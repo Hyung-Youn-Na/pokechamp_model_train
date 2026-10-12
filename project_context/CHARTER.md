@@ -1,60 +1,47 @@
-# 프로젝트 헌장 (Project Charter)
+# 프로젝트 헌장 — 모델 학습 연구선 (Project Charter)
 
-현재 당면 우선순위는 [D-119](decisions/D-119-fixed-matchup-mcts.md)의 **고정 A/B 공개 상태
-자기대국·MCTS 정책 개선 검증**이다. 사용자의 첫1라운드 요청 [D-123](decisions/D-123-fixed-matchup-first-round.md)에
-따라 [EX-078](experiments/EX-078-fixed-matchup-first-round.md)의 체크포인트 진단을
-[EP-127](exec-plans/active/EP-127-fixed-matchup-first-round.md)에서 수행했으나 시간초과로 학습 전 중단했다.
-후속 실행에는 [D-124](decisions/D-124-fixed-matchup-no-time-limit.md)의 시간 상한 해제를 적용한다.
-현재 [D-125](decisions/D-125-first-round-single-retry.md)/[EP-129](exec-plans/completed/EP-129-first-round-single-retry.md)으로
-정상31을 계승하고 실패1만 재수집해 첫라운드 학습·체크포인트 진단을 완료했다.
-후속 [D-126](decisions/D-126-fixed-matchup-stopping.md)/[EX-079](experiments/EX-079-fixed-matchup-stopping.md)는
-정기 평가·목표/정체/라운드 종료조건과 최고 모델 독립 시험을 완료했다.
-EX079의 초기모델 상대 우세와 Abyssal 주평가 개선 미입증을 구분한다.
-EX-076 예산 중단·EX-077 사용자 중지와 기존 Qwen 자료/판정·L1-L5 장기 목표를 보존한다.
+이 브랜치 `research/model-training`의 최상위 목표는 **포켓몬 배틀 전용 모델의 학습·정책 개선과
+독립 평가**다. [D-131](decisions/D-131-research-branch-preservation.md)의 사용자 지시에 따라 `/workspace`를 주 개발 checkout과 기존 실행
+환경으로 유지한다. L1–L5 구조 이식 연구는 별도 `research/l1-l5-port`에서 보존·후속 설계한다.
+공통 기준선·외부 자산·출력·복원 절차는 [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)를 따른다.
 
-**Authority:** 가장 높은 수준의 프로젝트 의도다. 현재 사용자가 연구 방향을 명시적으로
-재설정했으므로, 상속받은 repository는 새 연구의 목표가 아니라 활용 가능한 출발 artifact다.
+**Authority:** 이 브랜치의 프로젝트 목적과 기본 invariant에 대한 최상위 원문이다.
+연구선 분리는 기존 ADR·EX·동결 protocol·봉인·Blocked/Paused 판정을 바꾸지 않는다.
+분리 기반 구성의 범위·검증은 [EP-135](exec-plans/active/EP-135-research-branch-preservation.md)에서 관리한다. 실행 중인 학습·평가 실험은 없다.
 
 ## 프로젝트 목표 (Project Goal)
 
-AgenticSTS의 **L1-L5 계층형 메모리/컨텍스트 구조를 `pokechamp`에 적용하여 성능 개선을
-시도하는 것**이 이 프로젝트의 최상위 연구 목표다.
+`pokechamp`의 관측과 합법 행동 후보에 맞는 모델을 학습하고 정책을 개선하며,
+학습·모델 선택과 분리한 평가로 행동 선택 및 배틀 성능의 변화·불확실성을 판단한다.
+학습 손실 감소나 초기모델 상대 우세만으로 독립 배틀 성능 개선을 주장하지 않는다.
+구체적 학습 방법·처치·평가 기준·분모·예산·중단 조건은
+[`RESEARCH_DESIGN.md`](RESEARCH_DESIGN.md), 관련 Decision과 개별 EX에서 정한다.
 
-이 목표는 성능 향상을 사전에 보장하거나 이미 달성된 사실로 전제하지 않는다. 개선 여부는
-명시적으로 정의한 baseline, outcome measure, evaluation protocol과 보존된 evidence로 판단한다.
-L1-L5의 정확한 `pokechamp` 대응 관계, 구현 범위와 평가 기준은
-[`RESEARCH_DESIGN.md`](RESEARCH_DESIGN.md), 관련 Decision 및 bounded exec plan에서 구체화한다.
-
-기존 AgenticSTS code, mod, data, documentation은 L1-L5 구조를 이해하고 이전할 때 참고하거나
-선택적으로 재사용할 수 있는 기술적 baseline/evidence다. 원 프로젝트의 hypothesis, benchmark,
-metric 또는 결과를 새 목표에 자동 승계하지 않는다.
+LAYA-RLCD·EVE-RLCD·RLCD-Lite의 기존 환경과 Qwen·Kev·고정 대진 탐색 구현은 활용 가능한
+기반이다. 환경 준비나 기존 구현의 존재가 새 실행 또는 모든 환경의 동시 학습을 승인하지 않는다.
+프롬프트·JEV·AgenticSTS 구성과 과거 실험 자산을 공통 기준선에 유지한다.
+기존 AgenticSTS의 연구 목표·benchmark·metric·결과는 자동 승계하지 않는다.
 
 <a id="immediate-objective"></a>
 
 ### 당면 목표
 
-현재 우선 목표는 **구성한 LAYA-RLCD·EVE-RLCD·RLCD-Lite 세 학습 환경을 활용하여
-포켓몬 배틀에 특화된 모델을 학습하고, 행동 선택·배틀 성능의 개선 여부를 평가하는 것**이다.
-2026-09-28 사용자 지시와 [D-096](decisions/D-096-pokemon-training-objective.md)에 따라 채택한다.
-2026-10-01 사용자 지시와 [D-112](decisions/D-112-imitation-self-play-objectives.md)에 따라,
-Qwen 기반 구조화 행동 선택 모델(Kev 포함)의 **기존 리플레이 모방 학습 → 자기대국을 통한
-정책 개선**을 단기 학습 방향으로 채택했다. D-115의 Abyssal 우선 단계를 거쳐,
-2026-10-07 [D-119](decisions/D-119-fixed-matchup-mcts.md)에 따라 **고정 A/B 공개 상태에서
-작은 전용 모델의 자기대국·MCTS 정책 개선 검증**을 먼저 추진한다. 단계별 산출물·평가와 미정 설계는
-[단기 학습 목표](RESEARCH_DESIGN.md#pokemon-imitation-self-play)를 따른다.
-L1-L5 적용은 장기 목표로 유지하며, 학습 모델과 메모리 구조의 결합 방식은 미정이다.
-학습·평가의 구체적 설계와 해석은 [연구 설계](RESEARCH_DESIGN.md#pokemon-training-objective)를 따른다.
+이번 분리 단계의 범위는 Git 기준선·공통 보존 태그·브랜치별 목적 문서·worktree·대형 자산
+복사와 검증이며 진행·완료 근거는 [EP-135](exec-plans/active/EP-135-research-branch-preservation.md)에 연결한다. 새 학습·GPU 실행·외부 모델 호출·
+실제 배틀은 분리 범위에 포함하지 않는다.
+기존 [D-096](decisions/D-096-pokemon-training-objective.md)의 학습 목표와
+[D-112](decisions/D-112-imitation-self-play-objectives.md)의 모방 학습·정책 개선 방향,
+[D-119](decisions/D-119-fixed-matchup-mcts.md) 이후 고정 공개 상태 연구는 후속 설계의 근거다.
+EX-079·EX-080의 완료 결과와 기존 중단 결과를 각각의 조건·해석 범위에서 유지하며
+어떤 과거 실행도 이 분리 작업으로 재개하지 않는다.
 
 ## 범위 (Scope)
 
-- 적용 대상 시스템과 연구 domain: `pokechamp`.
-- 당면 intervention: 세 RLCD 환경을 활용한 포켓몬 배틀 전용 모델 학습.
-- 장기 intervention: AgenticSTS에서 L1-L5로 구분하는 계층형 메모리/컨텍스트 구조의 적용.
-- 의도한 outcome: `pokechamp`의 성능 개선 시도와 그 효과에 대한 evidence 기반 평가.
-- Layer별 대응, 재사용할 AgenticSTS component, deliverable, baseline, 성능 지표, 성공 기준과
-  evaluation protocol의 구체적 정의: **TBD**.
-- 구체적인 구현과 실험은 위 미정 항목을 관련 authority 문서와 bounded exec plan에서 정한 뒤
-  수행한다.
+- 대상: `pokechamp`의 모델 학습·정책 개선·독립 평가와 이를 뒷받침하는 입력·데이터·검증 기반.
+- 작업 위치: `/workspace`, 브랜치 `research/model-training`; 기존 interpreter·환경·캐시 경로 유지.
+- 이번 작업: 공통 소스 기준선, 목적 문서 분리, 외부 보존·검증·복원 연결.
+- 후속 학습의 모델·데이터·방법·평가·자원 조건: 새 bounded plan/EX에서 구체화한다.
+- L1–L5 이식은 별도 연구선의 목적이며 학습 모델과의 결합은 미정이다.
 
 ## 비목표 (Non-goals)
 

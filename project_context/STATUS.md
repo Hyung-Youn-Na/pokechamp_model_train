@@ -1,51 +1,37 @@
 # 프로젝트 상태 (Project Status)
 
-현재 당면 우선순위는 [D-119](decisions/D-119-fixed-matchup-mcts.md)의 **고정 A/B 공개 상태
-자기대국·MCTS 정책 개선 검증**이다. 사용자의 첫1라운드 요청 [D-123](decisions/D-123-fixed-matchup-first-round.md)에
-따라 [EX-078](experiments/EX-078-fixed-matchup-first-round.md)의 체크포인트 진단을
-[EP-127](exec-plans/active/EP-127-fixed-matchup-first-round.md)의 원실행은 중단했다.
-[D-124](decisions/D-124-fixed-matchup-no-time-limit.md)에 따라 후속 실행의 경과시간 상한을 해제했다.
-EX-076 예산 중단·EX-077 사용자 중지와 기존 Qwen 자료/판정·L1-L5 장기 목표를 보존한다.
+현재 연구선은 `research/model-training`이며 목적은 **모델 학습·정책 개선·독립 평가**다.
+[D-131](decisions/D-131-research-branch-preservation.md)에 따라 연구 목적을 분리하며, 현재 실행 중인 학습·평가·배틀 실험은 없다.
+기존 Blocked/Paused와 동결 protocol·봉인은 유지한다.
 
-- 기준일: 2026-10-08
-- 현재 판단에 필요한 요약이다. 진행·검증 원문은 개별 plan, 실험 조건·결과는 개별 EX 기록이다.
-- 완료 이력은 [exec-plan 색인](exec-plans/INDEX.md), 전체 실험은 [실험 색인](experiments/INDEX.md)에서 찾는다.
+- 기준일: 2026-10-12
+- 현재 작업 위치: `/workspace`
+- 목표 원문: [CHARTER](CHARTER.md) · [연구 설계](RESEARCH_DESIGN.md)
+- 경로·출력·외부 보존본·복원: [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)
+- 진행·검증은 개별 plan, 실험 조건·결과·분모는 개별 EX와 보고서를 따른다.
 
 <a id="current-objective"></a>
 
 ## 현재 연구 목표
 
-당면 목표는 **LAYA-RLCD·EVE-RLCD·RLCD-Lite 세 학습 환경을 활용하여 포켓몬 배틀에
-특화된 모델을 학습하고, 행동 선택·배틀 성능의 개선 여부를 평가하는 것**이다.
-[D-096](decisions/D-096-pokemon-training-objective.md)에 따라 채택했으며,
-연구 질문·목표 산출물·미정 설계는 [포켓몬 전용 학습 원문](RESEARCH_DESIGN.md#pokemon-training-objective)을 따른다.
-
-[D-112](decisions/D-112-imitation-self-play-objectives.md)에 따라 Qwen 기반 모델(Kev 포함)의
-**기존 리플레이 모방 학습 → 자기대국을 통한 정책 개선**을 단기 방향으로 채택했다.
-현재는 [D-119](decisions/D-119-fixed-matchup-mcts.md)에 따라 **고정 A/B 공개 상태에서
-작은 전용 모델의 자기대국·MCTS 정책 개선 검증**을 우선한다.
-행동 선택·실제 배틀 성능을 우선하며, 단계별 산출물과 미정 조건은
-[단기 학습 목표 원문](RESEARCH_DESIGN.md#pokemon-imitation-self-play)을 따른다.
-[EP-115](exec-plans/completed/EP-115-qwen-replay-imitation.md) /
-[EX-071](experiments/EX-071-qwen-replay-imitation.md)로 첫 리플레이 모방 학습과
-잠긴 test·고정40경기 평가·보고를 완료했다. 후속 자기대국은 EX-072에서 별도로 완료했으며,
-두 실험 모두 배틀 성능 개선은 불확실하다.
-
-별도 EX-066은 **재로딩 오류 상태를 보존하며 현재 GPU를 점유하지 않는다**.
-기존 [D-098](decisions/D-098-qwen-action-value.md) / [EX-061](experiments/EX-061-qwen-action-value.md)의
-22관측 전체 개발 실험이며 독립 배틀 성능은 미평가다. 고정 학습·재로딩·봉인·정리 완료,
-기술/사전 MSE·regret 기준 충족·전체 MAE 증가를 함께 보고한다.
-[최종 검증 보고](exec-plans/evidence/ep102/report.md). EX-061 학습/GPU 감시 실행은 종료됐다.
-
-[CHARTER](CHARTER.md)의 L1-L5 계층형 메모리/컨텍스트 적용 장기 목표는 유지한다.
-[입력 정보·이력·요약 연구](RESEARCH_DESIGN.md#intermediate-objectives)는 학습 입력과 후속
-메모리 설계의 참고 근거로 유지하며, 목표 달성과 L1-L5 전체 효능은 미평가다.
+포켓몬 관측·합법 행동에 맞춘 모델 학습과 정책 개선을 주 개발 목표로 관리한다.
+개선 여부는 학습·모델 선택과 분리한 평가로 판단한다. 기존 세 RLCD 환경과 Qwen·Kev·
+고정 대진 구현은 활용 가능한 기반이며, 다음 실험의 방법·초기 모델·데이터·평가·예산은
+아직 새 실행 작업으로 등록하지 않았다. L1-L5 구조 이식은 별도 연구선에서 보존·후속 설계한다.
 
 <a id="active-work"></a>
 
 ## 현재 실행 작업
 
-[EP-135](exec-plans/active/EP-135-research-branch-preservation.md): 사용자 승인 계획에 따라 연구 브랜치·기준 태그·외부 보존본을 구성 중이다. 기존 실험의 Blocked/Paused 및 봉인은 유지한다.
+[EP-135](exec-plans/active/EP-135-research-branch-preservation.md): 사용자 승인에 따라 Git 기준선·연구 브랜치·공통 보존 태그·worktree·외부 자산
+복사·검증과 목적 문서를 구성 중이다. 필수 검증 완료 전 완료로 표시하지 않는다.
+실험 재개·GPU 학습·외부 모델 API·실제 배틀은 포함하지 않는다.
+
+## 분리 전 실험 상태와 보존 근거
+
+아래 기록은 기존 실험·구현의 결과와 한계를 보존한 요약이다. 문단의 “현재” 또는 GPU·환경
+참조는 해당 작업의 보고 시점을 포함하므로 현 시점 실행 목록으로 읽지 않는다.
+각 EX·plan의 최종 상태가 원문이며 분리로 Blocked/Paused를 완료 또는 재개로 바꾸지 않는다.
 
 [EP-134](exec-plans/active/EP-134-jev27b-ex058-reproduction.md) /
 [EX-082](experiments/EX-082-jev27b-ex058-reproduction.md): 공개 JEV-27B를 추가 학습 없이
@@ -386,6 +372,9 @@ EX-049 API0 준비 실패와 과거 EX-047/048 중단·봉인은 보존한다.
 
 ## 남은 제한과 확인 필요 사항
 
+- 기존 Qwen 준비 코드의 EP132 경로 불일치는 알려진 후속 항목이다. 이번 분리에서
+  고정 출력 상수·실행기를 수정하거나 해당 실행을 재개하지 않는다.
+
 - EX-060은 단일 대진의 고유 관측22개이며 후보 간 q 차이가 관측된 상태는11개다.
   고정 숨은 상태·양측 Abyssal 후속 정책 조건의 자료로, 일반 성능·확정 최선·독립 자료의 학습 효과는
   미평가다. 동일 자료 개발 적합은 [EX-061 보고](exec-plans/evidence/ep102/report.md) 범위에서 확인했다.
@@ -409,19 +398,16 @@ EX-049 API0 준비 실패와 과거 EX-047/048 중단·봉인은 보존한다.
 
 ## 다음 단계
 
-[EP-116](exec-plans/completed/EP-116-selfplay-rlcd.md)의 첫 자기대국 실험은 완료했다.
-후속 설계의 우선 목표는 [Abyssal 상대 효율적 승리](RESEARCH_DESIGN.md#abyssal-first-objective)다.
-EX-073 종료 뒤 새 추가 학습은 [EX-074](experiments/EX-074-abyssal-rl-continue.md)의 승인 조건으로
-완료했다. 후속 [EX-075](experiments/EX-075-abyssal-rl-next.md)의82라운드 계승·
-추가12시간1회도 완료했다. 그 다음 주기 자동 실행은 승인하지 않았다.
-[EX-072 결과](experiments/EX-072-selfplay-rlcd.md#final-results)와 봉인 평가 자료를 보존한다.
-기존 EX-066 실행은 별도 조건을 유지한다.
-첫 개발 학습의 schema·모델·방법은 EX-061에서 확정·검증했다.
-기존 JEV 입력·배틀 결과는 유효성 범위 안에서 참고하며, 과거 평가 자료를 학습에 자동 편입하지 않는다.
-EX-060은 조건부 q 개발 자료로 연결했으며, 추가 상태·독립 대진의 필요 범위와 평가 봉인은
-후속 설계에서 정한다. 이 한 경기 자료의 적합을 일반 배틀 효과로 확대하지 않는다.
-포괄적 학습 목표 문서화는 [EP-099](exec-plans/completed/EP-099-pokemon-training-objective.md),
-단기 단계 구체화·검증은 [EP-114](exec-plans/completed/EP-114-imitation-self-play-objectives.md)를 참조한다.
+[EP-135](exec-plans/active/EP-135-research-branch-preservation.md)의 복사 전수 대조·Git tree/pin 비교·기존 환경 및 CPU 회귀·문서 링크·bundle·
+작은 표본 복원을 마치고, 최종 브랜치/태그와 자산 manifest 해시를 외부 receipt로 연결한다.
+검증 결과와 EP-135 종결 상태를 이 문서와 색인에 반영한다.
 
-중단 실험의 남은 예산은 재수집 허가가 아니다. 추가 실험·처치·방법 변경은 새 명시적 지시와 관련 authority/plan의 범위에서
-다루며, 과거 실패·무효·미완료 및 검토 종료 상태는 그대로 유지한다.
+분리 완료 뒤에는 기존 결과를 근거로 다음 학습·정책 개선·독립 평가의 범위를 정한다.
+새 실험은 모델·자료/분할·방법·평가·예산·중단 조건과 새 ID를 먼저 명시하고 기존 CLI의
+명시적 출력 인자로 보존 루트의 `runs/model-training/<새 실험 ID>`를 선택한다.
+출력 선택이 없는 과거 실행기는 새 실험용으로 자동 재사용하지 않는다.
+기존 평가 holdout·원자료·고정 절대경로를 유지하며 C-047 뷰어 완료 절차도 해당 실험에 적용한다.
+구체적 사용·복원은 [공통 안내](RESEARCH_WORKFLOW.md)를 따른다.
+
+중단 실험의 남은 예산은 재수집 허가가 아니다. 추가 실험·처치·방법 변경은 새 명시적
+지시와 관련 authority/plan의 범위에서 다루며, 과거 실패·무효·미완료와 검토 종료 상태를 유지한다.

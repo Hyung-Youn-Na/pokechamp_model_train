@@ -1,10 +1,18 @@
 # 아키텍처 (Architecture)
 
-이 문서는 현재 repository에서 관찰한 상속 시스템(inherited system)과 현재 채택된 PokéChamp
-qualification 및 research observability 경계를 간결하게 설명한다. 아직 새 연구 프로그램의 L1-L5 목표 아키텍처를
-정의하지 않으며, 원저자의 의도를 주장하지 않는다. 상세 AgenticSTS 모듈 목록은
-[`AgenticSTS/docs/reference/ARCHITECTURE.md`](../AgenticSTS/docs/reference/ARCHITECTURE.md)와
-[`REPO_LAYOUT.md`](../AgenticSTS/docs/reference/REPO_LAYOUT.md)에 남아 있다.
+`research/model-training`은 `/workspace`에서 모델 학습·정책 개선·독립 평가를 개발하는
+연구선이다. [D-131](decisions/D-131-research-branch-preservation.md)의 분리는 공통 코드 기준선을 유지하고 목적·작업 안내를 구분한다.
+기존 Python API·CLI·모델 입출력·학습 알고리즘과 submodule pin은 이번 단계에서 변경하지 않는다.
+
+현재 실행 환경·interpreter·가상환경·캐시는 `/workspace`의 원경로에 둔다. 새 실험은 출력 경로를
+선택할 수 있는 기존 CLI의 명시적 인자로 `/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/<새 실험 ID>`를
+사용하며 과거 실행기의 고정 출력 경로를 바꾸지 않는다. 현재 실행 중인 연구 실험은 없다.
+보존본·별도 Git 저장소·모델 blob·복원 연결은 [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)를 따른다.
+
+L1-L5 구조 이식은 별도 `research/l1-l5-port`의 보존·후속 설계 목적이다.
+이 문서의 AgenticSTS와 기존 학습·JEV 구성 설명은 공통 기준선의 사실이며 자동 실행 목록이 아니다.
+상세 AgenticSTS 구조는 [상속 아키텍처](../AgenticSTS/docs/reference/ARCHITECTURE.md)와
+[repository layout](../AgenticSTS/docs/reference/REPO_LAYOUT.md)에 보존한다.
 
 현재 공통 경로와 특정 정책의 실행 경로를 구별한다. 실행 승인·조건은 [CONTRACTS](CONTRACTS.md)와
 [RESEARCH_DESIGN](RESEARCH_DESIGN.md), 단계별 자격·결과는 [STATUS](STATUS.md)와 개별 EX 기록을 따른다.

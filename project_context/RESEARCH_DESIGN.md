@@ -1,16 +1,12 @@
 # 현재 연구 설계 (Research Design)
 
-현재 당면 우선순위는 [D-119](decisions/D-119-fixed-matchup-mcts.md)의 **고정 A/B 공개 상태
-자기대국·MCTS 정책 개선 검증**이다. 사용자의 첫1라운드 요청 [D-123](decisions/D-123-fixed-matchup-first-round.md)에
-따라 [EX-078](experiments/EX-078-fixed-matchup-first-round.md)의 체크포인트 진단을
-[EP-127](exec-plans/active/EP-127-fixed-matchup-first-round.md)에서 수행했으나 시간초과로 학습 전 중단했다.
-후속 실행에는 [D-124](decisions/D-124-fixed-matchup-no-time-limit.md)의 시간 상한 해제를 적용한다.
-현재 [D-125](decisions/D-125-first-round-single-retry.md)/[EP-129](exec-plans/completed/EP-129-first-round-single-retry.md)으로
-정상31을 계승하고 실패1만 재수집해 첫라운드 학습·체크포인트 진단을 완료했다.
-EX-076 예산 중단·EX-077 사용자 중지와 기존 Qwen 자료/판정·L1-L5 장기 목표를 보존한다.
+이 문서의 현재 연구선은 `research/model-training`이며 최상위 목적은 **모델 학습·정책 개선·독립 평가**다.
+[D-131](decisions/D-131-research-branch-preservation.md)에 따라 두 목적의 현재 작업을 분리한다. 기존 실험의 조건·평가·해석과
+Blocked/Paused 판정은 보존하며, 현재 실행 중인 연구 실험은 없다.
+분리 기반 구성은 [EP-135](exec-plans/active/EP-135-research-branch-preservation.md), 경로·외부 자산·복원은 [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)를 따른다.
 
-- 상태 (Status): Current — 포켓몬 전용 학습 우선; 고정 A/B 공개 상태 MCTS 정책 개선 검증; 실행별 평가 현황은 STATUS, L1-L5 전체 효능 비교는 미정
-- 편집 기준일 (As of): 2026-10-07 — D-119 고정 대진 공개 상태 우선 목표·EX-076 조건 등록
+- 상태 (Status): Current — 모델 학습·정책 개선·독립 평가; 새 실험 실행 없음
+- 편집 기준일 (As of): 2026-10-12 — D-131 연구선 분리
 - Authority domain: research question, hypothesis, treatment definition, comparison methodology,
   evaluation protocol, interpretation rule
 
@@ -26,16 +22,18 @@ artifact를 설명할 때는 현재 연구 설계로 채택했다는 의미가 �
 단위는 [`exec-plans/INDEX.md`](exec-plans/INDEX.md), 현재 진행 상태는 [`STATUS.md`](STATUS.md)가
 각각 담당한다. Implementation에서 관찰한 동작은 이 문서의 methodology를 자동으로 바꾸지 않는다.
 
-일반 절의 미정 항목은 L1-L5 전체 효능 비교 설계와 그 확증 evidence를 가리킨다. 별도로
-채택된 pilot·운영 비교·요약 진단의 조건과 평가는 이 문서의 해당 D-XXX 절을 따른다.
-당면 학습 목표와 그 미정 설계는 [§1의 포켓몬 전용 학습 절](#pokemon-training-objective)을 따른다.
+일반 절에서 L1-L5를 명시한 미정 항목은 그 연구선의 전체 효능 비교 설계와 확증 evidence에
+한정한다. 개별 학습·pilot·운영 비교·요약 진단의 조건과 평가는 해당 D-XXX 절과 EX를 따른다.
+브랜치의 현재 목적은 [§1](#branch-research-objective), 학습 연구선의 방향·미정 설계는
+[포켓몬 전용 학습 절](#pokemon-training-objective)에 구분한다.
 운영 실험·진단이 등록되지 않았다는 뜻으로 해석하지 않는다. 개별 실행·중단·검증 상태는
 [`STATUS.md`](STATUS.md)와 [`experiments/INDEX.md`](experiments/INDEX.md)가 연결하는 record를
 확인한다. 설계의 채택 자체는 중단된 실행의 재개 승인이 아니다.
 
 | 표시 | 의미 |
 |---|---|
-| **Current** | 현재 사용자 지시 또는 project context가 명시적으로 채택한 연구 설계 |
+| **Current** | 이 브랜치에서 채택한 연구 목적·설계. 실행 중이라는 뜻은 아니다. |
+| **Preserved** | 다른 연구선 또는 과거 승인 범위의 설계·근거를 보존한다. 당시 조건·판정을 변경하지 않는다. |
 | **Observed** | Source, test 또는 artifact에서 확인한 구현·기록 사실. 그 자체로 연구 의도는 아니다. |
 | **Excluded legacy** | 원저자 연구의 evidence이지만 Decision D-002에 따라 현재 설계로 승계하지 않은 항목 |
 | **Provisional** | 검토 가능한 후보이나 명시적 승인 전에는 experiment를 구속하지 않는 항목 |
@@ -46,13 +44,17 @@ artifact를 설명할 때는 현재 연구 설계로 채택했다는 의미가 �
 
 ## 적용 범위와 읽기 경로
 
+이 브랜치의 현재 목적은 **모델 학습·정책 개선·독립 평가**다. 분리 전에 등록한 D별 절의 `Current`,
+“현재 실행”, “이번 실행”은 각 결정이 채택한 당시 범위에 적용되며 현재 실행 지시가 아니다.
+동결 D별 본문·EX/ADR 원문을 유지하고 현재 실행 여부는 [STATUS](STATUS.md)에서 확인한다.
+
 [D-130](decisions/D-130-jev27b-ex058-reproduction.md)에 따라
 [EX-082](experiments/EX-082-jev27b-ex058-reproduction.md)의 질문·처치·동결 조건·진입 gate·
 자원/시간·분모·실패/복구·비교/해석을 공개 JEV-27B의 EX-058 재현 평가 규범으로 편입한다.
 과거 클라우드 모델과 로컬 공개 모델의 고정 대진 탐색 비교이며 다른 실험의 조건은 불변이다.
 
-공통 연구 목적·미정 설계·평가·해석은 §1–15를 따른다. 당면 목표는
-[포켓몬 전용 학습](#pokemon-training-objective)이다. 새 기본 IO 테스트는
+공통 연구 목적·미정 설계·평가·해석은 §1–15의 명시된 적용 범위를 따른다.
+브랜치 목적은 [§1](#branch-research-objective)에서 구분한다. 새 기본 IO 테스트는
 [§8.1](#io-explanation-review), 도구 결함 복구는 [§11.1](#defect-recovery), 공급자 판단 오류는
 [§11.2](#provider-judgment-errors)를 먼저 확인한다.
 새 상세 효과 사전의 지식 추가·해석 범위는 [D-057](#d-057-배틀선봉-상세-효과-사전), 선봉의 두 독립 개선은 [D-061](#d-061-선봉-전략규칙-입력-개선)을 따른다.
@@ -121,38 +123,32 @@ L1-L5 효능 또는 작은 승률 차이의 확증으로 확대 해석하지 않
 
 ### Current state
 
-상위 연구 목적은 **Current**다. AgenticSTS의 L1-L5 계층형 메모리/컨텍스트 구조를
-`pokechamp`에 적용하여 성능 개선을 시도한다. 이 방향은 [`CHARTER.md`](CHARTER.md)와
-[`D-005`](decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md)가 채택했다.
+<a id="branch-research-objective"></a>
 
-이 지시는 target system, 이전할 상위 구조와 의도한 outcome 방향을 정하지만, L1-L5의 정확한
-`pokechamp` 대응, deliverable, baseline/treatment, performance의 operational definition,
-hypothesis, 성공 기준과 evaluation protocol은 아직 정하지 않는다. [`D-002`](decisions/D-002-reset-research-direction.md)는
-원래의 bounded-memory hypothesis, roadmap, TODO와 experiment follow-up을 현재 설계로 자동
-승계하지 못하게 한다.
+이 브랜치의 최상위 연구 목적은 **포켓몬 전용 모델 학습·정책 개선·독립 평가**다.
+[D-131](decisions/D-131-research-branch-preservation.md)과 [CHARTER](CHARTER.md)에 따라 RQ4를 중심으로 학습 효과와 정책의 성능을
+구분하여 검증한다. 모델 선택에 사용하지 않은 평가 자료와 사전 지표·분모·불확실성 기준으로
+개선 여부를 판단하며, 기존 평가 자료를 학습에 자동 편입하지 않는다.
 
-채택된 empirical scope에는 기준선 pilot, 운영 비교와 요약 진단이 있다. 각 범위는 이 문서의
-해당 D-XXX 절과 연결된 Decision을 따르며, 승인 목록을 이 요약에 중복하여 제한하지 않는다.
-등록 evidence 및 중단 상태는 개별 EX record와 STATUS를 따른다. L1-L5 전체 efficacy
-comparison은 아직 승인되지 않았으며 다음 두 제약을 유지한다.
+L1-L5 구조 이식의 broad RQ1과 미정 설계는 `research/l1-l5-port`의 목적·보존 근거다.
+이 문서에도 관련 규범·참조를 유지하지만 학습 연구의 상위 목표나 자동 후속 작업으로 두지 않는다.
+두 연구선의 결합 방식은 미정이다. 기존 입력·JEV·AgenticSTS·학습 구현을 공통 기준선에 유지한다.
 
-1. 새 연구의 efficacy claim은 사용자 승인을 받은 objective, RQ, hypothesis, treatment,
-   outcome, protocol이 이 문서에 명시된 뒤에만 평가할 수 있다.
-2. 상속된 AgenticSTS implementation과 archive는 L1-L5 구조의 reference이자 선택 가능한 기술적
-   baseline/evidence다. 구체적인 code, data, benchmark 또는 과거 result는 현재 baseline이나
-   treatment로 자동 채택되지 않는다.
+개별 EX에 채택된 학습·운영 비교와 아직 미정인 L1-L5 전체 효능 비교를 구분한다.
+새 실험의 objective·질문·처치·평가·예산은 관련 authority와 bounded plan/EX에서 정한다.
+상속 artifact의 hypothesis·benchmark·결과와 과거 미완료 계획을 자동 채택하지 않는다.
+분리 범위는 EP-135의 기반 구성·보존에 한정한다. 현재 새 학습·GPU·외부 API·실제 배틀 실행은 없다.
 
 <a id="pokemon-training-objective"></a>
 
-### 당면 목표 — 세 환경을 활용한 포켓몬 전용 모델 학습
+### 주 연구 목표 — 포켓몬 전용 모델 학습·정책 개선·독립 평가
 
-[D-096](decisions/D-096-pokemon-training-objective.md)에 따라 **LAYA-RLCD·EVE-RLCD·RLCD-Lite를
-활용하여 포켓몬 배틀에 특화된 구조화 행동 선택 모델을 학습하고, 배틀 성능 개선 여부를
-평가하는 것**을 현재 우선 목표로 둔다. L1-L5의 장기 목표는 유지한다.
-[D-112](decisions/D-112-imitation-self-play-objectives.md)로 Qwen 기반 모델의
-[리플레이 모방 학습과 후속 정책 개선](#pokemon-imitation-self-play)을 구체화했으며,
-[D-119](decisions/D-119-fixed-matchup-mcts.md)에 따라 당면 우선순위는
-[고정 A/B 공개 상태 정책 개선](#fixed-matchup-objective)이다.
+[D-096](decisions/D-096-pokemon-training-objective.md)의 **LAYA-RLCD·EVE-RLCD·RLCD-Lite를
+활용한 포켓몬 전용 구조화 행동 선택 모델 학습**을 이 연구선의 기반으로 유지한다.
+[D-112](decisions/D-112-imitation-self-play-objectives.md)의 모방 학습·후속 정책 개선과
+[D-119](decisions/D-119-fixed-matchup-mcts.md) 이후 고정 공개 상태 연구는 기존 설계·실행 근거다.
+후속 학습 경로·모델·평가는 새 작업 범위에서 구체화하며 현재 실험을 자동 시작하지 않는다.
+L1-L5 구조 이식은 별도 연구선에서 관리한다.
 여기서 “JEV 계열”은 세 오픈소스의 구조화 결정/RLCD 학습 기반을 뜻하며,
 TypeSafe JEV의 원본 가중치나 공식 학습 구현을 확보했다는 뜻이 아니다.
 
@@ -184,8 +180,9 @@ TypeSafe JEV의 원본 가중치나 공식 학습 구현을 확보했다는 뜻�
 - 학습 전 기준선·환경 간 통제/차이, 주/보조 지표·분모·불확실성·성공 기준,
   평가 표본·seed·순서·실패/재시도 처리와 재현 identity.
 
-현재 단기 연구 방향은 **고정 A/B 공개 상태에서 작은 전용 모델의 자기대국·MCTS가
-탐색 없는 정책을 개선하는지 검증하는 것**이다. D-119가 이번 단계의 D-115 우선순위를 부분 대체한다.
+분리 전 학습 연구는 **고정 A/B 공개 상태에서 작은 전용 모델의 자기대국·MCTS가
+탐색 없는 정책을 개선하는지 검증하는 것**을 추진했다. 당시 D-119가 D-115의 우선순위를
+부분 대체했으며, 후속 결과와 중단·완료 상태는 개별 EX에 보존한다.
 기존 EX-061 개발 학습·EX-065 기반 공동 q 독립 평가의 실행 현황은 STATUS와 해당 EX를 따른다.
 기존 JEV 배틀과 입력·관측 연구는 당시 유효성 범위의 참고 근거다. 학습 효과와
 입력 변경·초기 모델·메모리 구조의 효과를 구분하며, 함께 바뀌면 전체 구성 차이로 해석한다.
@@ -205,6 +202,9 @@ EX066 실패·오프라인 test 미완료와 자료를 보존하고 학습 단�
 실행 자원만 변경한다. 이후 GPU2 사용 중 유휴 GPU 대체를 명시한
 [D-106](decisions/D-106-joint-q-idle-gpu.md)에 따라 GPU1로 고정했다. 변경 전 protocol·준비본·
 사전검사와 최초 시계는 보존하며 나머지 처치·평가는 유지한다.
+
+이하 D별 학습·실험 절은 채택 당시의 규범 원문이다. 절 안의 현재형 표현은 그 실험에
+한정되며 현재 브랜치의 실행 목록은 아니다. 종료·중단 상태는 [STATUS](STATUS.md)를 따른다.
 
 <a id="pokemon-imitation-self-play"></a>
 
@@ -356,7 +356,7 @@ EX-058 battle-19 원대진을 새 Qwen p2 대 Abyssal p1 한 경기로 실행한
 
 ## 2. 연구 질문 (Research Questions)
 
-당면 Qwen 입력 개선의 [D-102](decisions/D-102-qwen-candidate-state.md)는 제공 정보의
+기존 Qwen 입력 개선의 [D-102](decisions/D-102-qwen-candidate-state.md)는 제공 정보의
 결정별 행동 순서·상태 변화 연결을 개발 가설로 둔다. [EX-064](experiments/EX-064-qwen-candidate-state.md)의
 저장 관측 3조건과 별도 진단은 조건부 상태 정확성·후보 순위·비용을 분리해 비교한다.
 고정 모델의 학습 입력 분포 변화가 포함되며 q의 Abyssal 후속 조건 의미를 유지한다.
@@ -379,8 +379,8 @@ EX-058 battle-19 원대진을 새 Qwen p2 대 Abyssal p1 한 경기로 실행한
 | L1-L5 적용·평가 | 선정한 정보를 계층적으로 관리하면 어떤 차이가 생기는가? | 계층별 대응과 비교 설계, 구조의 효과와 한계에 대한 평가 |
 
 이 단계는 연구 결과와 설계 결정의 연결을 나타내며 새 실행 목록이나 과거 중단 실험의
-재개 지시가 아니다. 현재 우선순위는 [포켓몬 전용 학습 목표](#pokemon-training-objective)이며,
-입력 정보·이력·요약 연구는 학습 입력과 후속 메모리 설계의 참고 근거로 유지한다.
+재개 지시가 아니다. 현재 이 브랜치는 [포켓몬 전용 학습 목표](#pokemon-training-objective)를 따른다.
+입력 정보·이력·요약 연구는 학습 입력의 참고 근거이며 L1-L5 구조 설계는 별도 연구선에서 관리한다.
 기존 이력·요약 진단도 당시 조건과 유효성 범위에서 참고하며, 모든 단계가 완료되었다고 전제하지 않는다.
 
 중간 목표의 완료 기준은 사전에 정한 비교 범위를 마치고, 채택·제외·판단 보류할 정보와
@@ -393,12 +393,12 @@ EX-058 battle-19 원대진을 새 Qwen p2 대 Abyssal p1 한 경기로 실행한
 
 | ID | Status | Current formulation | 확정에 필요한 것 |
 |---|---|---|---|
-| **RQ1** | **Current — operationalization TBD** | AgenticSTS의 L1-L5 계층형 메모리/컨텍스트 구조를 `pokechamp`에 적용하면 `pokechamp`의 성능이 개선되는가? | Layer별 대응, 대상 population/version, baseline/treatment, performance metric과 claim criterion 승인 |
-| **RQ2** | **Current — operationalization TBD** | 제공하는 정보의 종류와 표현이 행동 선택·배틀 성능·비용에 어떤 영향을 미치는가? | 정보 내용과 표현의 비교 범위, 통제 조건, 행동 변화·성능·비용의 측정 및 완료 기준 |
-| **RQ3** | **Current — operationalization TBD** | 제공하는 이력의 범위와 요약 방식이 정보 보존·행동 선택·배틀 성능·비용에 어떤 영향을 미치는가? | 이력 범위·요약 조건, 정보 보존·손실 평가와 비교 protocol |
-| **RQ4** | **Current — 당면 목표, operationalization TBD** | 세 RLCD 환경을 활용한 포켓몬 전용 학습이 기준선 대비 행동 선택·배틀 성능에 어떤 변화를 만드는가? | 초기 모델·데이터/분할·학습 처치·통제 조건·평가 지표/분모·예산 및 claim criterion |
+| **RQ1** | **Preserved — research/l1-l5-port, operationalization TBD** | AgenticSTS의 L1-L5 계층형 메모리/컨텍스트 구조를 `pokechamp`에 적용하면 `pokechamp`의 성능이 개선되는가? | Layer별 대응, 대상 population/version, baseline/treatment, performance metric과 claim criterion 승인 |
+| **RQ2** | **Current — 학습 입력 참고, 새 비교 TBD** | 제공하는 정보의 종류와 표현이 행동 선택·배틀 성능·비용에 어떤 영향을 미치는가? | 정보 내용과 표현의 비교 범위, 통제 조건, 행동 변화·성능·비용의 측정 및 완료 기준 |
+| **RQ3** | **Current — 학습 입력 참고, 새 비교 TBD** | 제공하는 이력의 범위와 요약 방식이 정보 보존·행동 선택·배틀 성능·비용에 어떤 영향을 미치는가? | 이력 범위·요약 조건, 정보 보존·손실 평가와 비교 protocol |
+| **RQ4** | **Current — 주 목표, 후속 실행 설계 TBD** | 세 RLCD 환경을 활용한 포켓몬 전용 학습이 기준선 대비 행동 선택·배틀 성능에 어떤 변화를 만드는가? | 초기 모델·데이터/분할·학습 처치·통제 조건·평가 지표/분모·예산 및 claim criterion |
 
-RQ4의 단기 비교는 [Qwen 모방 학습·자기대국](#pokemon-imitation-self-play)으로 구체화한다.
+학습 연구선 RQ4의 기존 비교 설계는 [모방 학습·정책 개선·고정 대진 연구](#pokemon-imitation-self-play)에 보존한다.
 모방 학습 전후와 자기대국 전후의 효과를 구분하고, 구체적인 평가 조건은 실행 전에 정한다.
 
 RQ2·RQ3은 RQ1의 메모리 내용·관리 방식 설계를 위한 중간 연구 질문이다. 구체적인 처치·지표·
@@ -414,7 +414,8 @@ competitor report에 있다. 이들은 모두 **Excluded legacy**이며 현재 R
 
 ## 3. 가설 (Hypotheses)
 
-현재 명시적으로 채택된 hypothesis는 없다.
+L1-L5 전체 효능 비교의 H1은 아직 미정이다. 개별 학습·운영 실험에 채택된 질문·가설·판정은
+각 D별 절과 동결 EX를 따르며, H1의 미정 상태로 그 설계나 결과를 부정하지 않는다.
 
 ### H1 — TBD
 
@@ -432,7 +433,10 @@ support/reject/inconclusive criterion을 실행 전에 함께 승인해야 한�
 
 ## 4. 실험 단위와 처리 조건 (Experimental Units / Treatments)
 
-### Current treatments
+### 연구선별 적용 범위와 보존된 pilot 조건
+
+학습 연구선의 기존 처치·분할·평가는 해당 EX의 동결 조건을 따른다. 후속 실행 조건은
+새 범위에서 정한다. 아래 pilot 조건과 L1-L5의 미정 항목은 그 지정 범위에만 적용한다.
 
 - Experimental unit: Pilot은 경기 slot; 팀/seed와 진영 교환을 shared block으로 묶는다.
 - Baseline/control: Pilot은 pinned minimax/IO/Abyssal/OneStep/Random inventory.
@@ -500,6 +504,9 @@ control/recording capability와 아직 필요한 결정을 구분한다.
 | Showdown battle timer | Pinned server는 `forcetimer=true`지만 D-011 parent launcher가 process-local `false`로 override한다 | **Current:** 별도 timed-run 지시가 없으면 inactivity timer를 끈다. Timed run은 activation/configuration을 사전 선언·기록하고 untimed run과 같은 condition으로 합치지 않는다. |
 
 ## 7. 결과 측정치 (Outcome Measures)
+
+학습·정책 개선 연구의 지표·분모·판정은 개별 EX가 소유한다. 후속 독립 평가는 학습·모델
+선택 자료와 분리하고 사전 기준을 명시한다. 아래 TBD는 L1-L5 전체 효능 비교에 한정한다.
 
 ### Current outcomes — L1-L5 전체 효능 비교
 
@@ -725,8 +732,8 @@ model decoding의 완전한 재현성은 보장하지 않으며 model response i
 
 ## 12. 해석 규칙 (Interpretation Rules)
 
-1. 현재 H1이 비어 있으므로 어떤 기존 또는 신규 result도 현재 hypothesis를 support/reject한
-   것으로 분류할 수 없다.
+1. L1-L5 전체 효능 비교의 H1이 미정이므로 어떤 기존 또는 신규 result도 그 H1을
+   support/reject한 것으로 분류할 수 없다. 개별 실험의 판정은 해당 동결 EX를 따른다.
 2. Hypothesis support는 사전에 선언한 contrast, expected direction, metric, denominator,
    uncertainty rule을 충족하고 필요한 evidence가 온전할 때만 주장한다.
 3. Qualification success는 interface와 evidence pipeline이 의도대로 작동한다는 뜻이며 efficacy
@@ -736,8 +743,8 @@ model decoding의 완전한 재현성은 보장하지 않으며 model response i
 5. 다른 model/provider, game version, routing, cadence 또는 interface의 operational comparison은
    caveat를 유지하며 controlled single-variable ablation으로 relabel하지 않는다.
 6. 같은 point estimate는 equivalence를 증명하지 않는다. 작은 sample, 겹치는 interval 또는
-   nonsignificant result를 효과 없음의 증거로 해석하지 않는다. 현재 equivalence margin,
-   significance level, minimum effect는 모두 TBD다.
+   nonsignificant result를 효과 없음의 증거로 해석하지 않는다. L1-L5 전체 효능 비교의
+   equivalence margin, significance level, minimum effect는 모두 TBD다.
 7. Legacy archive는 새 RQ와 eligibility rule이 명시적으로 연결될 때만 secondary evidence로
    사용할 수 있다. 원저자의 claim을 새 연구 결론으로 그대로 가져오지 않는다.
 8. Missing 또는 invalid attempt를 조용히 삭제하지 않는다. 모든 exclusion과 retry는 record와
@@ -779,8 +786,8 @@ Kev 후속 승률의 정확한 추정을 보장하지 않는다. 이미 결과�
 
 | Research item | Required evidence | Current source | Status |
 |---|---|---|---|
-| 당면 학습 목표 / RQ4 | 명시적 사용자 지시, 학습·평가 설계 및 재현 증거 | [당면 학습 목표](#pokemon-training-objective), [D-096](decisions/D-096-pokemon-training-objective.md), EP-096–098 | **목표 승인·환경 준비 완료; 학습/평가 protocol TBD, 포켓몬 효능 미평가** |
-| Research objective / RQ1 | 명시적 사용자 승인과 Charter-compatible formulation | [`CHARTER.md`](CHARTER.md), [`D-005`](decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md), [`STATUS.md`](STATUS.md) | **Objective와 broad RQ 승인; operationalization Unresolved** |
+| 학습 연구선 / RQ4 | 명시적 사용자 지시, 학습·평가 설계 및 재현 증거 | [학습 목표와 보존 근거](#pokemon-training-objective), [D-096](decisions/D-096-pokemon-training-objective.md), [D-131](decisions/D-131-research-branch-preservation.md), 개별 EX | **실행별 완료·중단·성능 판정은 해당 EX를 따름; 후속 실행 설계 TBD** |
+| L1-L5 이식 연구선 / RQ1 | 명시적 사용자 승인과 Charter-compatible formulation | [`CHARTER.md`](CHARTER.md), [`D-005`](decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md), [`STATUS.md`](STATUS.md) | **Objective와 broad RQ 승인; operationalization Unresolved** |
 | 중간 연구 목표 / RQ2·RQ3 | 명시적 사용자 승인, 단계별 산출물·완료 기준 및 최종 목표와의 연결 | [이 문서 §2](#intermediate-objectives), [D-063](decisions/D-063-intermediate-research-objectives.md) | **목표와 broad RQ 승인; 새 실험별 operationalization TBD, 목표 달성은 미평가** |
 | H1 | Claim, direction, contrast, support/reject/inconclusive rule | 이 문서 §3 | **Missing / Unresolved** |
 | L1-L5 전체 효능 baseline/treatments | Exact configuration manifest와 isolation rule | 이 문서 §4; legacy `run_ablation.py`는 참고 가능 | **Missing** — 별도 운영 조건의 부재를 뜻하지 않음 |
@@ -795,8 +802,9 @@ Kev 후속 승률의 정확한 추정을 보장하지 않는다. 이미 결과�
 
 ## 14. 미해결 연구 질문 (Open Research Questions)
 
-이 목록은 implementation TODO가 아니다. Research design을 승인하기 전에 사람이 내려야 할
-결정과 필요한 evidence를 나타낸다.
+이 목록은 L1-L5 전체 이식·효능 설계의 미해결 질문이며 implementation TODO가 아니다.
+해당 research design에서 정할 결정과 필요한 evidence를 나타낸다. 학습 후속 실행의
+미정 조건은 [학습 목표 절](#pokemon-training-objective)과 개별 새 plan/EX에서 관리한다.
 
 | ID | Question | Why it matters | Resolution evidence/decision |
 |---|---|---|---|
@@ -812,27 +820,17 @@ Kev 후속 승률의 정확한 추정을 보장하지 않는다. 이미 결과�
 
 ## 15. 현재 연구 단계 (Current Research Stage)
 
-**포켓몬 전용 학습 우선 / 고정 A/B 공개 상태 MCTS 정책 개선 검증.**
-[D-096](decisions/D-096-pokemon-training-objective.md)의 [당면 학습 목표](#pokemon-training-objective)와
-RQ4를 우선하며, [D-119의 고정 대진 목표](#fixed-matchup-objective)를 당면 방향으로 둔다.
-기존 첫 실행 [D-098/EX-061](#qwen-action-value-first-run)과 후속 공동 q 학습·배틀의 실제 상태는
-STATUS와 각 EX를 따른다. [D-113/EX-071](experiments/EX-071-qwen-replay-imitation.md)의
-첫 모방 학습·평가·보고와 [D-114/EX-072](experiments/EX-072-selfplay-rlcd.md)의
-첫 자기대국·평가·정정 최종화를 완료했다. 배틀 개선은 미입증이며 추가 실행 조건은 미정이다.
-평가와 미정 설계는 해당 절을 따르며 L1-L5 전체 efficacy design은 여전히 미정이다.
-[중간 연구 목표](#intermediate-objectives)와 broad RQ2·RQ3을 채택했으며 기존 운영 실험·진단은
-개별 기록의 유효성 범위에서 연결한다. 중간 목표의 완료나 새 실험 실행을 뜻하지 않는다.
-최상위 objective와 broad RQ1은 승인되었지만,
-L1-L5 전체 효능 비교의 operational RQ, hypothesis, treatment, primary outcome과 evaluation protocol은 아직 승인되지
-않았다. [`EP-001`](exec-plans/completed/EP-001-pokechamp-reproducible-environment.md)은 local
-source/dependency/server/battle, real Ollama Cloud probe 및 valid-action IO battle을 포함한 technical
-environment qualification을 완료했다.
-[`EP-002`](exec-plans/completed/EP-002-pokechamp-battle-observability.md)는 opt-in full-fidelity
-recording, source seal과 local static viewer capability를 완료했지만 efficacy experiment를 실행하지
-않았다.
-[`experiments/INDEX.md`](experiments/INDEX.md)에는 qualification, 기준선 pilot, 후속 운영 비교와
-요약 진단이 등록되어 있다. 현재 EX-020/021/022는 중단 상태이며 유효 비교 완료로 해석하지
-않는다. 최신 실행 상태는 STATUS와 각 EX record를 따른다.
+**모델 학습·정책 개선·독립 평가를 주 개발 연구선으로 관리한다.**
+분리 기반의 보존·Git 기준선·문서·worktree·검증과 완료 근거는 [EP-135](exec-plans/active/EP-135-research-branch-preservation.md)가 소유한다.
+학습·평가 실험은 실행 중이지 않으며 후속 방법·초기 모델·데이터·독립 평가·자원 조건을
+새 범위에서 정한다. 기존 EX-079·EX-080의 종료·시험 결과와 주효능 미입증을 보존한다.
+기존 Qwen·Kev·Abyssal·JEV 결과 및 중단 판정도 해당 EX의 조건·분모·한계 안에서 해석한다.
+
+L1-L5 전체 효능 설계의 미정 상태는 별도 `research/l1-l5-port`에 유지한다.
+기존 구현·환경의 존재나 과거 완료 이력은 새 실행 권한이 아니다.
+운영 현황은 [STATUS](STATUS.md), 작업·보존본·출력·복원은 [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)를 따른다.
+
+### 보존된 운영 검증의 범위
 
 [EP-007](exec-plans/completed/EP-007-model-concurrency.md)의 운영 측정도 완료했다. EX-004에서
 C*=10을 선택했고, EX-011/012의 동일 source 8판 비교는 각각 유효 6/8과 관측 속도비
@@ -844,9 +842,9 @@ C*=10을 선택했고, EX-011/012의 동일 source 8판 비교는 각각 유효 
 상속된 runtime, test, five-condition harness와 frozen archive는 존재하지만
 [`D-002`](decisions/D-002-reset-research-direction.md)에 따라 새 연구의 qualification 또는 efficacy
 evidence로 자동 승계되지 않는다. EP-001 smoke는 새 treatment나 metric을 검증하지 않으며 pilot,
-efficacy evaluation, ablation 또는 replication이 아니다. 다음 연구 단계는 OQ-001과 OQ-002를
-포함한 operational research/transfer design을 명시적으로 정하는
-것이며, 이 문서는 그 결정을 대신하지 않는다.
+efficacy evaluation, ablation 또는 replication이 아니다. L1-L5 이식 연구선의 후속 설계에서는
+OQ-001·OQ-002를 포함한 operational research/transfer design을 명시적으로 정해야 한다.
+이 문서는 그 결정을 대신하거나 해당 후속 작업을 자동 시작하지 않는다.
 
 ## D-017 요청 조건 변경과 운영 검증
 
