@@ -1,0 +1,3052 @@
+{
+  "passed": true,
+  "prior_fact_count": 125,
+  "reviewer": "Codex; single reviewer, direct original-row audit before Cloud",
+  "prior_criteria_sha256": "f7d99d3e00dacf57bbde7ae05595f1950bc6a0a834de8905f952310831bc77d3",
+  "facts": {
+    "io-abyssal-b01-s1-a1-p1@117": {
+      "current_self": {
+        "expected_sha256": "ff1c618fa43d1cc08e70c5d00467af34a61663b84093845913e212bd9100c08e",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 116,
+            "line": 2,
+            "turn": 18
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "46b7f13b853169054cae240f9d17d932ebc40e7430693229221e3eee420b9da7",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 100,
+            "line": 4,
+            "turn": 14
+          },
+          {
+            "event": 100,
+            "line": 7,
+            "turn": 14
+          },
+          {
+            "event": 105,
+            "line": 6,
+            "turn": 15
+          },
+          {
+            "event": 105,
+            "line": 10,
+            "turn": 15
+          },
+          {
+            "event": 110,
+            "line": 6,
+            "turn": 16
+          },
+          {
+            "event": 110,
+            "line": 10,
+            "turn": 16
+          },
+          {
+            "event": 115,
+            "line": 6,
+            "turn": 17
+          },
+          {
+            "event": 115,
+            "line": 10,
+            "turn": 17
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "62520474eac4a78405d106050134f3ddc31a46a16a67139585a1406718daa06c",
+        "notes": "현재 자기 request와 원본 faint 행을 분리 확인; Latios40, Gliscor/Zapdos/Zamazenta 기절.",
+        "evidence": [
+          {
+            "event": 116,
+            "line": 2,
+            "turn": 18
+          },
+          {
+            "event": 76,
+            "line": 7,
+            "turn": 11
+          },
+          {
+            "event": 83,
+            "line": 11,
+            "turn": 12
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "7b8b12b2aa0bdee1baeacd4b172dc21c7555285fb80a8350049f36e5603b79eb",
+        "notes": "17턴 직전185, Giga Drain35, Leftovers67 세 행 및 반복 drain을 확인.",
+        "evidence": [
+          {
+            "event": 111,
+            "line": 2,
+            "turn": 17
+          },
+          {
+            "event": 115,
+            "line": 7,
+            "turn": 17
+          },
+          {
+            "event": 115,
+            "line": 9,
+            "turn": 17
+          },
+          {
+            "event": 115,
+            "line": 12,
+            "turn": 17
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "110e0413ed7cb27a3db2882422c75cf04c4720b80cdab9c208382f835e9e674e",
+        "notes": "진영별 sidestart와 12턴 Tinkaton entry88→63/Spikes를 확인.",
+        "evidence": [
+          {
+            "event": 26,
+            "line": 6,
+            "turn": 2
+          },
+          {
+            "event": 31,
+            "line": 7,
+            "turn": 3
+          },
+          {
+            "event": 36,
+            "line": 7,
+            "turn": 4
+          },
+          {
+            "event": 41,
+            "line": 7,
+            "turn": 5
+          },
+          {
+            "event": 85,
+            "line": 4,
+            "turn": 12
+          },
+          {
+            "event": 85,
+            "line": 5,
+            "turn": 12
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "fdac03deadded559f05d0f5686b7bba5ebd0f65928d9388ca5762b59b5230ed5",
+        "notes": "두 아이템 enditem 이후 복원 없음; 17턴 Giga Drain/heal100 확인.",
+        "evidence": [
+          {
+            "event": 21,
+            "line": 6,
+            "turn": 2
+          },
+          {
+            "event": 51,
+            "line": 8,
+            "turn": 7
+          },
+          {
+            "event": 115,
+            "line": 7,
+            "turn": 17
+          },
+          {
+            "event": 115,
+            "line": 10,
+            "turn": 17
+          }
+        ]
+      }
+    },
+    "io-abyssal-b01-s1-a1-p1@171": {
+      "current_self": {
+        "expected_sha256": "8d51e90938e2d2c818d7be4a3ebe7f87e1036f6f16260718209106fb48577c9a",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 170,
+            "line": 2,
+            "turn": 26
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "fc59300e0d989bd488d1fd80889f166e430f98df0fa3652954c8ff50d4847278",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 169,
+            "line": 4,
+            "turn": 25
+          },
+          {
+            "event": 169,
+            "line": 5,
+            "turn": 25
+          },
+          {
+            "event": 169,
+            "line": 9,
+            "turn": 25
+          },
+          {
+            "event": 169,
+            "line": 12,
+            "turn": 25
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "f296bf2d1952d1eeda4d5e423e29564faec0c2341fa4791bb76c90ad9087722c",
+        "notes": "현재 request의 기절3/생존3과 각 HP 직접 확인.",
+        "evidence": [
+          {
+            "event": 170,
+            "line": 2,
+            "turn": 26
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "341065bc7db3001e66fb8ce3c73e7e76981b11db81c12f70523f52c0124f4bb1",
+        "notes": "Slowking switch100/100 뒤20턴35,21턴0의 두 Sucker Punch를 확인.",
+        "evidence": [
+          {
+            "event": 132,
+            "line": 4,
+            "turn": 19
+          },
+          {
+            "event": 137,
+            "line": 4,
+            "turn": 20
+          },
+          {
+            "event": 137,
+            "line": 6,
+            "turn": 20
+          },
+          {
+            "event": 142,
+            "line": 4,
+            "turn": 21
+          },
+          {
+            "event": 142,
+            "line": 6,
+            "turn": 21
+          },
+          {
+            "event": 142,
+            "line": 7,
+            "turn": 21
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "2e4c3bf7610f214195462ca62d6f270874ed699bbbb7dd7fae9fc5eeb65da498",
+        "notes": "22턴 First Impression still/fail 이후 Body Press faint 순서 확인.",
+        "evidence": [
+          {
+            "event": 149,
+            "line": 4,
+            "turn": 22
+          },
+          {
+            "event": 149,
+            "line": 6,
+            "turn": 22
+          },
+          {
+            "event": 149,
+            "line": 7,
+            "turn": 22
+          },
+          {
+            "event": 149,
+            "line": 9,
+            "turn": 22
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "bc62c3a1951dac454a0e28ea5f2a07c796eb8764d924c638b6684bb9c216a9e3",
+        "notes": "25턴 entry82→Spikes57→Ice Fang38→frz→Leftovers44; p1 rocks 확인.",
+        "evidence": [
+          {
+            "event": 169,
+            "line": 4,
+            "turn": 25
+          },
+          {
+            "event": 169,
+            "line": 5,
+            "turn": 25
+          },
+          {
+            "event": 169,
+            "line": 7,
+            "turn": 25
+          },
+          {
+            "event": 169,
+            "line": 9,
+            "turn": 25
+          },
+          {
+            "event": 169,
+            "line": 10,
+            "turn": 25
+          },
+          {
+            "event": 169,
+            "line": 12,
+            "turn": 25
+          },
+          {
+            "event": 26,
+            "line": 6,
+            "turn": 2
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "b2c85d6cffb5ab47e41c33c504a0461e2ce25583498a7730369a9e25a36cb87e",
+        "notes": "Close Combat23/Ice Fang24/25 및 Hydrapple Draco Meteor SpA-2 후 교체 확인.",
+        "evidence": [
+          {
+            "event": 159,
+            "line": 5,
+            "turn": 23
+          },
+          {
+            "event": 164,
+            "line": 4,
+            "turn": 24
+          },
+          {
+            "event": 164,
+            "line": 7,
+            "turn": 24
+          },
+          {
+            "event": 164,
+            "line": 8,
+            "turn": 24
+          },
+          {
+            "event": 164,
+            "line": 9,
+            "turn": 24
+          },
+          {
+            "event": 169,
+            "line": 4,
+            "turn": 25
+          }
+        ]
+      }
+    },
+    "io-abyssal-b01-s1-a1-p1@63": {
+      "current_self": {
+        "expected_sha256": "8dab74951689e30a1ea0a6135f7c18ea62cda4f2d29966ce47656c52f140ee93",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 62,
+            "line": 2,
+            "turn": 10
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "c7a868eda10ea0813488d60d7d48919ffd5c6aa2e0cd9e757821b32c919ea9b2",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 46,
+            "line": 4,
+            "turn": 6
+          },
+          {
+            "event": 51,
+            "line": 7,
+            "turn": 7
+          },
+          {
+            "event": 61,
+            "line": 8,
+            "turn": 9
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "12e3324453a9e092fae2226e3cc348d1203efbbe151680e6e00c15b11bfb1c7e",
+        "notes": "첫3회 sidestart의 affected side p2와 p1 rocks를 원문 순서로 확인.",
+        "evidence": [
+          {
+            "event": 31,
+            "line": 7,
+            "turn": 3
+          },
+          {
+            "event": 36,
+            "line": 7,
+            "turn": 4
+          },
+          {
+            "event": 41,
+            "line": 7,
+            "turn": 5
+          },
+          {
+            "event": 26,
+            "line": 6,
+            "turn": 2
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "9e87041969e7d6e8070725634ac106adf07c72462f2096cb20c2559ce0a53802",
+        "notes": "Flip Turn의 enditem 및 Knock Off holder/제거 턴을 확인.",
+        "evidence": [
+          {
+            "event": 21,
+            "line": 6,
+            "turn": 2
+          },
+          {
+            "event": 51,
+            "line": 8,
+            "turn": 7
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "1f29e037cc8ae3b0edc4754c08dd7b7c118353dfd7b6dd48e338436ef16bf55b",
+        "notes": "자기 request217 → Hurricane73 → Poison Heal117, Toxic Orb/Poison Heal 발동을 직접 확인.",
+        "evidence": [
+          {
+            "event": 26,
+            "line": 8,
+            "turn": 2
+          },
+          {
+            "event": 57,
+            "line": 2,
+            "turn": 9
+          },
+          {
+            "event": 61,
+            "line": 4,
+            "turn": 9
+          },
+          {
+            "event": 61,
+            "line": 5,
+            "turn": 9
+          },
+          {
+            "event": 61,
+            "line": 10,
+            "turn": 9
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "8b6ae885b138202fe72ec811b051bf6b00ef6822e7229b7f040692371543fee3",
+        "notes": "Encore end6 및 confusion activate9, 피해 원인을 분리 확인.",
+        "evidence": [
+          {
+            "event": 46,
+            "line": 9,
+            "turn": 6
+          },
+          {
+            "event": 56,
+            "line": 5,
+            "turn": 8
+          },
+          {
+            "event": 56,
+            "line": 8,
+            "turn": 8
+          },
+          {
+            "event": 56,
+            "line": 10,
+            "turn": 8
+          },
+          {
+            "event": 61,
+            "line": 6,
+            "turn": 9
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "f6fce37d3ac28d2e1a135a22d218d685d59da024f46059ffca0f6427f919289d",
+        "notes": "첫 턴 Tinkaton switch 뒤 실제 Draco Meteor/immune 두 행 확인.",
+        "evidence": [
+          {
+            "event": 16,
+            "line": 4,
+            "turn": 1
+          },
+          {
+            "event": 16,
+            "line": 7,
+            "turn": 1
+          },
+          {
+            "event": 16,
+            "line": 8,
+            "turn": 1
+          }
+        ]
+      }
+    },
+    "io-abyssal-b01-s1-a1-p2@140": {
+      "current_self": {
+        "expected_sha256": "7f39d138fbd8e29b534641e1487f716a9c8d4b6a8aeb62186eaab9b4c9378236",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 139,
+            "line": 2,
+            "turn": 19
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "62aac29290b618eb9dd9ab898481d482fcfe8130e78154ff1511f4c4d8ece666",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 138,
+            "line": 4,
+            "turn": 18
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "4e24047b932372db83af63b09b689ab1b20d9d498dbec4f80c87c315cc782f3f",
+        "notes": "p1 rocks/p2 3Spikes와 Tinkaton12턴326→233을 확인.",
+        "evidence": [
+          {
+            "event": 24,
+            "line": 6,
+            "turn": 2
+          },
+          {
+            "event": 30,
+            "line": 7,
+            "turn": 3
+          },
+          {
+            "event": 36,
+            "line": 7,
+            "turn": 4
+          },
+          {
+            "event": 42,
+            "line": 7,
+            "turn": 5
+          },
+          {
+            "event": 98,
+            "line": 4,
+            "turn": 12
+          },
+          {
+            "event": 98,
+            "line": 5,
+            "turn": 12
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "0694125c1c566ff88deb79848f45f96bdfe26178e4b8fc8ae077685170099292",
+        "notes": "Zapdos253→0 Draco Meteor11, Zamazenta Psychic Noise12, Gliscor Hurricane10 확인.",
+        "evidence": [
+          {
+            "event": 75,
+            "line": 2,
+            "turn": 11
+          },
+          {
+            "event": 80,
+            "line": 4,
+            "turn": 11
+          },
+          {
+            "event": 80,
+            "line": 7,
+            "turn": 11
+          },
+          {
+            "event": 92,
+            "line": 7,
+            "turn": 12
+          },
+          {
+            "event": 92,
+            "line": 11,
+            "turn": 12
+          },
+          {
+            "event": 72,
+            "line": 6,
+            "turn": 10
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "409cbf8b7fe54f3602d8e120cb83666dd37323f1694dadac2a01f90cd5e256a5",
+        "notes": "17턴 상대Ting-Lu14/100 회복 후18턴 Giga Drain0; Hydrapple401/415 확인.",
+        "evidence": [
+          {
+            "event": 130,
+            "line": 9,
+            "turn": 17
+          },
+          {
+            "event": 130,
+            "line": 10,
+            "turn": 17
+          },
+          {
+            "event": 130,
+            "line": 12,
+            "turn": 17
+          },
+          {
+            "event": 136,
+            "line": 7,
+            "turn": 18
+          },
+          {
+            "event": 136,
+            "line": 9,
+            "turn": 18
+          },
+          {
+            "event": 136,
+            "line": 11,
+            "turn": 18
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "16abfba573952a29eb158c7ea6e0381f958a7622169deb1e08b412eaa20b6d29",
+        "notes": "기존 아이템 제거 유지와 공개 Vessel of Ruin·Leftovers holder 확인.",
+        "evidence": [
+          {
+            "event": 22,
+            "line": 6,
+            "turn": 2
+          },
+          {
+            "event": 54,
+            "line": 8,
+            "turn": 7
+          },
+          {
+            "event": 106,
+            "line": 6,
+            "turn": 13
+          },
+          {
+            "event": 106,
+            "line": 10,
+            "turn": 13
+          }
+        ]
+      }
+    },
+    "io-abyssal-b01-s1-a1-p2@202": {
+      "current_self": {
+        "expected_sha256": "6aef175d0da26d1cfae751e354682b61c09dc5b8dbc3a18f39d5a521e9dc6e38",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 201,
+            "line": 2,
+            "turn": 26
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "ba1b640bb71f9e8f3fd26671b60c1bb1dfaefae08e0a013ed8175661e461e93c",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 176,
+            "line": 4,
+            "turn": 22
+          },
+          {
+            "event": 188,
+            "line": 8,
+            "turn": 24
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "a6723a5e4be9fcd0cbcb27eb6b2d14c7b00fbbcfdaadf7afec467c7f4cc359f7",
+        "notes": "강제교체 request에서 자기 Ting-Lu 포함5기절, Hydrapple179 생존을 확인.",
+        "evidence": [
+          {
+            "event": 201,
+            "line": 2,
+            "turn": 26
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "f7f6b31daaaa33c50c6075197ebcc2000c3d2dd561d85bea53a4df1f3401abab",
+        "notes": "Slowking393→135→0,20/21턴 Sucker Punch 두 타격을 확인.",
+        "evidence": [
+          {
+            "event": 151,
+            "line": 2,
+            "turn": 20
+          },
+          {
+            "event": 156,
+            "line": 4,
+            "turn": 20
+          },
+          {
+            "event": 156,
+            "line": 6,
+            "turn": 20
+          },
+          {
+            "event": 162,
+            "line": 4,
+            "turn": 21
+          },
+          {
+            "event": 162,
+            "line": 6,
+            "turn": 21
+          },
+          {
+            "event": 162,
+            "line": 7,
+            "turn": 21
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "b39cb9f2ddd7fe8209a83e856b86d2e63728551642025d79687497b08dc6b6ce",
+        "notes": "22턴 First Impression fail, 이어 Ting-Lu Body Press로 Lokix faint 확인.",
+        "evidence": [
+          {
+            "event": 174,
+            "line": 4,
+            "turn": 22
+          },
+          {
+            "event": 174,
+            "line": 6,
+            "turn": 22
+          },
+          {
+            "event": 174,
+            "line": 7,
+            "turn": 22
+          },
+          {
+            "event": 174,
+            "line": 9,
+            "turn": 22
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "b519c33861d1dfe420e928d6ea4041fd9f4dcda97432c6b4d6bcfd0a92eb80ec",
+        "notes": "25턴Spikes289→IceFang193/frz→225 회복,26턴 Close Combat KO와 진영 확인.",
+        "evidence": [
+          {
+            "event": 194,
+            "line": 5,
+            "turn": 25
+          },
+          {
+            "event": 194,
+            "line": 7,
+            "turn": 25
+          },
+          {
+            "event": 194,
+            "line": 9,
+            "turn": 25
+          },
+          {
+            "event": 194,
+            "line": 10,
+            "turn": 25
+          },
+          {
+            "event": 200,
+            "line": 4,
+            "turn": 26
+          },
+          {
+            "event": 200,
+            "line": 10,
+            "turn": 26
+          },
+          {
+            "event": 24,
+            "line": 6,
+            "turn": 2
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "6e4b48c9000ed75bfd0558388db0e65e38df81a37828e3cc314823759ffee9ef",
+        "notes": "Zamazenta Close Combat/Ice Fang 및 Hydrapple24턴 SpA 하락·25턴 교체 확인.",
+        "evidence": [
+          {
+            "event": 182,
+            "line": 5,
+            "turn": 23
+          },
+          {
+            "event": 188,
+            "line": 4,
+            "turn": 24
+          },
+          {
+            "event": 188,
+            "line": 7,
+            "turn": 24
+          },
+          {
+            "event": 188,
+            "line": 9,
+            "turn": 24
+          },
+          {
+            "event": 194,
+            "line": 4,
+            "turn": 25
+          }
+        ]
+      }
+    },
+    "io-abyssal-b01-s1-a1-p2@76": {
+      "current_self": {
+        "expected_sha256": "e762a42aa9304cc5bb7c277dbc01fa4618a99360cda1667749078d6c3446a28c",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 75,
+            "line": 2,
+            "turn": 11
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "f1b05004a0980d34784b4092a1918734744a26e0ece942ea97b20541468615d1",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 74,
+            "line": 4,
+            "turn": 10
+          },
+          {
+            "event": 74,
+            "line": 5,
+            "turn": 10
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "6acd9927b5d021ce7a13c8f06938a885ec1db7fe0336060a7de9ae42fda3c3da",
+        "notes": "p1 rocks2, p2 Spikes3/4/5 affected-side를 직접 확인.",
+        "evidence": [
+          {
+            "event": 24,
+            "line": 6,
+            "turn": 2
+          },
+          {
+            "event": 30,
+            "line": 7,
+            "turn": 3
+          },
+          {
+            "event": 36,
+            "line": 7,
+            "turn": 4
+          },
+          {
+            "event": 42,
+            "line": 7,
+            "turn": 5
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "8b45e049d2a3f39bd83bca3e26d3e7a22e902835b7bdafbfb87b3d43aac2fff6",
+        "notes": "Tinkaton Air Balloon end2, Zapdos Boots end7 holder를 확인.",
+        "evidence": [
+          {
+            "event": 22,
+            "line": 6,
+            "turn": 2
+          },
+          {
+            "event": 54,
+            "line": 8,
+            "turn": 7
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "eba46c2547e7239f8d8fb2a6eb381846d12c577e8edebf74cb625047ae69f30c",
+        "notes": "Gliscor Toxic Orb2, Poison Heal9의21→34 후 Hurricane10 기절; 누적 피해 확인.",
+        "evidence": [
+          {
+            "event": 24,
+            "line": 8,
+            "turn": 2
+          },
+          {
+            "event": 66,
+            "line": 5,
+            "turn": 9
+          },
+          {
+            "event": 66,
+            "line": 10,
+            "turn": 9
+          },
+          {
+            "event": 72,
+            "line": 4,
+            "turn": 10
+          },
+          {
+            "event": 72,
+            "line": 5,
+            "turn": 10
+          },
+          {
+            "event": 72,
+            "line": 6,
+            "turn": 10
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "bd71d4fd7e60f2c743d20b089d33ace63ed119c3b1995d3fe08cd272f254dd9e",
+        "notes": "1턴 Tinkaton switch·Latios Draco Meteor·immune 순서 확인.",
+        "evidence": [
+          {
+            "event": 16,
+            "line": 4,
+            "turn": 1
+          },
+          {
+            "event": 16,
+            "line": 7,
+            "turn": 1
+          },
+          {
+            "event": 16,
+            "line": 8,
+            "turn": 1
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "3c7de3eb6e6202f66e609a4d39e4a15cf31577797d799e88f9e7f1ca2b06b53e",
+        "notes": "Encore 시작4/종료6이며10턴 Gliscor 기절을 확인.",
+        "evidence": [
+          {
+            "event": 36,
+            "line": 5,
+            "turn": 4
+          },
+          {
+            "event": 48,
+            "line": 9,
+            "turn": 6
+          }
+        ]
+      }
+    },
+    "io-abyssal-b04-s1-a1-p2@142": {
+      "current_self": {
+        "expected_sha256": "07a114a5170e180a9c4eb6ab82e052eb38927f7fd2c375899156745fb7ac3d9e",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 141,
+            "line": 2,
+            "turn": 17
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "70e6b4ac6c826690f9ba1eda15c12533357b8a968f1c4460f2f619b045f9d060",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 140,
+            "line": 4,
+            "turn": 16
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "5dcefe316de3772eecaede1096d16482c2e97e0f96d153ac8dc07e9e7a1422ba",
+        "notes": "자기 request에서 Ninetales/Ceruledge/Wake 기절,Hatterene167/Venusaur82 확인.",
+        "evidence": [
+          {
+            "event": 141,
+            "line": 2,
+            "turn": 17
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "ca658af3741bf18eb48cb41d7026cd076f3002aeaa71fd956642a8b6a72e8c90",
+        "notes": "12턴 Sash1→Bitter Blade133,13턴 Earth Power KO 뒤 Bitter Blade 없음 확인.",
+        "evidence": [
+          {
+            "event": 96,
+            "line": 6,
+            "turn": 12
+          },
+          {
+            "event": 96,
+            "line": 7,
+            "turn": 12
+          },
+          {
+            "event": 96,
+            "line": 8,
+            "turn": 12
+          },
+          {
+            "event": 96,
+            "line": 10,
+            "turn": 12
+          },
+          {
+            "event": 102,
+            "line": 4,
+            "turn": 13
+          },
+          {
+            "event": 102,
+            "line": 7,
+            "turn": 13
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "6234152b75e67716d152656dcaa457777cb90d3738bd2af40bc30cec7d1d315b",
+        "notes": "13턴 protosynthesisspa,14턴29→0과end를 확인; speed로 바꾸지 않음.",
+        "evidence": [
+          {
+            "event": 108,
+            "line": 6,
+            "turn": 13
+          },
+          {
+            "event": 109,
+            "line": 2,
+            "turn": 14
+          },
+          {
+            "event": 114,
+            "line": 4,
+            "turn": 14
+          },
+          {
+            "event": 114,
+            "line": 6,
+            "turn": 14
+          },
+          {
+            "event": 114,
+            "line": 7,
+            "turn": 14
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "4f3ceaa0d168507c369f432c360879b5ff69ddc1f10ed1e1f7bf1f4c89021f21",
+        "notes": "15턴 Eject Button end 뒤 Great Tusk 교체와 sun/endProto가 같은15턴임 확인.",
+        "evidence": [
+          {
+            "event": 126,
+            "line": 5,
+            "turn": 15
+          },
+          {
+            "event": 126,
+            "line": 6,
+            "turn": 15
+          },
+          {
+            "event": 132,
+            "line": 4,
+            "turn": 15
+          },
+          {
+            "event": 132,
+            "line": 6,
+            "turn": 15
+          },
+          {
+            "event": 132,
+            "line": 8,
+            "turn": 15
+          },
+          {
+            "event": 132,
+            "line": 9,
+            "turn": 15
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "c444653a7784d9710c42cb00fde2bc7538f3728ab9d06a779b14cc71a1b7f40b",
+        "notes": "16턴 Earth Power SpD-1,Headlong Rush def/spd-1: 총def-1/spd-2와152 확인.",
+        "evidence": [
+          {
+            "event": 138,
+            "line": 4,
+            "turn": 16
+          },
+          {
+            "event": 138,
+            "line": 5,
+            "turn": 16
+          },
+          {
+            "event": 138,
+            "line": 6,
+            "turn": 16
+          },
+          {
+            "event": 138,
+            "line": 7,
+            "turn": 16
+          },
+          {
+            "event": 138,
+            "line": 9,
+            "turn": 16
+          },
+          {
+            "event": 138,
+            "line": 10,
+            "turn": 16
+          },
+          {
+            "event": 138,
+            "line": 11,
+            "turn": 16
+          }
+        ]
+      },
+      "fact06": {
+        "expected_sha256": "1039f73b58e72f8ee428247e82cd64288c3809a50a94ddb04c5d1020df3c3994",
+        "notes": "이전 원문9/10턴 두 Kowtow Cleave와 해당 고정 이전 요약에서 복원 가능 확인.",
+        "evidence": [
+          {
+            "event": 70,
+            "line": 7,
+            "turn": 9
+          },
+          {
+            "event": 76,
+            "line": 8,
+            "turn": 10
+          },
+          {
+            "event": 76,
+            "line": 9,
+            "turn": 10
+          }
+        ]
+      }
+    },
+    "io-abyssal-b04-s1-a1-p2@78": {
+      "current_self": {
+        "expected_sha256": "d06cc978a5c26e728c68edd5a08860be54c49d05197fc387e0f867f9617174ae",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 77,
+            "line": 2,
+            "turn": 10
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "adda212a626835433e9678232bb1f66a4ef268fb2771ba023c7afb8cf8291a25",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 58,
+            "line": 4,
+            "turn": 7
+          },
+          {
+            "event": 70,
+            "line": 10,
+            "turn": 9
+          },
+          {
+            "event": 76,
+            "line": 6,
+            "turn": 10
+          },
+          {
+            "event": 76,
+            "line": 12,
+            "turn": 10
+          },
+          {
+            "event": 76,
+            "line": 13,
+            "turn": 10
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "683c77b8aed8dafcd27a1b24b0c3c95a6b7b1baf24b46b0149c3c951c2968ef4",
+        "notes": "Ninetales349→64→0,9/10턴 두 Kowtow Cleave 연결 확인.",
+        "evidence": [
+          {
+            "event": 65,
+            "line": 2,
+            "turn": 9
+          },
+          {
+            "event": 70,
+            "line": 6,
+            "turn": 9
+          },
+          {
+            "event": 70,
+            "line": 7,
+            "turn": 9
+          },
+          {
+            "event": 76,
+            "line": 7,
+            "turn": 10
+          },
+          {
+            "event": 76,
+            "line": 8,
+            "turn": 10
+          },
+          {
+            "event": 76,
+            "line": 9,
+            "turn": 10
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "aacf20714dce8663013216adb58a6257a417706d160368f2a2b8e0d72a4d0404",
+        "notes": "원문 request에서 Dubya29/339·Venusaur82/301 생존 확인.",
+        "evidence": [
+          {
+            "event": 77,
+            "line": 2,
+            "turn": 10
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "6bbdf63a8f01510055e979f5418ccda26a63e49f04d7a2ff972b208e367eeab3",
+        "notes": "Future Sight1 시전/2 실패/3 caster기절 후 Dubya162 해결 확인.",
+        "evidence": [
+          {
+            "event": 16,
+            "line": 6,
+            "turn": 1
+          },
+          {
+            "event": 16,
+            "line": 7,
+            "turn": 1
+          },
+          {
+            "event": 22,
+            "line": 7,
+            "turn": 2
+          },
+          {
+            "event": 28,
+            "line": 6,
+            "turn": 3
+          },
+          {
+            "event": 28,
+            "line": 8,
+            "turn": 3
+          },
+          {
+            "event": 28,
+            "line": 9,
+            "turn": 3
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "89c5ae278f0f6cd175ad3894c693d43a186f2152eaa781879c38aecbf1a71bba",
+        "notes": "Kingambit Swords Dance+2·Supreme Overlord 원문 발동,3동료기절,brn/17 확인.",
+        "evidence": [
+          {
+            "event": 58,
+            "line": 5,
+            "turn": 7
+          },
+          {
+            "event": 64,
+            "line": 7,
+            "turn": 8
+          },
+          {
+            "event": 64,
+            "line": 8,
+            "turn": 8
+          },
+          {
+            "event": 70,
+            "line": 5,
+            "turn": 9
+          },
+          {
+            "event": 76,
+            "line": 13,
+            "turn": 10
+          },
+          {
+            "event": 28,
+            "line": 6,
+            "turn": 3
+          },
+          {
+            "event": 42,
+            "line": 12,
+            "turn": 5
+          },
+          {
+            "event": 56,
+            "line": 7,
+            "turn": 7
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "111837200afea49305b810039a53480a5d8ecc8ede491064f5378180ad420d40",
+        "notes": "Drought 시작8과10턴 upkeep를 구별; 공개 Drought 현재관측 누락은 사전 교정.",
+        "evidence": [
+          {
+            "event": 64,
+            "line": 6,
+            "turn": 8
+          },
+          {
+            "event": 76,
+            "line": 11,
+            "turn": 10
+          }
+        ]
+      },
+      "fact06": {
+        "expected_sha256": "edc2358753065f24597c352ed843c8a099c8d7cf4bca6a8b69b4740d85fabd11",
+        "notes": "Iron Valiant Booster Energy3 및 Quark Drive 종료5 원문 확인.",
+        "evidence": [
+          {
+            "event": 30,
+            "line": 5,
+            "turn": 3
+          },
+          {
+            "event": 30,
+            "line": 7,
+            "turn": 3
+          },
+          {
+            "event": 42,
+            "line": 12,
+            "turn": 5
+          },
+          {
+            "event": 42,
+            "line": 13,
+            "turn": 5
+          }
+        ]
+      }
+    },
+    "io-one_step-b01-s1-a1-p1@115": {
+      "current_self": {
+        "expected_sha256": "c1d527f0aac01c86f688cd2007785ccc618f273b28f945f8fb1ec3174ece919a",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 114,
+            "line": 2,
+            "turn": 17
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "13b19b919ec29d576642120af7c649409c413bb3f9c71c85304aa3d3d3479544",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 113,
+            "line": 4,
+            "turn": 16
+          },
+          {
+            "event": 113,
+            "line": 8,
+            "turn": 16
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "7e948ec28bdd4a8aae84d89c0ca4dd095c41a706d03f743bb6696b94f9b719de",
+        "notes": "자기request의3기절·207 HP,Dauntless+1 이후Close Combat15/16으로def-1/spd-2 확인.",
+        "evidence": [
+          {
+            "event": 114,
+            "line": 2,
+            "turn": 17
+          },
+          {
+            "event": 103,
+            "line": 6,
+            "turn": 14
+          },
+          {
+            "event": 108,
+            "line": 10,
+            "turn": 15
+          },
+          {
+            "event": 108,
+            "line": 11,
+            "turn": 15
+          },
+          {
+            "event": 113,
+            "line": 9,
+            "turn": 16
+          },
+          {
+            "event": 113,
+            "line": 10,
+            "turn": 16
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "472f42c08b56362d6975e2ee63c117c7f4bc00d09ee112b5902b147cadb3305b",
+        "notes": "Gliscor KnockOff10 Boots 제거와상대Zamazenta22% 후교체16 확인.",
+        "evidence": [
+          {
+            "event": 78,
+            "line": 10,
+            "turn": 10
+          },
+          {
+            "event": 108,
+            "line": 9,
+            "turn": 15
+          },
+          {
+            "event": 113,
+            "line": 4,
+            "turn": 16
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "93c63191b467cbb7364f327ee7b0c4d8f599b23374b9ebc4050bb9cfa282800e",
+        "notes": "Gliscor ToxicOrb10·PoisonHeal11/12/13→80과StoneEdge14 KO 확인.",
+        "evidence": [
+          {
+            "event": 78,
+            "line": 12,
+            "turn": 10
+          },
+          {
+            "event": 83,
+            "line": 10,
+            "turn": 11
+          },
+          {
+            "event": 88,
+            "line": 10,
+            "turn": 12
+          },
+          {
+            "event": 93,
+            "line": 10,
+            "turn": 13
+          },
+          {
+            "event": 98,
+            "line": 4,
+            "turn": 14
+          },
+          {
+            "event": 98,
+            "line": 6,
+            "turn": 14
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "a58809c2d8b3f6c7e32342a86da5ee4ba2f58cc995dfd2f64715d71ce38f1ec2",
+        "notes": "Zapdos교체16/CloseCombat61% 및 prefix전체 sidestart 부재 확인.",
+        "evidence": [
+          {
+            "event": 113,
+            "line": 4,
+            "turn": 16
+          },
+          {
+            "event": 113,
+            "line": 5,
+            "turn": 16
+          },
+          {
+            "event": 113,
+            "line": 8,
+            "turn": 16
+          }
+        ]
+      }
+    },
+    "io-one_step-b01-s1-a1-p1@171": {
+      "current_self": {
+        "expected_sha256": "7c3c9ea1bee677c59c09ea67b8be6e9e714ba8bd2527212264efc48d6a7efe54",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 170,
+            "line": 2,
+            "turn": 25
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "b5f4e7aaaa4ea802984a65a436b9dd6fee5f69265649e278842ee77e53121f64",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 169,
+            "line": 4,
+            "turn": 24
+          },
+          {
+            "event": 169,
+            "line": 7,
+            "turn": 24
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "2c492474ed56b6218279b52f6cb1515848b0e766aa0df79adb695e4440c511c8",
+        "notes": "원문 현재request에Ting-Lu만514/514 생존,다른5기절 확인.",
+        "evidence": [
+          {
+            "event": 170,
+            "line": 2,
+            "turn": 25
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "81e49d99a8b6b1a81bb9c3adb13036b6c3553745db0dd33c1d0de05a0065bb22",
+        "notes": "Encore20 start/Sucker Punch fail,21/22 KO와22 end를 확인.",
+        "evidence": [
+          {
+            "event": 140,
+            "line": 4,
+            "turn": 20
+          },
+          {
+            "event": 140,
+            "line": 5,
+            "turn": 20
+          },
+          {
+            "event": 140,
+            "line": 6,
+            "turn": 20
+          },
+          {
+            "event": 140,
+            "line": 7,
+            "turn": 20
+          },
+          {
+            "event": 145,
+            "line": 8,
+            "turn": 21
+          },
+          {
+            "event": 152,
+            "line": 7,
+            "turn": 22
+          },
+          {
+            "event": 152,
+            "line": 9,
+            "turn": 22
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "8daf874fd19caf9997b14663a1fadc47a7b973b5130b3b11847ea4099c2a8cbd",
+        "notes": "Tinkaton Balloon end19와21 faint 후복원 없음 확인.",
+        "evidence": [
+          {
+            "event": 135,
+            "line": 4,
+            "turn": 19
+          },
+          {
+            "event": 135,
+            "line": 8,
+            "turn": 19
+          },
+          {
+            "event": 145,
+            "line": 8,
+            "turn": 21
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "d5cae6f217210df4c092585a86ea08d079fb4417a90d3e6d23fe56c10abbff62",
+        "notes": "23턴 First Impression fail 뒤 Flamethrower KO,실제피해 없는 실패 확인.",
+        "evidence": [
+          {
+            "event": 159,
+            "line": 4,
+            "turn": 23
+          },
+          {
+            "event": 159,
+            "line": 6,
+            "turn": 23
+          },
+          {
+            "event": 159,
+            "line": 7,
+            "turn": 23
+          },
+          {
+            "event": 159,
+            "line": 10,
+            "turn": 23
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "a2b310f3ed5850501ebfa71388700d6c165459dcb4fb02316641450e1636c707",
+        "notes": "상대4기절과Hydrapple교체24·Earthquake88%를 확인.",
+        "evidence": [
+          {
+            "event": 61,
+            "line": 7,
+            "turn": 8
+          },
+          {
+            "event": 128,
+            "line": 7,
+            "turn": 18
+          },
+          {
+            "event": 145,
+            "line": 8,
+            "turn": 21
+          },
+          {
+            "event": 152,
+            "line": 7,
+            "turn": 22
+          },
+          {
+            "event": 169,
+            "line": 4,
+            "turn": 24
+          },
+          {
+            "event": 169,
+            "line": 5,
+            "turn": 24
+          },
+          {
+            "event": 169,
+            "line": 7,
+            "turn": 24
+          }
+        ]
+      }
+    },
+    "io-one_step-b01-s1-a1-p1@65": {
+      "current_self": {
+        "expected_sha256": "ffbdb1ae193d1bba1a24caf90c4dbd70852dc96a8c50bde43bad89804624a482",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 64,
+            "line": 2,
+            "turn": 9
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "fe910022e1388d0f6dc297d281d0ba0c133acb4e8da57f355d76df01e857ab13",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 63,
+            "line": 4,
+            "turn": 8
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "bef7286485dc9fe5cc65cc0549e9f94f1a47bd8a5879f6476dd9a4dd1862041f",
+        "notes": "Pecharunt의 Ruination380→190→95 이후Earthquake7, Ting-Lu10%→Draco8 KO 확인.",
+        "evidence": [
+          {
+            "event": 47,
+            "line": 2,
+            "turn": 7
+          },
+          {
+            "event": 51,
+            "line": 8,
+            "turn": 7
+          },
+          {
+            "event": 51,
+            "line": 11,
+            "turn": 7
+          },
+          {
+            "event": 51,
+            "line": 14,
+            "turn": 7
+          },
+          {
+            "event": 61,
+            "line": 4,
+            "turn": 8
+          },
+          {
+            "event": 61,
+            "line": 7,
+            "turn": 8
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "137d7a80891aa567fe062d7e73ba357bee7ebb87b3c5a82754a606e7aa5716bc",
+        "notes": "Draco Meteor2 miss 및 Ruination의301→151→76→38 세 타격 확인.",
+        "evidence": [
+          {
+            "event": 21,
+            "line": 4,
+            "turn": 2
+          },
+          {
+            "event": 21,
+            "line": 5,
+            "turn": 2
+          },
+          {
+            "event": 21,
+            "line": 6,
+            "turn": 2
+          },
+          {
+            "event": 21,
+            "line": 7,
+            "turn": 2
+          },
+          {
+            "event": 26,
+            "line": 8,
+            "turn": 3
+          },
+          {
+            "event": 31,
+            "line": 8,
+            "turn": 4
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "d46407097998965bef8448c61eec283f2f3bc67de96a22c53a47f76408d30b2b",
+        "notes": "Malignant Chain tox/Poison Puppeteer6 이후Leftovers와psn 동시 관측 확인.",
+        "evidence": [
+          {
+            "event": 46,
+            "line": 7,
+            "turn": 6
+          },
+          {
+            "event": 46,
+            "line": 8,
+            "turn": 6
+          },
+          {
+            "event": 46,
+            "line": 13,
+            "turn": 6
+          },
+          {
+            "event": 51,
+            "line": 13,
+            "turn": 7
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "df1e35e78126f840f166e3cdf43aeefff57743c1160fbf0a274e5fe7b944d4b2",
+        "notes": "상대 Zamazenta교체8이 turn9 마커 이전;Def+1 public ability 확인.",
+        "evidence": [
+          {
+            "event": 63,
+            "line": 4,
+            "turn": 8
+          },
+          {
+            "event": 63,
+            "line": 5,
+            "turn": 8
+          },
+          {
+            "event": 63,
+            "line": 6,
+            "turn": 8
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "f01f20e6ac6f5106aad5bf69c76d433e5e81ca109e95758d48db8297307ef6e4",
+        "notes": "Latios SpA drops1/3/4 후교체5/7,현재Draco8의-2를 확인.",
+        "evidence": [
+          {
+            "event": 56,
+            "line": 4,
+            "turn": 7
+          },
+          {
+            "event": 61,
+            "line": 4,
+            "turn": 8
+          },
+          {
+            "event": 61,
+            "line": 6,
+            "turn": 8
+          }
+        ]
+      }
+    },
+    "io-one_step-b01-s1-a1-p2@142": {
+      "current_self": {
+        "expected_sha256": "1a9da1ece1ef06af75e63cf9d149f15506c70ac35bce65829361d03257c245ed",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 141,
+            "line": 2,
+            "turn": 19
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "2c781efed48b182e6da1033027bc56ea89dc92ef93096194512226507ae8fb9f",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 128,
+            "line": 4,
+            "turn": 17
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "511bdc5520d0a94d85cbbee9c8c2832a1bb32dfa48ef06dbd88325fae3b84830",
+        "notes": "현재request의Ting-Lu/Zapdos기절·Zamazenta69 생존 확인.",
+        "evidence": [
+          {
+            "event": 141,
+            "line": 2,
+            "turn": 19
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "7220ca4cd78afaaa409673d5e294a4a392bef0da4a45e6f0e9e2de5aa4890e5b",
+        "notes": "Zapdos233→7 StoneEdge17 후Hurricane KO,18FirstImpression7→0 확인.",
+        "evidence": [
+          {
+            "event": 121,
+            "line": 2,
+            "turn": 17
+          },
+          {
+            "event": 126,
+            "line": 4,
+            "turn": 17
+          },
+          {
+            "event": 126,
+            "line": 6,
+            "turn": 17
+          },
+          {
+            "event": 126,
+            "line": 7,
+            "turn": 17
+          },
+          {
+            "event": 126,
+            "line": 10,
+            "turn": 17
+          },
+          {
+            "event": 134,
+            "line": 4,
+            "turn": 18
+          },
+          {
+            "event": 134,
+            "line": 7,
+            "turn": 18
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "ec47a8bbd4eaa42dcb7559a889c949ecf68a337b12e3d60db5bfdc9948a5f570",
+        "notes": "Tinkaton교체18/MoldBreaker/AirBalloon과아직enditem없음 확인.",
+        "evidence": [
+          {
+            "event": 140,
+            "line": 4,
+            "turn": 18
+          },
+          {
+            "event": 140,
+            "line": 5,
+            "turn": 18
+          },
+          {
+            "event": 140,
+            "line": 6,
+            "turn": 18
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "dc7c2f7a410896bd5974568a436454553269e2926509c58fcf1ed6da4ec6ceb1",
+        "notes": "ZamazentaBoots end10;GliscorToxicOrb10/PoisonHeal11-13/StoneEdge14 기절 확인.",
+        "evidence": [
+          {
+            "event": 82,
+            "line": 10,
+            "turn": 10
+          },
+          {
+            "event": 82,
+            "line": 12,
+            "turn": 10
+          },
+          {
+            "event": 88,
+            "line": 10,
+            "turn": 11
+          },
+          {
+            "event": 100,
+            "line": 10,
+            "turn": 13
+          },
+          {
+            "event": 106,
+            "line": 6,
+            "turn": 14
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "3bc74def6558e27a6ed2baf8f3cd0205fcb401bcd2fdb2226ead7b8fa65ffa7f",
+        "notes": "상대4faint행과현재Lokix 공개100% 확인.",
+        "evidence": [
+          {
+            "event": 54,
+            "line": 11,
+            "turn": 7
+          },
+          {
+            "event": 74,
+            "line": 7,
+            "turn": 9
+          },
+          {
+            "event": 106,
+            "line": 6,
+            "turn": 14
+          },
+          {
+            "event": 126,
+            "line": 10,
+            "turn": 17
+          },
+          {
+            "event": 128,
+            "line": 4,
+            "turn": 17
+          }
+        ]
+      }
+    },
+    "io-one_step-b01-s1-a1-p2@204": {
+      "current_self": {
+        "expected_sha256": "35d0c9dd2d24cf4e434c1e59fbf8e2839c2e59a74246a83529ed1051f73b2896",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 203,
+            "line": 2,
+            "turn": 27
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "b50a581f25440e85ef809d0a7fb79e735a9034842bf38ecceff05e2005d1a2bc",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 184,
+            "line": 4,
+            "turn": 23
+          },
+          {
+            "event": 196,
+            "line": 9,
+            "turn": 25
+          },
+          {
+            "event": 196,
+            "line": 12,
+            "turn": 25
+          },
+          {
+            "event": 202,
+            "line": 10,
+            "turn": 26
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "b78ac39c9983bf4b7804ec47417443792b2d5024705c64aeb4f6b5b67a23ef17",
+        "notes": "현재request에서Hydrapple/Slowking만생존,자기나머지4기절 확인.",
+        "evidence": [
+          {
+            "event": 203,
+            "line": 2,
+            "turn": 27
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "6afb071c438d70a43f8f7d5ade324a5dbca5ec8b3215c3493e1ffb1993b666be",
+        "notes": "25턴317→GigaDrain384,26Earthquake333/NastyPlotSpA+2 확인.",
+        "evidence": [
+          {
+            "event": 196,
+            "line": 6,
+            "turn": 25
+          },
+          {
+            "event": 196,
+            "line": 7,
+            "turn": 25
+          },
+          {
+            "event": 196,
+            "line": 10,
+            "turn": 25
+          },
+          {
+            "event": 202,
+            "line": 5,
+            "turn": 26
+          },
+          {
+            "event": 202,
+            "line": 6,
+            "turn": 26
+          },
+          {
+            "event": 202,
+            "line": 7,
+            "turn": 26
+          },
+          {
+            "event": 202,
+            "line": 8,
+            "turn": 26
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "edf025ce5a4028d217a659b394ee2158aecc6bc650076c7eef72ba70dfc587fc",
+        "notes": "Balloon end19,Encore20 start22 end를 확인.",
+        "evidence": [
+          {
+            "event": 146,
+            "line": 8,
+            "turn": 19
+          },
+          {
+            "event": 152,
+            "line": 5,
+            "turn": 20
+          },
+          {
+            "event": 170,
+            "line": 9,
+            "turn": 22
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "3b7b95558a0f179a33f35793ae30ff84cb63f116057af65fdfb37320291a408d",
+        "notes": "23FirstImpression fail→Flamethrower KO,21Tinkaton/22Zama KO별도 확인.",
+        "evidence": [
+          {
+            "event": 182,
+            "line": 4,
+            "turn": 23
+          },
+          {
+            "event": 182,
+            "line": 6,
+            "turn": 23
+          },
+          {
+            "event": 182,
+            "line": 7,
+            "turn": 23
+          },
+          {
+            "event": 182,
+            "line": 10,
+            "turn": 23
+          },
+          {
+            "event": 158,
+            "line": 8,
+            "turn": 21
+          },
+          {
+            "event": 170,
+            "line": 7,
+            "turn": 22
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "177879ce982e6b4650eedc0f5582bb619bc07ad7596027445052d6446af4fef6",
+        "notes": "26턴Leftovers87/100은상대공개반올림값임 확인.",
+        "evidence": [
+          {
+            "event": 202,
+            "line": 10,
+            "turn": 26
+          }
+        ]
+      }
+    },
+    "io-one_step-b01-s1-a1-p2@78": {
+      "current_self": {
+        "expected_sha256": "bd4ea20eac6d3d99e684d80ef356b43cc058060ffce6320534d7bf9452a10fb3",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 77,
+            "line": 2,
+            "turn": 10
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "c8eceede95445ab2828a6192da2ae86daca2be596fcc428aa5efefdb9626b359",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 76,
+            "line": 4,
+            "turn": 9
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "ea61944d7435596fb1d0d90e0927e84afc19237904069641712b2933d4ddb217",
+        "notes": "Ting-Lu8기절 전여러Draco/독/회복,Pecharunt7·Latios9 기절 확인.",
+        "evidence": [
+          {
+            "event": 62,
+            "line": 7,
+            "turn": 8
+          },
+          {
+            "event": 54,
+            "line": 11,
+            "turn": 7
+          },
+          {
+            "event": 74,
+            "line": 7,
+            "turn": 9
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "7050b871133389f03891fd42c6f4f150d532de06123f7b87cee8a2a4539d0bf6",
+        "notes": "공개Ruination Latios51/26/13,Pecharunt50/25를 원문에서 확인;정확HP 아님.",
+        "evidence": [
+          {
+            "event": 22,
+            "line": 7,
+            "turn": 2
+          },
+          {
+            "event": 28,
+            "line": 8,
+            "turn": 3
+          },
+          {
+            "event": 34,
+            "line": 8,
+            "turn": 4
+          },
+          {
+            "event": 42,
+            "line": 6,
+            "turn": 5
+          },
+          {
+            "event": 48,
+            "line": 11,
+            "turn": 6
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "b7df553b9d1c6879a590ad101af1b1eebac93ce7331649b4518ae092f6063f50",
+        "notes": "6턴tox/confusion 이후Leftovers158/513 회복은 실제 발생함 확인.",
+        "evidence": [
+          {
+            "event": 48,
+            "line": 7,
+            "turn": 6
+          },
+          {
+            "event": 48,
+            "line": 8,
+            "turn": 6
+          },
+          {
+            "event": 48,
+            "line": 13,
+            "turn": 6
+          },
+          {
+            "event": 54,
+            "line": 13,
+            "turn": 7
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "33c64dff2013b0e2b73ec4e700246e099b89382d2b85b74ec3290c952951c703",
+        "notes": "Zamazenta교체8/DauntlessDef+1과Crunch9로약화Latios KO 확인.",
+        "evidence": [
+          {
+            "event": 68,
+            "line": 4,
+            "turn": 8
+          },
+          {
+            "event": 68,
+            "line": 5,
+            "turn": 8
+          },
+          {
+            "event": 68,
+            "line": 6,
+            "turn": 8
+          },
+          {
+            "event": 74,
+            "line": 4,
+            "turn": 9
+          },
+          {
+            "event": 74,
+            "line": 7,
+            "turn": 9
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "9d87075a17a8561b95c77872d6dd3846203af4502fb556fb083c92c08e7396a5",
+        "notes": "Gliscor교체9 이후cutoff78 이전공개아이템/특성 발동 없음;미래10턴 금지 확인.",
+        "evidence": [
+          {
+            "event": 76,
+            "line": 4,
+            "turn": 9
+          },
+          {
+            "event": 77,
+            "line": 2,
+            "turn": 10
+          }
+        ]
+      }
+    },
+    "io-one_step-b03-s0-a1-p1@145": {
+      "current_self": {
+        "expected_sha256": "84be5593a844862dfd81a8fea8d84ac07188d28d94176c9b0a6a0282baaf1c6b",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 144,
+            "line": 2,
+            "turn": 17
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "08d59666a9646e78a04e545f983e0122918e63678990824e4cf4900f1d26f611",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 131,
+            "line": 4,
+            "turn": 15
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "474eb8ca7361427c106bd61b3c0e06d1887c13ee3ad58634d2969ce8c705db8d",
+        "notes": "원문request에서자기4기절,Ting-Lu84 확인.",
+        "evidence": [
+          {
+            "event": 144,
+            "line": 2,
+            "turn": 17
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "eba48fbb565dc8fa4b861f4c94a8769b9e362e626e32da356ac3f9fec66d59e1",
+        "notes": "Landorus U-turn9 뒤Static status par,이전ThunderWave8 immune와분리 확인.",
+        "evidence": [
+          {
+            "event": 71,
+            "line": 5,
+            "turn": 8
+          },
+          {
+            "event": 83,
+            "line": 6,
+            "turn": 9
+          },
+          {
+            "event": 83,
+            "line": 9,
+            "turn": 9
+          },
+          {
+            "event": 131,
+            "line": 4,
+            "turn": 15
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "e543e2ab34483170225ca81c2e7a7695ab306acc574ea1143fcc426248530240",
+        "notes": "Kyurem Draco13/14/15와SpA하락,Hurricane15 KO,Zapdos350→170→35→Uturn0 확인.",
+        "evidence": [
+          {
+            "event": 117,
+            "line": 4,
+            "turn": 13
+          },
+          {
+            "event": 117,
+            "line": 6,
+            "turn": 13
+          },
+          {
+            "event": 123,
+            "line": 6,
+            "turn": 14
+          },
+          {
+            "event": 123,
+            "line": 7,
+            "turn": 14
+          },
+          {
+            "event": 129,
+            "line": 5,
+            "turn": 15
+          },
+          {
+            "event": 129,
+            "line": 6,
+            "turn": 15
+          },
+          {
+            "event": 129,
+            "line": 7,
+            "turn": 15
+          },
+          {
+            "event": 129,
+            "line": 9,
+            "turn": 15
+          },
+          {
+            "event": 137,
+            "line": 6,
+            "turn": 16
+          },
+          {
+            "event": 137,
+            "line": 9,
+            "turn": 16
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "3b9d57b4fe0c4d49444775ed98b667bddd810ffef2acdb865f2c2c8cb43ea1aa",
+        "notes": "16턴Hurricane miss후Landorus U-turn faint 확인.",
+        "evidence": [
+          {
+            "event": 137,
+            "line": 4,
+            "turn": 16
+          },
+          {
+            "event": 137,
+            "line": 5,
+            "turn": 16
+          },
+          {
+            "event": 137,
+            "line": 6,
+            "turn": 16
+          },
+          {
+            "event": 137,
+            "line": 9,
+            "turn": 16
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "171885040a45d1164960406fed72a2f208f4957db056b640b37374abd18d29ef",
+        "notes": "FutureSight5 end와Boots6/Balloon7 end의역사 유지 확인.",
+        "evidence": [
+          {
+            "event": 45,
+            "line": 9,
+            "turn": 5
+          },
+          {
+            "event": 51,
+            "line": 7,
+            "turn": 6
+          },
+          {
+            "event": 63,
+            "line": 8,
+            "turn": 7
+          }
+        ]
+      }
+    },
+    "io-one_step-b03-s0-a1-p1@79": {
+      "current_self": {
+        "expected_sha256": "c53010f46ad1cd751dabdaf1090b4e50906c9840d05585c9e75af943cf766a81",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 78,
+            "line": 2,
+            "turn": 9
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "18c7eb4f6063011baf7bbfa939b00672bee80d6c13385c9f2dafcc3def845474",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 65,
+            "line": 4,
+            "turn": 7
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "5bd15eb7f3e4cf3045d1c203593eb461e2719e22b38e3b508c938ed1b563eec2",
+        "notes": "원문request의Slowking/Tinkaton기절,Zamazenta275 확인.",
+        "evidence": [
+          {
+            "event": 78,
+            "line": 2,
+            "turn": 9
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "25fae8247d3c57dfc9bc762c80fda6804c9e60794c4c93c703abb4d3942f4017",
+        "notes": "FutureSight3→5해결,Slowking393→Moonblast346→FutureSight244→KnockOff0/Boots6 확인.",
+        "evidence": [
+          {
+            "event": 31,
+            "line": 7,
+            "turn": 3
+          },
+          {
+            "event": 45,
+            "line": 4,
+            "turn": 5
+          },
+          {
+            "event": 45,
+            "line": 7,
+            "turn": 5
+          },
+          {
+            "event": 45,
+            "line": 9,
+            "turn": 5
+          },
+          {
+            "event": 45,
+            "line": 10,
+            "turn": 5
+          },
+          {
+            "event": 51,
+            "line": 4,
+            "turn": 6
+          },
+          {
+            "event": 51,
+            "line": 7,
+            "turn": 6
+          },
+          {
+            "event": 51,
+            "line": 8,
+            "turn": 6
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "0836fb8c98b1742988a7d8c4419e950ff6d59ebc7e90d6b98a9f38b50a7d77ed",
+        "notes": "Tinkaton Balloon end7→GigatonHammer KO와IronValiant QuarkDrive end 확인.",
+        "evidence": [
+          {
+            "event": 63,
+            "line": 4,
+            "turn": 7
+          },
+          {
+            "event": 63,
+            "line": 5,
+            "turn": 7
+          },
+          {
+            "event": 63,
+            "line": 8,
+            "turn": 7
+          },
+          {
+            "event": 63,
+            "line": 9,
+            "turn": 7
+          },
+          {
+            "event": 63,
+            "line": 12,
+            "turn": 7
+          },
+          {
+            "event": 63,
+            "line": 13,
+            "turn": 7
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "1d742d6914652c4f307ca9799bd00d7f7b605844321ef0a545c2cf94c20e3924",
+        "notes": "ThunderWave8 immune 이후EarthPower KO;이전prefix마비없음 확인.",
+        "evidence": [
+          {
+            "event": 71,
+            "line": 4,
+            "turn": 8
+          },
+          {
+            "event": 71,
+            "line": 5,
+            "turn": 8
+          },
+          {
+            "event": 71,
+            "line": 6,
+            "turn": 8
+          },
+          {
+            "event": 71,
+            "line": 9,
+            "turn": 8
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "d1ed3464ec4db78056d3a88e3761d72d9795cbf6208abe5b1722d9dc1c8c5131",
+        "notes": "상대Kingambit2/Slowking4기절 직접 확인.",
+        "evidence": [
+          {
+            "event": 23,
+            "line": 9,
+            "turn": 2
+          },
+          {
+            "event": 37,
+            "line": 7,
+            "turn": 4
+          }
+        ]
+      }
+    },
+    "io-one_step-b04-s0-a1-p1@79": {
+      "current_self": {
+        "expected_sha256": "d1a6aa3035a1dae331c3e93c49155a7a1e07cc2e76f4698fbf9251ba8171ffa3",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 78,
+            "line": 2,
+            "turn": 10
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "efa3c56da7822a819cb781936acb6878c64eb93a89dfc9470da35b206db0bf1d",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 71,
+            "line": 4,
+            "turn": 8
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "9be9895094918067f15afed3e13da79e6f2a5e02317ce6ef2611a34ca81e05be",
+        "notes": "자기request Kyurem9/391·Slowking225/393 생존과Valiant기절 확인.",
+        "evidence": [
+          {
+            "event": 78,
+            "line": 2,
+            "turn": 10
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "64249d622eb19bc49aa5c0657c13d4288885e5757282406684a82bf1195281d4",
+        "notes": "Kyurem391→Headlong7 195→Headlong8 9 뒤FreezeDry KO 확인.",
+        "evidence": [
+          {
+            "event": 63,
+            "line": 4,
+            "turn": 7
+          },
+          {
+            "event": 63,
+            "line": 6,
+            "turn": 7
+          },
+          {
+            "event": 63,
+            "line": 7,
+            "turn": 7
+          },
+          {
+            "event": 69,
+            "line": 4,
+            "turn": 8
+          },
+          {
+            "event": 69,
+            "line": 5,
+            "turn": 8
+          },
+          {
+            "event": 69,
+            "line": 8,
+            "turn": 8
+          },
+          {
+            "event": 69,
+            "line": 11,
+            "turn": 8
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "fe8b587f0a5eb476a8090ee38ee40bb644da01c2099607c48d01b7e96860d1c8",
+        "notes": "Wake Toxic1/poison2/Moonblast3 KO,NinetalesCloseCombat4/Surf5/6 KO 확인.",
+        "evidence": [
+          {
+            "event": 17,
+            "line": 8,
+            "turn": 1
+          },
+          {
+            "event": 23,
+            "line": 11,
+            "turn": 2
+          },
+          {
+            "event": 29,
+            "line": 4,
+            "turn": 3
+          },
+          {
+            "event": 29,
+            "line": 7,
+            "turn": 3
+          },
+          {
+            "event": 37,
+            "line": 4,
+            "turn": 4
+          },
+          {
+            "event": 49,
+            "line": 6,
+            "turn": 5
+          },
+          {
+            "event": 55,
+            "line": 6,
+            "turn": 6
+          },
+          {
+            "event": 55,
+            "line": 9,
+            "turn": 6
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "21068b1a94cc4629d8768694de32ba6a2ec3bf3406f47d9187790ffbb4b7c380",
+        "notes": "Ninetales교체3 Drought와sun9 upkeep,GreatTuskProto종료8을 확인. 사전Drought누락 교정.",
+        "evidence": [
+          {
+            "event": 31,
+            "line": 5,
+            "turn": 3
+          },
+          {
+            "event": 77,
+            "line": 9,
+            "turn": 9
+          },
+          {
+            "event": 69,
+            "line": 11,
+            "turn": 8
+          },
+          {
+            "event": 69,
+            "line": 12,
+            "turn": 8
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "5a683740448d7a6b2087582de2eec365816cda0425e4cc306a0c1485f6c2ef0f",
+        "notes": "자기ValiantBoosterEnergy2 소모/QuarkDrive4 종료 확인.",
+        "evidence": [
+          {
+            "event": 23,
+            "line": 5,
+            "turn": 2
+          },
+          {
+            "event": 23,
+            "line": 7,
+            "turn": 2
+          },
+          {
+            "event": 37,
+            "line": 10,
+            "turn": 4
+          },
+          {
+            "event": 37,
+            "line": 11,
+            "turn": 4
+          }
+        ]
+      }
+    },
+    "io-one_step-b04-s1-a1-p2@80": {
+      "current_self": {
+        "expected_sha256": "de9a247282426cd9a134a2b74de3ee2df10b44af97c631b3b0575d4508ac15b8",
+        "notes": "최신 원문 자기 request의 active ident/HP/status와 actor 진영을 직접 대조.",
+        "evidence": [
+          {
+            "event": 79,
+            "line": 2,
+            "turn": 11
+          }
+        ]
+      },
+      "current_opponent": {
+        "expected_sha256": "70e6b4ac6c826690f9ba1eda15c12533357b8a968f1c4460f2f619b045f9d060",
+        "notes": "원문 마지막 상대 switch/HP/status 행을 prefix 끝까지 추적하여 현재상대와 공개정밀도를 확인.",
+        "evidence": [
+          {
+            "event": 78,
+            "line": 4,
+            "turn": 10
+          }
+        ]
+      },
+      "fact01": {
+        "expected_sha256": "6619b2f0049867ae862c54f6cbf1e419dbe2f67b6f58ca893ce8f9e3bfa2f233",
+        "notes": "자기request Wake29/Venusaur130및6체모두생존 확인.",
+        "evidence": [
+          {
+            "event": 79,
+            "line": 2,
+            "turn": 11
+          }
+        ]
+      },
+      "fact02": {
+        "expected_sha256": "d38d438d46a08d33504134206777eb1fb31f56884d2b5a39c7a0e3df574b21ce",
+        "notes": "FutureSight1시전/2실패/3casterfaint후Wake162해결 확인.",
+        "evidence": [
+          {
+            "event": 16,
+            "line": 6,
+            "turn": 1
+          },
+          {
+            "event": 22,
+            "line": 7,
+            "turn": 2
+          },
+          {
+            "event": 28,
+            "line": 6,
+            "turn": 3
+          },
+          {
+            "event": 28,
+            "line": 8,
+            "turn": 3
+          },
+          {
+            "event": 28,
+            "line": 9,
+            "turn": 3
+          }
+        ]
+      },
+      "fact03": {
+        "expected_sha256": "a0f8b635daac17472fe47f5c3bae55ba76c21afeaba426e5c42bf2bf8c878fb2",
+        "notes": "KyuremDraco8/9/10 모두immune,HattereneGleam9 30%/10 KO두피격 확인.",
+        "evidence": [
+          {
+            "event": 64,
+            "line": 6,
+            "turn": 8
+          },
+          {
+            "event": 64,
+            "line": 7,
+            "turn": 8
+          },
+          {
+            "event": 70,
+            "line": 4,
+            "turn": 9
+          },
+          {
+            "event": 70,
+            "line": 5,
+            "turn": 9
+          },
+          {
+            "event": 70,
+            "line": 6,
+            "turn": 9
+          },
+          {
+            "event": 70,
+            "line": 8,
+            "turn": 9
+          },
+          {
+            "event": 76,
+            "line": 4,
+            "turn": 10
+          },
+          {
+            "event": 76,
+            "line": 5,
+            "turn": 10
+          },
+          {
+            "event": 76,
+            "line": 6,
+            "turn": 10
+          },
+          {
+            "event": 76,
+            "line": 8,
+            "turn": 10
+          },
+          {
+            "event": 76,
+            "line": 9,
+            "turn": 10
+          }
+        ]
+      },
+      "fact04": {
+        "expected_sha256": "8051363047b10cf73740edd154083e2abcd216dd138125a9cdbcc3580b55bced",
+        "notes": "상대ValiantBooster3·QuarkDrive5종료와Slowking3/Landorus7/Kyurem10기절 확인.",
+        "evidence": [
+          {
+            "event": 30,
+            "line": 5,
+            "turn": 3
+          },
+          {
+            "event": 30,
+            "line": 7,
+            "turn": 3
+          },
+          {
+            "event": 42,
+            "line": 11,
+            "turn": 5
+          },
+          {
+            "event": 42,
+            "line": 12,
+            "turn": 5
+          },
+          {
+            "event": 28,
+            "line": 6,
+            "turn": 3
+          },
+          {
+            "event": 56,
+            "line": 7,
+            "turn": 7
+          },
+          {
+            "event": 76,
+            "line": 9,
+            "turn": 10
+          }
+        ]
+      },
+      "fact05": {
+        "expected_sha256": "8f1602dd11f0add42d584ecae5e9825cd45e2fe70cd37d270bc8ddd6718bbaaf",
+        "notes": "현재Hattereneitem ejectbutton,전체prefix PsychicNoise/healblock없음 확인.",
+        "evidence": [
+          {
+            "event": 79,
+            "line": 2,
+            "turn": 11
+          },
+          {
+            "event": 76,
+            "line": 4,
+            "turn": 10
+          },
+          {
+            "event": 76,
+            "line": 6,
+            "turn": 10
+          }
+        ]
+      }
+    }
+  },
+  "notes": "125개 기존 필수 명제는 원문행·최신 자기request·공개 마지막관측과 직접 대조해 유지. Drought 공개특성 전달 누락은 Cloud 전 독립재현/교정하며 정답 문구 변경은 없음. 통합은 최신7사실과 아래별도 역사 필수사실을 평가한다.",
+  "recurrence_rules": {
+    "historical_choice_lock": "Kyurem의 이전 Freeze-Dry Choice lock을 교체 후 현재/재진입 시 보장으로 복원하는 문장. 그 외 과거 move lock 복원은 일반 factual로도 기록.",
+    "spikes_side": "Spikes의 affected side p1/p2 또는 SELF/OPPONENT를 뒤집거나 그에 기반한 반대편 피해를 단정.",
+    "occurrence_turn": "실제 행의 turn 마커와 다른 발생 턴. coverage/decision 번호는 발생 턴으로 평가하지 않음.",
+    "ended_item_effect": "소모·제거 아이템 또는 종료/교체로 끝난 효과·boost를 현재로 복원. historical_choice_lock과 중복 가능."
+  },
+  "claim_policy": "원문과 현재관측 또는 고정 이전 메모리에서 증명된 사실만 사용. 일반종족지식으로 특성·타입규칙·미래결과를 단정하면 unsupported. 같은 문맥의 반복 주장은 한번 센다."
+}

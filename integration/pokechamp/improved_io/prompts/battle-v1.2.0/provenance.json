@@ -1,0 +1,9 @@
+{
+  "v1.2.0": {
+    "version": "v1.2.0",
+    "base_sha256": "161f03004723e6579801ceaf390d5d51922309b362dac8cde2d185e32ccd2a45",
+    "field_catalog_sha256": "5e27b030fe7677981e0c4061fca4eaf25de63a0543c82ea1f77a99e589dc627e",
+    "field_guide_sha256": "dcb643c773ad0c6288be3d80a0f00b5edea7d68e86edc17fb1a9e2f362f654ff",
+    "prompt_sha256": "fdafaf6228b21e58a5fbf7837d4622afef764de02776734eb2c4d82b1c1e9826"
+  }
+}

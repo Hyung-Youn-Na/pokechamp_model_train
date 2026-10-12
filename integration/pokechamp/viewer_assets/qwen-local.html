@@ -1,0 +1,48 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__EXPERIMENT__ · 후보별 q와 리플레이</title>
+<style>
+body{font:15px system-ui;margin:20px;color:#172735;background:#f5f7f9}a{color:#17669d}
+.layout{display:grid;grid-template-columns:minmax(500px,1fr) minmax(420px,1fr);gap:18px}
+section{background:white;border:1px solid #d9e1e8;border-radius:8px;padding:16px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:600px;overflow:auto;background:#f2f5f8;padding:12px}
+table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:8px;border-bottom:1px solid #ddd}
+.chosen{background:#d8efe4}#selection{font-size:20px;font-weight:700}button,select{font:inherit;padding:7px;margin:3px}iframe{width:100%;height:780px;border:0}
+@media(max-width:1050px){.layout{grid-template-columns:1fr}}
+</style>
+<a href="../index.html">← 경기 목록</a><h1 id="title"></h1><p id="outcome"></p>
+<p>입력·후보별 q·선택·실제 전송은 오프라인 열람 가능합니다. q는 독립 행동가치입니다. 애니메이션에는 인터넷 연결이 필요합니다.</p>
+<button id="previous">← 이전</button><select id="decision"></select><button id="next">다음 →</button>
+<div class="layout"><section><h2 id="turn"></h2><p id="selection"></p><p id="sent-action"></p><p id="latency"></p>
+<table><thead><tr><th>행동</th><th>q</th><th>토큰</th></tr></thead><tbody id="q-values"></tbody></table>
+<details open><summary>실제 입력 요청</summary><button data-copy="request">복사</button><button data-download="request">다운로드</button><pre id="request"></pre></details>
+<details><summary>응답·prompt/token 해시</summary><button data-copy="response">복사</button><button data-download="response">다운로드</button><pre id="response"></pre></details>
+<details><summary>전송·관측 경계</summary><pre id="technical"></pre></details></section>
+<section><h2>리플레이·오프라인 경기 로그</h2><iframe src="replay.html" title="배틀 리플레이"></iframe><a href="showdown.log" download>공개 protocol 다운로드</a></section></div>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+__ACTION_LABELS__
+const data=JSON.parse(document.getElementById('data').textContent), decisions=data.decisions;
+const $=id=>document.getElementById(id); let selected=0;
+function label(d,key){return actionLabel(d.request?.observation,key,d.request?.actions?.find(a=>a.action_id===key)?.description)}
+$('title').textContent=`${data.experiment} · ${data.outcome.slot}경기 · Qwen ${data.outcome.qwen_actor}`;
+$('outcome').textContent=JSON.stringify({completed:data.outcome.completed,outcome:data.outcome.outcome,turns:data.outcome.turns});
+decisions.forEach((d,i)=>{const option=document.createElement('option');option.value=i;option.textContent=`${i+1} · ${d.turn}턴 · ${label(d,d.selection?.choice)}`;$('decision').append(option)});
+function show(i){
+ if(!decisions.length){$('selection').textContent='보존된 입력 없음';return}
+ selected=Math.max(0,Math.min(decisions.length-1,i));const d=decisions[selected];$('decision').value=selected;
+ $('turn').textContent=`결정 ${selected+1}/${decisions.length} · ${d.turn}턴 · ${d.kind}`;
+ $('selection').textContent=`선택: ${d.selection ? label(d,d.selection.choice) : '미수신'}`;
+ $('sent-action').textContent=`실제 전송: ${d.wire ? label(d,d.request?.actions?.find(a=>'/'+(a.command.startsWith('team ')?a.command:'choose '+a.command)===d.wire.command)?.action_id) : '없음'}`;
+ $('latency').textContent=`서버 처리 ${d.response?.elapsed_seconds?.toFixed(3)??'—'}초 · 입력 생성 ${d.technical.input_generation_seconds.toFixed(3)}초`;
+ $('q-values').replaceChildren();
+ (d.request?.actions??[]).forEach(a=>{const tr=document.createElement('tr');tr.dataset.actionId=a.action_id;if(a.action_id===d.selection?.choice)tr.className='chosen';
+ [label(d,a.action_id),d.response?.q_values?.[a.action_id]??'—',d.response?.candidates?.find(c=>c.action_id===a.action_id)?.tokens??'—'].forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.append(td)});$('q-values').append(tr)});
+ $('request').textContent=JSON.stringify(d.request,null,2);$('response').textContent=JSON.stringify(d.response,null,2);
+ $('technical').textContent=JSON.stringify({selection:d.selection,wire:d.wire,...d.technical},null,2);
+}
+$('previous').onclick=()=>show(selected-1);$('next').onclick=()=>show(selected+1);$('decision').onchange=e=>show(Number(e.target.value));
+document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(e.target.tagName))return;if(e.key==='ArrowLeft')show(selected-1);if(e.key==='ArrowRight')show(selected+1)});
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{const text=$(b.dataset.copy).textContent;try{await navigator.clipboard.writeText(text)}catch{const t=document.createElement('textarea');t.value=text;document.body.append(t);t.select();document.execCommand('copy');t.remove()}});
+document.querySelectorAll('[data-download]').forEach(b=>b.onclick=()=>{const blob=new Blob([$(b.dataset.download).textContent],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${decisions[selected].id}-${b.dataset.download}.json`;a.click();URL.revokeObjectURL(a.href)});
+show(0);
+</script></html>

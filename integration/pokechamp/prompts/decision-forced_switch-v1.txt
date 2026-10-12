@@ -1,0 +1,8 @@
+CURRENT DECISION PROCEDURE: FORCED SWITCH
+
+1. Compare the supplied legal replacement candidates.
+2. Use the supplied replacement timing to identify remaining actions and end-of-turn effects. A faint replacement and a mid-turn pivot replacement can have different remaining events; not every replacement starts a new turn.
+3. Apply hazards and supported entry effects before assessing the entrant's HP, status, boosts and effective Speed. Keep uncomputed entry effects explicitly uncertain.
+4. Evaluate only opposing actions that can still occur after entry. Do not apply an already completed attack again. For a mid-turn switch, do not assume an unexecuted opposing attack disappears. Current-active damage is not damage against the entrant.
+5. Compare survival, the entrant's next effective action, positioning and contribution to the team's win condition. Preserve important answers to opposing threats.
+6. If timing or remaining actions are unavailable, retain that uncertainty and compare relevant conditional branches rather than assuming a favorable order or a fresh turn.

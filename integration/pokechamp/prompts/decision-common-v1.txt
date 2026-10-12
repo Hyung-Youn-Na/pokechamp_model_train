@@ -1,0 +1,15 @@
+SHARED INTERPRETATION FOR THIS DECISION
+
+Separate observed facts from conditional scenarios. Keep one coherent opponent set, including Speed, bulk and power, within each scenario; do not combine incompatible set extremes. Recommended sets are assumptions, neither observed possession nor all legal sets. Do not assign unsupported probabilities to hidden sets or predicted actions.
+
+Use a supplied damage range only while its target, calculation phase and assumptions remain applicable. Apply an earlier action's relevant state changes before evaluating a later action. If those changes invalidate a range and no matching recalculation is supplied, updated damage is unknown; never invent an exact range or an unsupported probability. Distinguish original current-state damage from additional, explicitly scoped candidate-state calculations when present. The original ranges' exclusions of switching and future action-order changes describe those calculations' limits; they do not remove those events from candidate evaluation.
+
+When an action has evaluation_ref, resolve it against state.candidate_evaluations using the supplied action ID. Use that action's matching records and assumptions; do not substitute another candidate's prediction or damage target.
+An explicit same_outcomes_as_action_id shares only numerical scenario outcomes with that referenced action; resolve the shared outcomes while evaluating the selected candidate's own Tera use, type changes and resource cost separately.
+Read scenario_rows in the exact order of state.candidate_scenario_columns for evaluation.kind=move or state.candidate_switch_columns for evaluation.kind=switch; null means no supported value, and unknown remains explicit uncertainty.
+Resolve each general_effect_ref using state.effect_descriptions; the referenced text is the exact original general rule, not evidence that its effect is currently active.
+Resolve team role_summary.scope_ref and roles[].description_ref using state.role_descriptions; the exact original conditional role text applies with the preserved role ID and knowledge label, without establishing an actual matchup or win condition.
+
+Compare conditional survival, KO and resulting positions, including useful alternatives and preservation of key answers. Immediate KO is not an unconditional priority: compare any survival or KO opportunity forgone with the concrete positioning, preservation or win-condition value gained. Focus on move effects and strategic factors that change the current candidate's value; do not repeat an exhaustive checklist. Role labels alone establish neither favorable matchups nor a win condition.
+
+Preserve supplied legal IDs and the existing output contract. The original interpretation rules and output requirements below remain in force.

@@ -1,0 +1,39 @@
+{
+  "schema": "pokechamp-research-preservation-v1",
+  "decision": "D-131",
+  "plan": "EP-135",
+  "snapshot": "pre-split",
+  "original_git_head": "e93a7b166b0c4b8721bd802d1e9d6731eecbffcf",
+  "preservation_root": "/mnt/digicap/combined/hyna/backup/pokechamp-research",
+  "snapshot_filesystem_root": "/mnt/digicap/combined/hyna/backup/pokechamp-research/snapshots/pre-split/fs",
+  "asset_manifest": {
+    "path": "/mnt/digicap/combined/hyna/backup/pokechamp-research/manifests/assets.jsonl",
+    "sha256": "bfc682d9fbb2a6f06026e65488d3c17d1d9aebcb75b57436fd35b02ae6f95cad"
+  },
+  "inventory_manifest": {
+    "path": "/mnt/digicap/combined/hyna/backup/pokechamp-research/manifests/inventory.jsonl",
+    "sha256": "38089837598ef6cc14ba3cba97b188a47b42b9f63612c379506051851625ea75"
+  },
+  "copy_verification": {
+    "path": "/mnt/digicap/combined/hyna/backup/pokechamp-research/manifests/copy-verification.json",
+    "sha256": "1f5505d81da51f1b717be6373aada5d89a00c9b81a04feff9d44e447696121d3"
+  },
+  "asset_roots": {
+    "path": "/mnt/digicap/combined/hyna/backup/pokechamp-research/manifests/asset-roots.json",
+    "sha256": "8a40c57615d4e81931adc6a3abbc1a548e9225860de00e45d2f2445f6e3a284b"
+  },
+  "exclusions": {
+    "path": "/mnt/digicap/combined/hyna/backup/pokechamp-research/manifests/exclusions.json",
+    "sha256": "1d7f5047cfba2f09cf923fcc36b56482a2993038d423ecbaf63aafccdcc2e992"
+  },
+  "regular_files": 3320231,
+  "entries": 3494244,
+  "unique_regular_file_bytes": 812502949406,
+  "git_identity_receipt": "/mnt/digicap/combined/hyna/backup/pokechamp-research/manifests/git-receipt.json",
+  "restore_guide": "../RESEARCH_WORKFLOW.md",
+  "notes": [
+    "원본 삭제·이동 없음. 자산 manifest는 Git 커밋을 포함하지 않으며 최종 Git 연결은 별도 외부 receipt다.",
+    "복사된 환경은 원경로·OS·의존성 검증 없이 재배치 실행 가능한 환경으로 취급하지 않는다.",
+    "과거 protocol·봉인·판정은 보존하며 이번 복사 검증으로 실험을 재개하거나 유효성을 재판정하지 않는다."
+  ]
+}

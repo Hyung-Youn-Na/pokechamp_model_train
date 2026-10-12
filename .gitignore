@@ -23,6 +23,27 @@ AgenticSTS/data/knowledge/*.md
 # Dev-side staging area (pre-restructure metadata + machine identifiers).
 paper/data_package_2026-05-20/
 
-# Secrets / local env
+# Secrets / local env. Root .env is loaded by scripts/pokechamp-env.
 .env
+!.env.example
 *.key
+
+# PokéChamp qualification environment and generated evidence
+.tools/
+.artifacts/
+# Optional default location for full-fidelity research bundles. The runtime still
+# requires an explicit POKECHAMP_DATA_ROOT so logging is never enabled implicitly.
+.pokechamp-data/
+__pycache__/
+.pytest_cache/
+
+# Parent-owned pinned calculator dependencies are installed from its lockfile.
+/integration/pokechamp/improved_io/calculator/node_modules/
+
+# EP-135 research preservation: originals stay local; archives are external.
+# No trailing slash: these paths are also ignored when linked in the L1-L5 worktree.
+/exports
+/export
+/data/showdown-replays
+/project_context/exec-plans/evidence/*
+!/project_context/exec-plans/evidence/INDEX.md

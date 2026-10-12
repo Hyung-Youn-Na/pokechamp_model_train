@@ -1,0 +1,12 @@
+{
+  "version": "v1.1.1",
+  "decision": "D-027",
+  "parent": "v1.1.0",
+  "failure_evidence": ".pokechamp-data/io-improvement/ex024/cloud-v1/failure-review.json",
+  "failure_sha256": "03e5cfae81ef2a50cd2a0a410f2b356e0fef4fcfb3325d38482ec3b2af78145a",
+  "reason": "literal actor identity; affected sides throughout all sections; exact pre-marker replacement turns; do not restore bench boosts/Choice locks or ended Encore",
+  "files": {
+    "summary.txt": "5b2e32e4e2703c4d7f618e42dfbfb2bee65b6fbf9b0f329bae3d49cbe0ed03ca",
+    "summary_rollup.txt": "c8be5e7ebf2be314d8b036c69fd465e79c3d235b073e45131cc49670c3affac9"
+  }
+}

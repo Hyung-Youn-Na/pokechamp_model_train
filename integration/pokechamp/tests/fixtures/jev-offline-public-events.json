@@ -1,0 +1,16 @@
+{
+  "actor": "p1",
+  "turn": 2,
+  "recent_completed_turn_events": [
+    {"turn": 1, "protocol": "|move|p1a: Lokix|First Impression|p2a: Zapdos"},
+    {"turn": 1, "protocol": "|-resisted|p2a: Zapdos"},
+    {"turn": 1, "protocol": "|-damage|p2a: Zapdos|63/100"},
+    {"turn": 1, "protocol": "|move|p2a: Zapdos|Hurricane|p1a: Lokix"},
+    {"turn": 1, "protocol": "|-supereffective|p1a: Lokix"},
+    {"turn": 1, "protocol": "|-damage|p1a: Lokix|0 fnt"},
+    {"turn": 1, "protocol": "|faint|p1a: Lokix"},
+    {"turn": 1, "protocol": "|switch|p1a: Zamazenta|Zamazenta|325/325"},
+    {"turn": 1, "protocol": "|-ability|p1a: Zamazenta|Dauntless Shield|boost"},
+    {"turn": 1, "protocol": "|-boost|p1a: Zamazenta|def|1"}
+  ]
+}

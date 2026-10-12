@@ -1,0 +1,3231 @@
+{
+  "source": "pinned Showdown e64915c0eab066db1d3e732b1280386468dd7415 independent 16 rolls, D-034",
+  "entries": {
+    "in-hydrapple-bodypress-h0-hp325": {
+      "conditional_order": {
+        "attacker_speed": 412,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 127,
+        "equal_priority_speed_relation": "attacker_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        115,
+        136
+      ],
+      "damage_rolls": [
+        115,
+        117,
+        118,
+        120,
+        120,
+        121,
+        123,
+        124,
+        126,
+        127,
+        129,
+        130,
+        132,
+        133,
+        135,
+        136
+      ],
+      "defender_max_hp": 415,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "in-hydrapple-bodypress-h0-hp325",
+      "survival_given_hit": null
+    },
+    "in-hydrapple-bodypress-h1-hp325": {
+      "conditional_order": {
+        "attacker_speed": 412,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 127,
+        "equal_priority_speed_relation": "attacker_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        115,
+        136
+      ],
+      "damage_rolls": [
+        115,
+        117,
+        118,
+        120,
+        120,
+        121,
+        123,
+        124,
+        126,
+        127,
+        129,
+        130,
+        132,
+        133,
+        135,
+        136
+      ],
+      "defender_max_hp": 415,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "in-hydrapple-bodypress-h1-hp325",
+      "survival_given_hit": null
+    },
+    "in-hydrapple-bodypress-h2-hp325": {
+      "conditional_order": {
+        "attacker_speed": 412,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 127,
+        "equal_priority_speed_relation": "attacker_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        115,
+        136
+      ],
+      "damage_rolls": [
+        115,
+        117,
+        118,
+        120,
+        120,
+        121,
+        123,
+        124,
+        126,
+        127,
+        129,
+        130,
+        132,
+        133,
+        135,
+        136
+      ],
+      "defender_max_hp": 415,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "in-hydrapple-bodypress-h2-hp325",
+      "survival_given_hit": null
+    },
+    "in-hydrapple-bodypress-h3-hp325": {
+      "conditional_order": {
+        "attacker_speed": 412,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 127,
+        "equal_priority_speed_relation": "attacker_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        115,
+        136
+      ],
+      "damage_rolls": [
+        115,
+        117,
+        118,
+        120,
+        120,
+        121,
+        123,
+        124,
+        126,
+        127,
+        129,
+        130,
+        132,
+        133,
+        135,
+        136
+      ],
+      "defender_max_hp": 415,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "in-hydrapple-bodypress-h3-hp325",
+      "survival_given_hit": null
+    },
+    "in-tinglu-bodypress-h0-hp325": {
+      "conditional_order": {
+        "attacker_speed": 412,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 130,
+        "equal_priority_speed_relation": "attacker_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        182,
+        216
+      ],
+      "damage_rolls": [
+        182,
+        182,
+        186,
+        188,
+        192,
+        192,
+        194,
+        198,
+        198,
+        200,
+        204,
+        206,
+        206,
+        210,
+        212,
+        216
+      ],
+      "defender_max_hp": 513,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "in-tinglu-bodypress-h0-hp325",
+      "survival_given_hit": null
+    },
+    "in-tinglu-bodypress-h1-hp325": {
+      "conditional_order": {
+        "attacker_speed": 412,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 130,
+        "equal_priority_speed_relation": "attacker_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        182,
+        216
+      ],
+      "damage_rolls": [
+        182,
+        182,
+        186,
+        188,
+        192,
+        192,
+        194,
+        198,
+        198,
+        200,
+        204,
+        206,
+        206,
+        210,
+        212,
+        216
+      ],
+      "defender_max_hp": 513,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "in-tinglu-bodypress-h1-hp325",
+      "survival_given_hit": null
+    },
+    "in-tinglu-bodypress-h2-hp325": {
+      "conditional_order": {
+        "attacker_speed": 412,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 130,
+        "equal_priority_speed_relation": "attacker_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        182,
+        216
+      ],
+      "damage_rolls": [
+        182,
+        182,
+        186,
+        188,
+        192,
+        192,
+        194,
+        198,
+        198,
+        200,
+        204,
+        206,
+        206,
+        210,
+        212,
+        216
+      ],
+      "defender_max_hp": 513,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "in-tinglu-bodypress-h2-hp325",
+      "survival_given_hit": null
+    },
+    "in-tinglu-bodypress-h3-hp325": {
+      "conditional_order": {
+        "attacker_speed": 412,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 130,
+        "equal_priority_speed_relation": "attacker_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        182,
+        216
+      ],
+      "damage_rolls": [
+        182,
+        182,
+        186,
+        188,
+        192,
+        192,
+        194,
+        198,
+        198,
+        200,
+        204,
+        206,
+        206,
+        210,
+        212,
+        216
+      ],
+      "defender_max_hp": 513,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "in-tinglu-bodypress-h3-hp325",
+      "survival_given_hit": null
+    },
+    "out-move-bodypress-h0-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        56,
+        66
+      ],
+      "damage_rolls": [
+        56,
+        56,
+        57,
+        58,
+        58,
+        59,
+        60,
+        60,
+        61,
+        62,
+        62,
+        63,
+        64,
+        64,
+        65,
+        66
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "out-move-bodypress-h0-hp325",
+      "survival_given_hit": null
+    },
+    "out-move-bodypress-h1-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        56,
+        66
+      ],
+      "damage_rolls": [
+        56,
+        56,
+        57,
+        58,
+        58,
+        59,
+        60,
+        60,
+        61,
+        62,
+        62,
+        63,
+        64,
+        64,
+        65,
+        66
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "out-move-bodypress-h1-hp325",
+      "survival_given_hit": null
+    },
+    "out-move-bodypress-h2-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        56,
+        66
+      ],
+      "damage_rolls": [
+        56,
+        56,
+        57,
+        58,
+        58,
+        59,
+        60,
+        60,
+        61,
+        62,
+        62,
+        63,
+        64,
+        64,
+        65,
+        66
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "out-move-bodypress-h2-hp325",
+      "survival_given_hit": null
+    },
+    "out-move-bodypress-h3-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        56,
+        66
+      ],
+      "damage_rolls": [
+        56,
+        56,
+        57,
+        58,
+        58,
+        59,
+        60,
+        60,
+        61,
+        62,
+        62,
+        63,
+        64,
+        64,
+        65,
+        66
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "out-move-bodypress-h3-hp325",
+      "survival_given_hit": null
+    },
+    "out-move-earthquake-h0-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        69,
+        82
+      ],
+      "damage_rolls": [
+        69,
+        70,
+        70,
+        72,
+        72,
+        73,
+        75,
+        75,
+        76,
+        76,
+        78,
+        78,
+        79,
+        79,
+        81,
+        82
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Earthquake",
+        "type": "Ground"
+      },
+      "scenario_id": "out-move-earthquake-h0-hp325",
+      "survival_given_hit": null
+    },
+    "out-move-earthquake-h1-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        69,
+        82
+      ],
+      "damage_rolls": [
+        69,
+        70,
+        70,
+        72,
+        72,
+        73,
+        75,
+        75,
+        76,
+        76,
+        78,
+        78,
+        79,
+        79,
+        81,
+        82
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Earthquake",
+        "type": "Ground"
+      },
+      "scenario_id": "out-move-earthquake-h1-hp325",
+      "survival_given_hit": null
+    },
+    "out-move-earthquake-h2-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        69,
+        82
+      ],
+      "damage_rolls": [
+        69,
+        70,
+        70,
+        72,
+        72,
+        73,
+        75,
+        75,
+        76,
+        76,
+        78,
+        78,
+        79,
+        79,
+        81,
+        82
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Earthquake",
+        "type": "Ground"
+      },
+      "scenario_id": "out-move-earthquake-h2-hp325",
+      "survival_given_hit": null
+    },
+    "out-move-earthquake-h3-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        69,
+        82
+      ],
+      "damage_rolls": [
+        69,
+        70,
+        70,
+        72,
+        72,
+        73,
+        75,
+        75,
+        76,
+        76,
+        78,
+        78,
+        79,
+        79,
+        81,
+        82
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Earthquake",
+        "type": "Ground"
+      },
+      "scenario_id": "out-move-earthquake-h3-hp325",
+      "survival_given_hit": null
+    },
+    "out-terastallize-bodypress-h0-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        56,
+        66
+      ],
+      "damage_rolls": [
+        56,
+        56,
+        57,
+        58,
+        58,
+        59,
+        60,
+        60,
+        61,
+        62,
+        62,
+        63,
+        64,
+        64,
+        65,
+        66
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "out-terastallize-bodypress-h0-hp325",
+      "survival_given_hit": null
+    },
+    "out-terastallize-bodypress-h1-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        56,
+        66
+      ],
+      "damage_rolls": [
+        56,
+        56,
+        57,
+        58,
+        58,
+        59,
+        60,
+        60,
+        61,
+        62,
+        62,
+        63,
+        64,
+        64,
+        65,
+        66
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "out-terastallize-bodypress-h1-hp325",
+      "survival_given_hit": null
+    },
+    "out-terastallize-bodypress-h2-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        56,
+        66
+      ],
+      "damage_rolls": [
+        56,
+        56,
+        57,
+        58,
+        58,
+        59,
+        60,
+        60,
+        61,
+        62,
+        62,
+        63,
+        64,
+        64,
+        65,
+        66
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "out-terastallize-bodypress-h2-hp325",
+      "survival_given_hit": null
+    },
+    "out-terastallize-bodypress-h3-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        56,
+        66
+      ],
+      "damage_rolls": [
+        56,
+        56,
+        57,
+        58,
+        58,
+        59,
+        60,
+        60,
+        61,
+        62,
+        62,
+        63,
+        64,
+        64,
+        65,
+        66
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Body Press",
+        "type": "Fighting"
+      },
+      "scenario_id": "out-terastallize-bodypress-h3-hp325",
+      "survival_given_hit": null
+    },
+    "out-terastallize-earthquake-h0-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        69,
+        82
+      ],
+      "damage_rolls": [
+        69,
+        70,
+        70,
+        72,
+        72,
+        73,
+        75,
+        75,
+        76,
+        76,
+        78,
+        78,
+        79,
+        79,
+        81,
+        82
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Earthquake",
+        "type": "Ground"
+      },
+      "scenario_id": "out-terastallize-earthquake-h0-hp325",
+      "survival_given_hit": null
+    },
+    "out-terastallize-earthquake-h1-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        69,
+        82
+      ],
+      "damage_rolls": [
+        69,
+        70,
+        70,
+        72,
+        72,
+        73,
+        75,
+        75,
+        76,
+        76,
+        78,
+        78,
+        79,
+        79,
+        81,
+        82
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Earthquake",
+        "type": "Ground"
+      },
+      "scenario_id": "out-terastallize-earthquake-h1-hp325",
+      "survival_given_hit": null
+    },
+    "out-terastallize-earthquake-h2-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        69,
+        82
+      ],
+      "damage_rolls": [
+        69,
+        70,
+        70,
+        72,
+        72,
+        73,
+        75,
+        75,
+        76,
+        76,
+        78,
+        78,
+        79,
+        79,
+        81,
+        82
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Earthquake",
+        "type": "Ground"
+      },
+      "scenario_id": "out-terastallize-earthquake-h2-hp325",
+      "survival_given_hit": null
+    },
+    "out-terastallize-earthquake-h3-hp325": {
+      "conditional_order": {
+        "attacker_speed": 130,
+        "conditions": "conditional on equal move priority; Trick Room reverses unequal speed order; switching and priority/activation uncertainty remain",
+        "defender_speed": 412,
+        "equal_priority_speed_relation": "defender_first",
+        "move_priority": 0
+      },
+      "damage_range_hp": [
+        69,
+        82
+      ],
+      "damage_rolls": [
+        69,
+        70,
+        70,
+        72,
+        72,
+        73,
+        75,
+        75,
+        76,
+        76,
+        78,
+        78,
+        79,
+        79,
+        81,
+        82
+      ],
+      "defender_max_hp": 325,
+      "ko_chance_given_hit": null,
+      "move": {
+        "category": "Physical",
+        "name": "Earthquake",
+        "type": "Ground"
+      },
+      "scenario_id": "out-terastallize-earthquake-h3-hp325",
+      "survival_given_hit": null
+    }
+  },
+  "scenarios": [
+    {
+      "scenario_id": "out-move-earthquake-h0-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "earthquake",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-move-earthquake-h1-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "earthquake",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-move-earthquake-h2-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "earthquake",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-move-earthquake-h3-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "earthquake",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-terastallize-earthquake-h0-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": "",
+          "teraType": "Ghost"
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "earthquake",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-terastallize-earthquake-h1-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": "",
+          "teraType": "Ghost"
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "earthquake",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-terastallize-earthquake-h2-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": "",
+          "teraType": "Ghost"
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "earthquake",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-terastallize-earthquake-h3-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": "",
+          "teraType": "Ghost"
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "earthquake",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-move-bodypress-h0-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-move-bodypress-h1-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-move-bodypress-h2-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-move-bodypress-h3-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-terastallize-bodypress-h0-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": "",
+          "teraType": "Ghost"
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-terastallize-bodypress-h1-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": "",
+          "teraType": "Ghost"
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-terastallize-bodypress-h2-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": "",
+          "teraType": "Ghost"
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "out-terastallize-bodypress-h3-hp325",
+      "attacker": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": "",
+          "teraType": "Ghost"
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "spikes": 3
+        },
+        "defenderSide": {
+          "isSR": true
+        }
+      }
+    },
+    {
+      "scenario_id": "in-tinglu-bodypress-h0-hp325",
+      "attacker": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "isSR": true
+        },
+        "defenderSide": {
+          "spikes": 3
+        }
+      }
+    },
+    {
+      "scenario_id": "in-tinglu-bodypress-h1-hp325",
+      "attacker": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "isSR": true
+        },
+        "defenderSide": {
+          "spikes": 3
+        }
+      }
+    },
+    {
+      "scenario_id": "in-tinglu-bodypress-h2-hp325",
+      "attacker": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "isSR": true
+        },
+        "defenderSide": {
+          "spikes": 3
+        }
+      }
+    },
+    {
+      "scenario_id": "in-tinglu-bodypress-h3-hp325",
+      "attacker": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "tinglu",
+        "options": {
+          "level": 100,
+          "ability": "vesselofruin",
+          "item": "leftovers",
+          "nature": "Impish",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 244,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 16
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 417,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 256,
+          "def": 381,
+          "spa": 131,
+          "spd": 196,
+          "spe": 130,
+          "hp": 513
+        },
+        "entry_effects_observed": true
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "isSR": true
+        },
+        "defenderSide": {
+          "spikes": 3
+        }
+      }
+    },
+    {
+      "scenario_id": "in-hydrapple-bodypress-h0-hp325",
+      "attacker": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "hydrapple",
+        "options": {
+          "level": 100,
+          "ability": "regenerator",
+          "item": "heavydutyboots",
+          "nature": "Modest",
+          "ivs": {
+            "atk": 0,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 176,
+            "hp": 248,
+            "spa": 16,
+            "spd": 56,
+            "spe": 12
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 415,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 148,
+          "def": 300,
+          "spa": 308,
+          "spd": 210,
+          "spe": 127,
+          "hp": 415
+        },
+        "entry_effects_observed": false
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "isSR": true
+        },
+        "defenderSide": {
+          "spikes": 3
+        }
+      }
+    },
+    {
+      "scenario_id": "in-hydrapple-bodypress-h1-hp325",
+      "attacker": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "hydrapple",
+        "options": {
+          "level": 100,
+          "ability": "regenerator",
+          "item": "heavydutyboots",
+          "nature": "Modest",
+          "ivs": {
+            "atk": 0,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 176,
+            "hp": 248,
+            "spa": 16,
+            "spd": 56,
+            "spe": 12
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 415,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 148,
+          "def": 300,
+          "spa": 308,
+          "spd": 210,
+          "spe": 127,
+          "hp": 415
+        },
+        "entry_effects_observed": false
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "isSR": true
+        },
+        "defenderSide": {
+          "spikes": 3
+        }
+      }
+    },
+    {
+      "scenario_id": "in-hydrapple-bodypress-h2-hp325",
+      "attacker": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Leftovers",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "hydrapple",
+        "options": {
+          "level": 100,
+          "ability": "regenerator",
+          "item": "heavydutyboots",
+          "nature": "Modest",
+          "ivs": {
+            "atk": 0,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 176,
+            "hp": 248,
+            "spa": 16,
+            "spd": 56,
+            "spe": 12
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 415,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 148,
+          "def": 300,
+          "spa": 308,
+          "spd": 210,
+          "spe": 127,
+          "hp": 415
+        },
+        "entry_effects_observed": false
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "isSR": true
+        },
+        "defenderSide": {
+          "spikes": 3
+        }
+      }
+    },
+    {
+      "scenario_id": "in-hydrapple-bodypress-h3-hp325",
+      "attacker": {
+        "name": "zamazenta",
+        "options": {
+          "level": 100,
+          "ability": "dauntlessshield",
+          "item": "Heavy-Duty Boots",
+          "nature": "Jolly",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "hp": 0,
+            "atk": 252,
+            "def": 4,
+            "spa": 0,
+            "spd": 0,
+            "spe": 252
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 1,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 325,
+          "status": ""
+        },
+        "entry_effects_observed": true
+      },
+      "defender": {
+        "name": "hydrapple",
+        "options": {
+          "level": 100,
+          "ability": "regenerator",
+          "item": "heavydutyboots",
+          "nature": "Modest",
+          "ivs": {
+            "atk": 0,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "evs": {
+            "atk": 0,
+            "def": 176,
+            "hp": 248,
+            "spa": 16,
+            "spd": 56,
+            "spe": 12
+          },
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 415,
+          "status": ""
+        },
+        "expectedStats": {
+          "atk": 148,
+          "def": 300,
+          "spa": 308,
+          "spd": 210,
+          "spe": 127,
+          "hp": 415
+        },
+        "entry_effects_observed": false
+      },
+      "move": "bodypress",
+      "field": {
+        "attackerSide": {
+          "isSR": true
+        },
+        "defenderSide": {
+          "spikes": 3
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+POKECHAMP PVP — SAME-BATTLE SUMMARY ROLLUP v1.1.0
+
+D-027 evidence discipline — apply before writing any section
+- Resolve perspective explicitly from actor_id: p1 means SELF=p1 and OPPONENT=p2; p2 means SELF=p2 and OPPONENT=p1. Print this mapping in Current Position. A side condition affects the side named by the protocol target, regardless of who installed it. Write each hazard/screen with its affected p1/p2 side and SELF/OPPONENT label. Do not turn an opponent-side hazard into a hazard for our switches.
+- Use event_annotations.turn or read the raw protocol in order. Actions preceding a |turn|N marker belong to the earlier turn; a packet's final showdown_turn is only its delivery snapshot. There can be actual turn-1 actions in a packet ending with turn 2. A new turn marker is not evidence that the preceding turn had no actions. If the occurrence turn is unavailable, say UNKNOWN.
+- For every event-ledger entry give occurrence turn, acting Pokemon/side, target Pokemon/side, and [event:N] (line number when useful). Separate move execution, each observed HP change, and fainting. HP loss is not an uncapped damage roll; recoil, weather, poison and healing are not attack hits. If several attacks preceded a faint, retain that sequence. Never infer a full-health OHKO from a faint or a final 0 HP alone. Do not claim exact attack-hit count without linked move and damage evidence.
+- Current observation is authoritative for current HP/status/items/abilities/boosts/effects. Earlier values remain historical. Say an item was revealed/activated/removed with holder and event, preserving each lifetime transition. Removed or consumed items and ended effects must never return as current merely because an older summary mentions them. Preserve important public revelations and fainted identities from earlier windows.
+- Cross-check every previous-summary claim that you retain against available original events and the current observation. Explicitly correct supported errors in Corrections and Unresolved Conflicts. If a historical claim cannot be checked, attribute it to the prior summary as unverified instead of presenting it as confirmed. Repetition is not corroboration.
+- Do not add unsupported game rules, type matchups, immunity explanations, damage guarantees or future outcomes. Do not infer survival, an attack's number of hits, or an ability's causal effect from its name alone. Hypotheses must be conditional and marked INFERRED; UNKNOWN is preferable to invented justification. Candidate approaches are optional and must not assert an optimal action.
+- Before emitting, check all seven sections for agreement on side, species, turn, current versus historical state and HP precision. Preserve decision-relevant revealed moves, item/ability changes, fainting sequences, active side effects and pending effects with references. Keep a compact account of those facts even if it exceeds the 600-word target. No outside commentary.
+
+
+Consolidate chronological summaries for exactly one battle_id and actor_id. The caller must reject a mixed-battle or mixed-perspective list before calling you. Inputs can also include the latest validated observation and original events needed to resolve contradictions. This is read-only; do not make a battle decision or update cross-battle lessons.
+
+Use the latest summary as the starting structure. When a latest validated observation is supplied, it determines current state. If it is absent, preserve the latest summary's current-state claims with their original evidence/confidence and coverage, and explicitly state that they were not refreshed. Do not portray them as a newer observation.
+
+Restore important missing historical facts from earlier summaries: revealed moves, item/ability/type changes, relevant failed actions and pending effects. Preserve CONFIRMED/INFERRED/UNKNOWN distinctions, event references, HP precision and source coverage. Do not reintroduce an old item, boost, plan or defeated Pokemon as current state.
+
+Original source events and supported explicit corrections take precedence over summary claims. Neither oldest nor newest summary automatically wins a factual dispute. Correct only with evidence and record the correction; if evidence is unavailable, retain a concise unresolved conflict. Never upgrade an inference to a fact by repeated appearance in summaries. A selected but unexecuted move is still unexecuted.
+
+Remove duplicate narrative and resolved obsolete plans. Keep current restrictions, delayed effects and decision-relevant observations. Do not import a previous battle's team, private opponent sets or seed-specific outcomes. Target 600 English words, permitting more only to retain critical active effects or unresolved conflicts.
+
+Output only <summary>...</summary> using these exact headings:
+# Battle Summary
+## Identity and Coverage
+## Current Position
+## Team and Revealed Opponent Information
+## Pending Effects and Restrictions
+## Relevant Event Ledger
+## Hypotheses and Current Options
+## Corrections and Unresolved Conflicts
+
+Report the latest covered event, which source established current state and the coverage of merged history. Do not output an action JSON, tool call or cross-battle memory update.

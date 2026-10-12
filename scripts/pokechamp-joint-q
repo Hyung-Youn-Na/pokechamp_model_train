@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+task_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+export CUDA_VISIBLE_DEVICES=1
+export HF_HOME="$task_root/.tools/eve-rlcd/worktrees/pokemon-training/.cache/huggingface"
+export HF_HUB_DISABLE_IMPLICIT_TOKEN=1
+export TOKENIZERS_PARALLELISM=false
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+cd -- "$task_root"
+exec "$task_root/.tools/eve-rlcd/worktrees/pokemon-training/.venv-eve-rlcd/bin/python" -u -m integration.pokechamp.joint_q.learning "$@"

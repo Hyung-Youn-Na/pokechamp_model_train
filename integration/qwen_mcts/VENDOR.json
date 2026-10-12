@@ -1,0 +1,65 @@
+{
+ "note": "EX-080 vendored copies (D-127): insulates the run from later edits under integration/pokechamp. origin_sha256 is the origin at copy time (2026-10-07); vendored_sha256 is the frozen copy.",
+ "files": {
+  "public_state.cjs": {
+   "origin": "integration/pokechamp/fixed_matchup/public_state.cjs",
+   "origin_sha256": "0fc9d378a3fccf1d129278dd90d0a19e31cd70b03a5c33d45a6cf97a55faa8ba",
+   "vendored_sha256": "0fc9d378a3fccf1d129278dd90d0a19e31cd70b03a5c33d45a6cf97a55faa8ba",
+   "modification": "unchanged"
+  },
+  "observation.cjs": {
+   "origin": "integration/pokechamp/fixed_matchup/observation.cjs",
+   "origin_sha256": "92e095eb24a506e2a4c87fcdfe05cafc50098a4103f894df49c223381b298a7b",
+   "vendored_sha256": "92e095eb24a506e2a4c87fcdfe05cafc50098a4103f894df49c223381b298a7b",
+   "modification": "unchanged (legalActions/observe; same require depth)"
+  },
+  "transport.py": {
+   "origin": "integration/pokechamp/branch_rollouts/simulator.py",
+   "origin_sha256": "6584f58737d310cd623836d0f8591678fd9f600d6776b97f4b7e4bf8b4837f03",
+   "vendored_sha256": "d0d9c63659704891e93ca153ccc265ba0fd9fce486d488d67605baaf86fc72ba",
+   "modification": "CREDENTIAL_NAMES imported value inlined (integration.pokechamp.providers)"
+  },
+  "opponent/actor_rpc.py": {
+   "origin": "integration/pokechamp/fixed_matchup/actor_rpc.py",
+   "origin_sha256": "642e447872418e75bbfb3cae11308c677174c2765db5a92c748275b2d963f4bf",
+   "vendored_sha256": "5420511d19eaf6621cc01558b2e02d05c19ae75bc8b1ca51a02ed92fd56f4f3d",
+   "modification": "imports the vendored opponent.actor"
+  },
+  "opponent/actor.py": {
+   "origin": "integration/pokechamp/joint_q/actor.py",
+   "origin_sha256": "9d558be8e24379262474c7a3884423be65e1c7c2f6569cc4435ef07438c3ccd4",
+   "vendored_sha256": "86bbcf1465114eb6e7e42bf6dc29ef4df0467e49a98ffad1cc18617c1a0be71e",
+   "modification": "relative imports point to vendored policy/battle_adapter/abyssal_tera"
+  },
+  "opponent/policy.py": {
+   "origin": "integration/pokechamp/branch_rollouts/policy.py",
+   "origin_sha256": "af7c0cbf5210009010f536d6bbe56558e6df77c7e350f09867205f1efec9e03c",
+   "vendored_sha256": "612c8018e7aae958828e31e360dda5d330ffabb198c20904177071ee1991f1f0",
+   "modification": "battle_adapter import made package-local"
+  },
+  "opponent/battle_adapter.py": {
+   "origin": "integration/pokechamp/battle_adapter.py",
+   "origin_sha256": "57f3d63a45bbdbd83f904d19fd58e2bc760eebbe9937e83542681dd724303e3f",
+   "vendored_sha256": "57f3d63a45bbdbd83f904d19fd58e2bc760eebbe9937e83542681dd724303e3f",
+   "modification": "unchanged"
+  },
+  "opponent/abyssal_tera.py": {
+   "origin": "integration/pokechamp/abyssal_tera.py",
+   "origin_sha256": "b22a44950cd694c62fe24f9cc6a73296fa2e239eee197ffa4410384712255a19",
+   "vendored_sha256": "b22a44950cd694c62fe24f9cc6a73296fa2e239eee197ffa4410384712255a19",
+   "modification": "unchanged"
+  },
+  "opponent/storage.py": {
+   "origin": "integration/pokechamp/joint_q/storage.py",
+   "origin_sha256": "266f42455f89fd1ecb8f5e1597c2f10cbf28bb31c2e2c9b7008f75eb3f86485b",
+   "vendored_sha256": "266f42455f89fd1ecb8f5e1597c2f10cbf28bb31c2e2c9b7008f75eb3f86485b",
+   "modification": "unchanged"
+  },
+  "opponent/immutable.py": {
+   "origin": "integration/pokechamp/joint_q/immutable.py",
+   "origin_sha256": "289fda8f51bada394a0b41d95bdd11f4f278668728da85e07f7bffadd95a6733",
+   "vendored_sha256": "d08b1a695bf633eb6822f0108cd6332c4e2413ce081d5dc630bf2ede27f95753",
+   "modification": "lookup() (joint_q engine blob store) raises NotImplementedError; not on the opponent path"
+  }
+ }
+}

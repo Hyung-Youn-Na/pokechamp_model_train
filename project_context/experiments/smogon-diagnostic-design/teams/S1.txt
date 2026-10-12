@@ -1,0 +1,61 @@
+Ogerpon-Wellspring (F) @ Wellspring Mask  
+Ability: Water Absorb  
+Tera Type: Water  
+EVs: 252 Atk / 4 SpD / 252 Spe  
+Jolly Nature  
+- Ivy Cudgel  
+- Knock Off  
+- U-turn  
+- Encore  
+
+Dragonite @ Heavy-Duty Boots  
+Ability: Multiscale  
+Tera Type: Normal  
+EVs: 252 Atk / 4 SpD / 252 Spe  
+Adamant Nature  
+- Outrage  
+- Earthquake  
+- Extreme Speed  
+- Dragon Dance  
+
+Raging Bolt @ Booster Energy  
+Ability: Protosynthesis  
+Tera Type: Bug  
+EVs: 4 Def / 252 SpA / 252 Spe  
+Modest Nature  
+IVs: 20 Atk  
+- Thunderbolt  
+- Thunderclap  
+- Dragon Pulse  
+- Calm Mind  
+
+Great Tusk @ Heavy-Duty Boots  
+Ability: Protosynthesis  
+Tera Type: Ground  
+EVs: 252 HP / 4 Atk / 252 Spe  
+Jolly Nature  
+- Headlong Rush  
+- Ice Spinner  
+- Rapid Spin  
+- Stealth Rock  
+
+Iron Crown @ Booster Energy  
+Ability: Quark Drive  
+Tera Type: Ground  
+EVs: 80 HP / 4 Def / 172 SpA / 252 Spe  
+Timid Nature  
+- Tachyon Cutter  
+- Psychic Noise  
+- Tera Blast  
+- Calm Mind  
+
+Ting-Lu @ Rocky Helmet  
+Ability: Vessel of Ruin  
+Tera Type: Ghost  
+EVs: 252 HP / 200 SpD / 56 Spe  
+Careful Nature  
+- Earthquake  
+- Ruination  
+- Taunt  
+- Spikes  
+

@@ -1,0 +1,12 @@
+{
+  "version": "v1.1.2",
+  "decision": "D-027",
+  "parent": "v1.1.1",
+  "failure_evidence": ".pokechamp-data/io-improvement/ex024/cloud-v2/failure-review.json",
+  "failure_sha256": "74fec1ef836f7f1a876fb81c6126763de3db51f89e9886330b00d32a34ec42a1",
+  "reason": "missing outer summary tags; recurring wrong affected side in hypotheses; invented unseen roster slot. Latest-state and occurrence-turn rules retained.",
+  "files": {
+    "summary.txt": "f1d16e932d8536355edb11199a3633c8ce6b60f3141f5692238dff701d33ee83",
+    "summary_rollup.txt": "04c56a9dda3e3ac050c75bf495cb8e8ed2e8c3dccc97c8113fac89e4c68cd69b"
+  }
+}

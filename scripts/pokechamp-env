@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+workspace_root="$(cd -- "$script_dir/.." && pwd)"
+export POKECHAMP_WORKSPACE_ROOT="$workspace_root"
+export PYTHONPATH="$workspace_root:$workspace_root/pokechamp${PYTHONPATH:+:$PYTHONPATH}"
+
+if [[ $# -eq 0 ]]; then
+  echo "usage: scripts/pokechamp-env {bootstrap|preflight|server|probe|smoke|research|benchmark}" >&2
+  exit 2
+fi
+
+cd "$workspace_root/pokechamp"
+if [[ "$1" == "bootstrap" || "$1" == "--help" || "$1" == "-h" ]]; then
+  exec /opt/conda/bin/python3 -m integration.pokechamp.cli "$@"
+fi
+
+venv_python="$workspace_root/pokechamp/.venv/bin/python"
+if [[ ! -x "$venv_python" ]]; then
+  echo "PokéChamp environment is missing; run scripts/pokechamp-env bootstrap" >&2
+  exit 2
+fi
+exec "$venv_python" -m integration.pokechamp.cli "$@"

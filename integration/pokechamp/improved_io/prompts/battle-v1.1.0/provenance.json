@@ -1,0 +1,16 @@
+{
+  "v1.0.0": {
+    "version": "v1.0.0",
+    "base_sha256": "161f03004723e6579801ceaf390d5d51922309b362dac8cde2d185e32ccd2a45",
+    "field_catalog_sha256": null,
+    "field_guide_sha256": null,
+    "prompt_sha256": "161f03004723e6579801ceaf390d5d51922309b362dac8cde2d185e32ccd2a45"
+  },
+  "v1.1.0": {
+    "version": "v1.1.0",
+    "base_sha256": "161f03004723e6579801ceaf390d5d51922309b362dac8cde2d185e32ccd2a45",
+    "field_catalog_sha256": "5239b594acbe5aba660404324b06a71d2fd093028367b0939188565ca362c415",
+    "field_guide_sha256": "b9b3f3edb4e0241f03a485b43c9a17b86a25e96ff640961be8480d2d6e51eb85",
+    "prompt_sha256": "0c3fd05662a915f5c4421d606b8071f72b500b78962b3ef151a3823948f482b1"
+  }
+}

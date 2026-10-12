@@ -1,0 +1,15 @@
+{
+  "format_version": "b-delivery-v1",
+  "source": "EX-037 B battle-v1.2.0; EP-034/D-046 offline candidates",
+  "assets": {
+    "B0.txt": "fdafaf6228b21e58a5fbf7837d4622afef764de02776734eb2c4d82b1c1e9826",
+    "guide.txt": "72f619553c933534772f27169f5069f9fa43fc22159ddad587b4509feebe5825",
+    "history-guide.txt": "f010ab3eb70e03f6e7be7152f708a2b36e8dbe9716123b9bd01992ac5d1c34a2"
+  },
+  "system_prompts": {
+    "B0": "fdafaf6228b21e58a5fbf7837d4622afef764de02776734eb2c4d82b1c1e9826",
+    "B1": "d39c5cae448d8140dd8a9ed815f66a102c235a4fac9d00951d2709f0bc25b9e8",
+    "B2": "356189aa7ef8928bd8d4ffad4b067dee644bf12b5b510ea83e4ec56469fa8cab",
+    "B3": "6beb239b3e866ae95012858d9cc0161c89ac81e660e3aff87102e439e75818fe"
+  }
+}

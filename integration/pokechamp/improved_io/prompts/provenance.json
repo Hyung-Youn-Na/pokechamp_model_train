@@ -1,0 +1,12 @@
+{
+  "source": ".pokechamp-data/benchmarks/glm-upstream-fallback32-v1/analysis/prompts_pvp",
+  "files": {
+    "battle_common.txt": "2714823ec4022c671ccba513e32dd8dc16faf9db1a3578a693adbfbb6819c695",
+    "profiles/fixed.txt": "fbabc242a909ccf794872032a50dcfcaaf78c3d321c81f3c732302c382ef4657",
+    "battle_fixed.txt": "161f03004723e6579801ceaf390d5d51922309b362dac8cde2d185e32ccd2a45",
+    "summary.txt": "4960e7fb904a5222e495a9c6804d59c1c65518ba44284d122b87c304c78f100f",
+    "summary_rollup.txt": "facdcc9fa2d18c4049f9e88ad13ff0651a9f5ee411d15feff1ba5bcfa9b601cc",
+    "self_criticism.txt": "06bf806b67da50f72bf01918e2c64f4fa73c3812913d4a1cde8eda6967db783c",
+    "acceptance_cases.json": "4633820e2774b59889e9dc466575d38bfdf29c2e6b554ac5bb2073468d522c78"
+  }
+}

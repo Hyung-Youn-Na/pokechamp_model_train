@@ -1,0 +1,256 @@
+{
+  "version": "v1.1.0",
+  "title": "Team preview JSON structure v1.1.0",
+  "rules": [
+    "This is Gen9 OU singles: keep all six members and choose exactly one lead_slot. The self slots are the actual submission order, not the shuffled command order.",
+    "self_team comes only from the controlled actor's original submission and initial private request. Missing optional fields mean not supplied; do not fill them from species defaults. An empty self item is no held item, an empty ability is absent, and empty arrays supply no entries.",
+    "opponent_preview is only the public |poke| details available at the initial preview cutoff. It contains no private moves, abilities, items, EVs, IVs or tera type. Do not read a dictionary entry as evidence of an opponent set. Future rows, results and the opponent source team are excluded.",
+    "Paths begin at $. [] defines every array element once. Shared types below are defined once. source references identify event_seq and 1-based line within that packet; identity input_sha256 binds the preserved original input before the effect dictionary was added.",
+    "effect_reference is the request-local dictionary of general Generation 9 game rules. Its items, abilities and moves maps each normalized ID to name and the pinned Dex full desc. Normalize an effect name by lowercasing and removing non-ASCII letters/digits; canonical IDs and Dex aliases resolve to the same entry. Each referenced effect is described once. Descriptions do not recursively add other mentioned effects.",
+    "A dictionary entry is NOT evidence that any particular opponent owns that effect, that a historical item is still held, or that an ability/effect is currently active. Use the original field's public/self/inferred source and time. Missing information remains unknown; a description alone never guarantees a legal action succeeds.",
+    "Check activation conditions, exceptions, consumption, duration, current state and the scenario's modeled scope. Never multiply or add an effect again when it is already included in calculated damage, stats, entry HP or other supplied scenario results. The general description does not enlarge the calculator's coverage or predict a full turn."
+  ],
+  "key_rules": {
+    "battle_stat": {
+      "allowed": [
+        "atk",
+        "def",
+        "spa",
+        "spd",
+        "spe"
+      ],
+      "description": "Self server baseStoredStats (HP is in condition)."
+    },
+    "effect_id": {
+      "pattern": "[a-z0-9]+",
+      "description": "Normalized canonical Dex item, ability or move ID."
+    }
+  },
+  "definitions": {
+    "source_ref": {
+      "type": "object",
+      "description": "Initial protocol boundary; not a battle turn.",
+      "properties": {
+        "event_seq": {
+          "type": "integer",
+          "description": "Recorder event sequence."
+        },
+        "line": {
+          "type": "integer",
+          "description": "1-based line number."
+        }
+      }
+    },
+    "self_member": {
+      "type": "object",
+      "description": "One verified self member at selection time.",
+      "properties": {
+        "ident": {
+          "type": "string",
+          "description": "Server fullname p1: nickname or p2: nickname; nickname is data. Active protocol identifiers add a slot letter (p1a: nickname)."
+        },
+        "details": {
+          "type": "string",
+          "description": "Server details string: species, optional L<level>, M/F, shiny and form information; absent level means 100, absent gender may be genderless. Not a set reveal."
+        },
+        "moves": {
+          "type": "array",
+          "description": "Self move IDs, including unavailable moves; does not imply current legality or PP. Ordered move slots.",
+          "items": {
+            "type": "string",
+            "description": "One value in the parent collection; same source and time."
+          }
+        },
+        "item": {
+          "type": "string",
+          "description": "Current self item ID; empty string means no held item. Consumption/removal does not restore the original item."
+        },
+        "stats": {
+          "type": "object",
+          "description": "Self baseStoredStats atk/def/spa/spd/spe in stat points; excludes HP and current boost stages. Not a full execution-speed calculation.",
+          "keys": "battle_stat",
+          "values": {
+            "type": "integer",
+            "description": "Stat value in the units specified by the parent; zero is literal."
+          }
+        },
+        "condition": {
+          "type": "string",
+          "description": "Exact self currentHP/maxHP plus optional brn/par/slp/frz/psn/tox; 0 fnt means fainted and omits maximum. Current HP units, not percent; parse at this request time."
+        },
+        "teraType": {
+          "type": "string",
+          "description": "Current configured tera type name, not proof of terastallization."
+        },
+        "ability": {
+          "type": "string",
+          "description": "Current self ability ID; empty means no current ability, not an unknown prior."
+        },
+        "lead_slot": {
+          "type": "integer",
+          "description": "1-based actual submitted team slot (1..6); output this number, not preview order."
+        },
+        "species": {
+          "type": "string",
+          "description": "Normalized self species verified against the submitted slot."
+        },
+        "source": {
+          "type": "string",
+          "description": "self_submission_and_request; private self knowledge only.",
+          "enum": [
+            "self_submission_and_request"
+          ]
+        }
+      }
+    },
+    "public_member": {
+      "type": "object",
+      "description": "One public opponent preview entry; not a selectable self slot.",
+      "properties": {
+        "details": {
+          "type": "string",
+          "description": "Public species/form, optional level, gender and shiny; no private set."
+        },
+        "source": {
+          "type": "string",
+          "description": "Public team preview only.",
+          "enum": [
+            "public_team_preview"
+          ]
+        }
+      }
+    },
+    "effect_entry": {
+      "type": "object",
+      "description": "One general rule, not holder evidence.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Canonical English Dex name."
+        },
+        "desc": {
+          "type": "string",
+          "description": "Full pinned Gen9 Dex desc, verbatim; not a summary."
+        }
+      }
+    }
+  },
+  "roots": {
+    "$": {
+      "type": "object",
+      "description": "One independent lead request.",
+      "properties": {
+        "identity": {
+          "type": "object",
+          "description": "Actor/decision identity and initial evidence boundary.",
+          "properties": {
+            "battle_id": {
+              "type": "string",
+              "description": "Recorded battle ID."
+            },
+            "actor_id": {
+              "type": "string",
+              "description": "Controlled actor ID."
+            },
+            "decision_seq": {
+              "type": "integer",
+              "description": "Actor decision sequence; preview precedes battle actions."
+            },
+            "request_id": {
+              "type": "integer|null",
+              "description": "Initial server rqid; null when absent."
+            },
+            "side": {
+              "type": "string",
+              "description": "Controlled server side.",
+              "enum": [
+                "p1",
+                "p2"
+              ]
+            },
+            "input_version": {
+              "type": "string",
+              "description": "Original input schema version.",
+              "enum": [
+                "team-preview-v1"
+              ]
+            },
+            "protocol_cutoff": {
+              "ref": "source_ref",
+              "description": "First boundary with both private request and public preview available."
+            },
+            "public_preview_cutoff": {
+              "ref": "source_ref",
+              "description": "Public preview completion line."
+            },
+            "self_request_ref": {
+              "ref": "source_ref",
+              "description": "Initial self private request line."
+            },
+            "input_sha256": {
+              "type": "string",
+              "description": "Canonical original input SHA-256, excluding this hash field."
+            }
+          }
+        },
+        "battle_format": {
+          "type": "string",
+          "description": "Verified format.",
+          "enum": [
+            "gen9ou"
+          ]
+        },
+        "self_team": {
+          "type": "array",
+          "description": "Six members in actual submission order.",
+          "items": {
+            "ref": "self_member",
+            "description": "One self slot."
+          }
+        },
+        "opponent_preview": {
+          "type": "array",
+          "description": "Six public opponent entries; no hidden set lookup.",
+          "items": {
+            "ref": "public_member",
+            "description": "One public preview entry."
+          }
+        },
+        "effect_reference": {
+          "type": "object",
+          "description": "Request-local common effect dictionary. Each kind/ID appears once.",
+          "properties": {
+            "items": {
+              "type": "object",
+              "description": "Referenced items; empty means no references of this kind.",
+              "keys": "effect_id",
+              "values": {
+                "ref": "effect_entry",
+                "description": "One referenced effect."
+              }
+            },
+            "abilities": {
+              "type": "object",
+              "description": "Referenced abilities; empty means no references of this kind.",
+              "keys": "effect_id",
+              "values": {
+                "ref": "effect_entry",
+                "description": "One referenced effect."
+              }
+            },
+            "moves": {
+              "type": "object",
+              "description": "Referenced moves; empty means no references of this kind.",
+              "keys": "effect_id",
+              "values": {
+                "ref": "effect_entry",
+                "description": "One referenced effect."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "shared_definitions": true
+}

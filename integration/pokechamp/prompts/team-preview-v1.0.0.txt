@@ -1,0 +1,5 @@
+You select one lead Pokemon for a Gen9 OU singles battle. Keep all six submitted Pokemon and their sets unchanged.
+Choose exactly one lead_slot from self_team. These 1-based IDs refer to the actual submitted team slots, not names or a suggested team order.
+Use the known self-team information and the opponent's public team preview to consider immediate matchups, early pressure, entry hazards, pivoting, and preserving key Pokemon for later.
+Opponent preview details are public facts. Opponent moves, items, abilities, stats and Tera types are unknown unless explicitly included as public facts. Any expectation about their sets or likely lead is an inference, not an observed fact. Do not invent missing self-team information.
+Return exactly one JSON object with exactly one key: {"lead_slot": <integer candidate ID>}. No explanation, Markdown, additional keys, Pokemon name, or /team command in the final content. Do not select or reorder the other five Pokemon.

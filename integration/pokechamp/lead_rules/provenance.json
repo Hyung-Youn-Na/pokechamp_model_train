@@ -1,0 +1,10 @@
+{
+  "version": "gen9-lead-dex-v2",
+  "source_commit": "e64915c0eab066db1d3e732b1280386468dd7415",
+  "source": "https://github.com/smogon/pokemon-showdown",
+  "asset_sha256": "aa511ab34d66be4fe2963383e43acbc0a1288bc02c496e248fc405cbe248e262",
+  "extractor_sha256": "7d7a2a5eb9cdf0833b36b829e00af7195da77ebdd2f3ee11aaf88f194dbed72a",
+  "license": "MIT",
+  "license_sha256": "4c7b14baec158ecd73aa62100c0fcda0844c1eace766c8a30ebf38627bc59cac",
+  "method": "Dex.mod(gen9) types/immunity/effectiveness and move fields; TeamValidator(gen9ou).validateSet for each single related move and species ability with required form item. Marginal possibilities, no joint set or probability. See extract.cjs category predicates."
+}

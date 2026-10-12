@@ -1,0 +1,136 @@
+{
+  "version": "io-battle-only-evaluation-v1",
+  "profile": "io-battle-only-v1",
+  "interpretation": "전체 B 구성의 탐색적 비교. 최적 행동 정답과 모든 사실 나열 요구는 없다.",
+  "review_dimensions": [
+    "facts",
+    "identity",
+    "timing",
+    "calculation",
+    "action_contract"
+  ],
+  "rules": [
+    "주장한 사실을 원문 공개 prefix 및 실제 전송 입력과 대조한다. 언급하지 않은 관측은 오류가 아니다.",
+    "확인/추정/미상, 자기/상대 진영, 현재/과거/미래 및 조건부 피해/실제 실행을 구별한다.",
+    "수치 주장은 실제 관측 또는 해당 상태/행동/target/tera 계산에 있어야 한다.",
+    "계산은 고정 prior 조건부이며 상대 선택·숨은 세트·명중·선공·생존·KO를 보장하지 않는다.",
+    "합법적인 전략적 선택은 최적 행동 라벨로 채점하지 않는다. 모든 선택지가 불리할 수 있다.",
+    "과거 acceptance_cases의 사후 사건은 해석 감사용이며 현재 모델 입력이나 요구 사실이 아니다.",
+    "실제 배틀 설명의 사실 오류는 별도 오류율이다. 합법 완료 승패 표본을 제외하지 않는다."
+  ],
+  "cases": {
+    "IO-C01": {
+      "focus": "자기 전체 기술·조건부 Draco Meteor 피해",
+      "moves": [
+        "dracometeor"
+      ]
+    },
+    "IO-C02": {
+      "focus": "현재 Air Balloon·Earthquake 무효",
+      "opponent": {
+        "item": "airballoon",
+        "tera_type": null
+      },
+      "moves": [
+        "earthquake"
+      ]
+    },
+    "IO-C03": {
+      "focus": "현재 Balloon·미래 소실 및 tera를 구별",
+      "opponent": {
+        "item": "airballoon",
+        "tera_type": null
+      },
+      "moves": [
+        "ruination"
+      ]
+    },
+    "IO-C04": {
+      "focus": "현재 독과 Poison Heal 공존",
+      "opponent": {
+        "status": "TOX",
+        "ability": "poisonheal"
+      }
+    },
+    "IO-C05": {
+      "focus": "기절 교체·Dark 물리 피격·Sucker Punch 미공개",
+      "request": {
+        "kind": "forced_switch",
+        "force_switch_cause": "faint"
+      }
+    },
+    "IO-C06": {
+      "focus": "Hydrapple Regenerator·상대 Fighting/Ice 기술 미공개",
+      "self": {
+        "species": "hydrapple",
+        "ability": "regenerator"
+      }
+    },
+    "IO-C07": {
+      "focus": "먼저 기절하면 Bitter Blade 피해/회복 없음",
+      "moves": [
+        "bitterblade"
+      ]
+    },
+    "IO-C08": {
+      "focus": "SpA 활성과 선공 미상 구별",
+      "self": {
+        "species": "walkingwake",
+        "stats.spe": 317
+      },
+      "active_contains": [
+        "effects.PROTOSYNTHESISSPA"
+      ]
+    },
+    "IO-C09": {
+      "focus": "Healing Wish 실행 전 회복을 가정하지 않음",
+      "self": {
+        "species": "venusaur",
+        "condition": "82/301"
+      }
+    },
+    "IO-C10": {
+      "focus": "합법 Thunder Wave와 실제 효과 무효 구별",
+      "moves": [
+        "thunderwave"
+      ]
+    },
+    "IO-C11": {
+      "focus": "현재 SpA -2 재계산·과거 피해 재사용 금지",
+      "active": {
+        "boosts.spa": -2
+      },
+      "moves": [
+        "dracometeor"
+      ]
+    },
+    "IO-C12": {
+      "focus": "선공 피격 기절 시 U-turn 실행 없음",
+      "moves": [
+        "uturn"
+      ]
+    },
+    "IO-C13": {
+      "focus": "반올림 상대HP55·명중과 피해 불확실성",
+      "opponent": {
+        "hp": 55
+      },
+      "moves": [
+        "pyroball"
+      ]
+    },
+    "IO-C14": {
+      "focus": "피격/Eject Button 시 Psychic Noise 실행을 가정하지 않음",
+      "moves": [
+        "psychicnoise"
+      ]
+    },
+    "IO-C15": {
+      "focus": "Walking Wake 정확HP29/339와 피격 범위",
+      "active": {
+        "condition": "29/339"
+      },
+      "incoming": "in-walkingwake-pyroball-"
+    }
+  }
+}

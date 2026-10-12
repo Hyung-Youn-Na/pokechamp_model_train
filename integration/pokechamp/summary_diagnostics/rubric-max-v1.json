@@ -1,0 +1,45 @@
+{
+  "version": "EX-025-v1",
+  "language": "ko",
+  "primary": "사실·진영·시점·identity·형식 오류 또는 필수 사실 누락이 하나 이상인 응답 비율",
+  "unit": "입력별3반복 먼저 집계. 전체는 원배틀별 평균의 동일 가중; 경계/진영/반복은 독립 표본 아님.",
+  "strata": [
+    "first",
+    "followup",
+    "rollup"
+  ],
+  "required_domains": [
+    "HP/정밀도",
+    "생존/피격 횟수",
+    "actor identity",
+    "효과 발생 시점",
+    "공개 상태"
+  ],
+  "required_fact_rule": "references의 facts를 각각 하나의 보존 단위로 삼는다. 핵심 명제가 모두 정확히 포함되어야 보존이다. 부정확한 단정은 중요 사실 오류, 명시적 UNKNOWN/언급 없음/핵심 연결 누락은 누락이다. 상충 문장과 정확한 문장이 함께 있으면 오류 및 내부 모순이다. 모든 증거의 행 번호를 출력할 필요는 없지만 출력의 event 인용이 실제 주장을 지지해야 한다.",
+  "health_rule": "자기 HP는 정확 수치 또는 정확히 환산한 대략적 비율을 허용한다. 상대 100분율은 공개 반올림값으로만 취급한다. fainted/생존 및 중요 다중 피격 연결은 필수다. 피해량과 잔여 HP 감소를 구별한다.",
+  "timing_rule": "protocol 내부 turn 마커를 순서대로 읽는다. 행동 전환은 다음 턴 표시 전의 턴에 속한다. 지연 효과의 시전과 해결을 분리한다. 설치 턴을 남은 턴/겹 수로 읽으면 중요 오류다.",
+  "claim_rule": "응답 전체의 검증 가능한 원자 사실 주장을 세어 전체 사실 주장 수/오류 수를 기록한다. 연결된 여러 독립 주장은 나누며 반복된 같은 주장은 같은 문맥에서 하나로 센다. 명시적으로 INFERRED인 합리적 전략 가능성은 사실 주장이 아니다. 근거 없는 CONFIRMED 단정, 미래 확정, 정밀도 상승은 오류다. 최적 행동은 채점하지 않는다. 오류 코드별 재발은 같은 응답 안에서 한 번 센다. 과거의 정확한 사건을 HISTORICAL/이전메모리 출처로 보존하면 retained; UNKNOWN으로 핵심내용을 지우면 omitted.",
+  "format_rule": "기존 validate_summary의 단일 블록·필수 heading·identity·event·행동JSON 금지와 system 요구를 확인한다. 600단어는 목표이므로 단독 위반으로 세지 않는다.",
+  "review_schema": "각 blind_id에 response_sha256, facts{id:{retained:boolean, quote:string}}, errors[{kind:critical_fact|factual|unsupported|contradiction|format, quote, critical:boolean, evidence:[{event,line}], explanation}], factual_claims, erroneous_claims, notes를 기록한다. 오류 인용은 원응답 부분문자열이어야 하며 형식 오류 이외에는 원본 증거가 있어야 한다. 보존 사실의 quote도 원응답과 대조한다. facts의 status는 retained|incorrect|omitted이며 incorrect에는 해당 fact_ids를 연결한 errors가 필요하다.",
+  "blinding": "응답/원자료/rubric만 노출하며 조건명과 thinking, token/지연을 숨긴다. 설계를 아는 단일 검토자로 완전한 독립 이중맹검은 아니다.",
+  "secondary": [
+    "전체 사실 주장 오류율",
+    "근거 없는 단정",
+    "내부 모순",
+    "필수 사실 보존율",
+    "조건별 실제 token",
+    "HTTP 지연",
+    "배치 경과"
+  ],
+  "interpretation": "고정된 검증 이전메모리와 v1.1.2에서 low/max를 비교하는 개발자료 탐색적 진단. 연쇄오류누적·실배틀·모델유일원인·운영적용·IO재개를 자동 판단하지 않음.",
+  "critical_rule": "중요도와 무관하게 factual/critical_fact/unsupported/contradiction 오류는 모두 주지표에 포함. 중요 오류는 별도 보조지표.",
+  "primary_all_factual_errors": true,
+  "recurrence_rules": {
+    "historical_choice_lock": "Kyurem의 이전 Freeze-Dry Choice lock을 교체 후 현재/재진입 시 보장으로 복원하는 문장. 그 외 과거 move lock 복원은 일반 factual로도 기록.",
+    "spikes_side": "Spikes의 affected side p1/p2 또는 SELF/OPPONENT를 뒤집거나 그에 기반한 반대편 피해를 단정.",
+    "occurrence_turn": "실제 행의 turn 마커와 다른 발생 턴. coverage/decision 번호는 발생 턴으로 평가하지 않음.",
+    "ended_item_effect": "소모·제거 아이템 또는 종료/교체로 끝난 효과·boost를 현재로 복원. historical_choice_lock과 중복 가능."
+  },
+  "review_evidence_rule": "각 필수사실의 status·retained·정확한 응답quote(누락은 빈문자열)·원문 evidence/event/line·설명을 기록. incorrect는 errors.fact_ids로 연결. 검토 응답 전체의 사실 주장 수와 오류 수를 직접 기록.",
+  "history_rule": "통합의 history_*는 해당 이전 경계의 역사 명제이며 현재 상태/살아있는 roster로 복원하면 incorrect. 서로 다른 시점의 HP를 혼합하지 않는다."
+}

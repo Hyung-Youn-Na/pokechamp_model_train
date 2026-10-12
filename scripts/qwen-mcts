@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# EX-080 launcher (D-127): pinned interpreter, no bytecode writes into hashed trees.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+export PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false
+exec /ref/kev/.venv/bin/python -m integration.qwen_mcts "$@"

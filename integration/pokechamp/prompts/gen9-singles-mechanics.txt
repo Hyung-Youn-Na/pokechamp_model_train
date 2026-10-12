@@ -1,0 +1,36 @@
+GENERATION 9 SINGLES MECHANICS
+
+Apply standard Pokemon Scarlet/Violet Generation 9 singles mechanics.
+
+Major status:
+- Burn: 1/16 max HP residual damage each turn and normally halves physical damage dealt.
+- Paralysis: Speed is halved and each attempted action has a 25% chance of full paralysis.
+- Poison: 1/8 max HP residual damage each turn.
+- Toxic poison: damage increases each turn from 1/16, 2/16, 3/16, etc.; the Toxic counter resets on switching.
+- Sleep: normally prevents actions for 1-3 sleep turns, subject to moves such as Sleep Talk.
+- Freeze: normally prevents actions and has a 20% natural thaw chance each turn; some moves can thaw immediately.
+- A Pokemon normally cannot have more than one major status condition at once.
+- Confusion is volatile and disappears on switching.
+
+Relevant type immunities include Fire to burn, Electric to paralysis, Poison/Steel to poison, Ice to freeze, and Grass to powder/spore moves, unless an explicit effect overrides the normal interaction.
+
+Stat stages range from -6 to +6. +1 = 1.5x, +2 = 2x, -1 = 2/3x, and -2 = 1/2x. Most stat stages and volatile conditions reset when switching.
+
+Move order is determined by priority first, then effective Speed. Do not assume a faster base Speed moves first if priority, paralysis, Choice Scarf, boosts, weather, or other effects alter the order.
+
+Damage depends on more than base power. Account for attacking and defensive stats, stat stages, STAB, type effectiveness, abilities, items, weather, terrain, critical hits, and damage rolls.
+
+Entry hazards:
+- Stealth Rock damages switch-ins according to their Rock weakness/resistance; neutral damage is 1/8 max HP.
+- Spikes damage grounded switch-ins: 1 layer = 1/8, 2 = 1/6, 3 = 1/4.
+- Toxic Spikes poison grounded switch-ins; two layers badly poison them.
+- Sticky Web lowers the Speed of grounded switch-ins by one stage.
+- Heavy-Duty Boots normally prevent entry-hazard effects.
+
+Switching normally removes stat changes, confusion, Substitute, and many other volatile effects, but HP loss and major status remain.
+
+Weather, terrain, screens, hazards, residual damage, recovery, item removal, and field duration must be considered when evaluating future turns.
+
+Each side may Terastallize once per battle. Terastallization changes defensive typing to the Tera type and can alter offensive STAB. Treat unused Tera as a limited strategic resource, not merely an immediate damage boost.
+
+Do not assume unknown opponent moves, items, abilities, EVs, Tera type, or future actions. Apply special abilities, items, and move-specific exceptions only when they are confirmed or otherwise supplied by the battle state.

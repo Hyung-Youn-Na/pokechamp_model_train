@@ -1,0 +1,79 @@
+You select one lead Pokemon for a Gen9 OU singles battle. Keep all six submitted Pokemon and their sets unchanged.
+Choose exactly one lead_slot from self_team. These 1-based IDs refer to the actual submitted team slots, not names or a suggested team order.
+Use the known self-team information and the opponent's public team preview to consider immediate matchups, early pressure, entry hazards, pivoting, and preserving key Pokemon for later.
+Opponent preview details are public facts. Opponent moves, items, abilities, stats and Tera types are unknown unless explicitly included as public facts. Any expectation about their sets or likely lead is an inference, not an observed fact. Do not invent missing self-team information.
+Return exactly one JSON object with exactly one key: {"lead_slot": <integer candidate ID>}. No explanation, Markdown, additional keys, Pokemon name, or /team command in the final content. Do not select or reorder the other five Pokemon.
+
+---
+
+Team preview JSON structure v1.1.0
+
+This is Gen9 OU singles: keep all six members and choose exactly one lead_slot. The self slots are the actual submission order, not the shuffled command order.
+self_team comes only from the controlled actor's original submission and initial private request. Missing optional fields mean not supplied; do not fill them from species defaults. An empty self item is no held item, an empty ability is absent, and empty arrays supply no entries.
+opponent_preview is only the public |poke| details available at the initial preview cutoff. It contains no private moves, abilities, items, EVs, IVs or tera type. Do not read a dictionary entry as evidence of an opponent set. Future rows, results and the opponent source team are excluded.
+Paths begin at $. [] defines every array element once. Shared types below are defined once. source references identify event_seq and 1-based line within that packet; identity input_sha256 binds the preserved original input before the effect dictionary was added.
+effect_reference is the request-local dictionary of general Generation 9 game rules. Its items, abilities and moves maps each normalized ID to name and the pinned Dex full desc. Normalize an effect name by lowercasing and removing non-ASCII letters/digits; canonical IDs and Dex aliases resolve to the same entry. Each referenced effect is described once. Descriptions do not recursively add other mentioned effects.
+A dictionary entry is NOT evidence that any particular opponent owns that effect, that a historical item is still held, or that an ability/effect is currently active. Use the original field's public/self/inferred source and time. Missing information remains unknown; a description alone never guarantees a legal action succeeds.
+Check activation conditions, exceptions, consumption, duration, current state and the scenario's modeled scope. Never multiply or add an effect again when it is already included in calculated damage, stats, entry HP or other supplied scenario results. The general description does not enlarge the calculator's coverage or predict a full turn.
+
+Key rules
+{battle_stat}: Self server baseStoredStats (HP is in condition).
+Allowed keys: atk, def, spa, spd, spe.
+{effect_id}: Normalized canonical Dex item, ability or move ID.
+
+Field paths: $
+$ [object]: One independent lead request.
+$.identity [object]: Actor/decision identity and initial evidence boundary.
+$.identity.battle_id [string]: Recorded battle ID.
+$.identity.actor_id [string]: Controlled actor ID.
+$.identity.decision_seq [integer]: Actor decision sequence; preview precedes battle actions.
+$.identity.request_id [integer|null]: Initial server rqid; null when absent.
+$.identity.side [string]: Controlled server side. Allowed values: ["p1", "p2"].
+$.identity.input_version [string]: Original input schema version. Allowed values: ["team-preview-v1"].
+$.identity.protocol_cutoff [object; see source_ref]: First boundary with both private request and public preview available.
+$.identity.public_preview_cutoff [object; see source_ref]: Public preview completion line.
+$.identity.self_request_ref [object; see source_ref]: Initial self private request line.
+$.identity.input_sha256 [string]: Canonical original input SHA-256, excluding this hash field.
+$.battle_format [string]: Verified format. Allowed values: ["gen9ou"].
+$.self_team [array]: Six members in actual submission order.
+$.self_team[] [object; see self_member]: One self slot.
+$.opponent_preview [array]: Six public opponent entries; no hidden set lookup.
+$.opponent_preview[] [object; see public_member]: One public preview entry.
+$.effect_reference [object]: Request-local common effect dictionary. Each kind/ID appears once.
+$.effect_reference.items [object]: Referenced items; empty means no references of this kind.
+$.effect_reference.items.{effect_id} [object; see effect_entry]: One referenced effect.
+$.effect_reference.abilities [object]: Referenced abilities; empty means no references of this kind.
+$.effect_reference.abilities.{effect_id} [object; see effect_entry]: One referenced effect.
+$.effect_reference.moves [object]: Referenced moves; empty means no references of this kind.
+$.effect_reference.moves.{effect_id} [object; see effect_entry]: One referenced effect.
+
+Shared type: source_ref
+source_ref [object]: Initial protocol boundary; not a battle turn.
+source_ref.event_seq [integer]: Recorder event sequence.
+source_ref.line [integer]: 1-based line number.
+
+Shared type: self_member
+self_member [object]: One verified self member at selection time.
+self_member.ident [string]: Server fullname p1: nickname or p2: nickname; nickname is data. Active protocol identifiers add a slot letter (p1a: nickname).
+self_member.details [string]: Server details string: species, optional L<level>, M/F, shiny and form information; absent level means 100, absent gender may be genderless. Not a set reveal.
+self_member.moves [array]: Self move IDs, including unavailable moves; does not imply current legality or PP. Ordered move slots.
+self_member.moves[] [string]: One value in the parent collection; same source and time.
+self_member.item [string]: Current self item ID; empty string means no held item. Consumption/removal does not restore the original item.
+self_member.stats [object]: Self baseStoredStats atk/def/spa/spd/spe in stat points; excludes HP and current boost stages. Not a full execution-speed calculation.
+self_member.stats.{battle_stat} [integer]: Stat value in the units specified by the parent; zero is literal.
+self_member.condition [string]: Exact self currentHP/maxHP plus optional brn/par/slp/frz/psn/tox; 0 fnt means fainted and omits maximum. Current HP units, not percent; parse at this request time.
+self_member.teraType [string]: Current configured tera type name, not proof of terastallization.
+self_member.ability [string]: Current self ability ID; empty means no current ability, not an unknown prior.
+self_member.lead_slot [integer]: 1-based actual submitted team slot (1..6); output this number, not preview order.
+self_member.species [string]: Normalized self species verified against the submitted slot.
+self_member.source [string]: self_submission_and_request; private self knowledge only. Allowed values: ["self_submission_and_request"].
+
+Shared type: public_member
+public_member [object]: One public opponent preview entry; not a selectable self slot.
+public_member.details [string]: Public species/form, optional level, gender and shiny; no private set.
+public_member.source [string]: Public team preview only. Allowed values: ["public_team_preview"].
+
+Shared type: effect_entry
+effect_entry [object]: One general rule, not holder evidence.
+effect_entry.name [string]: Canonical English Dex name.
+effect_entry.desc [string]: Full pinned Gen9 Dex desc, verbatim; not a summary.

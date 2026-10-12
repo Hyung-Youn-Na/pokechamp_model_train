@@ -1,0 +1,104 @@
+{
+  "attacker": {
+    "battle_types": [
+      "Fire"
+    ],
+    "entry_effects_observed": true,
+    "name": "ninetales",
+    "options": {
+      "ability": "drought",
+      "boosts": {
+        "accuracy": 0,
+        "atk": 0,
+        "def": 0,
+        "evasion": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      },
+      "curHP": 349,
+      "evs": {
+        "atk": 0,
+        "def": 20,
+        "hp": 248,
+        "spa": 0,
+        "spd": 0,
+        "spe": 240
+      },
+      "item": "Heat Rock",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 100,
+      "nature": "Timid",
+      "status": ""
+    },
+    "projected_entry": false,
+    "qp_source": null
+  },
+  "defender": {
+    "battle_types": [
+      "Dark",
+      "Steel"
+    ],
+    "entry_effects_observed": true,
+    "expectedStats": {
+      "atk": 405,
+      "def": 276,
+      "hp": 381,
+      "spa": 140,
+      "spd": 206,
+      "spe": 160
+    },
+    "name": "kingambit",
+    "options": {
+      "ability": "supremeoverlord",
+      "boosts": {
+        "accuracy": 0,
+        "atk": 0,
+        "def": 0,
+        "evasion": 0,
+        "spa": 0,
+        "spd": 0,
+        "spe": 0
+      },
+      "curHP": 341,
+      "evs": {
+        "atk": 252,
+        "def": 0,
+        "hp": 160,
+        "spa": 0,
+        "spd": 0,
+        "spe": 96
+      },
+      "gender": "F",
+      "item": "leftovers",
+      "ivs": {
+        "atk": 31,
+        "def": 31,
+        "hp": 31,
+        "spa": 31,
+        "spd": 31,
+        "spe": 31
+      },
+      "level": 100,
+      "nature": "Adamant",
+      "status": "",
+      "teraType": "Dark"
+    },
+    "projected_entry": false,
+    "qp_source": null
+  },
+  "field": {
+    "attackerSide": {},
+    "defenderSide": {},
+    "weather": "Sun"
+  },
+  "move": "weatherball",
+  "scenario_id": "in-kingambit-weatherball-h0-hp349"
+}

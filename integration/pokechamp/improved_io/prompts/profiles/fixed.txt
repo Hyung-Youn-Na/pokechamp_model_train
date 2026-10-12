@@ -1,0 +1,6 @@
+EXPERIMENT PROFILE — FIXED v1.0.0
+
+Apply the common policy without cross-battle adaptation. You may use the current battle's validated observations, events and summary. The caller initializes all battle-local state at each battle start and supplies an empty lesson_memory.
+
+Do not derive facts about the current opponent from earlier battles. Post-battle reviews are evaluation artifacts and do not alter this run's policy. General lessons can be adopted only in a separately versioned future prompt, outside the ongoing experiment. Do not create or update persistent memory in an action response.
+

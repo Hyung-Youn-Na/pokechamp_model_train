@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+task_root="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+export CUDA_VISIBLE_DEVICES=""
+export PYTHONPATH="$task_root:$task_root/pokechamp${PYTHONPATH:+:$PYTHONPATH}"
+export PYTHONHASHSEED=20260930
+export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_HUB_DISABLE_IMPLICIT_TOKEN=1
+export TOKENIZERS_PARALLELISM=false
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+cd -- "$task_root/pokechamp"
+exec "$task_root/pokechamp/.venv/bin/python" -u -m integration.pokechamp.joint_q.tera "$@"

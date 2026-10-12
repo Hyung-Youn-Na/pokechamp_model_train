@@ -1,0 +1,12 @@
+# D-048 — 지연 기술 대상 슬롯 교정
+
+- 상태: Accepted
+- 날짜: 2026-09-14
+
+현재 사용자가 EX-038 지연 기술 입력 오류의 별도 오프라인 수정·검증을 명시적으로 지시했다.
+공개 switch/drag/replace/faint 기록의 동일 진영·개체에 유일하게 대응하는 슬롯으로만
+슬롯 없는 대상을 연결한다. 명시 슬롯 우선이며 기절 직전 근거를 보존하고 모호함은 거부한다.
+Doom Desire 실제 시작 표기도 수용한다. 수명·공개 JSON·프롬프트·B2·계산식/버전은 유지한다.
+새 source와 독립 회귀 evidence를 남기고 과거 source qualification을 재사용하지 않는다.
+유료 재개·추가 설명 검토·과거 전체 계산 재생은 제외한다. EX-038/EP-035 Blocked와 부분 결과는 불변이다.
+[EP-036](../exec-plans/completed/EP-036-delayed-target-slot.md)에 완료 기준을 등록한다.

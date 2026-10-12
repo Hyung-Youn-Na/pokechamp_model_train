@@ -88,8 +88,24 @@ For any C# mod work, prefer reverse-engineering `sts2.dll` via `ilspycmd` (insta
 - `data.snapshots/` is write-once (patch-pipeline output). Never overwrite, delete, or commit.
 - Do not commit secrets, local logs, or per-run evolution caches. See the `data/` table in `README.md` for the commit-vs-ignore rule per subdirectory.
 
-## Agent Usage (Claude Code / Codex / Sonnet Teams)
+## Agent Usage
 
-For repository exploration of unfamiliar subsystems, prefer dispatching the `Explore` agent (sonnet) in parallel across disjoint domains over sequential reads — skills / memory / write-gate / evolution / prompts / mcp / C# mod / frontend are independent enough to investigate concurrently. Follow the `superpowers:dispatching-parallel-agents` pattern: one agent per independent domain, each with a self-contained prompt and a fixed word-count target for the report.
+Follow the approved active plan and the authorization, clarification, stopping, and completion rules
+in [`../project_context/INDEX.md`](../project_context/INDEX.md). The dated status and roadmap above
+are legacy evidence, not current work.
 
-For new features: brainstorm → plan (`superpowers:write-plan`) → TDD (`superpowers:test-driven-development`) → implement → `superpowers:requesting-code-review`. Skip any step only with explicit reason.
+For new features, use design discussion, planning, behavior-focused tests, implementation, and review
+in proportion to the change. Record a brief reason when adapting or omitting a process step;
+this is not a request for user approval. Preserve the mandatory testing and safety requirements above.
+Do not omit a process step or approval that the user explicitly requires.
+When implementation is requested, continue through implementation and required verification rather
+than ending after a plan or review request.
+
+Companion skills such as `superpowers:write-plan`, `superpowers:test-driven-development`, and
+`superpowers:requesting-code-review` are optional aids when available. If an aid is unavailable,
+perform the equivalent necessary work with available tools; do not require its installation or pause
+independent approved work solely because it is missing.
+
+When delegation is authorized and useful, assign independent work with bounded scope and preserve
+the current model unless a model change was requested. A particular agent name or provider is not a
+prerequisite for repository exploration; direct inspection remains available.

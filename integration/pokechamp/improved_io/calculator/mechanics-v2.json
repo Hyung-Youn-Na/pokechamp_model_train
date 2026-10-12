@@ -1,0 +1,51 @@
+{
+  "patch_id": "mechanics-v2",
+  "package": "@smogon/calc",
+  "version": "0.11.0",
+  "mode": "verified_in_memory_overlay",
+  "files": [
+    {
+      "path": "dist/mechanics/gen789.js",
+      "before_sha256": "9f530bc0ae539f7bc7e1eeb8d45f4a2547ddefbe634612448abcc2728b1a4e06",
+      "after_sha256": "e08007d340b1348c8e80dc059286f404c0ebbb66a3ab3b0fa2d42410a54ab999",
+      "replacements": [
+        {
+          "before": "    (0, util_2.checkDownload)(attacker, defender, field.isWonderRoom);",
+          "after": "    if (!attacker.species.__entryObserved) (0, util_2.checkDownload)(attacker, defender, field.isWonderRoom);"
+        },
+        {
+          "before": "    (0, util_2.checkDownload)(defender, attacker, field.isWonderRoom);",
+          "after": "    if (!defender.species.__entryObserved) (0, util_2.checkDownload)(defender, attacker, field.isWonderRoom);"
+        },
+        {
+          "before": "    (0, util_2.checkWindRider)(attacker, field.attackerSide);",
+          "after": "    if (!attacker.species.__entryObserved) (0, util_2.checkWindRider)(attacker, field.attackerSide);"
+        },
+        {
+          "before": "    (0, util_2.checkWindRider)(defender, field.defenderSide);",
+          "after": "    if (!defender.species.__entryObserved) (0, util_2.checkWindRider)(defender, field.defenderSide);"
+        },
+        {
+          "before": "if (move.named('Nature\\'s Madness', 'Ruination')) {",
+          "after": "if (move.named('Nature\\'s Madness', 'Ruination', 'Super Fang')) {"
+        },
+        {
+          "before": "    if (move.named('Final Gambit')) {",
+          "after": "    if (move.named('Endeavor')) {\n        result.damage = Math.max(0, defender.curHP() - attacker.curHP());\n        return result;\n    }\n    if (move.named('Fissure', 'Guillotine', 'Horn Drill', 'Sheer Cold')) {\n        result.damage = attacker.level < defender.level || defender.hasAbility('Sturdy') ||\n            (move.named('Sheer Cold') && defender.hasType('Ice')) ? 0 : defender.maxHP();\n        return result;\n    }\n    if (move.named('Final Gambit')) {"
+        },
+        {
+          "before": "(!defender.item || ((0, util_2.isQPActive)(defender, field) && defender.hasItem('Booster Energy')))",
+          "after": "!defender.item"
+        },
+        {
+          "before": "(!attacker.item ||\n                    ((0, util_2.isQPActive)(attacker, field) && attacker.hasItem('Booster Energy')))",
+          "after": "!attacker.item"
+        },
+        {
+          "before": "(!defenderItem || ((0, util_2.isQPActive)(defender, field) && defenderItem === 'Booster Energy'))",
+          "after": "(!defenderItem || (defenderItem === 'Booster Energy' && defender.named('Great Tusk', 'Scream Tail', 'Brute Bonnet', 'Flutter Mane', 'Slither Wing', 'Sandy Shocks', 'Iron Treads', 'Iron Bundle', 'Iron Hands', 'Iron Jugulis', 'Iron Moth', 'Iron Thorns', 'Roaring Moon', 'Iron Valiant', 'Walking Wake', 'Iron Leaves')))"
+        }
+      ]
+    }
+  ]
+}

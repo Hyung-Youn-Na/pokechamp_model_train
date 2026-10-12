@@ -1,0 +1,9 @@
+# D-086 — 실패 입력의 현재 응답 확인
+
+- 상태: Accepted
+- 날짜: 2026-09-21
+- 승인: 사용자 “같은 입력으로 현재 요청 넣으면 응답이 오나요?”
+
+직전 대화의 EX-054 마지막 실패 입력을 그대로 재전송하는 독립 확인 요청1개를 실행한다.
+기존 D-084 재시도3회를 유지한다. 배틀 재개·성적 보충은 없으며 원 실험은 보존한다.
+[EX-055](../experiments/EX-055-jev-failed-input-probe.md) · [EP-078](../exec-plans/completed/EP-078-jev-failed-input-probe.md).

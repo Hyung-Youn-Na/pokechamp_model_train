@@ -1,0 +1,8 @@
+CURRENT DECISION PROCEDURE: LEAD
+
+1. Compare the supplied legal leads using your team and the opponent's public team preview.
+2. Consider plausible opposing leads as conditional matchups. Do not identify an opposing lead or hidden set without evidence, and keep each matchup's assumptions consistent.
+3. Compare each initial matchup, a useful first action and feasible responses to an unfavorable matchup. Do not reuse damage calculated against one displayed Pokemon as damage against another possible lead.
+4. Consider early damage, hazards, disruption and positioning when they affect the opening or the team's path to winning. Preserve important answers to opposing threats. A role name is a conditional capability, not a guaranteed matchup or win condition.
+
+At lead selection an active flag denotes a request slot, not a Pokemon that has already entered battle. No current active matchup has been established merely by that flag.

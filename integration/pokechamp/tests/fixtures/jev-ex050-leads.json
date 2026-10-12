@@ -1,0 +1,3140 @@
+[
+  {
+    "source_line": 7,
+    "event_sha256": "9467dd605e6229af2597c1b97846da170e90bf7f36dc57b87e3d9b07e3ffe9ad",
+    "prefix": [
+      {
+        "event_seq": 1,
+        "protocol": ">battle-gen9ou-1\n|init|battle\n|title|jev99560790 vs. aby99560790\n\n"
+      },
+      {
+        "event_seq": 2,
+        "protocol": ">battle-gen9ou-1\n|J|☆aby99560790"
+      },
+      {
+        "event_seq": 3,
+        "protocol": ">battle-gen9ou-1\n|t:|1789956079\n|gametype|singles"
+      },
+      {
+        "event_seq": 4,
+        "protocol": ">battle-gen9ou-1\n|player|p1|jev99560790|cilan|"
+      },
+      {
+        "event_seq": 5,
+        "protocol": ">battle-gen9ou-1\n|player|p2|aby99560790|pokemonbreeder-gen4|\n|teamsize|p1|6\n|teamsize|p2|6\n|gen|9\n|tier|Gen 9 OU\n|rule|HP Percentage Mod: HP is shown in percentages\n|rule|Endless Battle Clause: Forcing endless battles is banned\n|rule|Species Clause: Limit one of each Pokémon\n|rule|OHKO Clause: OHKO moves are banned\n|rule|Evasion Items Clause: Evasion items are banned\n|rule|Evasion Moves Clause: Evasion moves are banned\n|rule|Evasion Abilities Clause: Evasion abilities are banned\n|rule|Sleep Moves Clause: Sleep-inducing moves are banned\n|clearpoke\n|poke|p1|Lokix, M|\n|poke|p1|Pecharunt|\n|poke|p1|Zamazenta-*|\n|poke|p1|Ting-Lu|\n|poke|p1|Latios, M|\n|poke|p1|Gliscor, M|\n|poke|p2|Zapdos|\n|poke|p2|Hydrapple, M|\n|poke|p2|Zamazenta-*|\n|poke|p2|Slowking-Galar, M|\n|poke|p2|Tinkaton, F|\n|poke|p2|Ting-Lu|\n|teampreview"
+      },
+      {
+        "event_seq": 6,
+        "protocol": ">battle-gen9ou-1\n|request|{\"teamPreview\":true,\"side\":{\"name\":\"jev99560790\",\"id\":\"p1\",\"pokemon\":[{\"ident\":\"p1: Lokix\",\"details\":\"Lokix, M\",\"condition\":\"283/283\",\"active\":true,\"stats\":{\"atk\":333,\"def\":193,\"spa\":126,\"spd\":146,\"spe\":283},\"moves\":[\"firstimpression\",\"uturn\",\"knockoff\",\"suckerpunch\"],\"baseAbility\":\"tintedlens\",\"item\":\"heavydutyboots\",\"pokeball\":\"pokeball\",\"ability\":\"tintedlens\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Bug\",\"terastallized\":\"\"},{\"ident\":\"p1: Pecharunt\",\"details\":\"Pecharunt\",\"condition\":\"380/380\",\"active\":false,\"stats\":{\"atk\":162,\"def\":454,\"spa\":212,\"spd\":212,\"spe\":219},\"moves\":[\"malignantchain\",\"foulplay\",\"partingshot\",\"recover\"],\"baseAbility\":\"poisonpuppeteer\",\"item\":\"heavydutyboots\",\"pokeball\":\"pokeball\",\"ability\":\"poisonpuppeteer\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Dark\",\"terastallized\":\"\"},{\"ident\":\"p1: Zamazenta\",\"details\":\"Zamazenta\",\"condition\":\"325/325\",\"active\":false,\"stats\":{\"atk\":339,\"def\":266,\"spa\":176,\"spd\":267,\"spe\":412},\"moves\":[\"closecombat\",\"crunch\",\"stoneedge\",\"icefang\"],\"baseAbility\":\"dauntlessshield\",\"item\":\"heavydutyboots\",\"pokeball\":\"pokeball\",\"ability\":\"dauntlessshield\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Fire\",\"terastallized\":\"\"},{\"ident\":\"p1: Ting-Lu\",\"details\":\"Ting-Lu\",\"condition\":\"514/514\",\"active\":false,\"stats\":{\"atk\":256,\"def\":286,\"spa\":131,\"spd\":281,\"spe\":130},\"moves\":[\"stealthrock\",\"whirlwind\",\"earthquake\",\"ruination\"],\"baseAbility\":\"vesselofruin\",\"item\":\"leftovers\",\"pokeball\":\"pokeball\",\"ability\":\"vesselofruin\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Ghost\",\"terastallized\":\"\"},{\"ident\":\"p1: Latios\",\"details\":\"Latios, M\",\"condition\":\"301/301\",\"active\":false,\"stats\":{\"atk\":194,\"def\":197,\"spa\":359,\"spd\":256,\"spe\":350},\"moves\":[\"dracometeor\",\"psychicnoise\",\"flipturn\",\"recover\"],\"baseAbility\":\"levitate\",\"item\":\"souldew\",\"pokeball\":\"pokeball\",\"ability\":\"levitate\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Steel\",\"terastallized\":\"\"},{\"ident\":\"p1: Gliscor\",\"details\":\"Gliscor, M\",\"condition\":\"352/352\",\"active\":false,\"stats\":{\"atk\":226,\"def\":295,\"spa\":113,\"spd\":267,\"spe\":225},\"moves\":[\"spikes\",\"knockoff\",\"uturn\",\"protect\"],\"baseAbility\":\"poisonheal\",\"item\":\"toxicorb\",\"pokeball\":\"pokeball\",\"ability\":\"poisonheal\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Water\",\"terastallized\":\"\"}]},\"rqid\":2}"
+      }
+    ],
+    "event": {
+      "at": 1789956081.1979115,
+      "event_seq": 7,
+      "type": "input",
+      "decision": "jev99560790-2-6",
+      "battle": "battle-gen9ou-1",
+      "actor": "p1",
+      "payload": {
+        "state": {
+          "version": "jev-choice-v1",
+          "format": "gen9ou singles",
+          "turn": 0,
+          "actor": "p1",
+          "request_id": 2,
+          "decision_kind": "lead",
+          "self_team": [
+            {
+              "slot": 1,
+              "species": "Lokix",
+              "ident": "p1: Lokix",
+              "condition": "283/283",
+              "active": true,
+              "stats": {
+                "atk": 333,
+                "def": 193,
+                "spa": 126,
+                "spd": 146,
+                "spe": 283
+              },
+              "item": "heavydutyboots",
+              "ability": "tintedlens",
+              "baseAbility": "tintedlens",
+              "teraType": "Bug",
+              "terastallized": "",
+              "types": [
+                "Bug",
+                "Dark"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "firstimpression",
+                  "type": "Bug",
+                  "category": "Physical",
+                  "power": 90,
+                  "accuracy": 100,
+                  "priority": 2,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "uturn",
+                  "type": "Bug",
+                  "category": "Physical",
+                  "power": 70,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "knockoff",
+                  "type": "Dark",
+                  "category": "Physical",
+                  "power": 65,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "suckerpunch",
+                  "type": "Dark",
+                  "category": "Physical",
+                  "power": 70,
+                  "accuracy": 100,
+                  "priority": 1,
+                  "current_pp": "unknown"
+                }
+              ],
+              "current_move_slots": []
+            },
+            {
+              "slot": 2,
+              "species": "Pecharunt",
+              "ident": "p1: Pecharunt",
+              "condition": "380/380",
+              "active": false,
+              "stats": {
+                "atk": 162,
+                "def": 454,
+                "spa": 212,
+                "spd": 212,
+                "spe": 219
+              },
+              "item": "heavydutyboots",
+              "ability": "poisonpuppeteer",
+              "baseAbility": "poisonpuppeteer",
+              "teraType": "Dark",
+              "terastallized": "",
+              "types": [
+                "Poison",
+                "Ghost"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "malignantchain",
+                  "type": "Poison",
+                  "category": "Special",
+                  "power": 100,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "foulplay",
+                  "type": "Dark",
+                  "category": "Physical",
+                  "power": 95,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "partingshot",
+                  "type": "Dark",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "recover",
+                  "type": "Normal",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": true,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                }
+              ]
+            },
+            {
+              "slot": 3,
+              "species": "Zamazenta",
+              "ident": "p1: Zamazenta",
+              "condition": "325/325",
+              "active": false,
+              "stats": {
+                "atk": 339,
+                "def": 266,
+                "spa": 176,
+                "spd": 267,
+                "spe": 412
+              },
+              "item": "heavydutyboots",
+              "ability": "dauntlessshield",
+              "baseAbility": "dauntlessshield",
+              "teraType": "Fire",
+              "terastallized": "",
+              "types": [
+                "Fighting"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "closecombat",
+                  "type": "Fighting",
+                  "category": "Physical",
+                  "power": 120,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "crunch",
+                  "type": "Dark",
+                  "category": "Physical",
+                  "power": 80,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "stoneedge",
+                  "type": "Rock",
+                  "category": "Physical",
+                  "power": 100,
+                  "accuracy": 80,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "icefang",
+                  "type": "Ice",
+                  "category": "Physical",
+                  "power": 65,
+                  "accuracy": 95,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                }
+              ]
+            },
+            {
+              "slot": 4,
+              "species": "Ting-Lu",
+              "ident": "p1: Ting-Lu",
+              "condition": "514/514",
+              "active": false,
+              "stats": {
+                "atk": 256,
+                "def": 286,
+                "spa": 131,
+                "spd": 281,
+                "spe": 130
+              },
+              "item": "leftovers",
+              "ability": "vesselofruin",
+              "baseAbility": "vesselofruin",
+              "teraType": "Ghost",
+              "terastallized": "",
+              "types": [
+                "Dark",
+                "Ground"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "stealthrock",
+                  "type": "Rock",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": true,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "whirlwind",
+                  "type": "Normal",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": true,
+                  "priority": -6,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "earthquake",
+                  "type": "Ground",
+                  "category": "Physical",
+                  "power": 100,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "ruination",
+                  "type": "Dark",
+                  "category": "Special",
+                  "power": 0,
+                  "accuracy": 90,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                }
+              ]
+            },
+            {
+              "slot": 5,
+              "species": "Latios",
+              "ident": "p1: Latios",
+              "condition": "301/301",
+              "active": false,
+              "stats": {
+                "atk": 194,
+                "def": 197,
+                "spa": 359,
+                "spd": 256,
+                "spe": 350
+              },
+              "item": "souldew",
+              "ability": "levitate",
+              "baseAbility": "levitate",
+              "teraType": "Steel",
+              "terastallized": "",
+              "types": [
+                "Dragon",
+                "Psychic"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "dracometeor",
+                  "type": "Dragon",
+                  "category": "Special",
+                  "power": 130,
+                  "accuracy": 90,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "psychicnoise",
+                  "type": "Psychic",
+                  "category": "Special",
+                  "power": 75,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "flipturn",
+                  "type": "Water",
+                  "category": "Physical",
+                  "power": 60,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "recover",
+                  "type": "Normal",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": true,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                }
+              ]
+            },
+            {
+              "slot": 6,
+              "species": "Gliscor",
+              "ident": "p1: Gliscor",
+              "condition": "352/352",
+              "active": false,
+              "stats": {
+                "atk": 226,
+                "def": 295,
+                "spa": 113,
+                "spd": 267,
+                "spe": 225
+              },
+              "item": "toxicorb",
+              "ability": "poisonheal",
+              "baseAbility": "poisonheal",
+              "teraType": "Water",
+              "terastallized": "",
+              "types": [
+                "Ground",
+                "Flying"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "spikes",
+                  "type": "Ground",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": true,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "knockoff",
+                  "type": "Dark",
+                  "category": "Physical",
+                  "power": 65,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "uturn",
+                  "type": "Bug",
+                  "category": "Physical",
+                  "power": 70,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "protect",
+                  "type": "Normal",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": true,
+                  "priority": 4,
+                  "current_pp": "unknown"
+                }
+              ]
+            }
+          ],
+          "opponent_team": [
+            {
+              "preview_slot": 1,
+              "ident": null,
+              "species": "Zapdos",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Electric",
+                "Flying"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            },
+            {
+              "preview_slot": 2,
+              "ident": null,
+              "species": "Hydrapple",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Grass",
+                "Dragon"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            },
+            {
+              "preview_slot": 3,
+              "ident": null,
+              "species": "Zamazenta-*",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Fighting"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            },
+            {
+              "preview_slot": 4,
+              "ident": null,
+              "species": "Slowking-Galar",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Poison",
+                "Psychic"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            },
+            {
+              "preview_slot": 5,
+              "ident": null,
+              "species": "Tinkaton",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Fairy",
+                "Steel"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            },
+            {
+              "preview_slot": 6,
+              "ident": null,
+              "species": "Ting-Lu",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Dark",
+                "Ground"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            }
+          ],
+          "weather": "",
+          "weather_duration": [
+            0,
+            0
+          ],
+          "field": [],
+          "side_conditions": {
+            "p1": {},
+            "p2": {}
+          },
+          "recent_completed_turn_events": [],
+          "information_rules": "Opponent sets and pending action are unknown. Move power is base power, not calculated damage. Public HP is rounded. Effect counters are official client data, not guaranteed remaining durations."
+        },
+        "questions": {
+          "action": {
+            "type": "choice",
+            "instructions": "Choose exactly one legal candidate that best improves the controlled side's chance of winning this Generation 9 OU singles battle. Compare all available moves and switches. Balance immediate offensive value with survival, positioning, status, hazards, remaining team roles, and conservation or timely use of Terastallization. A Terastallization candidate means Terastallize and use that move in the same turn; an ordinary move candidate does not spend Terastallization.\nUse the current state as authoritative. The opponent's unrevealed moves, ability, item, stats and pending action are unknown; never treat guesses as observed facts. Base power is not calculated damage. Take move priority, speed changes, immunities and accuracy into account without assuming guaranteed outcomes. Public opponent HP is rounded. Recent completed-turn events are history, not a replacement for the current state.\nFor forced switches, choose the best next Pokemon among the supplied switch candidates. The candidate IDs identify exact request slots; use their descriptions and the team slot numbers to identify the intended action. All candidates are legal for this request. Select the best available candidate even if every option is unfavorable. No free-text explanation or tool call is required.\n\nChoose the lead Pokemon using your own team and the opponent's public team preview. Other team slots keep their original relative order.",
+            "criteria": {
+              "team_1": {
+                "kind": "team",
+                "slot": 1,
+                "pokemon": "Lokix"
+              },
+              "team_2": {
+                "kind": "team",
+                "slot": 2,
+                "pokemon": "Pecharunt"
+              },
+              "team_3": {
+                "kind": "team",
+                "slot": 3,
+                "pokemon": "Zamazenta"
+              },
+              "team_4": {
+                "kind": "team",
+                "slot": 4,
+                "pokemon": "Ting-Lu"
+              },
+              "team_5": {
+                "kind": "team",
+                "slot": 5,
+                "pokemon": "Latios"
+              },
+              "team_6": {
+                "kind": "team",
+                "slot": 6,
+                "pokemon": "Gliscor"
+              }
+            }
+          }
+        }
+      },
+      "commands": {
+        "team_1": "/team 123456",
+        "team_2": "/team 213456",
+        "team_3": "/team 312456",
+        "team_4": "/team 412356",
+        "team_5": "/team 512346",
+        "team_6": "/team 612345"
+      },
+      "boundary": {
+        "protocol_event_seq": 6,
+        "line_index": 1
+      },
+      "official": {
+        "turn": 0,
+        "request": {
+          "teamPreview": true,
+          "side": {
+            "name": "jev99560790",
+            "id": "p1",
+            "pokemon": [
+              {
+                "ident": "p1: Lokix",
+                "details": "Lokix, M",
+                "condition": "283/283",
+                "active": true,
+                "stats": {
+                  "atk": 333,
+                  "def": 193,
+                  "spa": 126,
+                  "spd": 146,
+                  "spe": 283
+                },
+                "moves": [
+                  "firstimpression",
+                  "uturn",
+                  "knockoff",
+                  "suckerpunch"
+                ],
+                "baseAbility": "tintedlens",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "tintedlens",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Bug",
+                "terastallized": ""
+              },
+              {
+                "ident": "p1: Pecharunt",
+                "details": "Pecharunt",
+                "condition": "380/380",
+                "active": false,
+                "stats": {
+                  "atk": 162,
+                  "def": 454,
+                  "spa": 212,
+                  "spd": 212,
+                  "spe": 219
+                },
+                "moves": [
+                  "malignantchain",
+                  "foulplay",
+                  "partingshot",
+                  "recover"
+                ],
+                "baseAbility": "poisonpuppeteer",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "poisonpuppeteer",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Dark",
+                "terastallized": ""
+              },
+              {
+                "ident": "p1: Zamazenta",
+                "details": "Zamazenta",
+                "condition": "325/325",
+                "active": false,
+                "stats": {
+                  "atk": 339,
+                  "def": 266,
+                  "spa": 176,
+                  "spd": 267,
+                  "spe": 412
+                },
+                "moves": [
+                  "closecombat",
+                  "crunch",
+                  "stoneedge",
+                  "icefang"
+                ],
+                "baseAbility": "dauntlessshield",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "dauntlessshield",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Fire",
+                "terastallized": ""
+              },
+              {
+                "ident": "p1: Ting-Lu",
+                "details": "Ting-Lu",
+                "condition": "514/514",
+                "active": false,
+                "stats": {
+                  "atk": 256,
+                  "def": 286,
+                  "spa": 131,
+                  "spd": 281,
+                  "spe": 130
+                },
+                "moves": [
+                  "stealthrock",
+                  "whirlwind",
+                  "earthquake",
+                  "ruination"
+                ],
+                "baseAbility": "vesselofruin",
+                "item": "leftovers",
+                "pokeball": "pokeball",
+                "ability": "vesselofruin",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Ghost",
+                "terastallized": ""
+              },
+              {
+                "ident": "p1: Latios",
+                "details": "Latios, M",
+                "condition": "301/301",
+                "active": false,
+                "stats": {
+                  "atk": 194,
+                  "def": 197,
+                  "spa": 359,
+                  "spd": 256,
+                  "spe": 350
+                },
+                "moves": [
+                  "dracometeor",
+                  "psychicnoise",
+                  "flipturn",
+                  "recover"
+                ],
+                "baseAbility": "levitate",
+                "item": "souldew",
+                "pokeball": "pokeball",
+                "ability": "levitate",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Steel",
+                "terastallized": ""
+              },
+              {
+                "ident": "p1: Gliscor",
+                "details": "Gliscor, M",
+                "condition": "352/352",
+                "active": false,
+                "stats": {
+                  "atk": 226,
+                  "def": 295,
+                  "spa": 113,
+                  "spd": 267,
+                  "spe": 225
+                },
+                "moves": [
+                  "spikes",
+                  "knockoff",
+                  "uturn",
+                  "protect"
+                ],
+                "baseAbility": "poisonheal",
+                "item": "toxicorb",
+                "pokeball": "pokeball",
+                "ability": "poisonheal",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Water",
+                "terastallized": ""
+              }
+            ]
+          },
+          "rqid": 2
+        },
+        "choice_request": {
+          "teamPreview": true,
+          "side": {
+            "name": "jev99560790",
+            "id": "p1",
+            "pokemon": [
+              {
+                "ident": "p1: Lokix",
+                "details": "Lokix, M",
+                "condition": "283/283",
+                "active": true,
+                "stats": {
+                  "atk": 333,
+                  "def": 193,
+                  "spa": 126,
+                  "spd": 146,
+                  "spe": 283
+                },
+                "moves": [
+                  "firstimpression",
+                  "uturn",
+                  "knockoff",
+                  "suckerpunch"
+                ],
+                "baseAbility": "tintedlens",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "tintedlens",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Bug",
+                "terastallized": "",
+                "name": "Lokix",
+                "speciesForme": "Lokix",
+                "level": 100,
+                "shiny": false,
+                "gender": "M",
+                "searchid": "p1: Lokix|Lokix, M",
+                "hpcolor": "",
+                "hp": 283,
+                "maxhp": 283,
+                "status": ""
+              },
+              {
+                "ident": "p1: Pecharunt",
+                "details": "Pecharunt",
+                "condition": "380/380",
+                "active": false,
+                "stats": {
+                  "atk": 162,
+                  "def": 454,
+                  "spa": 212,
+                  "spd": 212,
+                  "spe": 219
+                },
+                "moves": [
+                  "malignantchain",
+                  "foulplay",
+                  "partingshot",
+                  "recover"
+                ],
+                "baseAbility": "poisonpuppeteer",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "poisonpuppeteer",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Dark",
+                "terastallized": "",
+                "name": "Pecharunt",
+                "speciesForme": "Pecharunt",
+                "level": 100,
+                "shiny": false,
+                "gender": "",
+                "searchid": "p1: Pecharunt|Pecharunt",
+                "hpcolor": "",
+                "hp": 380,
+                "maxhp": 380,
+                "status": ""
+              },
+              {
+                "ident": "p1: Zamazenta",
+                "details": "Zamazenta",
+                "condition": "325/325",
+                "active": false,
+                "stats": {
+                  "atk": 339,
+                  "def": 266,
+                  "spa": 176,
+                  "spd": 267,
+                  "spe": 412
+                },
+                "moves": [
+                  "closecombat",
+                  "crunch",
+                  "stoneedge",
+                  "icefang"
+                ],
+                "baseAbility": "dauntlessshield",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "dauntlessshield",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Fire",
+                "terastallized": "",
+                "name": "Zamazenta",
+                "speciesForme": "Zamazenta",
+                "level": 100,
+                "shiny": false,
+                "gender": "",
+                "searchid": "p1: Zamazenta|Zamazenta",
+                "hpcolor": "",
+                "hp": 325,
+                "maxhp": 325,
+                "status": ""
+              },
+              {
+                "ident": "p1: Ting-Lu",
+                "details": "Ting-Lu",
+                "condition": "514/514",
+                "active": false,
+                "stats": {
+                  "atk": 256,
+                  "def": 286,
+                  "spa": 131,
+                  "spd": 281,
+                  "spe": 130
+                },
+                "moves": [
+                  "stealthrock",
+                  "whirlwind",
+                  "earthquake",
+                  "ruination"
+                ],
+                "baseAbility": "vesselofruin",
+                "item": "leftovers",
+                "pokeball": "pokeball",
+                "ability": "vesselofruin",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Ghost",
+                "terastallized": "",
+                "name": "Ting-Lu",
+                "speciesForme": "Ting-Lu",
+                "level": 100,
+                "shiny": false,
+                "gender": "",
+                "searchid": "p1: Ting-Lu|Ting-Lu",
+                "hpcolor": "",
+                "hp": 514,
+                "maxhp": 514,
+                "status": ""
+              },
+              {
+                "ident": "p1: Latios",
+                "details": "Latios, M",
+                "condition": "301/301",
+                "active": false,
+                "stats": {
+                  "atk": 194,
+                  "def": 197,
+                  "spa": 359,
+                  "spd": 256,
+                  "spe": 350
+                },
+                "moves": [
+                  "dracometeor",
+                  "psychicnoise",
+                  "flipturn",
+                  "recover"
+                ],
+                "baseAbility": "levitate",
+                "item": "souldew",
+                "pokeball": "pokeball",
+                "ability": "levitate",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Steel",
+                "terastallized": "",
+                "name": "Latios",
+                "speciesForme": "Latios",
+                "level": 100,
+                "shiny": false,
+                "gender": "M",
+                "searchid": "p1: Latios|Latios, M",
+                "hpcolor": "",
+                "hp": 301,
+                "maxhp": 301,
+                "status": ""
+              },
+              {
+                "ident": "p1: Gliscor",
+                "details": "Gliscor, M",
+                "condition": "352/352",
+                "active": false,
+                "stats": {
+                  "atk": 226,
+                  "def": 295,
+                  "spa": 113,
+                  "spd": 267,
+                  "spe": 225
+                },
+                "moves": [
+                  "spikes",
+                  "knockoff",
+                  "uturn",
+                  "protect"
+                ],
+                "baseAbility": "poisonheal",
+                "item": "toxicorb",
+                "pokeball": "pokeball",
+                "ability": "poisonheal",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Water",
+                "terastallized": "",
+                "name": "Gliscor",
+                "speciesForme": "Gliscor",
+                "level": 100,
+                "shiny": false,
+                "gender": "M",
+                "searchid": "p1: Gliscor|Gliscor, M",
+                "hpcolor": "",
+                "hp": 352,
+                "maxhp": 352,
+                "status": ""
+              }
+            ]
+          },
+          "rqid": 2,
+          "requestType": "team",
+          "chosenTeamSize": 1,
+          "targetable": false
+        },
+        "sides": [
+          {
+            "id": "p1",
+            "pokemon": [
+              {
+                "ident": "",
+                "species": "Lokix",
+                "details": "Lokix, M",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Bug",
+                  "Dark"
+                ],
+                "battle_types": [
+                  "Bug",
+                  "Dark"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Pecharunt",
+                "details": "Pecharunt",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Poison",
+                  "Ghost"
+                ],
+                "battle_types": [
+                  "Poison",
+                  "Ghost"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Zamazenta-*",
+                "details": "Zamazenta-*",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Fighting"
+                ],
+                "battle_types": [
+                  "Fighting"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Ting-Lu",
+                "details": "Ting-Lu",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Dark",
+                  "Ground"
+                ],
+                "battle_types": [
+                  "Dark",
+                  "Ground"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Latios",
+                "details": "Latios, M",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Dragon",
+                  "Psychic"
+                ],
+                "battle_types": [
+                  "Dragon",
+                  "Psychic"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Gliscor",
+                "details": "Gliscor, M",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Ground",
+                  "Flying"
+                ],
+                "battle_types": [
+                  "Ground",
+                  "Flying"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              }
+            ],
+            "active": [
+              null
+            ],
+            "side_conditions": {}
+          },
+          {
+            "id": "p2",
+            "pokemon": [
+              {
+                "ident": "",
+                "species": "Zapdos",
+                "details": "Zapdos",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Electric",
+                  "Flying"
+                ],
+                "battle_types": [
+                  "Electric",
+                  "Flying"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Hydrapple",
+                "details": "Hydrapple, M",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Grass",
+                  "Dragon"
+                ],
+                "battle_types": [
+                  "Grass",
+                  "Dragon"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Zamazenta-*",
+                "details": "Zamazenta-*",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Fighting"
+                ],
+                "battle_types": [
+                  "Fighting"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Slowking-Galar",
+                "details": "Slowking-Galar, M",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Poison",
+                  "Psychic"
+                ],
+                "battle_types": [
+                  "Poison",
+                  "Psychic"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Tinkaton",
+                "details": "Tinkaton, F",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Fairy",
+                  "Steel"
+                ],
+                "battle_types": [
+                  "Fairy",
+                  "Steel"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Ting-Lu",
+                "details": "Ting-Lu",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Dark",
+                  "Ground"
+                ],
+                "battle_types": [
+                  "Dark",
+                  "Ground"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              }
+            ],
+            "active": [
+              null
+            ],
+            "side_conditions": {}
+          }
+        ],
+        "weather": "",
+        "weather_duration": [
+          0,
+          0
+        ],
+        "field": [],
+        "candidates": [
+          {
+            "wire": "team 1",
+            "action": {
+              "team": 1
+            }
+          },
+          {
+            "wire": "team 2",
+            "action": {
+              "team": 2
+            }
+          },
+          {
+            "wire": "team 3",
+            "action": {
+              "team": 3
+            }
+          },
+          {
+            "wire": "team 4",
+            "action": {
+              "team": 4
+            }
+          },
+          {
+            "wire": "team 5",
+            "action": {
+              "team": 5
+            }
+          },
+          {
+            "wire": "team 6",
+            "action": {
+              "team": 6
+            }
+          }
+        ],
+        "consumed": 41,
+        "official_steps": 33,
+        "game_type": "singles",
+        "gen": 9
+      },
+      "observation_identity": {
+        "version": "official-client-v1",
+        "client_commit": "f2faebd6892b314d785a0038f77309afed36970c",
+        "server_commit": "e64915c0eab066db1d3e732b1280386468dd7415",
+        "manifest_sha256": "42c3dbd111740e8088b72c88e1581e68958f78a7bae7a8cae54890afb55eea44"
+      }
+    }
+  },
+  {
+    "source_line": 641,
+    "event_sha256": "3a78098ba8544fb226a65fd6e263558907e9e70d6860d2febd25a400cd2ed662",
+    "prefix": [
+      {
+        "event_seq": 1,
+        "protocol": ">battle-gen9ou-1\n|init|battle\n|title|aby99561521 vs. jev99561521\n\n"
+      },
+      {
+        "event_seq": 2,
+        "protocol": ">battle-gen9ou-1\n|t:|1789956153\n|gametype|singles"
+      },
+      {
+        "event_seq": 3,
+        "protocol": ">battle-gen9ou-1\n|player|p1|aby99561521|risingstarf|"
+      },
+      {
+        "event_seq": 4,
+        "protocol": ">battle-gen9ou-1\n|player|p2|jev99561521|penny|\n|teamsize|p1|6\n|teamsize|p2|6\n|gen|9\n|tier|Gen 9 OU\n|rule|HP Percentage Mod: HP is shown in percentages\n|rule|Endless Battle Clause: Forcing endless battles is banned\n|rule|Species Clause: Limit one of each Pokémon\n|rule|OHKO Clause: OHKO moves are banned\n|rule|Evasion Items Clause: Evasion items are banned\n|rule|Evasion Moves Clause: Evasion moves are banned\n|rule|Evasion Abilities Clause: Evasion abilities are banned\n|rule|Sleep Moves Clause: Sleep-inducing moves are banned\n|clearpoke\n|poke|p1|Lokix, M|\n|poke|p1|Pecharunt|\n|poke|p1|Zamazenta-*|\n|poke|p1|Ting-Lu|\n|poke|p1|Latios, M|\n|poke|p1|Gliscor, F|\n|poke|p2|Zapdos|\n|poke|p2|Hydrapple, M|\n|poke|p2|Zamazenta-*|\n|poke|p2|Slowking-Galar, M|\n|poke|p2|Tinkaton, F|\n|poke|p2|Ting-Lu|\n|teampreview"
+      },
+      {
+        "event_seq": 5,
+        "protocol": ">battle-gen9ou-1\n|request|{\"teamPreview\":true,\"side\":{\"name\":\"jev99561521\",\"id\":\"p2\",\"pokemon\":[{\"ident\":\"p2: Zapdos\",\"details\":\"Zapdos\",\"condition\":\"383/383\",\"active\":true,\"stats\":{\"atk\":166,\"def\":225,\"spa\":286,\"spd\":216,\"spe\":310},\"moves\":[\"hurricane\",\"weatherball\",\"voltswitch\",\"roost\"],\"baseAbility\":\"static\",\"item\":\"heavydutyboots\",\"pokeball\":\"pokeball\",\"ability\":\"static\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Grass\",\"terastallized\":\"\"},{\"ident\":\"p2: Hydrapple\",\"details\":\"Hydrapple, M\",\"condition\":\"415/415\",\"active\":false,\"stats\":{\"atk\":148,\"def\":300,\"spa\":308,\"spd\":210,\"spe\":127},\"moves\":[\"dracometeor\",\"gigadrain\",\"earthpower\",\"nastyplot\"],\"baseAbility\":\"regenerator\",\"item\":\"heavydutyboots\",\"pokeball\":\"pokeball\",\"ability\":\"regenerator\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Steel\",\"terastallized\":\"\"},{\"ident\":\"p2: Zamazenta\",\"details\":\"Zamazenta\",\"condition\":\"325/325\",\"active\":false,\"stats\":{\"atk\":339,\"def\":266,\"spa\":176,\"spd\":267,\"spe\":412},\"moves\":[\"closecombat\",\"crunch\",\"stoneedge\",\"heavyslam\"],\"baseAbility\":\"dauntlessshield\",\"item\":\"heavydutyboots\",\"pokeball\":\"pokeball\",\"ability\":\"dauntlessshield\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Steel\",\"terastallized\":\"\"},{\"ident\":\"p2: Slowking\",\"details\":\"Slowking-Galar, M\",\"condition\":\"393/393\",\"active\":false,\"stats\":{\"atk\":135,\"def\":198,\"spa\":256,\"spd\":350,\"spe\":58},\"moves\":[\"sludgebomb\",\"futuresight\",\"flamethrower\",\"chillyreception\"],\"baseAbility\":\"regenerator\",\"item\":\"heavydutyboots\",\"pokeball\":\"pokeball\",\"ability\":\"regenerator\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Water\",\"terastallized\":\"\"},{\"ident\":\"p2: Tinkaton\",\"details\":\"Tinkaton, F\",\"condition\":\"373/373\",\"active\":false,\"stats\":{\"atk\":186,\"def\":190,\"spa\":158,\"spd\":252,\"spe\":311},\"moves\":[\"gigatonhammer\",\"thunderwave\",\"encore\",\"stealthrock\"],\"baseAbility\":\"moldbreaker\",\"item\":\"airballoon\",\"pokeball\":\"pokeball\",\"ability\":\"moldbreaker\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Water\",\"terastallized\":\"\"},{\"ident\":\"p2: Ting-Lu\",\"details\":\"Ting-Lu\",\"condition\":\"513/513\",\"active\":false,\"stats\":{\"atk\":256,\"def\":381,\"spa\":131,\"spd\":196,\"spe\":130},\"moves\":[\"earthquake\",\"bodypress\",\"ruination\",\"whirlwind\"],\"baseAbility\":\"vesselofruin\",\"item\":\"leftovers\",\"pokeball\":\"pokeball\",\"ability\":\"vesselofruin\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Ghost\",\"terastallized\":\"\"}]},\"rqid\":3}"
+      }
+    ],
+    "event": {
+      "at": 1789956156.3743894,
+      "event_seq": 641,
+      "type": "input",
+      "decision": "jev99561521-3-640",
+      "battle": "battle-gen9ou-1",
+      "actor": "p2",
+      "payload": {
+        "state": {
+          "version": "jev-choice-v1",
+          "format": "gen9ou singles",
+          "turn": 0,
+          "actor": "p2",
+          "request_id": 3,
+          "decision_kind": "lead",
+          "self_team": [
+            {
+              "slot": 1,
+              "species": "Zapdos",
+              "ident": "p2: Zapdos",
+              "condition": "383/383",
+              "active": true,
+              "stats": {
+                "atk": 166,
+                "def": 225,
+                "spa": 286,
+                "spd": 216,
+                "spe": 310
+              },
+              "item": "heavydutyboots",
+              "ability": "static",
+              "baseAbility": "static",
+              "teraType": "Grass",
+              "terastallized": "",
+              "types": [
+                "Electric",
+                "Flying"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "hurricane",
+                  "type": "Flying",
+                  "category": "Special",
+                  "power": 110,
+                  "accuracy": 70,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "weatherball",
+                  "type": "Normal",
+                  "category": "Special",
+                  "power": 50,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "voltswitch",
+                  "type": "Electric",
+                  "category": "Special",
+                  "power": 70,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "roost",
+                  "type": "Flying",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": true,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                }
+              ],
+              "current_move_slots": []
+            },
+            {
+              "slot": 2,
+              "species": "Hydrapple",
+              "ident": "p2: Hydrapple",
+              "condition": "415/415",
+              "active": false,
+              "stats": {
+                "atk": 148,
+                "def": 300,
+                "spa": 308,
+                "spd": 210,
+                "spe": 127
+              },
+              "item": "heavydutyboots",
+              "ability": "regenerator",
+              "baseAbility": "regenerator",
+              "teraType": "Steel",
+              "terastallized": "",
+              "types": [
+                "Grass",
+                "Dragon"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "dracometeor",
+                  "type": "Dragon",
+                  "category": "Special",
+                  "power": 130,
+                  "accuracy": 90,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "gigadrain",
+                  "type": "Grass",
+                  "category": "Special",
+                  "power": 75,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "earthpower",
+                  "type": "Ground",
+                  "category": "Special",
+                  "power": 90,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "nastyplot",
+                  "type": "Dark",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": true,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                }
+              ]
+            },
+            {
+              "slot": 3,
+              "species": "Zamazenta",
+              "ident": "p2: Zamazenta",
+              "condition": "325/325",
+              "active": false,
+              "stats": {
+                "atk": 339,
+                "def": 266,
+                "spa": 176,
+                "spd": 267,
+                "spe": 412
+              },
+              "item": "heavydutyboots",
+              "ability": "dauntlessshield",
+              "baseAbility": "dauntlessshield",
+              "teraType": "Steel",
+              "terastallized": "",
+              "types": [
+                "Fighting"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "closecombat",
+                  "type": "Fighting",
+                  "category": "Physical",
+                  "power": 120,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "crunch",
+                  "type": "Dark",
+                  "category": "Physical",
+                  "power": 80,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "stoneedge",
+                  "type": "Rock",
+                  "category": "Physical",
+                  "power": 100,
+                  "accuracy": 80,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "heavyslam",
+                  "type": "Steel",
+                  "category": "Physical",
+                  "power": 0,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                }
+              ]
+            },
+            {
+              "slot": 4,
+              "species": "Slowking-Galar",
+              "ident": "p2: Slowking",
+              "condition": "393/393",
+              "active": false,
+              "stats": {
+                "atk": 135,
+                "def": 198,
+                "spa": 256,
+                "spd": 350,
+                "spe": 58
+              },
+              "item": "heavydutyboots",
+              "ability": "regenerator",
+              "baseAbility": "regenerator",
+              "teraType": "Water",
+              "terastallized": "",
+              "types": [
+                "Poison",
+                "Psychic"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "sludgebomb",
+                  "type": "Poison",
+                  "category": "Special",
+                  "power": 90,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "futuresight",
+                  "type": "Psychic",
+                  "category": "Special",
+                  "power": 120,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "flamethrower",
+                  "type": "Fire",
+                  "category": "Special",
+                  "power": 90,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "chillyreception",
+                  "type": "Ice",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": true,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                }
+              ]
+            },
+            {
+              "slot": 5,
+              "species": "Tinkaton",
+              "ident": "p2: Tinkaton",
+              "condition": "373/373",
+              "active": false,
+              "stats": {
+                "atk": 186,
+                "def": 190,
+                "spa": 158,
+                "spd": 252,
+                "spe": 311
+              },
+              "item": "airballoon",
+              "ability": "moldbreaker",
+              "baseAbility": "moldbreaker",
+              "teraType": "Water",
+              "terastallized": "",
+              "types": [
+                "Fairy",
+                "Steel"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "gigatonhammer",
+                  "type": "Steel",
+                  "category": "Physical",
+                  "power": 160,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "thunderwave",
+                  "type": "Electric",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": 90,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "encore",
+                  "type": "Normal",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "stealthrock",
+                  "type": "Rock",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": true,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                }
+              ]
+            },
+            {
+              "slot": 6,
+              "species": "Ting-Lu",
+              "ident": "p2: Ting-Lu",
+              "condition": "513/513",
+              "active": false,
+              "stats": {
+                "atk": 256,
+                "def": 381,
+                "spa": 131,
+                "spd": 196,
+                "spe": 130
+              },
+              "item": "leftovers",
+              "ability": "vesselofruin",
+              "baseAbility": "vesselofruin",
+              "teraType": "Ghost",
+              "terastallized": "",
+              "types": [
+                "Dark",
+                "Ground"
+              ],
+              "boosts": "unknown",
+              "status": "unknown",
+              "volatiles": "unknown",
+              "turnstatuses": "unknown",
+              "movestatuses": "unknown",
+              "status_data": "unknown",
+              "tera_type": "unknown",
+              "moves": [
+                {
+                  "id": "earthquake",
+                  "type": "Ground",
+                  "category": "Physical",
+                  "power": 100,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "bodypress",
+                  "type": "Fighting",
+                  "category": "Physical",
+                  "power": 80,
+                  "accuracy": 100,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "ruination",
+                  "type": "Dark",
+                  "category": "Special",
+                  "power": 0,
+                  "accuracy": 90,
+                  "priority": 0,
+                  "current_pp": "unknown"
+                },
+                {
+                  "id": "whirlwind",
+                  "type": "Normal",
+                  "category": "Status",
+                  "power": 0,
+                  "accuracy": true,
+                  "priority": -6,
+                  "current_pp": "unknown"
+                }
+              ]
+            }
+          ],
+          "opponent_team": [
+            {
+              "preview_slot": 1,
+              "ident": null,
+              "species": "Lokix",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Bug",
+                "Dark"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            },
+            {
+              "preview_slot": 2,
+              "ident": null,
+              "species": "Pecharunt",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Poison",
+                "Ghost"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            },
+            {
+              "preview_slot": 3,
+              "ident": null,
+              "species": "Zamazenta-*",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Fighting"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            },
+            {
+              "preview_slot": 4,
+              "ident": null,
+              "species": "Ting-Lu",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Dark",
+                "Ground"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            },
+            {
+              "preview_slot": 5,
+              "ident": null,
+              "species": "Latios",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Dragon",
+                "Psychic"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            },
+            {
+              "preview_slot": 6,
+              "ident": null,
+              "species": "Gliscor",
+              "active": false,
+              "fainted": false,
+              "types": [
+                "Ground",
+                "Flying"
+              ],
+              "boosts": {},
+              "status": "",
+              "volatiles": {},
+              "turnstatuses": {},
+              "movestatuses": {},
+              "status_data": {
+                "sleepTurns": 0,
+                "toxicTurns": 0
+              },
+              "tera_type": "",
+              "hp": "unknown",
+              "ability": "unknown",
+              "item": "unknown",
+              "moves": []
+            }
+          ],
+          "weather": "",
+          "weather_duration": [
+            0,
+            0
+          ],
+          "field": [],
+          "side_conditions": {
+            "p1": {},
+            "p2": {}
+          },
+          "recent_completed_turn_events": [],
+          "information_rules": "Opponent sets and pending action are unknown. Move power is base power, not calculated damage. Public HP is rounded. Effect counters are official client data, not guaranteed remaining durations."
+        },
+        "questions": {
+          "action": {
+            "type": "choice",
+            "instructions": "Choose exactly one legal candidate that best improves the controlled side's chance of winning this Generation 9 OU singles battle. Compare all available moves and switches. Balance immediate offensive value with survival, positioning, status, hazards, remaining team roles, and conservation or timely use of Terastallization. A Terastallization candidate means Terastallize and use that move in the same turn; an ordinary move candidate does not spend Terastallization.\nUse the current state as authoritative. The opponent's unrevealed moves, ability, item, stats and pending action are unknown; never treat guesses as observed facts. Base power is not calculated damage. Take move priority, speed changes, immunities and accuracy into account without assuming guaranteed outcomes. Public opponent HP is rounded. Recent completed-turn events are history, not a replacement for the current state.\nFor forced switches, choose the best next Pokemon among the supplied switch candidates. The candidate IDs identify exact request slots; use their descriptions and the team slot numbers to identify the intended action. All candidates are legal for this request. Select the best available candidate even if every option is unfavorable. No free-text explanation or tool call is required.\n\nChoose the lead Pokemon using your own team and the opponent's public team preview. Other team slots keep their original relative order.",
+            "criteria": {
+              "team_1": {
+                "kind": "team",
+                "slot": 1,
+                "pokemon": "Zapdos"
+              },
+              "team_2": {
+                "kind": "team",
+                "slot": 2,
+                "pokemon": "Hydrapple"
+              },
+              "team_3": {
+                "kind": "team",
+                "slot": 3,
+                "pokemon": "Zamazenta"
+              },
+              "team_4": {
+                "kind": "team",
+                "slot": 4,
+                "pokemon": "Slowking-Galar"
+              },
+              "team_5": {
+                "kind": "team",
+                "slot": 5,
+                "pokemon": "Tinkaton"
+              },
+              "team_6": {
+                "kind": "team",
+                "slot": 6,
+                "pokemon": "Ting-Lu"
+              }
+            }
+          }
+        }
+      },
+      "commands": {
+        "team_1": "/team 123456",
+        "team_2": "/team 213456",
+        "team_3": "/team 312456",
+        "team_4": "/team 412356",
+        "team_5": "/team 512346",
+        "team_6": "/team 612345"
+      },
+      "boundary": {
+        "protocol_event_seq": 5,
+        "line_index": 1
+      },
+      "official": {
+        "turn": 0,
+        "request": {
+          "teamPreview": true,
+          "side": {
+            "name": "jev99561521",
+            "id": "p2",
+            "pokemon": [
+              {
+                "ident": "p2: Zapdos",
+                "details": "Zapdos",
+                "condition": "383/383",
+                "active": true,
+                "stats": {
+                  "atk": 166,
+                  "def": 225,
+                  "spa": 286,
+                  "spd": 216,
+                  "spe": 310
+                },
+                "moves": [
+                  "hurricane",
+                  "weatherball",
+                  "voltswitch",
+                  "roost"
+                ],
+                "baseAbility": "static",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "static",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Grass",
+                "terastallized": ""
+              },
+              {
+                "ident": "p2: Hydrapple",
+                "details": "Hydrapple, M",
+                "condition": "415/415",
+                "active": false,
+                "stats": {
+                  "atk": 148,
+                  "def": 300,
+                  "spa": 308,
+                  "spd": 210,
+                  "spe": 127
+                },
+                "moves": [
+                  "dracometeor",
+                  "gigadrain",
+                  "earthpower",
+                  "nastyplot"
+                ],
+                "baseAbility": "regenerator",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "regenerator",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Steel",
+                "terastallized": ""
+              },
+              {
+                "ident": "p2: Zamazenta",
+                "details": "Zamazenta",
+                "condition": "325/325",
+                "active": false,
+                "stats": {
+                  "atk": 339,
+                  "def": 266,
+                  "spa": 176,
+                  "spd": 267,
+                  "spe": 412
+                },
+                "moves": [
+                  "closecombat",
+                  "crunch",
+                  "stoneedge",
+                  "heavyslam"
+                ],
+                "baseAbility": "dauntlessshield",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "dauntlessshield",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Steel",
+                "terastallized": ""
+              },
+              {
+                "ident": "p2: Slowking",
+                "details": "Slowking-Galar, M",
+                "condition": "393/393",
+                "active": false,
+                "stats": {
+                  "atk": 135,
+                  "def": 198,
+                  "spa": 256,
+                  "spd": 350,
+                  "spe": 58
+                },
+                "moves": [
+                  "sludgebomb",
+                  "futuresight",
+                  "flamethrower",
+                  "chillyreception"
+                ],
+                "baseAbility": "regenerator",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "regenerator",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Water",
+                "terastallized": ""
+              },
+              {
+                "ident": "p2: Tinkaton",
+                "details": "Tinkaton, F",
+                "condition": "373/373",
+                "active": false,
+                "stats": {
+                  "atk": 186,
+                  "def": 190,
+                  "spa": 158,
+                  "spd": 252,
+                  "spe": 311
+                },
+                "moves": [
+                  "gigatonhammer",
+                  "thunderwave",
+                  "encore",
+                  "stealthrock"
+                ],
+                "baseAbility": "moldbreaker",
+                "item": "airballoon",
+                "pokeball": "pokeball",
+                "ability": "moldbreaker",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Water",
+                "terastallized": ""
+              },
+              {
+                "ident": "p2: Ting-Lu",
+                "details": "Ting-Lu",
+                "condition": "513/513",
+                "active": false,
+                "stats": {
+                  "atk": 256,
+                  "def": 381,
+                  "spa": 131,
+                  "spd": 196,
+                  "spe": 130
+                },
+                "moves": [
+                  "earthquake",
+                  "bodypress",
+                  "ruination",
+                  "whirlwind"
+                ],
+                "baseAbility": "vesselofruin",
+                "item": "leftovers",
+                "pokeball": "pokeball",
+                "ability": "vesselofruin",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Ghost",
+                "terastallized": ""
+              }
+            ]
+          },
+          "rqid": 3
+        },
+        "choice_request": {
+          "teamPreview": true,
+          "side": {
+            "name": "jev99561521",
+            "id": "p2",
+            "pokemon": [
+              {
+                "ident": "p2: Zapdos",
+                "details": "Zapdos",
+                "condition": "383/383",
+                "active": true,
+                "stats": {
+                  "atk": 166,
+                  "def": 225,
+                  "spa": 286,
+                  "spd": 216,
+                  "spe": 310
+                },
+                "moves": [
+                  "hurricane",
+                  "weatherball",
+                  "voltswitch",
+                  "roost"
+                ],
+                "baseAbility": "static",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "static",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Grass",
+                "terastallized": "",
+                "name": "Zapdos",
+                "speciesForme": "Zapdos",
+                "level": 100,
+                "shiny": false,
+                "gender": "",
+                "searchid": "p2: Zapdos|Zapdos",
+                "hpcolor": "",
+                "hp": 383,
+                "maxhp": 383,
+                "status": ""
+              },
+              {
+                "ident": "p2: Hydrapple",
+                "details": "Hydrapple, M",
+                "condition": "415/415",
+                "active": false,
+                "stats": {
+                  "atk": 148,
+                  "def": 300,
+                  "spa": 308,
+                  "spd": 210,
+                  "spe": 127
+                },
+                "moves": [
+                  "dracometeor",
+                  "gigadrain",
+                  "earthpower",
+                  "nastyplot"
+                ],
+                "baseAbility": "regenerator",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "regenerator",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Steel",
+                "terastallized": "",
+                "name": "Hydrapple",
+                "speciesForme": "Hydrapple",
+                "level": 100,
+                "shiny": false,
+                "gender": "M",
+                "searchid": "p2: Hydrapple|Hydrapple, M",
+                "hpcolor": "",
+                "hp": 415,
+                "maxhp": 415,
+                "status": ""
+              },
+              {
+                "ident": "p2: Zamazenta",
+                "details": "Zamazenta",
+                "condition": "325/325",
+                "active": false,
+                "stats": {
+                  "atk": 339,
+                  "def": 266,
+                  "spa": 176,
+                  "spd": 267,
+                  "spe": 412
+                },
+                "moves": [
+                  "closecombat",
+                  "crunch",
+                  "stoneedge",
+                  "heavyslam"
+                ],
+                "baseAbility": "dauntlessshield",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "dauntlessshield",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Steel",
+                "terastallized": "",
+                "name": "Zamazenta",
+                "speciesForme": "Zamazenta",
+                "level": 100,
+                "shiny": false,
+                "gender": "",
+                "searchid": "p2: Zamazenta|Zamazenta",
+                "hpcolor": "",
+                "hp": 325,
+                "maxhp": 325,
+                "status": ""
+              },
+              {
+                "ident": "p2: Slowking",
+                "details": "Slowking-Galar, M",
+                "condition": "393/393",
+                "active": false,
+                "stats": {
+                  "atk": 135,
+                  "def": 198,
+                  "spa": 256,
+                  "spd": 350,
+                  "spe": 58
+                },
+                "moves": [
+                  "sludgebomb",
+                  "futuresight",
+                  "flamethrower",
+                  "chillyreception"
+                ],
+                "baseAbility": "regenerator",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "regenerator",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Water",
+                "terastallized": "",
+                "name": "Slowking",
+                "speciesForme": "Slowking-Galar",
+                "level": 100,
+                "shiny": false,
+                "gender": "M",
+                "searchid": "p2: Slowking|Slowking-Galar, M",
+                "hpcolor": "",
+                "hp": 393,
+                "maxhp": 393,
+                "status": ""
+              },
+              {
+                "ident": "p2: Tinkaton",
+                "details": "Tinkaton, F",
+                "condition": "373/373",
+                "active": false,
+                "stats": {
+                  "atk": 186,
+                  "def": 190,
+                  "spa": 158,
+                  "spd": 252,
+                  "spe": 311
+                },
+                "moves": [
+                  "gigatonhammer",
+                  "thunderwave",
+                  "encore",
+                  "stealthrock"
+                ],
+                "baseAbility": "moldbreaker",
+                "item": "airballoon",
+                "pokeball": "pokeball",
+                "ability": "moldbreaker",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Water",
+                "terastallized": "",
+                "name": "Tinkaton",
+                "speciesForme": "Tinkaton",
+                "level": 100,
+                "shiny": false,
+                "gender": "F",
+                "searchid": "p2: Tinkaton|Tinkaton, F",
+                "hpcolor": "",
+                "hp": 373,
+                "maxhp": 373,
+                "status": ""
+              },
+              {
+                "ident": "p2: Ting-Lu",
+                "details": "Ting-Lu",
+                "condition": "513/513",
+                "active": false,
+                "stats": {
+                  "atk": 256,
+                  "def": 381,
+                  "spa": 131,
+                  "spd": 196,
+                  "spe": 130
+                },
+                "moves": [
+                  "earthquake",
+                  "bodypress",
+                  "ruination",
+                  "whirlwind"
+                ],
+                "baseAbility": "vesselofruin",
+                "item": "leftovers",
+                "pokeball": "pokeball",
+                "ability": "vesselofruin",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Ghost",
+                "terastallized": "",
+                "name": "Ting-Lu",
+                "speciesForme": "Ting-Lu",
+                "level": 100,
+                "shiny": false,
+                "gender": "",
+                "searchid": "p2: Ting-Lu|Ting-Lu",
+                "hpcolor": "",
+                "hp": 513,
+                "maxhp": 513,
+                "status": ""
+              }
+            ]
+          },
+          "rqid": 3,
+          "requestType": "team",
+          "chosenTeamSize": 1,
+          "targetable": false
+        },
+        "sides": [
+          {
+            "id": "p1",
+            "pokemon": [
+              {
+                "ident": "",
+                "species": "Lokix",
+                "details": "Lokix, M",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Bug",
+                  "Dark"
+                ],
+                "battle_types": [
+                  "Bug",
+                  "Dark"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Pecharunt",
+                "details": "Pecharunt",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Poison",
+                  "Ghost"
+                ],
+                "battle_types": [
+                  "Poison",
+                  "Ghost"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Zamazenta-*",
+                "details": "Zamazenta-*",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Fighting"
+                ],
+                "battle_types": [
+                  "Fighting"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Ting-Lu",
+                "details": "Ting-Lu",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Dark",
+                  "Ground"
+                ],
+                "battle_types": [
+                  "Dark",
+                  "Ground"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Latios",
+                "details": "Latios, M",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Dragon",
+                  "Psychic"
+                ],
+                "battle_types": [
+                  "Dragon",
+                  "Psychic"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Gliscor",
+                "details": "Gliscor, F",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Ground",
+                  "Flying"
+                ],
+                "battle_types": [
+                  "Ground",
+                  "Flying"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              }
+            ],
+            "active": [
+              null
+            ],
+            "side_conditions": {}
+          },
+          {
+            "id": "p2",
+            "pokemon": [
+              {
+                "ident": "",
+                "species": "Zapdos",
+                "details": "Zapdos",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Electric",
+                  "Flying"
+                ],
+                "battle_types": [
+                  "Electric",
+                  "Flying"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Hydrapple",
+                "details": "Hydrapple, M",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Grass",
+                  "Dragon"
+                ],
+                "battle_types": [
+                  "Grass",
+                  "Dragon"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Zamazenta-*",
+                "details": "Zamazenta-*",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Fighting"
+                ],
+                "battle_types": [
+                  "Fighting"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Slowking-Galar",
+                "details": "Slowking-Galar, M",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Poison",
+                  "Psychic"
+                ],
+                "battle_types": [
+                  "Poison",
+                  "Psychic"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Tinkaton",
+                "details": "Tinkaton, F",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Fairy",
+                  "Steel"
+                ],
+                "battle_types": [
+                  "Fairy",
+                  "Steel"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              },
+              {
+                "ident": "",
+                "species": "Ting-Lu",
+                "details": "Ting-Lu",
+                "active": false,
+                "fainted": false,
+                "hp": 1000,
+                "max_hp": 1000,
+                "level": 100,
+                "status": "",
+                "status_data": {
+                  "sleepTurns": 0,
+                  "toxicTurns": 0
+                },
+                "boosts": {},
+                "ability": "",
+                "baseAbility": "",
+                "item": "",
+                "prevItem": "",
+                "itemEffect": "",
+                "prevItemEffect": "",
+                "moves": [],
+                "types": [
+                  "Dark",
+                  "Ground"
+                ],
+                "battle_types": [
+                  "Dark",
+                  "Ground"
+                ],
+                "tera_type": "",
+                "volatiles": {},
+                "turnstatuses": {},
+                "movestatuses": {}
+              }
+            ],
+            "active": [
+              null
+            ],
+            "side_conditions": {}
+          }
+        ],
+        "weather": "",
+        "weather_duration": [
+          0,
+          0
+        ],
+        "field": [],
+        "candidates": [
+          {
+            "wire": "team 1",
+            "action": {
+              "team": 1
+            }
+          },
+          {
+            "wire": "team 2",
+            "action": {
+              "team": 2
+            }
+          },
+          {
+            "wire": "team 3",
+            "action": {
+              "team": 3
+            }
+          },
+          {
+            "wire": "team 4",
+            "action": {
+              "team": 4
+            }
+          },
+          {
+            "wire": "team 5",
+            "action": {
+              "team": 5
+            }
+          },
+          {
+            "wire": "team 6",
+            "action": {
+              "team": 6
+            }
+          }
+        ],
+        "consumed": 39,
+        "official_steps": 32,
+        "game_type": "singles",
+        "gen": 9
+      },
+      "observation_identity": {
+        "version": "official-client-v1",
+        "client_commit": "f2faebd6892b314d785a0038f77309afed36970c",
+        "server_commit": "e64915c0eab066db1d3e732b1280386468dd7415",
+        "manifest_sha256": "42c3dbd111740e8088b72c88e1581e68958f78a7bae7a8cae54890afb55eea44"
+      }
+    }
+  }
+]

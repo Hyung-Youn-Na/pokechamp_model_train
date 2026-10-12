@@ -1,0 +1,15 @@
+{
+  "v1.4.0": {
+    "version": "v1.4.0",
+    "base_sha256": "161f03004723e6579801ceaf390d5d51922309b362dac8cde2d185e32ccd2a45",
+    "field_catalog_sha256": "c90f1324e1070864e26e3fb2e5344efd8acf43489f6e39ccc720ac6c5fdc6359",
+    "field_guide_sha256": "a4af3c64fbcfa774d365e34e2a8bd602c6a29cfd5d81b7e123b69a3b185e741f",
+    "prompt_sha256": "06da5fe170b1499b2ec3220498d9158b14b1319d7db12cac79bd8b8cf63a45c1",
+    "effect_reference_identity": {
+      "version": "gen9-effects-v1",
+      "source_commit": "e64915c0eab066db1d3e732b1280386468dd7415",
+      "asset_sha256": "2847e37ebf9896c3de2963c143d13655b80508275ed2980a60fa2039183f8238",
+      "license_sha256": "4c7b14baec158ecd73aa62100c0fcda0844c1eace766c8a30ebf38627bc59cac"
+    }
+  }
+}

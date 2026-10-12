@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+workspace_root="$(cd -- "$script_dir/.." && pwd)"
+export PYTHONPATH="$workspace_root${PYTHONPATH:+:$PYTHONPATH}"
+export PYTHONHASHSEED=20261001
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1
+export TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+export CUDA_VISIBLE_DEVICES=""
+cd "$workspace_root"
+exec /ref/kev/.venv/bin/python -m integration.pokechamp.imitation "$@"

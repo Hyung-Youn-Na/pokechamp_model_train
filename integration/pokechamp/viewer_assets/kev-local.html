@@ -1,0 +1,68 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__EXPERIMENT__ · Kev 후보 확률과 리플레이</title>
+<style>
+body{font:15px system-ui;margin:20px;color:#172735;background:#f5f7f9;line-height:1.55}a{color:#17669d}
+.layout{display:grid;grid-template-columns:minmax(500px,1fr) minmax(420px,1fr);gap:18px}
+section{background:white;border:1px solid #d9e1e8;border-radius:8px;padding:16px;min-width:0}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:560px;overflow:auto;background:#f2f5f8;padding:12px}
+table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:8px;border-bottom:1px solid #ddd}
+.chosen{background:#d8efe4}small{display:block;color:#5a6771}#selection{font-size:20px;font-weight:700}
+button,select{font:inherit;padding:7px;margin:3px}select{max-width:65vw}iframe{width:100%;height:780px;border:0}
+.key{color:#7139a4}.string{color:#075d5a}.number{color:#a43714}.literal{color:#81522b}summary{cursor:pointer;font-weight:600}
+.notice{padding:8px 12px;background:#fff7de;border-left:4px solid #d6a139}.probability{font-variant-numeric:tabular-nums}
+@media(max-width:1050px){.layout{grid-template-columns:1fr}}
+</style>
+<a href="../index.html">← 경기 목록</a><h1 id="title"></h1><p id="outcome"></p>
+<p class="notice">후보별 p(true)는 모델의 독립 추정값입니다. 연결 검사이며 성능 향상을 입증하지 않습니다.
+입력·응답·선택·전송·공개 로그는 오프라인에서 열립니다. 리플레이 애니메이션에는 인터넷이 필요합니다.</p>
+<button id="previous">← 이전</button><select id="decision" aria-label="결정 탐색"></select><button id="next">다음 →</button>
+<div class="layout"><section><h2 id="turn"></h2><p id="selection"></p><p id="sent-action"></p><p id="latency"></p><p id="usage"></p>
+<table><thead><tr><th>행동</th><th>종류</th><th>p(true)</th></tr></thead><tbody id="p-values"></tbody></table>
+<details open><summary>실제 입력 요청 · state는 문자열</summary><button data-copy="request">복사</button><button data-download="request">다운로드</button><pre id="request"></pre></details>
+<details open><summary>실제 응답</summary><button data-copy="response">복사</button><button data-download="response">다운로드</button><pre id="response"></pre></details>
+<details><summary>상태 읽기 · 요청 문자열을 JSON으로 파싱한 열람본</summary><pre id="state"></pre></details>
+<details><summary>선택·rqid 재검증·실제 전송·입력 해시</summary><pre id="technical"></pre></details>
+<details><summary>결정 원기록 · 오류/미수신 포함</summary><pre id="records"></pre></details>
+<p id="source"></p><a href="decisions.json" download>전체 결정 JSON 다운로드</a>
+</section><section><h2>리플레이·오프라인 경기 로그</h2><iframe src="replay.html#embedded" title="배틀 리플레이"></iframe>
+<a href="showdown.log" download>공개 protocol 다운로드</a></section></div>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+'use strict';
+const data=JSON.parse(document.getElementById('data').textContent),decisions=data.decisions;
+const $=id=>document.getElementById(id);let selected=0;
+const kinds={team:'선봉',switch:'교체',move:'기술'};
+function label(a){if(!a)return '미확인';if(a.kind==='team')return '선봉 → '+a.pokemon;if(a.kind==='switch')return '교체 → '+a.pokemon;return (a.name??'기술명 미확인')+(a.action_id.endsWith('_terastallize')?' · 테라스탈':'')}
+function chosen(d,key){return label(d.actions.find(a=>a.action_id===key))}
+function json(id,value){const el=$(id);el.replaceChildren();const s=JSON.stringify(value??null,null,2);
+ const pattern=/("(?:\\.|[^"\\])*"\s*:|"(?:\\.|[^"\\])*"|-?\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|\btrue\b|\bfalse\b|\bnull\b)/g;let offset=0;
+ for(const match of s.matchAll(pattern)){el.append(document.createTextNode(s.slice(offset,match.index)));const span=document.createElement('span');span.className=match[0].startsWith('"')?(match[0].endsWith(':')?'key':'string'):(/^(true|false|null)$/.test(match[0])?'literal':'number');span.textContent=match[0];el.append(span);offset=match.index+match[0].length}el.append(document.createTextNode(s.slice(offset)))}
+function number(v,suffix=''){return typeof v==='number'?v.toFixed(3)+suffix:'—'}
+$('title').textContent=`${data.experiment} · ${data.outcome.slot}경기 · Kev ${data.outcome.kev_actor}`;
+const outcomeLabels={player_won:'승리',player_lost:'패배',tied:'무승부'};
+$('outcome').textContent=`${data.outcome.completed?'정상 종료':'미완료'} · ${outcomeLabels[data.outcome.outcome]??'결과 미확정'} · ${data.outcome.turns??'—'}턴 · 결정 ${decisions.length}개`;
+$('source').textContent=`원본: ${data.source.directory} · events SHA-256: ${data.source.events_sha256}`;
+decisions.forEach((d,i)=>{const option=document.createElement('option');option.value=i;option.textContent=`${i+1} · ${d.turn}턴 · ${d.selection?chosen(d,d.selection.choice):'선택 없음'}`;$('decision').append(option)});
+function show(i){
+ if(!decisions.length){$('selection').textContent='보존된 입력 없음';$('previous').disabled=$('next').disabled=true;return}
+ selected=Math.max(0,Math.min(decisions.length-1,i));const d=decisions[selected];$('decision').value=selected;
+ $('previous').disabled=selected===0;$('next').disabled=selected===decisions.length-1;
+ $('turn').textContent=`결정 ${selected+1}/${decisions.length} · ${d.turn}턴 · ${d.kind}`;
+ $('selection').textContent=`선택: ${d.selection?chosen(d,d.selection.choice):'없음'}`;
+ const sent=d.wire?Object.keys(d.commands).find(key=>d.commands[key]===d.wire.command):null;
+ $('sent-action').textContent=`실제 전송: ${d.wire?chosen(d,sent)+' · '+d.wire.command:'없음'} · rqid 재검증 ${d.revalidation?(d.revalidation.passed?'통과':'실패'):'없음'}`;
+ $('latency').textContent=`서버 ${number(d.response?.latency_ms,'ms')} · 응답 대기 ${number(d.technical.elapsed_seconds,'초')} · 입력 생성 ${number(d.technical.input_generation_seconds,'초')}`;
+ $('usage').textContent=`입력 토큰 ${d.response?.usage?.input_tokens??'—'} · 출력 토큰 ${d.response?.usage?.output_tokens??'—'}`;
+ $('p-values').replaceChildren();
+ d.actions.forEach(a=>{const tr=document.createElement('tr');tr.dataset.actionId=a.action_id;if(a.action_id===d.selection?.choice)tr.className='chosen';
+ const name=document.createElement('td');name.append(document.createTextNode(label(a)));const id=document.createElement('small');id.textContent=a.action_id;name.append(id);tr.append(name);
+ const kind=document.createElement('td');kind.textContent=kinds[a.kind]??a.kind;tr.append(kind);const p=document.createElement('td');p.className='probability';const value=d.response?.answers?.[a.action_id]?.noul;p.textContent=typeof value==='number'?value.toFixed(4):'미수신';tr.append(p);$('p-values').append(tr)});
+ json('request',d.request);json('response',d.response);json('state',JSON.parse(d.payload_json));
+ json('technical',{input_sha256:d.input_sha256,selection:d.selection,revalidation:d.revalidation,wire:d.wire,...d.technical});json('records',d.records);
+}
+$('previous').onclick=()=>show(selected-1);$('next').onclick=()=>show(selected+1);$('decision').onchange=e=>show(Number(e.target.value));
+document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(e.target.tagName)||e.target.isContentEditable)return;if(e.key==='ArrowLeft'){e.preventDefault();show(selected-1)}if(e.key==='ArrowRight'){e.preventDefault();show(selected+1)}});
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{const text=$(b.dataset.copy).textContent;try{await navigator.clipboard.writeText(text)}catch{const t=document.createElement('textarea');t.value=text;document.body.append(t);t.select();document.execCommand('copy');t.remove()}});
+document.querySelectorAll('[data-download]').forEach(b=>b.onclick=()=>{if(!decisions.length)return;const blob=new Blob([$(b.dataset.download).textContent],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`${decisions[selected].id}-${b.dataset.download}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),0)});
+show(0);
+</script></html>

@@ -1,0 +1,369 @@
+{
+  "source": {
+    "experiment": "EX-028",
+    "bundle": "/workspace/.pokechamp-data/experiments/ex028-c0-compare32/battles/B-io-abyssal-b01-s0-a1-p1",
+    "event_seq": 40
+  },
+  "scenarios": [
+    {
+      "attacker": {
+        "entry_effects_observed": true,
+        "name": "tinkaton",
+        "options": {
+          "ability": "moldbreaker",
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 90,
+          "evs": {
+            "atk": 0,
+            "def": 0,
+            "hp": 252,
+            "spa": 0,
+            "spd": 24,
+            "spe": 232
+          },
+          "item": "",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "level": 100,
+          "nature": "Jolly",
+          "status": ""
+        }
+      },
+      "defender": {
+        "entry_effects_observed": true,
+        "expectedStats": {
+          "atk": 339,
+          "def": 266,
+          "hp": 325,
+          "spa": 176,
+          "spd": 267,
+          "spe": 412
+        },
+        "name": "zamazenta",
+        "options": {
+          "ability": "dauntlessshield",
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": -1,
+            "spe": 0
+          },
+          "curHP": 243,
+          "evs": {
+            "atk": 252,
+            "def": 0,
+            "hp": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "item": "heavydutyboots",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "level": 100,
+          "nature": "Jolly",
+          "status": "par"
+        }
+      },
+      "field": {
+        "attackerSide": {},
+        "defenderSide": {}
+      },
+      "move": "gigatonhammer",
+      "scenario_id": "in-zamazenta-gigatonhammer-h0-hp90"
+    },
+    {
+      "attacker": {
+        "entry_effects_observed": true,
+        "name": "tinkaton",
+        "options": {
+          "ability": "moldbreaker",
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 93,
+          "evs": {
+            "atk": 0,
+            "def": 0,
+            "hp": 252,
+            "spa": 0,
+            "spd": 24,
+            "spe": 232
+          },
+          "item": "",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "level": 100,
+          "nature": "Jolly",
+          "status": ""
+        }
+      },
+      "defender": {
+        "entry_effects_observed": true,
+        "expectedStats": {
+          "atk": 339,
+          "def": 266,
+          "hp": 325,
+          "spa": 176,
+          "spd": 267,
+          "spe": 412
+        },
+        "name": "zamazenta",
+        "options": {
+          "ability": "dauntlessshield",
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": -1,
+            "spe": 0
+          },
+          "curHP": 243,
+          "evs": {
+            "atk": 252,
+            "def": 0,
+            "hp": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "item": "heavydutyboots",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "level": 100,
+          "nature": "Jolly",
+          "status": "par"
+        }
+      },
+      "field": {
+        "attackerSide": {},
+        "defenderSide": {}
+      },
+      "move": "gigatonhammer",
+      "scenario_id": "in-zamazenta-gigatonhammer-h0-hp93"
+    },
+    {
+      "attacker": {
+        "entry_effects_observed": true,
+        "name": "tinkaton",
+        "options": {
+          "ability": "moldbreaker",
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 90,
+          "evs": {
+            "atk": 28,
+            "def": 0,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 232
+          },
+          "item": "",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "level": 100,
+          "nature": "Jolly",
+          "status": ""
+        }
+      },
+      "defender": {
+        "entry_effects_observed": true,
+        "expectedStats": {
+          "atk": 339,
+          "def": 266,
+          "hp": 325,
+          "spa": 176,
+          "spd": 267,
+          "spe": 412
+        },
+        "name": "zamazenta",
+        "options": {
+          "ability": "dauntlessshield",
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": -1,
+            "spe": 0
+          },
+          "curHP": 243,
+          "evs": {
+            "atk": 252,
+            "def": 0,
+            "hp": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "item": "heavydutyboots",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "level": 100,
+          "nature": "Jolly",
+          "status": "par"
+        }
+      },
+      "field": {
+        "attackerSide": {},
+        "defenderSide": {}
+      },
+      "move": "gigatonhammer",
+      "scenario_id": "in-zamazenta-gigatonhammer-h1-hp90"
+    },
+    {
+      "attacker": {
+        "entry_effects_observed": true,
+        "name": "tinkaton",
+        "options": {
+          "ability": "moldbreaker",
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": 0,
+            "spe": 0
+          },
+          "curHP": 93,
+          "evs": {
+            "atk": 28,
+            "def": 0,
+            "hp": 248,
+            "spa": 0,
+            "spd": 0,
+            "spe": 232
+          },
+          "item": "",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "level": 100,
+          "nature": "Jolly",
+          "status": ""
+        }
+      },
+      "defender": {
+        "entry_effects_observed": true,
+        "expectedStats": {
+          "atk": 339,
+          "def": 266,
+          "hp": 325,
+          "spa": 176,
+          "spd": 267,
+          "spe": 412
+        },
+        "name": "zamazenta",
+        "options": {
+          "ability": "dauntlessshield",
+          "boosts": {
+            "accuracy": 0,
+            "atk": 0,
+            "def": 0,
+            "evasion": 0,
+            "spa": 0,
+            "spd": -1,
+            "spe": 0
+          },
+          "curHP": 243,
+          "evs": {
+            "atk": 252,
+            "def": 0,
+            "hp": 0,
+            "spa": 0,
+            "spd": 4,
+            "spe": 252
+          },
+          "item": "heavydutyboots",
+          "ivs": {
+            "atk": 31,
+            "def": 31,
+            "hp": 31,
+            "spa": 31,
+            "spd": 31,
+            "spe": 31
+          },
+          "level": 100,
+          "nature": "Jolly",
+          "status": "par"
+        }
+      },
+      "field": {
+        "attackerSide": {},
+        "defenderSide": {}
+      },
+      "move": "gigatonhammer",
+      "scenario_id": "in-zamazenta-gigatonhammer-h1-hp93"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "version": "v1.1.0",
+  "decision": "D-027",
+  "parent": "v1.0.0",
+  "reason": "EX-020 multiple attacks/fainting and EX-023 side/turn errors; latest observed item/effect precedence",
+  "files": {
+    "summary.txt": "944d142e73dd1049d479311af172ee097108b95fb2969f7fd94874216ed738bf",
+    "summary_rollup.txt": "92a703e55677e8b7b4497c3a29adc690837f3c48da0780e08bcc4cd69aadb8a2"
+  }
+}

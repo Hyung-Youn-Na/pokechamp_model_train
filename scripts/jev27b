@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+workspace_root="$(cd -- "$script_dir/.." && pwd)"
+export PYTHONPATH="$workspace_root:$workspace_root/pokechamp"
+export POKECHAMP_WORKSPACE_ROOT="$workspace_root"
+export PYTHONDONTWRITEBYTECODE=1
+export TOKENIZERS_PARALLELISM=false
+model_python="$workspace_root/.pokechamp-data/jev27b-runtime/.venv/bin/python"
+actor_python="$workspace_root/pokechamp/.venv/bin/python"
+cd "$workspace_root"
+command="${1:---help}"
+if [[ $# -gt 0 ]]; then shift; fi
+case "$command" in
+  download) exec "$model_python" -m integration.jev27b.download "$@" ;;
+  lengths|infer|compare-reloads)
+    if [[ "$command" == compare-reloads ]]; then command=compare; fi
+    exec "$model_python" -m integration.jev27b.preflight "$command" "$@" ;;
+  serve) exec "$model_python" -m integration.jev27b.server "$@" ;;
+  execute) exec "$actor_python" -m integration.jev27b.execute "$@" ;;
+  finalize) exec "$actor_python" -m integration.jev27b.study finalize "$@" ;;
+  verify-browser) exec /tmp/ep037/tools/bin/python -m integration.jev27b.study verify-browser "$@" ;;
+  --help|-h)
+    echo 'usage: scripts/jev27b {download|lengths|infer|compare-reloads|serve|execute|finalize|verify-browser} [arguments]'
+    ;;
+  *) echo "unknown EX-082 command: $command" >&2; exit 2 ;;
+esac

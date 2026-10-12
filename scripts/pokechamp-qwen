@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+workspace_root="$(cd -- "$script_dir/.." && pwd)"
+export PYTHONPATH="$workspace_root:$workspace_root/pokechamp${PYTHONPATH:+:$PYTHONPATH}"
+export PYTHONHASHSEED=20260930
+cd "$workspace_root"
+command="${1:---help}"
+if [[ "$command" == battle ]]; then
+  shift
+  cd "$workspace_root/pokechamp"
+  exec "$workspace_root/pokechamp/.venv/bin/python" -m integration.pokechamp.qwen_battle "$@"
+elif [[ "$command" == start || "$command" == status || "$command" == stop || "$command" == probe ]]; then
+  exec /opt/conda/bin/python3 -m integration.pokechamp.qwen_control "$@"
+elif [[ "$command" == state-study ]]; then
+  if [[ "${2:-}" == token-preflight ]]; then
+    export CUDA_VISIBLE_DEVICES=''
+    exec "$workspace_root/.tools/eve-rlcd/worktrees/pokemon-training/.venv-eve-rlcd/bin/python" -m integration.pokechamp.qwen_state_study "${@:2}"
+  fi
+  exec "$workspace_root/pokechamp/.venv/bin/python" -m integration.pokechamp.qwen_state_study "${@:2}"
+elif [[ "$command" == study-run ]]; then
+  exec "$workspace_root/pokechamp/.venv/bin/python" -m integration.pokechamp.qwen_state_run "${@:2}"
+else
+  echo 'usage: scripts/pokechamp-qwen {start [--candidate-state] [--diagnostics]|status|stop|probe|battle|state-study STAGE --output PATH|study-run --output PATH}'
+fi

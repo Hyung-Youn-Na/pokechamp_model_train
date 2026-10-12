@@ -1,0 +1,6 @@
+[submodule "pokechamp"]
+	path = pokechamp
+	url = https://github.com/sethkarten/pokechamp.git
+[submodule "pokemon-showdown"]
+	path = pokemon-showdown
+	url = https://github.com/jakegrigsby/pokemon-showdown.git

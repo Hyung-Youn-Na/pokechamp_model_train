@@ -1,0 +1,101 @@
+[
+  {
+    "team_id": "S1",
+    "url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-795586",
+    "log_url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-795586.log",
+    "status_code": 200,
+    "retrieved_battle_log": true,
+    "sha256": "91a53f66270b9021492882adaee1426d2801a2f2eb97a64eb0b6e8200a125882",
+    "bytes": 13439,
+    "turns": 39,
+    "verification_scope": "링크 접근 및 공개 로그 형식만 확인; 전체 전략/승률/원본 EV 재현 검증 아님"
+  },
+  {
+    "team_id": "S2",
+    "url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-799597",
+    "log_url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-799597.log",
+    "status_code": 200,
+    "retrieved_battle_log": true,
+    "sha256": "cb18cf0fc0d5fb0f5385539f4ac67741f7ddd23051ae0ac4dbf87bb04cd83721",
+    "bytes": 7443,
+    "turns": 15,
+    "verification_scope": "링크 접근 및 공개 로그 형식만 확인; 전체 전략/승률/원본 EV 재현 검증 아님"
+  },
+  {
+    "team_id": "H1",
+    "url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-795968",
+    "log_url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-795968.log",
+    "status_code": 200,
+    "retrieved_battle_log": true,
+    "sha256": "d2194ccf52f4824d43da5c02e47d5293a204bfef372f64cc92a7d8421b280016",
+    "bytes": 14660,
+    "turns": 41,
+    "verification_scope": "링크 접근 및 공개 로그 형식만 확인; 전체 전략/승률/원본 EV 재현 검증 아님"
+  },
+  {
+    "team_id": "H2",
+    "url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-795739",
+    "log_url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-795739.log",
+    "status_code": 200,
+    "retrieved_battle_log": true,
+    "sha256": "3f1f66a72f0e7846a1c19311ec2c4f578f01aa69e11dee4abc22f2a52ea2422c",
+    "bytes": 13535,
+    "turns": 34,
+    "verification_scope": "링크 접근 및 공개 로그 형식만 확인; 전체 전략/승률/원본 EV 재현 검증 아님"
+  },
+  {
+    "team_id": "H3",
+    "url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-792049",
+    "log_url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-792049.log",
+    "status_code": 200,
+    "retrieved_battle_log": true,
+    "sha256": "39fc10be32e6eff156a607eac60b2c4b39edc313b23347124d143e17eaf8c4b5",
+    "bytes": 19048,
+    "turns": 56,
+    "verification_scope": "링크 접근 및 공개 로그 형식만 확인; 전체 전략/승률/원본 EV 재현 검증 아님"
+  },
+  {
+    "team_id": "R2",
+    "url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-795453",
+    "log_url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-795453.log",
+    "status_code": 200,
+    "retrieved_battle_log": true,
+    "sha256": "ba1238e98616fe54f770f79b7eabc44a0a4ca902ce3096e9d5fc260a2d7e1c99",
+    "bytes": 36174,
+    "turns": 110,
+    "verification_scope": "링크 접근 및 공개 로그 형식만 확인; 전체 전략/승률/원본 EV 재현 검증 아님"
+  },
+  {
+    "team_id": "R3",
+    "url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-907270",
+    "log_url": "https://replay.pokemonshowdown.com/smogtours-gen9ou-907270.log",
+    "status_code": 200,
+    "retrieved_battle_log": true,
+    "sha256": "4bb80a31cd91ffa2ecfa14329417c2369544bf8c9863a5b2c175fb46d0496460",
+    "bytes": 18703,
+    "turns": 48,
+    "verification_scope": "링크 접근 및 공개 로그 형식만 확인; 전체 전략/승률/원본 EV 재현 검증 아님"
+  },
+  {
+    "team_id": "W1",
+    "url": "https://replay.pokemonshowdown.com/gen9ou-2187516554",
+    "log_url": "https://replay.pokemonshowdown.com/gen9ou-2187516554.log",
+    "status_code": 200,
+    "retrieved_battle_log": true,
+    "sha256": "429cfd550f1d87b8b28f7f6e179c031af85b911d058ae0a97bf4fec94fc5621d",
+    "bytes": 15525,
+    "turns": 44,
+    "verification_scope": "링크 접근 및 공개 로그 형식만 확인; 전체 전략/승률/원본 EV 재현 검증 아님"
+  },
+  {
+    "team_id": "W2",
+    "url": "https://replay.pokemonshowdown.com/gen9ou-1892456641-0tokynwhraa9m3ps8xlgbnk9ei8obu7pw",
+    "log_url": "https://replay.pokemonshowdown.com/gen9ou-1892456641-0tokynwhraa9m3ps8xlgbnk9ei8obu7pw.log",
+    "status_code": 404,
+    "retrieved_battle_log": false,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "turns": null,
+    "verification_scope": "링크 접근 및 공개 로그 형식만 확인; 전체 전략/승률/원본 EV 재현 검증 아님"
+  }
+]

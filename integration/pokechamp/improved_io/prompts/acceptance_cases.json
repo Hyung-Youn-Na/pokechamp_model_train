@@ -1,0 +1,97 @@
+{
+  "purpose": "Human/model evaluation rubric. Expectations are not model-run results, computed damage values, or unique optimal-action labels.",
+  "evidence_path": "../io_evidence.json",
+  "cases": [
+    {
+      "id": "IO-C01", "battle": "io-abyssal-b01-s0-a1-p1", "event_seq": 14,
+      "labels": ["INPUT_OMISSION", "NUMERIC_REASONING"],
+      "source_events": [14, 17],
+      "expected": "자기 팀 전체 기술은 원래 request에서 보완하고 벤치 요약을 전체 기술로 오인하지 않는다. Draco Meteor 피해의 추정치를 계산 근거 없이 확정하지 않는다.",
+      "must_not": "서버에서 OHKO였다는 사후 정보만으로 당시 공격 선택이 잘못됐다고 판정하거나 누락된 벤치 기술이 없다고 단정한다."
+    },
+    {
+      "id": "IO-C02", "battle": "io-abyssal-b01-s0-a1-p1", "event_seq": 28,
+      "labels": ["INPUT_OMISSION"], "source_events": [28, 29, 31],
+      "expected": "target_state의 Air Balloon과 user_prompt 누락을 구분한다. 보완된 계산 입력에서는 현재 Tinkaton에 대한 Earthquake 무효를 반영한다.",
+      "must_not": "LLM이 아이템을 제공받았는데도 무시했다고 하거나 단순 타입 2배를 실제 피해로 사용한다."
+    },
+    {
+      "id": "IO-C03", "battle": "io-abyssal-b01-s0-a1-p1", "event_seq": 40,
+      "labels": ["INPUT_OMISSION", "FACTUAL_EXPLANATION"], "source_events": [40, 43],
+      "expected": "Ruination의 유효한 결과와 Flying 테라스탈이라는 근거 없는 설명을 분리한다. Air Balloon 소실은 발생한 뒤의 요약에만 확정 기록한다.",
+      "must_not": "소실 이벤트를 5턴 결정 이전에 알려진 사실로 사용하거나 Tinkaton이 실제 Flying으로 변했다고 기록한다."
+    },
+    {
+      "id": "IO-C04", "battle": "io-abyssal-b01-s1-a1-p2", "event_seq": 63,
+      "labels": ["FACTUAL_EXPLANATION"], "source_events": [63, 66],
+      "expected": "Poison Heal 회복 이력과 독 상태를 함께 보존하고 설명의 모순을 지적한다. 공격 선택의 전략적 열등성은 별도 증명이 필요하다.",
+      "must_not": "독 때문에 Poison Heal이 차단됐다고 하거나 회복 이벤트를 요약에서 삭제한다."
+    },
+    {
+      "id": "IO-C05", "battle": "io-abyssal-b01-s1-a1-p2", "event_seq": 147,
+      "labels": ["FACTUAL_EXPLANATION", "NUMERIC_REASONING"], "source_events": [147, 153, 156],
+      "expected": "Slowking-Galar에 대한 Dark 약점과 해당 기술의 물리·특수 분류에 맞는 피격 계산을 사용한다. 선택한 교체와 다음 턴 피격을 구분한다.",
+      "must_not": "높은 SpD만으로 Sucker Punch 생존을 보장하거나 기절 후 교체 순간에 다음 턴 공격이 이미 발생했다고 기록한다."
+    },
+    {
+      "id": "IO-C06", "battle": "io-abyssal-b01-s1-a1-p2", "event_seq": 179,
+      "labels": ["FACTUAL_EXPLANATION"], "source_events": [179, 182, 188],
+      "expected": "Hydrapple의 타입·특성 및 제공된 효과 판정을 확인한다. 추정 Body Press와 실제 Close Combat을 구분하고 상대 커버리지는 공개 시점 이후에만 확정한다.",
+      "must_not": "근거 없는 Fighting 저항·Ground 면역을 안전한 교체 근거로 쓰거나 다음 턴 Ice Fang을 이미 공개된 기술로 취급한다."
+    },
+    {
+      "id": "IO-C07", "battle": "io-abyssal-b04-s1-a1-p2", "event_seq": 99,
+      "labels": ["EXECUTION_ORDER"], "source_events": [99, 102],
+      "expected": "Ceruledge가 먼저 쓰러지면 Bitter Blade 피해와 회복이 발생하지 않는다고 판단한다. 희생 자체의 전략적 가치는 별도 평가한다.",
+      "must_not": "먼저 기절해도 Kyurem이 제거된다고 주장한다."
+    },
+    {
+      "id": "IO-C08", "battle": "io-abyssal-b04-s1-a1-p2", "event_seq": 111,
+      "labels": ["INPUT_CONTRADICTION", "EXECUTION_ORDER"], "source_events": [105, 108, 111, 114],
+      "expected": "양측 Speed 317 및 상충하는 faster 문구를 입력 모순으로 표시한다. 관측된 특공 활성과 속도 우위를 혼동하지 않고 선공 불확실성을 유지한다.",
+      "must_not": "동일 표시 속도 또는 임의의 boost tie-break를 확정 선공 근거로 삼는다."
+    },
+    {
+      "id": "IO-C09", "battle": "io-abyssal-b04-s1-a1-p2", "event_seq": 161,
+      "labels": ["EXECUTION_ORDER"], "source_events": [161, 164, 172],
+      "expected": "Healing Wish가 먼저 실행돼야 회복 효과를 얻는다고 확인한다. 다음 포켓몬의 실제 HP를 관측에서 읽는다.",
+      "must_not": "선택만 한 Healing Wish를 성공한 기술로 요약하거나 Venusaur HP를 완전 회복으로 바꾼다."
+    },
+    {
+      "id": "IO-C10", "battle": "io-one_step-b03-s0-a1-p1", "event_seq": 68,
+      "labels": ["FACTUAL_EXPLANATION", "EXECUTION_ORDER"], "source_events": [68, 71],
+      "expected": "상태 기술의 유효성도 확인하고, 선공 Thunder Wave가 무효인 현재 상대에게 보호를 제공하지 않는다고 평가한다.",
+      "must_not": "합법 후보라는 이유로 마비가 보장되거나 먼저 움직이면 이번 턴 피격이 사라진다고 주장한다."
+    },
+    {
+      "id": "IO-C11", "battle": "io-one_step-b03-s0-a1-p1", "event_seq": 152,
+      "labels": ["NUMERIC_REASONING"], "source_events": [146, 149, 152, 155],
+      "expected": "현재 SpA -2를 반영한 재계산을 사용한다. 사후 34% 피해는 관측값으로만 기록한다.",
+      "must_not": "직전 약 60% 피해를 그대로 적용해 확정 KO라고 하거나 관측값으로 미실행 계산을 위장한다."
+    },
+    {
+      "id": "IO-C12", "battle": "io-one_step-b04-s0-a1-p1", "event_seq": 106,
+      "labels": ["EXECUTION_ORDER"], "source_events": [106, 109, 112, 115],
+      "expected": "선공 피격으로 Landorus가 쓰러지면 U-turn은 실행되지 않으며 이후 Cinderace 투입은 기절 후 교체임을 구분한다.",
+      "must_not": "Cinderace가 나왔다는 이유로 U-turn이 성공했다고 평가한다."
+    },
+    {
+      "id": "IO-C13", "battle": "io-one_step-b04-s0-a1-p1", "event_seq": 132,
+      "labels": ["NUMERIC_REASONING", "OUTCOME_VARIANCE"], "source_events": [126, 129, 132, 135],
+      "expected": "45% 이전 피해와 남은 55%만으로 KO를 보장하지 않는다. 실제 miss와 명중 시 피해 범위는 분리한다.",
+      "must_not": "빗나갔으므로 선택이 틀렸다고 하거나 계산 없이 명중해도 절대 KO 불가라고 단정한다."
+    },
+    {
+      "id": "IO-C14", "battle": "io-one_step-b04-s1-a1-p2", "event_seq": 81,
+      "labels": ["EXECUTION_ORDER"], "source_events": [81, 84, 85, 87, 90],
+      "expected": "선공 피격과 Eject Button 교체 단계에서 Psychic Noise가 실행됐는지 서버 이벤트로 확인한다.",
+      "must_not": "선택한 Psychic Noise의 피해나 회복 봉쇄를 실제 효과로 기록한다."
+    },
+    {
+      "id": "IO-C15", "battle": "io-one_step-b04-s1-a1-p2", "event_seq": 93,
+      "labels": ["NUMERIC_REASONING", "EXECUTION_ORDER"], "source_events": [93, 96],
+      "expected": "Walking Wake의 현재 29/339 HP와 피격 계산을 비교한다. 저항과 생존 여부를 구분한다.",
+      "must_not": "0.25배 저항만으로 생존이나 Hydro Steam 실행을 보장한다."
+    }
+  ]
+}

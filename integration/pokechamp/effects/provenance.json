@@ -1,0 +1,21 @@
+{
+  "version": "gen9-effects-v1",
+  "generation": 9,
+  "source": "https://github.com/smogon/pokemon-showdown",
+  "source_commit": "e64915c0eab066db1d3e732b1280386468dd7415",
+  "method": "node integration/pokechamp/effects/extract.cjs [output-directory]; Dex.mod(\"gen9\")[kind].get(id).desc; canonical IDs; no shortDesc fallback, translation or recursive expansion",
+  "asset_sha256": "2847e37ebf9896c3de2963c143d13655b80508275ed2980a60fa2039183f8238",
+  "extractor_sha256": "1755d1c5913bb103d3f863d4483be18a02a374ddc756b5bfb64b6a77165726a5",
+  "license": "MIT",
+  "license_sha256": "4c7b14baec158ecd73aa62100c0fcda0844c1eace766c8a30ebf38627bc59cac",
+  "counts": {
+    "items": 537,
+    "abilities": 314,
+    "moves": 936
+  },
+  "missing_desc": {
+    "items": [],
+    "abilities": [],
+    "moves": []
+  }
+}

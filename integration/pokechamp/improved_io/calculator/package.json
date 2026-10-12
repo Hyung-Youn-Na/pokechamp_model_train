@@ -1,0 +1,11 @@
+{
+  "name": "pokechamp-io-calculator",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@smogon/calc": "0.11.0"
+  },
+  "scripts": {
+    "patch:calc": "node patch.cjs"
+  }
+}

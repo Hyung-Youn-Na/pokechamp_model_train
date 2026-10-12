@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "phase": "core-repeat",
+  "seed": 20260906,
+  "methods": [
+    "minimax",
+    "io",
+    "abyssal",
+    "one_step"
+  ],
+  "blocks_per_pair": 4,
+  "retry_transient": 1,
+  "battle_watchdog_seconds": 1200,
+  "pairs": [
+    [
+      "minimax",
+      "abyssal"
+    ],
+    [
+      "minimax",
+      "one_step"
+    ],
+    [
+      "io",
+      "abyssal"
+    ],
+    [
+      "io",
+      "one_step"
+    ]
+  ]
+}

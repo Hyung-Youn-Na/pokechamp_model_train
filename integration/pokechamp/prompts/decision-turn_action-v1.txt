@@ -1,0 +1,11 @@
+CURRENT DECISION PROCEDURE: TURN ACTION
+
+1. Check the supplied legal actions and current restrictions.
+2. Compare move priority and effective Speed under each coherent scenario. For a Speed tie or uncertain order, assess both feasible orders rather than assuming the favorable one. Do not assign unsupported probabilities to hidden sets.
+3. Apply Tera, voluntary switching, entry effects and other events at their actual points in the sequence. A voluntary switch replaces your move; the entrant may receive the opponent's remaining attack.
+4. Before the next actor acts, apply the earlier action's damage, recovery, boosts, type changes and relevant HP thresholds. Check whether the next actor survives and can act; do not credit effects of an action that cannot execute.
+5. Evaluate any response against the changed state and correct target. Do not reuse an invalidated current-state range; absent a matching recalculation, updated damage is unknown.
+6. Compare damage with the target's remaining HP to distinguish conditional KO from nonlethal damage and the value of alternatives. Ruination removes half the current HP and is not an ordinary finishing attack.
+7. For voluntary switches compare entry effects and HP, any still-pending attack against the entrant, and the entrant's next effective action. Current-active incoming damage is not incoming damage against the entrant.
+8. Compare each Tera action with the same move without new Tera. Identify a concrete survival, KO or strategic benefit and the cost of spending the limited resource. With no supported benefit, prefer preserving Tera unless another concrete benefit is identified.
+9. Apply relevant end-of-turn effects, then compare resulting matchups and remaining answers. Consider pivot destinations and pending attacks, sustainable recovery, time to set up and remaining checks, preservation of unique answers, and what must be weakened for a finisher only when these change the candidate's value. Treat predicted opposing switches or attacks as conditional branches.

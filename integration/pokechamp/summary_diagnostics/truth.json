@@ -1,0 +1,2718 @@
+{
+  "io-abyssal-b01-s1-a1-p2": [
+    {
+      "id": "identity",
+      "expected": "Perspective p2; battle io-abyssal-b01-s1-a1-p2; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p2|bp2e56636f9b425|ash-johto|"
+        }
+      ]
+    },
+    {
+      "id": "self_zapdos",
+      "expected": "Self p2: Zapdos (Zapdos): latest request HP/status 253/383; active, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 75,
+          "line": 2,
+          "quote": "p2: Zapdos"
+        }
+      ]
+    },
+    {
+      "id": "self_tinkaton",
+      "expected": "Self p2: Tinkaton (Tinkaton, F): latest request HP/status 326/373; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 75,
+          "line": 2,
+          "quote": "p2: Tinkaton"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Latios is active at public 88/100; Gliscor has fainted.",
+      "evidence": [
+        {
+          "event": 74,
+          "line": 4,
+          "quote": "|switch|p1a: Latios|Latios, M|100/100"
+        },
+        {
+          "event": 74,
+          "line": 5,
+          "quote": "|-damage|p1a: Latios|88/100|[from] Stealth Rock"
+        },
+        {
+          "event": 72,
+          "line": 6,
+          "quote": "|faint|p1a: Gliscor"
+        }
+      ]
+    },
+    {
+      "id": "hazards",
+      "expected": "Self side has three Spikes layers; opponent Stealth Rock was installed on turn 2 (one hazard, not two layers).",
+      "evidence": [
+        {
+          "event": 24,
+          "line": 6,
+          "quote": "|-sidestart|p1: bp1e56636f9b425|move: Stealth Rock"
+        },
+        {
+          "event": 30,
+          "line": 7,
+          "quote": "|-sidestart|p2: bp2e56636f9b425|Spikes"
+        },
+        {
+          "event": 36,
+          "line": 7,
+          "quote": "|-sidestart|p2: bp2e56636f9b425|Spikes"
+        },
+        {
+          "event": 42,
+          "line": 7,
+          "quote": "|-sidestart|p2: bp2e56636f9b425|Spikes"
+        }
+      ]
+    },
+    {
+      "id": "knockoff",
+      "expected": "Gliscor revealed Knock Off; Zapdos lost Heavy-Duty Boots on turn 7.",
+      "evidence": [
+        {
+          "event": 54,
+          "line": 6,
+          "quote": "|move|p1a: Gliscor|Knock Off|p2a: Zapdos"
+        },
+        {
+          "event": 54,
+          "line": 8,
+          "quote": "|-enditem|p2a: Zapdos|Heavy-Duty Boots|[from] move: Knock Off|[of] p1a: Gliscor"
+        }
+      ]
+    },
+    {
+      "id": "gliscor_history",
+      "expected": "Gliscor survived earlier hits and Poison Heal recovery; Hurricane KO occurred on turn 10 from public 34/100.",
+      "evidence": [
+        {
+          "event": 66,
+          "line": 10,
+          "quote": "|-heal|p1a: Gliscor|34/100 tox|[from] ability: Poison Heal"
+        },
+        {
+          "event": 66,
+          "line": 12,
+          "quote": "|turn|10"
+        },
+        {
+          "event": 72,
+          "line": 4,
+          "quote": "|move|p2a: Zapdos|Hurricane|p1a: Gliscor"
+        },
+        {
+          "event": 72,
+          "line": 5,
+          "quote": "|-damage|p1a: Gliscor|0 fnt"
+        }
+      ]
+    },
+    {
+      "id": "tinkaton_resources",
+      "expected": "Tinkaton Air Balloon was lost to Flip Turn on turn 2; Draco Meteor earlier failed by immunity.",
+      "evidence": [
+        {
+          "event": 16,
+          "line": 7,
+          "quote": "|move|p1a: Latios|Draco Meteor|p2a: Tinkaton"
+        },
+        {
+          "event": 16,
+          "line": 8,
+          "quote": "|-immune|p2a: Tinkaton"
+        },
+        {
+          "event": 22,
+          "line": 4,
+          "quote": "|move|p1a: Latios|Flip Turn|p2a: Tinkaton"
+        },
+        {
+          "event": 22,
+          "line": 6,
+          "quote": "|-enditem|p2a: Tinkaton|Air Balloon"
+        }
+      ]
+    },
+    {
+      "id": "encore",
+      "expected": "Gliscor Encore ended on turn 6; no active Encore remains.",
+      "evidence": [
+        {
+          "event": 48,
+          "line": 9,
+          "quote": "|-end|p1a: Gliscor|Encore"
+        },
+        {
+          "event": 48,
+          "line": 11,
+          "quote": "|turn|7"
+        }
+      ]
+    }
+  ],
+  "io-abyssal-b04-s1-a1-p2": [
+    {
+      "id": "identity",
+      "expected": "Perspective p2; battle io-abyssal-b04-s1-a1-p2; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p2|bp2031e51dcf23f|cynthia-anime2|"
+        }
+      ]
+    },
+    {
+      "id": "self_kurama_chakra_mode",
+      "expected": "Self p2: Kurama Chakra Mode (Ninetales, M): latest request HP/status 0 fnt; active, fainted. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 77,
+          "line": 2,
+          "quote": "p2: Kurama Chakra Mode"
+        }
+      ]
+    },
+    {
+      "id": "self_dubya",
+      "expected": "Self p2: Dubya (Walking Wake): latest request HP/status 29/339; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 77,
+          "line": 2,
+          "quote": "p2: Dubya"
+        }
+      ]
+    },
+    {
+      "id": "self_venu_vidi_vici",
+      "expected": "Self p2: Venu Vidi Vici (Venusaur, F): latest request HP/status 82/301; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 77,
+          "line": 2,
+          "quote": "p2: Venu Vidi Vici"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Kingambit remains active at public 17/100, burned, +2 Attack; three opponent allies fainted.",
+      "evidence": [
+        {
+          "event": 58,
+          "line": 6,
+          "quote": "|-start|p1a: Kingambit|fallen3|[silent]"
+        },
+        {
+          "event": 64,
+          "line": 8,
+          "quote": "|-boost|p1a: Kingambit|atk|2"
+        },
+        {
+          "event": 70,
+          "line": 5,
+          "quote": "|-status|p1a: Kingambit|brn"
+        },
+        {
+          "event": 76,
+          "line": 13,
+          "quote": "|-damage|p1a: Kingambit|17/100 brn|[from] brn"
+        }
+      ]
+    },
+    {
+      "id": "ninetales_hits",
+      "expected": "Self Ninetales (Kurama Chakra Mode) took two Kowtow Cleaves: 349→64 on turn 9, then 64→0 on turn 10; the final observed decrement 64 does not establish uncapped attack damage.",
+      "evidence": [
+        {
+          "event": 64,
+          "line": 5,
+          "quote": "|switch|p2a: Kurama Chakra Mode|Ninetales, M|349/349"
+        },
+        {
+          "event": 70,
+          "line": 6,
+          "quote": "|move|p1a: Kingambit|Kowtow Cleave|p2a: Kurama Chakra Mode"
+        },
+        {
+          "event": 70,
+          "line": 7,
+          "quote": "|-damage|p2a: Kurama Chakra Mode|64/349"
+        },
+        {
+          "event": 70,
+          "line": 12,
+          "quote": "|turn|10"
+        },
+        {
+          "event": 76,
+          "line": 7,
+          "quote": "|move|p1a: Kingambit|Kowtow Cleave|p2a: Kurama Chakra Mode"
+        },
+        {
+          "event": 76,
+          "line": 8,
+          "quote": "|-damage|p2a: Kurama Chakra Mode|0 fnt"
+        },
+        {
+          "event": 76,
+          "line": 9,
+          "quote": "|faint|p2a: Kurama Chakra Mode"
+        }
+      ]
+    },
+    {
+      "id": "future_sight",
+      "expected": "Opponent Slowking set Future Sight on turn 1; it hit Walking Wake on turn 3 after Slowking fainted, leaving 162/339.",
+      "evidence": [
+        {
+          "event": 16,
+          "line": 6,
+          "quote": "|move|p1a: Slowking|Future Sight|p2a: Dubya"
+        },
+        {
+          "event": 16,
+          "line": 7,
+          "quote": "|-start|p1a: Slowking|move: Future Sight"
+        },
+        {
+          "event": 28,
+          "line": 6,
+          "quote": "|faint|p1a: Slowking"
+        },
+        {
+          "event": 28,
+          "line": 8,
+          "quote": "|-end|p2a: Dubya|move: Future Sight"
+        },
+        {
+          "event": 28,
+          "line": 9,
+          "quote": "|-damage|p2a: Dubya|162/339"
+        }
+      ]
+    },
+    {
+      "id": "venusaur",
+      "expected": "Self Venusaur survived Moonblast and Close Combat, then Life Orb recoil left 82/301; it is alive.",
+      "evidence": [
+        {
+          "event": 36,
+          "line": 8,
+          "quote": "|-damage|p2a: Venu Vidi Vici|232/301"
+        },
+        {
+          "event": 42,
+          "line": 6,
+          "quote": "|-damage|p2a: Venu Vidi Vici|112/301"
+        },
+        {
+          "event": 42,
+          "line": 14,
+          "quote": "|-damage|p2a: Venu Vidi Vici|82/301|[from] item: Life Orb"
+        }
+      ]
+    },
+    {
+      "id": "wake",
+      "expected": "Self Walking Wake survived Future Sight then Earth Power, leaving 29/339; it is alive.",
+      "evidence": [
+        {
+          "event": 28,
+          "line": 9,
+          "quote": "|-damage|p2a: Dubya|162/339"
+        },
+        {
+          "event": 50,
+          "line": 5,
+          "quote": "|move|p1a: Landorus|Earth Power|p2a: Dubya"
+        },
+        {
+          "event": 50,
+          "line": 6,
+          "quote": "|-damage|p2a: Dubya|29/339"
+        }
+      ]
+    },
+    {
+      "id": "sun",
+      "expected": "Ninetales Drought set sun on turn 8; sun persists through the turn 10 boundary. Current raw weather value 10 is the last weather protocol update turn, not activation or remaining turns.",
+      "evidence": [
+        {
+          "event": 64,
+          "line": 6,
+          "quote": "|-weather|SunnyDay|[from] ability: Drought|[of] p2a: Kurama Chakra Mode"
+        },
+        {
+          "event": 64,
+          "line": 12,
+          "quote": "|turn|9"
+        },
+        {
+          "event": 76,
+          "line": 11,
+          "quote": "|-weather|SunnyDay|[upkeep]"
+        }
+      ]
+    },
+    {
+      "id": "opponent_faints",
+      "expected": "Slowking, Iron Valiant, and Landorus fainted; Booster Energy/Quark Drive speed belonged to Iron Valiant, not current Kingambit.",
+      "evidence": [
+        {
+          "event": 28,
+          "line": 6,
+          "quote": "|faint|p1a: Slowking"
+        },
+        {
+          "event": 30,
+          "line": 5,
+          "quote": "|-enditem|p1a: Iron Valiant|Booster Energy"
+        },
+        {
+          "event": 30,
+          "line": 7,
+          "quote": "|-start|p1a: Iron Valiant|quarkdrivespe"
+        },
+        {
+          "event": 42,
+          "line": 12,
+          "quote": "|faint|p1a: Iron Valiant"
+        },
+        {
+          "event": 56,
+          "line": 7,
+          "quote": "|faint|p1a: Landorus"
+        }
+      ]
+    }
+  ],
+  "io-one_step-b03-s0-a1-p1": [
+    {
+      "id": "identity",
+      "expected": "Perspective p1; battle io-one_step-b03-s0-a1-p1; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p1|bp1a1e5c6393510|fisherman-gen6xy|"
+        }
+      ]
+    },
+    {
+      "id": "self_zapdos",
+      "expected": "Self p1: Zapdos (Zapdos): latest request HP/status 383/383; active, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Zapdos"
+        }
+      ]
+    },
+    {
+      "id": "self_slowking",
+      "expected": "Self p1: Slowking (Slowking-Galar, M): latest request HP/status 0 fnt; bench, fainted. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Slowking"
+        }
+      ]
+    },
+    {
+      "id": "self_zamazenta",
+      "expected": "Self p1: Zamazenta (Zamazenta): latest request HP/status 275/325; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Zamazenta"
+        }
+      ]
+    },
+    {
+      "id": "self_tinkaton",
+      "expected": "Self p1: Tinkaton (Tinkaton, F): latest request HP/status 0 fnt; bench, fainted. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Tinkaton"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Opponent Landorus is active at public 100/100 with revealed Intimidate; Kingambit, Slowking and Iron Valiant are fainted.",
+      "evidence": [
+        {
+          "event": 23,
+          "line": 9,
+          "quote": "|faint|p2a: Kingambit"
+        },
+        {
+          "event": 37,
+          "line": 7,
+          "quote": "|faint|p2a: Slowking"
+        },
+        {
+          "event": 63,
+          "line": 12,
+          "quote": "|faint|p2a: Iron Valiant"
+        },
+        {
+          "event": 65,
+          "line": 4,
+          "quote": "|switch|p2a: Landorus|Landorus-Therian, M, shiny|100/100"
+        },
+        {
+          "event": 65,
+          "line": 5,
+          "quote": "|-ability|p2a: Landorus|Intimidate|boost"
+        }
+      ]
+    },
+    {
+      "id": "slowking_chain",
+      "expected": "Self Slowking took Moonblast 393→346 then delayed Future Sight 346→244 on turn 5, and Knock Off 244→0 on turn 6; attacker identity differs for the delayed hit.",
+      "evidence": [
+        {
+          "event": 45,
+          "line": 4,
+          "quote": "|switch|p1a: Slowking|Slowking-Galar, M|393/393"
+        },
+        {
+          "event": 45,
+          "line": 5,
+          "quote": "|move|p2a: Iron Valiant|Moonblast|p1a: Slowking"
+        },
+        {
+          "event": 45,
+          "line": 7,
+          "quote": "|-damage|p1a: Slowking|346/393"
+        },
+        {
+          "event": 45,
+          "line": 9,
+          "quote": "|-end|p1a: Slowking|move: Future Sight"
+        },
+        {
+          "event": 45,
+          "line": 10,
+          "quote": "|-damage|p1a: Slowking|244/393"
+        },
+        {
+          "event": 51,
+          "line": 4,
+          "quote": "|move|p2a: Iron Valiant|Knock Off|p1a: Slowking"
+        },
+        {
+          "event": 51,
+          "line": 6,
+          "quote": "|-damage|p1a: Slowking|0 fnt"
+        }
+      ]
+    },
+    {
+      "id": "future_sight",
+      "expected": "Opponent Slowking cast Future Sight on turn 3; its turn 4 faint did not cancel the turn 5 hit.",
+      "evidence": [
+        {
+          "event": 31,
+          "line": 7,
+          "quote": "|move|p2a: Slowking|Future Sight|p1a: Zamazenta"
+        },
+        {
+          "event": 31,
+          "line": 8,
+          "quote": "|-start|p2a: Slowking|move: Future Sight"
+        },
+        {
+          "event": 37,
+          "line": 7,
+          "quote": "|faint|p2a: Slowking"
+        },
+        {
+          "event": 45,
+          "line": 9,
+          "quote": "|-end|p1a: Slowking|move: Future Sight"
+        }
+      ]
+    },
+    {
+      "id": "tinkaton_chain",
+      "expected": "Tinkaton survived Close Combat at 112/373 on turn 7, defeated Iron Valiant with Gigaton Hammer, then fainted to Earth Power on turn 8.",
+      "evidence": [
+        {
+          "event": 63,
+          "line": 4,
+          "quote": "|move|p2a: Iron Valiant|Close Combat|p1a: Tinkaton"
+        },
+        {
+          "event": 63,
+          "line": 5,
+          "quote": "|-damage|p1a: Tinkaton|112/373"
+        },
+        {
+          "event": 63,
+          "line": 9,
+          "quote": "|move|p1a: Tinkaton|Gigaton Hammer|p2a: Iron Valiant"
+        },
+        {
+          "event": 63,
+          "line": 12,
+          "quote": "|faint|p2a: Iron Valiant"
+        },
+        {
+          "event": 71,
+          "line": 6,
+          "quote": "|move|p2a: Landorus|Earth Power|p1a: Tinkaton"
+        },
+        {
+          "event": 71,
+          "line": 9,
+          "quote": "|faint|p1a: Tinkaton"
+        }
+      ]
+    },
+    {
+      "id": "failed_status",
+      "expected": "Thunder Wave on Landorus was immune on turn 8; it did not paralyze Landorus.",
+      "evidence": [
+        {
+          "event": 71,
+          "line": 4,
+          "quote": "|move|p1a: Tinkaton|Thunder Wave|p2a: Landorus"
+        },
+        {
+          "event": 71,
+          "line": 5,
+          "quote": "|-immune|p2a: Landorus"
+        }
+      ]
+    },
+    {
+      "id": "lost_items",
+      "expected": "Self Slowking Boots removed by Knock Off; Tinkaton Balloon popped on turn 7 before its turn 8 KO.",
+      "evidence": [
+        {
+          "event": 51,
+          "line": 7,
+          "quote": "|-enditem|p1a: Slowking|Heavy-Duty Boots|[from] move: Knock Off|[of] p2a: Iron Valiant"
+        },
+        {
+          "event": 63,
+          "line": 8,
+          "quote": "|-enditem|p1a: Tinkaton|Air Balloon"
+        }
+      ]
+    }
+  ],
+  "io-one_step-b04-s0-a1-p1": [
+    {
+      "id": "identity",
+      "expected": "Perspective p1; battle io-one_step-b04-s0-a1-p1; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p1|bp14fdaaa294d17|sage-gen2|"
+        }
+      ]
+    },
+    {
+      "id": "self_cinderace",
+      "expected": "Self p1: Cinderace (Cinderace, F, shiny): latest request HP/status 202/337; active, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Cinderace"
+        }
+      ]
+    },
+    {
+      "id": "self_iron_valiant",
+      "expected": "Self p1: Iron Valiant (Iron Valiant): latest request HP/status 0 fnt; bench, fainted. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Iron Valiant"
+        }
+      ]
+    },
+    {
+      "id": "self_slowking",
+      "expected": "Self p1: Slowking (Slowking-Galar, M, shiny): latest request HP/status 225/393; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Slowking"
+        }
+      ]
+    },
+    {
+      "id": "self_kyurem",
+      "expected": "Self p1: Kyurem (Kyurem, shiny): latest request HP/status 9/391; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Kyurem"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Ceruledge (Slayboi Carti) is current opponent at public 100/100; Walking Wake, Ninetales and Great Tusk are fainted.",
+      "evidence": [
+        {
+          "event": 29,
+          "line": 7,
+          "quote": "|faint|p2a: Dubya"
+        },
+        {
+          "event": 55,
+          "line": 9,
+          "quote": "|faint|p2a: Kurama Chakra Mode"
+        },
+        {
+          "event": 69,
+          "line": 11,
+          "quote": "|faint|p2a: Lynrd Spynrd"
+        },
+        {
+          "event": 71,
+          "line": 4,
+          "quote": "|switch|p2a: Slayboi Carti|Ceruledge, F|100/100"
+        }
+      ]
+    },
+    {
+      "id": "kyurem_hits",
+      "expected": "Kyurem survived two Headlong Rush hits: 391→195 turn 7, then 195→9 turn 8; it defeated Great Tusk with Freeze-Dry and remains alive on bench.",
+      "evidence": [
+        {
+          "event": 63,
+          "line": 4,
+          "quote": "|switch|p1a: Kyurem|Kyurem, shiny|391/391"
+        },
+        {
+          "event": 63,
+          "line": 6,
+          "quote": "|move|p2a: Lynrd Spynrd|Headlong Rush|p1a: Kyurem"
+        },
+        {
+          "event": 63,
+          "line": 7,
+          "quote": "|-damage|p1a: Kyurem|195/391"
+        },
+        {
+          "event": 69,
+          "line": 4,
+          "quote": "|move|p2a: Lynrd Spynrd|Headlong Rush|p1a: Kyurem"
+        },
+        {
+          "event": 69,
+          "line": 5,
+          "quote": "|-damage|p1a: Kyurem|9/391"
+        },
+        {
+          "event": 69,
+          "line": 8,
+          "quote": "|move|p1a: Kyurem|Freeze-Dry|p2a: Lynrd Spynrd"
+        },
+        {
+          "event": 69,
+          "line": 11,
+          "quote": "|faint|p2a: Lynrd Spynrd"
+        }
+      ]
+    },
+    {
+      "id": "ninetales_chain",
+      "expected": "Opponent Ninetales took Close Combat to 33/100, Surf to 10/100 then another Surf to 0; self Iron Valiant fainted to Flamethrower on turn 4.",
+      "evidence": [
+        {
+          "event": 37,
+          "line": 4,
+          "quote": "|move|p1a: Iron Valiant|Close Combat|p2a: Kurama Chakra Mode"
+        },
+        {
+          "event": 37,
+          "line": 5,
+          "quote": "|-damage|p2a: Kurama Chakra Mode|33/100"
+        },
+        {
+          "event": 37,
+          "line": 10,
+          "quote": "|faint|p1a: Iron Valiant"
+        },
+        {
+          "event": 49,
+          "line": 8,
+          "quote": "|-damage|p2a: Kurama Chakra Mode|10/100"
+        },
+        {
+          "event": 55,
+          "line": 8,
+          "quote": "|-damage|p2a: Kurama Chakra Mode|0 fnt"
+        },
+        {
+          "event": 55,
+          "line": 9,
+          "quote": "|faint|p2a: Kurama Chakra Mode"
+        }
+      ]
+    },
+    {
+      "id": "sun",
+      "expected": "Opponent Drought set sun on turn 3, before the turn 4 marker; sun remains active through turn 9 action/turn 10 request; Great Tusk had a publicly revealed Protosynthesis speed boost. Current raw weather value 9 is the last weather protocol update turn.",
+      "evidence": [
+        {
+          "event": 31,
+          "line": 5,
+          "quote": "|-weather|SunnyDay|[from] ability: Drought|[of] p2a: Kurama Chakra Mode"
+        },
+        {
+          "event": 57,
+          "line": 6,
+          "quote": "|-start|p2a: Lynrd Spynrd|protosynthesisspe"
+        },
+        {
+          "event": 77,
+          "line": 9,
+          "quote": "|-weather|SunnyDay|[upkeep]"
+        },
+        {
+          "event": 77,
+          "line": 11,
+          "quote": "|turn|10"
+        }
+      ]
+    },
+    {
+      "id": "slowking",
+      "expected": "Self Slowking survived initial Draco Meteor at 147/393, later re-entered at 278/393 and survived at 94/393 before leaving.",
+      "evidence": [
+        {
+          "event": 17,
+          "line": 5,
+          "quote": "|-damage|p1a: Slowking|147/393"
+        },
+        {
+          "event": 43,
+          "line": 4,
+          "quote": "|switch|p1a: Slowking|Slowking-Galar, M, shiny|278/393"
+        },
+        {
+          "event": 55,
+          "line": 5,
+          "quote": "|-damage|p1a: Slowking|94/393"
+        },
+        {
+          "event": 63,
+          "line": 4,
+          "quote": "|switch|p1a: Kyurem|Kyurem, shiny|391/391"
+        }
+      ]
+    },
+    {
+      "id": "wake_poison",
+      "expected": "Toxic afflicted Walking Wake on turn 1; its Draco Meteor was immune against Iron Valiant on turn 2; Moonblast KO was from public 82/100 on turn 3.",
+      "evidence": [
+        {
+          "event": 17,
+          "line": 8,
+          "quote": "|-status|p2a: Dubya|tox"
+        },
+        {
+          "event": 23,
+          "line": 9,
+          "quote": "|-immune|p1a: Iron Valiant"
+        },
+        {
+          "event": 23,
+          "line": 11,
+          "quote": "|-damage|p2a: Dubya|82/100 tox|[from] psn"
+        },
+        {
+          "event": 29,
+          "line": 4,
+          "quote": "|move|p1a: Iron Valiant|Moonblast|p2a: Dubya"
+        },
+        {
+          "event": 29,
+          "line": 7,
+          "quote": "|faint|p2a: Dubya"
+        }
+      ]
+    }
+  ],
+  "io-abyssal-b01-s0-a1-p1": [
+    {
+      "id": "identity",
+      "expected": "Perspective p1; battle io-abyssal-b01-s0-a1-p1; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p1|bp1f964228d11b7|pokemonranger-gen6xy|"
+        }
+      ]
+    },
+    {
+      "id": "self_pecharunt",
+      "expected": "Self p1: Pecharunt (Pecharunt): latest request HP/status 104/380; active, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Pecharunt"
+        }
+      ]
+    },
+    {
+      "id": "self_ting-lu",
+      "expected": "Self p1: Ting-Lu (Ting-Lu): latest request HP/status 294/514; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Ting-Lu"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Opponent Ting-Lu is current at public 94/100 after Stealth Rock; Hydrapple, Tinkaton and Zamazenta fainted.",
+      "evidence": [
+        {
+          "event": 17,
+          "line": 8,
+          "quote": "|faint|p2a: Hydrapple"
+        },
+        {
+          "event": 49,
+          "line": 9,
+          "quote": "|faint|p2a: Tinkaton"
+        },
+        {
+          "event": 75,
+          "line": 10,
+          "quote": "|faint|p2a: Zamazenta"
+        },
+        {
+          "event": 77,
+          "line": 4,
+          "quote": "|switch|p2a: Ting-Lu|Ting-Lu|100/100"
+        },
+        {
+          "event": 77,
+          "line": 5,
+          "quote": "|-damage|p2a: Ting-Lu|94/100|[from] Stealth Rock"
+        }
+      ]
+    },
+    {
+      "id": "hazards",
+      "expected": "Opponent Stealth Rock was installed on turn 4; number 4 is installation turn, not layers.",
+      "evidence": [
+        {
+          "event": 37,
+          "line": 6,
+          "quote": "|move|p1a: Ting-Lu|Stealth Rock|p2a: Tinkaton"
+        },
+        {
+          "event": 37,
+          "line": 7,
+          "quote": "|-sidestart|p2: bp2f964228d11b7|move: Stealth Rock"
+        },
+        {
+          "event": 37,
+          "line": 11,
+          "quote": "|turn|5"
+        }
+      ]
+    },
+    {
+      "id": "balloon",
+      "expected": "Earthquake initially failed into Tinkaton Air Balloon; Ruination reduced public HP 100→51 on turn 5 and popped Balloon, allowing turn 6 Earthquake KO.",
+      "evidence": [
+        {
+          "event": 31,
+          "line": 6,
+          "quote": "|move|p1a: Ting-Lu|Earthquake|p2a: Tinkaton"
+        },
+        {
+          "event": 31,
+          "line": 7,
+          "quote": "|-immune|p2a: Tinkaton"
+        },
+        {
+          "event": 43,
+          "line": 6,
+          "quote": "|move|p1a: Ting-Lu|Ruination|p2a: Tinkaton"
+        },
+        {
+          "event": 43,
+          "line": 7,
+          "quote": "|-damage|p2a: Tinkaton|51/100"
+        },
+        {
+          "event": 43,
+          "line": 8,
+          "quote": "|-enditem|p2a: Tinkaton|Air Balloon"
+        },
+        {
+          "event": 49,
+          "line": 6,
+          "quote": "|move|p1a: Ting-Lu|Earthquake|p2a: Tinkaton"
+        },
+        {
+          "event": 49,
+          "line": 9,
+          "quote": "|faint|p2a: Tinkaton"
+        }
+      ]
+    },
+    {
+      "id": "pecharunt_hits",
+      "expected": "Pecharunt survived three Crunch hits 380→288→200→104 on turns 8,9,10 and KOed Zamazenta with the third Malignant Chain.",
+      "evidence": [
+        {
+          "event": 57,
+          "line": 4,
+          "quote": "|switch|p1a: Pecharunt|Pecharunt|380/380"
+        },
+        {
+          "event": 63,
+          "line": 6,
+          "quote": "|-damage|p1a: Pecharunt|288/380"
+        },
+        {
+          "event": 69,
+          "line": 7,
+          "quote": "|-damage|p1a: Pecharunt|200/380"
+        },
+        {
+          "event": 75,
+          "line": 7,
+          "quote": "|-damage|p1a: Pecharunt|104/380"
+        },
+        {
+          "event": 75,
+          "line": 8,
+          "quote": "|move|p1a: Pecharunt|Malignant Chain|p2a: Zamazenta"
+        },
+        {
+          "event": 75,
+          "line": 10,
+          "quote": "|faint|p2a: Zamazenta"
+        }
+      ]
+    },
+    {
+      "id": "poison",
+      "expected": "Zamazenta was badly poisoned and confused by Malignant Chain/Poison Puppeteer; poison contributed damage before the final KO.",
+      "evidence": [
+        {
+          "event": 63,
+          "line": 9,
+          "quote": "|-status|p2a: Zamazenta|tox"
+        },
+        {
+          "event": 63,
+          "line": 10,
+          "quote": "|-start|p2a: Zamazenta|confusion|[from] ability: Poison Puppeteer|[of] p1a: Pecharunt"
+        },
+        {
+          "event": 69,
+          "line": 11,
+          "quote": "|-damage|p2a: Zamazenta|23/100 tox|[from] psn"
+        }
+      ]
+    },
+    {
+      "id": "immunities",
+      "expected": "Thunder Wave failed against self Ting-Lu and Close Combat failed against self Pecharunt; those status/damage effects did not occur.",
+      "evidence": [
+        {
+          "event": 31,
+          "line": 4,
+          "quote": "|move|p2a: Tinkaton|Thunder Wave|p1a: Ting-Lu"
+        },
+        {
+          "event": 31,
+          "line": 5,
+          "quote": "|-immune|p1a: Ting-Lu"
+        },
+        {
+          "event": 57,
+          "line": 5,
+          "quote": "|move|p2a: Zamazenta|Close Combat|p1a: Pecharunt"
+        },
+        {
+          "event": 57,
+          "line": 6,
+          "quote": "|-immune|p1a: Pecharunt"
+        }
+      ]
+    }
+  ],
+  "io-abyssal-b02-s1-a1-p2": [
+    {
+      "id": "identity",
+      "expected": "Perspective p2; battle io-abyssal-b02-s1-a1-p2; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p2|bp23a31403e183b|kieran-champion|"
+        }
+      ]
+    },
+    {
+      "id": "self_zapdos",
+      "expected": "Self p2: Zapdos (Zapdos): latest request HP/status 181/383; active, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 79,
+          "line": 2,
+          "quote": "p2: Zapdos"
+        }
+      ]
+    },
+    {
+      "id": "self_tinkaton",
+      "expected": "Self p2: Tinkaton (Tinkaton, F): latest request HP/status 98/373; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 79,
+          "line": 2,
+          "quote": "p2: Tinkaton"
+        }
+      ]
+    },
+    {
+      "id": "self_zamazenta",
+      "expected": "Self p2: Zamazenta (Zamazenta): latest request HP/status 0 fnt; bench, fainted. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 79,
+          "line": 2,
+          "quote": "p2: Zamazenta"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Opponent Cinderace entered at public 100/100 after Landorus U-turn; Iron Valiant, Kyurem and Slowking fainted; Landorus survives at 40/100.",
+      "evidence": [
+        {
+          "event": 16,
+          "line": 9,
+          "quote": "|faint|p1a: Iron Valiant"
+        },
+        {
+          "event": 42,
+          "line": 9,
+          "quote": "|faint|p1a: Kyurem"
+        },
+        {
+          "event": 56,
+          "line": 7,
+          "quote": "|faint|p1a: Slowking"
+        },
+        {
+          "event": 76,
+          "line": 5,
+          "quote": "|-damage|p1a: Landorus|40/100"
+        },
+        {
+          "event": 78,
+          "line": 4,
+          "quote": "|switch|p1a: Cinderace|Cinderace, F, shiny|100/100|[from] U-turn"
+        }
+      ]
+    },
+    {
+      "id": "tinkaton_hits",
+      "expected": "Self Tinkaton survived two Blizzard hits 373→229 turn 2 then 229→98 turn 3; Balloon popped on the first hit.",
+      "evidence": [
+        {
+          "event": 24,
+          "line": 4,
+          "quote": "|switch|p2a: Tinkaton|Tinkaton, F|373/373"
+        },
+        {
+          "event": 24,
+          "line": 9,
+          "quote": "|-damage|p2a: Tinkaton|229/373"
+        },
+        {
+          "event": 24,
+          "line": 10,
+          "quote": "|-enditem|p2a: Tinkaton|Air Balloon"
+        },
+        {
+          "event": 30,
+          "line": 6,
+          "quote": "|-damage|p2a: Tinkaton|98/373"
+        }
+      ]
+    },
+    {
+      "id": "zamazenta_chain",
+      "expected": "Self Zamazenta survived Blizzard at 46/325 on turn 4; later fainted to Landorus Earth Power on turn 8.",
+      "evidence": [
+        {
+          "event": 36,
+          "line": 4,
+          "quote": "|switch|p2a: Zamazenta|Zamazenta|325/325"
+        },
+        {
+          "event": 36,
+          "line": 8,
+          "quote": "|-damage|p2a: Zamazenta|46/325"
+        },
+        {
+          "event": 64,
+          "line": 6,
+          "quote": "|move|p1a: Landorus|Earth Power|p2a: Zamazenta"
+        },
+        {
+          "event": 64,
+          "line": 7,
+          "quote": "|-damage|p2a: Zamazenta|0 fnt"
+        },
+        {
+          "event": 64,
+          "line": 8,
+          "quote": "|faint|p2a: Zamazenta"
+        }
+      ]
+    },
+    {
+      "id": "future_sight",
+      "expected": "Opponent Slowking set Future Sight on turn 6; no damaging resolution is observed in this source slice after Zamazenta fainted on turn 8. Do not invent damage or confidently assert a remaining counter.",
+      "evidence": [
+        {
+          "event": 50,
+          "line": 7,
+          "quote": "|move|p1a: Slowking|Future Sight|p2a: Zamazenta"
+        },
+        {
+          "event": 50,
+          "line": 8,
+          "quote": "|-start|p1a: Slowking|move: Future Sight"
+        },
+        {
+          "event": 64,
+          "line": 8,
+          "quote": "|faint|p2a: Zamazenta"
+        },
+        {
+          "event": 70,
+          "line": 4,
+          "quote": "|switch|p2a: Zapdos|Zapdos|220/383"
+        },
+        {
+          "event": 70,
+          "line": 5,
+          "quote": "|turn|9"
+        }
+      ]
+    },
+    {
+      "id": "landorus",
+      "expected": "Self Zapdos Hurricane confused Landorus on turn 9; Landorus executed U-turn, reducing Zapdos 220→181 and pivoting to Cinderace.",
+      "evidence": [
+        {
+          "event": 76,
+          "line": 4,
+          "quote": "|move|p2a: Zapdos|Hurricane|p1a: Landorus"
+        },
+        {
+          "event": 76,
+          "line": 5,
+          "quote": "|-damage|p1a: Landorus|40/100"
+        },
+        {
+          "event": 76,
+          "line": 6,
+          "quote": "|-start|p1a: Landorus|confusion"
+        },
+        {
+          "event": 76,
+          "line": 8,
+          "quote": "|move|p1a: Landorus|U-turn|p2a: Zapdos"
+        },
+        {
+          "event": 76,
+          "line": 10,
+          "quote": "|-damage|p2a: Zapdos|181/383"
+        },
+        {
+          "event": 78,
+          "line": 4,
+          "quote": "|switch|p1a: Cinderace|Cinderace, F, shiny|100/100|[from] U-turn"
+        }
+      ]
+    },
+    {
+      "id": "boosts",
+      "expected": "Zamazenta was Intimidated by Landorus on entry; its Close Combat had lowered defenses. These are historical because Zamazenta is fainted.",
+      "evidence": [
+        {
+          "event": 42,
+          "line": 7,
+          "quote": "|-unboost|p2a: Zamazenta|def|1"
+        },
+        {
+          "event": 42,
+          "line": 8,
+          "quote": "|-unboost|p2a: Zamazenta|spd|1"
+        },
+        {
+          "event": 58,
+          "line": 5,
+          "quote": "|-ability|p1a: Landorus|Intimidate|boost"
+        },
+        {
+          "event": 58,
+          "line": 6,
+          "quote": "|-unboost|p2a: Zamazenta|atk|1"
+        },
+        {
+          "event": 64,
+          "line": 8,
+          "quote": "|faint|p2a: Zamazenta"
+        }
+      ]
+    }
+  ],
+  "io-abyssal-b03-s1-a1-p2": [
+    {
+      "id": "identity",
+      "expected": "Perspective p2; battle io-abyssal-b03-s1-a1-p2; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p2|bp23b21e734c5c1|wally-gen3|"
+        }
+      ]
+    },
+    {
+      "id": "self_cinderace",
+      "expected": "Self p2: Cinderace (Cinderace, F, shiny): latest request HP/status 0 fnt; active, fainted. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 75,
+          "line": 2,
+          "quote": "p2: Cinderace"
+        }
+      ]
+    },
+    {
+      "id": "self_landorus",
+      "expected": "Self p2: Landorus (Landorus-Therian, M, shiny): latest request HP/status 147/381 par; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 75,
+          "line": 2,
+          "quote": "p2: Landorus"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Opponent Ting-Lu active at public 79/100 with Leftovers; opponent Zapdos and Tinkaton fainted, Zamazenta remains alive at 35/100.",
+      "evidence": [
+        {
+          "event": 34,
+          "line": 10,
+          "quote": "|-damage|p1a: Zamazenta|35/100|[from] item: Rocky Helmet|[of] p2a: Landorus"
+        },
+        {
+          "event": 52,
+          "line": 7,
+          "quote": "|faint|p1a: Zapdos"
+        },
+        {
+          "event": 66,
+          "line": 8,
+          "quote": "|faint|p1a: Tinkaton"
+        },
+        {
+          "event": 74,
+          "line": 5,
+          "quote": "|-damage|p1a: Ting-Lu|73/100"
+        },
+        {
+          "event": 74,
+          "line": 11,
+          "quote": "|-heal|p1a: Ting-Lu|79/100|[from] item: Leftovers"
+        }
+      ]
+    },
+    {
+      "id": "landorus_hits",
+      "expected": "Self Landorus survived three Close Combats 381→326→272→147, then was paralyzed by Zapdos Static on U-turn; it remains alive on bench.",
+      "evidence": [
+        {
+          "event": 22,
+          "line": 5,
+          "quote": "|switch|p2a: Landorus|Landorus-Therian, M, shiny|381/381"
+        },
+        {
+          "event": 22,
+          "line": 10,
+          "quote": "|-damage|p2a: Landorus|326/381"
+        },
+        {
+          "event": 28,
+          "line": 6,
+          "quote": "|-damage|p2a: Landorus|272/381"
+        },
+        {
+          "event": 34,
+          "line": 7,
+          "quote": "|-damage|p2a: Landorus|147/381"
+        },
+        {
+          "event": 40,
+          "line": 8,
+          "quote": "|-status|p2a: Landorus|par|[from] ability: Static|[of] p1a: Zapdos"
+        }
+      ]
+    },
+    {
+      "id": "cinderace",
+      "expected": "Self Cinderace survived Gigaton Hammer at 240/337, defeated Tinkaton, then fainted to Ting-Lu Earthquake turn 9.",
+      "evidence": [
+        {
+          "event": 60,
+          "line": 4,
+          "quote": "|switch|p2a: Cinderace|Cinderace, F, shiny|337/337"
+        },
+        {
+          "event": 60,
+          "line": 7,
+          "quote": "|-damage|p2a: Cinderace|240/337"
+        },
+        {
+          "event": 66,
+          "line": 8,
+          "quote": "|faint|p1a: Tinkaton"
+        },
+        {
+          "event": 74,
+          "line": 6,
+          "quote": "|move|p1a: Ting-Lu|Earthquake|p2a: Cinderace"
+        },
+        {
+          "event": 74,
+          "line": 9,
+          "quote": "|faint|p2a: Cinderace"
+        }
+      ]
+    },
+    {
+      "id": "hazards",
+      "expected": "Opponent Stealth Rock was installed on turn 4, damaging Tinkaton and Ting-Lu entries; self side has no installed hazard.",
+      "evidence": [
+        {
+          "event": 34,
+          "line": 11,
+          "quote": "|move|p2a: Landorus|Stealth Rock|p1a: Zamazenta"
+        },
+        {
+          "event": 34,
+          "line": 12,
+          "quote": "|-sidestart|p1: bp13b21e734c5c1|move: Stealth Rock"
+        },
+        {
+          "event": 54,
+          "line": 5,
+          "quote": "|-damage|p1a: Tinkaton|94/100|[from] Stealth Rock"
+        },
+        {
+          "event": 68,
+          "line": 5,
+          "quote": "|-damage|p1a: Ting-Lu|94/100|[from] Stealth Rock"
+        }
+      ]
+    },
+    {
+      "id": "zamazenta",
+      "expected": "Opponent Zamazenta accumulated Close Combat defense drops and Rocky Helmet damage; Taunt was historical and ended when it switched.",
+      "evidence": [
+        {
+          "event": 22,
+          "line": 11,
+          "quote": "|-unboost|p1a: Zamazenta|def|1"
+        },
+        {
+          "event": 28,
+          "line": 7,
+          "quote": "|-unboost|p1a: Zamazenta|def|1"
+        },
+        {
+          "event": 28,
+          "line": 11,
+          "quote": "|-start|p1a: Zamazenta|move: Taunt"
+        },
+        {
+          "event": 34,
+          "line": 8,
+          "quote": "|-unboost|p1a: Zamazenta|def|1"
+        },
+        {
+          "event": 34,
+          "line": 10,
+          "quote": "|-damage|p1a: Zamazenta|35/100|[from] item: Rocky Helmet|[of] p2a: Landorus"
+        },
+        {
+          "event": 40,
+          "line": 4,
+          "quote": "|switch|p1a: Zapdos|Zapdos|100/100"
+        }
+      ]
+    },
+    {
+      "id": "zapdos",
+      "expected": "Opponent Zapdos was first chipped to 91/100 by U-turn then KOed by Freeze-Dry on turn 6.",
+      "evidence": [
+        {
+          "event": 40,
+          "line": 5,
+          "quote": "|move|p2a: Landorus|U-turn|p1a: Zapdos"
+        },
+        {
+          "event": 40,
+          "line": 7,
+          "quote": "|-damage|p1a: Zapdos|91/100"
+        },
+        {
+          "event": 52,
+          "line": 4,
+          "quote": "|move|p2a: Kyurem|Freeze-Dry|p1a: Zapdos"
+        },
+        {
+          "event": 52,
+          "line": 7,
+          "quote": "|faint|p1a: Zapdos"
+        }
+      ]
+    }
+  ],
+  "io-abyssal-b04-s0-a1-p1": [
+    {
+      "id": "identity",
+      "expected": "Perspective p1; battle io-abyssal-b04-s0-a1-p1; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p1|bp155a660999f61|sage-gen2|"
+        }
+      ]
+    },
+    {
+      "id": "self_iron_valiant",
+      "expected": "Self p1: Iron Valiant (Iron Valiant): latest request HP/status 108/289; active, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 82,
+          "line": 2,
+          "quote": "p1: Iron Valiant"
+        }
+      ]
+    },
+    {
+      "id": "self_slowking",
+      "expected": "Self p1: Slowking (Slowking-Galar, M, shiny): latest request HP/status 278/393; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 82,
+          "line": 2,
+          "quote": "p1: Slowking"
+        }
+      ]
+    },
+    {
+      "id": "self_kingambit",
+      "expected": "Self p1: Kingambit (Kingambit, F): latest request HP/status 289/381; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 82,
+          "line": 2,
+          "quote": "p1: Kingambit"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Opponent Ceruledge is current at public 100/100; Walking Wake, Venusaur, Great Tusk and Hatterene fainted, Ninetales has not appeared.",
+      "evidence": [
+        {
+          "event": 29,
+          "line": 7,
+          "quote": "|faint|p2a: Dubya"
+        },
+        {
+          "event": 43,
+          "line": 7,
+          "quote": "|faint|p2a: Venu Vidi Vici"
+        },
+        {
+          "event": 71,
+          "line": 7,
+          "quote": "|faint|p2a: Lynrd Spynrd"
+        },
+        {
+          "event": 79,
+          "line": 6,
+          "quote": "|faint|p2a: Die w A Smile"
+        },
+        {
+          "event": 81,
+          "line": 4,
+          "quote": "|switch|p2a: Slayboi Carti|Ceruledge, F|100/100"
+        }
+      ]
+    },
+    {
+      "id": "valiant",
+      "expected": "Self Iron Valiant Booster Energy speed boost ended on its first switch; it re-entered without another activation and survived Headlong Rush at 108/289.",
+      "evidence": [
+        {
+          "event": 23,
+          "line": 5,
+          "quote": "|-enditem|p1a: Iron Valiant|Booster Energy"
+        },
+        {
+          "event": 23,
+          "line": 7,
+          "quote": "|-start|p1a: Iron Valiant|quarkdrivespe"
+        },
+        {
+          "event": 37,
+          "line": 4,
+          "quote": "|-end|p1a: Iron Valiant|Quark Drive|[silent]"
+        },
+        {
+          "event": 65,
+          "line": 5,
+          "quote": "|switch|p1a: Iron Valiant|Iron Valiant|289/289"
+        },
+        {
+          "event": 65,
+          "line": 7,
+          "quote": "|-damage|p1a: Iron Valiant|108/289"
+        }
+      ]
+    },
+    {
+      "id": "hatterene",
+      "expected": "Hatterene survived Iron Head at public 26/100 and used Eject Button; later returned at 26/100 and fainted to Moonblast turn 10.",
+      "evidence": [
+        {
+          "event": 57,
+          "line": 4,
+          "quote": "|move|p1a: Kingambit|Iron Head|p2a: Die w A Smile"
+        },
+        {
+          "event": 57,
+          "line": 6,
+          "quote": "|-damage|p2a: Die w A Smile|26/100"
+        },
+        {
+          "event": 57,
+          "line": 7,
+          "quote": "|-enditem|p2a: Die w A Smile|Eject Button"
+        },
+        {
+          "event": 73,
+          "line": 4,
+          "quote": "|switch|p2a: Die w A Smile|Hatterene, F|26/100"
+        },
+        {
+          "event": 79,
+          "line": 4,
+          "quote": "|move|p1a: Iron Valiant|Moonblast|p2a: Die w A Smile"
+        },
+        {
+          "event": 79,
+          "line": 6,
+          "quote": "|faint|p2a: Die w A Smile"
+        }
+      ]
+    },
+    {
+      "id": "kingambit",
+      "expected": "Self Kingambit survived Dazzling Gleam 381→243, healed to 289/381 with Leftovers before leaving.",
+      "evidence": [
+        {
+          "event": 51,
+          "line": 4,
+          "quote": "|switch|p1a: Kingambit|Kingambit, F|381/381"
+        },
+        {
+          "event": 51,
+          "line": 6,
+          "quote": "|-damage|p1a: Kingambit|243/381"
+        },
+        {
+          "event": 51,
+          "line": 8,
+          "quote": "|-heal|p1a: Kingambit|266/381|[from] item: Leftovers"
+        },
+        {
+          "event": 59,
+          "line": 6,
+          "quote": "|-heal|p1a: Kingambit|289/381|[from] item: Leftovers"
+        }
+      ]
+    },
+    {
+      "id": "venusaur",
+      "expected": "Venusaur Growth raised Attack/SpA by one stage turn 4; Freeze-Dry KO occurred turn 5. No sun was installed in this prefix.",
+      "evidence": [
+        {
+          "event": 37,
+          "line": 7,
+          "quote": "|move|p2a: Venu Vidi Vici|Growth|p2a: Venu Vidi Vici"
+        },
+        {
+          "event": 37,
+          "line": 8,
+          "quote": "|-boost|p2a: Venu Vidi Vici|atk|1"
+        },
+        {
+          "event": 37,
+          "line": 9,
+          "quote": "|-boost|p2a: Venu Vidi Vici|spa|1"
+        },
+        {
+          "event": 43,
+          "line": 4,
+          "quote": "|move|p1a: Kyurem|Freeze-Dry|p2a: Venu Vidi Vici"
+        },
+        {
+          "event": 43,
+          "line": 7,
+          "quote": "|faint|p2a: Venu Vidi Vici"
+        }
+      ]
+    },
+    {
+      "id": "wake",
+      "expected": "Walking Wake was badly poisoned, its second Draco Meteor was immune into Iron Valiant, then Moonblast defeated it from public 82/100.",
+      "evidence": [
+        {
+          "event": 17,
+          "line": 8,
+          "quote": "|-status|p2a: Dubya|tox"
+        },
+        {
+          "event": 23,
+          "line": 9,
+          "quote": "|-immune|p1a: Iron Valiant"
+        },
+        {
+          "event": 23,
+          "line": 11,
+          "quote": "|-damage|p2a: Dubya|82/100 tox|[from] psn"
+        },
+        {
+          "event": 29,
+          "line": 4,
+          "quote": "|move|p1a: Iron Valiant|Moonblast|p2a: Dubya"
+        },
+        {
+          "event": 29,
+          "line": 7,
+          "quote": "|faint|p2a: Dubya"
+        }
+      ]
+    }
+  ],
+  "io-one_step-b01-s0-a1-p1": [
+    {
+      "id": "identity",
+      "expected": "Perspective p1; battle io-one_step-b01-s0-a1-p1; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p1|bp1f940f0a8637b|pokemonranger-gen6xy|"
+        }
+      ]
+    },
+    {
+      "id": "self_zamazenta",
+      "expected": "Self p1: Zamazenta (Zamazenta): latest request HP/status 147/325; active, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 76,
+          "line": 2,
+          "quote": "p1: Zamazenta"
+        }
+      ]
+    },
+    {
+      "id": "self_ting-lu",
+      "expected": "Self p1: Ting-Lu (Ting-Lu): latest request HP/status 126/514; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 76,
+          "line": 2,
+          "quote": "p1: Ting-Lu"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Opponent Ting-Lu is active and alive at public 16/100 after Leftovers; Hydrapple and Tinkaton fainted.",
+      "evidence": [
+        {
+          "event": 17,
+          "line": 8,
+          "quote": "|faint|p2a: Hydrapple"
+        },
+        {
+          "event": 43,
+          "line": 9,
+          "quote": "|faint|p2a: Tinkaton"
+        },
+        {
+          "event": 75,
+          "line": 6,
+          "quote": "|-damage|p2a: Ting-Lu|10/100"
+        },
+        {
+          "event": 75,
+          "line": 12,
+          "quote": "|-heal|p2a: Ting-Lu|16/100|[from] item: Leftovers"
+        }
+      ]
+    },
+    {
+      "id": "zamazenta_hits",
+      "expected": "Self Zamazenta survived Earthquake on entry 325→255 turn 9 and again 255→147 turn 10; Close Combat did not KO opponent Ting-Lu.",
+      "evidence": [
+        {
+          "event": 69,
+          "line": 4,
+          "quote": "|switch|p1a: Zamazenta|Zamazenta|325/325"
+        },
+        {
+          "event": 69,
+          "line": 8,
+          "quote": "|-damage|p1a: Zamazenta|255/325"
+        },
+        {
+          "event": 75,
+          "line": 4,
+          "quote": "|move|p1a: Zamazenta|Close Combat|p2a: Ting-Lu"
+        },
+        {
+          "event": 75,
+          "line": 6,
+          "quote": "|-damage|p2a: Ting-Lu|10/100"
+        },
+        {
+          "event": 75,
+          "line": 10,
+          "quote": "|-damage|p1a: Zamazenta|147/325"
+        }
+      ]
+    },
+    {
+      "id": "tinglu_chain",
+      "expected": "Self Ting-Lu remains alive on bench at 126/514 after Body Press 250→94 plus Leftovers recovery; keep it distinct from opponent Ting-Lu.",
+      "evidence": [
+        {
+          "event": 57,
+          "line": 9,
+          "quote": "|-heal|p1a: Ting-Lu|250/514|[from] item: Leftovers"
+        },
+        {
+          "event": 63,
+          "line": 8,
+          "quote": "|-damage|p1a: Ting-Lu|94/514"
+        },
+        {
+          "event": 63,
+          "line": 11,
+          "quote": "|-heal|p1a: Ting-Lu|126/514|[from] item: Leftovers"
+        },
+        {
+          "event": 69,
+          "line": 4,
+          "quote": "|switch|p1a: Zamazenta|Zamazenta|325/325"
+        }
+      ]
+    },
+    {
+      "id": "balloon",
+      "expected": "Ruination on turn 4 left Tinkaton at public 51/100 and popped Air Balloon; Earthquake KO came on turn 5.",
+      "evidence": [
+        {
+          "event": 37,
+          "line": 6,
+          "quote": "|move|p1a: Ting-Lu|Ruination|p2a: Tinkaton"
+        },
+        {
+          "event": 37,
+          "line": 7,
+          "quote": "|-damage|p2a: Tinkaton|51/100"
+        },
+        {
+          "event": 37,
+          "line": 8,
+          "quote": "|-enditem|p2a: Tinkaton|Air Balloon"
+        },
+        {
+          "event": 43,
+          "line": 6,
+          "quote": "|move|p1a: Ting-Lu|Earthquake|p2a: Tinkaton"
+        },
+        {
+          "event": 43,
+          "line": 9,
+          "quote": "|faint|p2a: Tinkaton"
+        }
+      ]
+    },
+    {
+      "id": "hazards",
+      "expected": "Stealth Rock is installed on opponent side on turn 6; raw value 6 is activation turn, not layers.",
+      "evidence": [
+        {
+          "event": 51,
+          "line": 4,
+          "quote": "|move|p1a: Ting-Lu|Stealth Rock|p2a: Ting-Lu"
+        },
+        {
+          "event": 51,
+          "line": 5,
+          "quote": "|-sidestart|p2: bp2f940f0a8637b|move: Stealth Rock"
+        },
+        {
+          "event": 51,
+          "line": 11,
+          "quote": "|turn|7"
+        }
+      ]
+    },
+    {
+      "id": "restrictions",
+      "expected": "Close Combat removed Zamazenta initial +1 Defense, leaving net Defense 0 and SpD -1; opponent Ting-Lu revealed Earthquake/Body Press and Leftovers.",
+      "evidence": [
+        {
+          "event": 69,
+          "line": 6,
+          "quote": "|-boost|p1a: Zamazenta|def|1"
+        },
+        {
+          "event": 75,
+          "line": 7,
+          "quote": "|-unboost|p1a: Zamazenta|def|1"
+        },
+        {
+          "event": 75,
+          "line": 8,
+          "quote": "|-unboost|p1a: Zamazenta|spd|1"
+        },
+        {
+          "event": 63,
+          "line": 6,
+          "quote": "|move|p2a: Ting-Lu|Body Press|p1a: Ting-Lu"
+        },
+        {
+          "event": 75,
+          "line": 9,
+          "quote": "|move|p2a: Ting-Lu|Earthquake|p1a: Zamazenta"
+        },
+        {
+          "event": 75,
+          "line": 12,
+          "quote": "|-heal|p2a: Ting-Lu|16/100|[from] item: Leftovers"
+        }
+      ]
+    }
+  ],
+  "io-one_step-b02-s0-a1-p1": [
+    {
+      "id": "identity",
+      "expected": "Perspective p1; battle io-one_step-b02-s0-a1-p1; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p1|bp152a725525362|brendan-contest|"
+        }
+      ]
+    },
+    {
+      "id": "self_landorus",
+      "expected": "Self p1: Landorus (Landorus-Therian, M, shiny): latest request HP/status 330/381; active, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Landorus"
+        }
+      ]
+    },
+    {
+      "id": "self_kyurem",
+      "expected": "Self p1: Kyurem (Kyurem, shiny): latest request HP/status 249/391; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Kyurem"
+        }
+      ]
+    },
+    {
+      "id": "self_cinderace",
+      "expected": "Self p1: Cinderace (Cinderace, F, shiny): latest request HP/status 241/337; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Cinderace"
+        }
+      ]
+    },
+    {
+      "id": "self_iron_valiant",
+      "expected": "Self p1: Iron Valiant (Iron Valiant): latest request HP/status 0 fnt; bench, fainted. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Iron Valiant"
+        }
+      ]
+    },
+    {
+      "id": "self_slowking",
+      "expected": "Self p1: Slowking (Slowking-Galar, M, shiny): latest request HP/status 243/393; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 78,
+          "line": 2,
+          "quote": "p1: Slowking"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Opponent Zamazenta active at public 65/100 tox, with Intimidate Attack drop; Zapdos, Ting-Lu and Tinkaton fainted.",
+      "evidence": [
+        {
+          "event": 29,
+          "line": 7,
+          "quote": "|faint|p2a: Zapdos"
+        },
+        {
+          "event": 43,
+          "line": 7,
+          "quote": "|faint|p2a: Ting-Lu"
+        },
+        {
+          "event": 57,
+          "line": 8,
+          "quote": "|faint|p2a: Tinkaton"
+        },
+        {
+          "event": 77,
+          "line": 6,
+          "quote": "|-unboost|p2a: Zamazenta|atk|1"
+        },
+        {
+          "event": 77,
+          "line": 12,
+          "quote": "|-damage|p2a: Zamazenta|65/100 tox|[from] psn"
+        }
+      ]
+    },
+    {
+      "id": "slowking_hits",
+      "expected": "Self Slowking survived Close Combat 393→336 turn 7 and Crunch 336→112 turn 8; it used Toxic successfully and then switched out.",
+      "evidence": [
+        {
+          "event": 65,
+          "line": 4,
+          "quote": "|switch|p1a: Slowking|Slowking-Galar, M, shiny|393/393"
+        },
+        {
+          "event": 65,
+          "line": 7,
+          "quote": "|-damage|p1a: Slowking|336/393"
+        },
+        {
+          "event": 71,
+          "line": 4,
+          "quote": "|move|p2a: Zamazenta|Crunch|p1a: Slowking"
+        },
+        {
+          "event": 71,
+          "line": 6,
+          "quote": "|-damage|p1a: Slowking|112/393"
+        },
+        {
+          "event": 71,
+          "line": 7,
+          "quote": "|move|p1a: Slowking|Toxic|p2a: Zamazenta"
+        },
+        {
+          "event": 71,
+          "line": 8,
+          "quote": "|-status|p2a: Zamazenta|tox"
+        },
+        {
+          "event": 77,
+          "line": 4,
+          "quote": "|switch|p1a: Landorus|Landorus-Therian, M, shiny|381/381"
+        }
+      ]
+    },
+    {
+      "id": "landorus",
+      "expected": "Self Landorus active 330/381, Defense -1 after Crunch; Intimidate lowered opponent Attack, Rocky Helmet and poison reduced opponent HP.",
+      "evidence": [
+        {
+          "event": 77,
+          "line": 4,
+          "quote": "|switch|p1a: Landorus|Landorus-Therian, M, shiny|381/381"
+        },
+        {
+          "event": 77,
+          "line": 5,
+          "quote": "|-ability|p1a: Landorus|Intimidate|boost"
+        },
+        {
+          "event": 77,
+          "line": 6,
+          "quote": "|-unboost|p2a: Zamazenta|atk|1"
+        },
+        {
+          "event": 77,
+          "line": 8,
+          "quote": "|-damage|p1a: Landorus|330/381"
+        },
+        {
+          "event": 77,
+          "line": 9,
+          "quote": "|-unboost|p1a: Landorus|def|1"
+        },
+        {
+          "event": 77,
+          "line": 10,
+          "quote": "|-damage|p2a: Zamazenta|78/100 tox|[from] item: Rocky Helmet|[of] p1a: Landorus"
+        },
+        {
+          "event": 77,
+          "line": 12,
+          "quote": "|-damage|p2a: Zamazenta|65/100 tox|[from] psn"
+        }
+      ]
+    },
+    {
+      "id": "valiant",
+      "expected": "Self Iron Valiant fainted to Hurricane turn 1 after Moonblast damaged Zapdos to public 58/100; Booster Energy is consumed.",
+      "evidence": [
+        {
+          "event": 11,
+          "line": 7,
+          "quote": "|-enditem|p1a: Iron Valiant|Booster Energy"
+        },
+        {
+          "event": 17,
+          "line": 5,
+          "quote": "|-damage|p2a: Zapdos|58/100"
+        },
+        {
+          "event": 17,
+          "line": 6,
+          "quote": "|move|p2a: Zapdos|Hurricane|p1a: Iron Valiant"
+        },
+        {
+          "event": 17,
+          "line": 9,
+          "quote": "|faint|p1a: Iron Valiant"
+        }
+      ]
+    },
+    {
+      "id": "kyurem",
+      "expected": "Self Kyurem defeated Zapdos and Ting-Lu but took Earthquake to 249/391; it remains alive.",
+      "evidence": [
+        {
+          "event": 29,
+          "line": 4,
+          "quote": "|move|p1a: Kyurem|Freeze-Dry|p2a: Zapdos"
+        },
+        {
+          "event": 29,
+          "line": 7,
+          "quote": "|faint|p2a: Zapdos"
+        },
+        {
+          "event": 37,
+          "line": 8,
+          "quote": "|-damage|p1a: Kyurem|249/391"
+        },
+        {
+          "event": 43,
+          "line": 7,
+          "quote": "|faint|p2a: Ting-Lu"
+        }
+      ]
+    },
+    {
+      "id": "cinderace",
+      "expected": "Self Cinderace took Gigaton Hammer to 241/337 and KOed Tinkaton with Pyro Ball; it remains alive.",
+      "evidence": [
+        {
+          "event": 51,
+          "line": 4,
+          "quote": "|switch|p1a: Cinderace|Cinderace, F, shiny|337/337"
+        },
+        {
+          "event": 51,
+          "line": 7,
+          "quote": "|-damage|p1a: Cinderace|241/337"
+        },
+        {
+          "event": 57,
+          "line": 4,
+          "quote": "|move|p1a: Cinderace|Pyro Ball|p2a: Tinkaton"
+        },
+        {
+          "event": 57,
+          "line": 8,
+          "quote": "|faint|p2a: Tinkaton"
+        }
+      ]
+    }
+  ],
+  "io-one_step-b02-s1-a1-p2": [
+    {
+      "id": "identity",
+      "expected": "Perspective p2; battle io-one_step-b02-s1-a1-p2; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p2|bp2a1379808fa23|kieran-champion|"
+        }
+      ]
+    },
+    {
+      "id": "self_ting-lu",
+      "expected": "Self p2: Ting-Lu (Ting-Lu): latest request HP/status 281/513; active, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 81,
+          "line": 2,
+          "quote": "p2: Ting-Lu"
+        }
+      ]
+    },
+    {
+      "id": "self_zapdos",
+      "expected": "Self p2: Zapdos (Zapdos): latest request HP/status 187/383; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 81,
+          "line": 2,
+          "quote": "p2: Zapdos"
+        }
+      ]
+    },
+    {
+      "id": "self_zamazenta",
+      "expected": "Self p2: Zamazenta (Zamazenta): latest request HP/status 10/325; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 81,
+          "line": 2,
+          "quote": "p2: Zamazenta"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Opponent Landorus active at public 100/100 par; Iron Valiant, Slowking, Kyurem and Cinderace fainted; Landorus Intimidated self Ting-Lu.",
+      "evidence": [
+        {
+          "event": 16,
+          "line": 9,
+          "quote": "|faint|p1a: Iron Valiant"
+        },
+        {
+          "event": 42,
+          "line": 7,
+          "quote": "|faint|p1a: Slowking"
+        },
+        {
+          "event": 56,
+          "line": 9,
+          "quote": "|faint|p1a: Kyurem"
+        },
+        {
+          "event": 78,
+          "line": 10,
+          "quote": "|faint|p1a: Cinderace"
+        },
+        {
+          "event": 80,
+          "line": 4,
+          "quote": "|switch|p1a: Landorus|Landorus-Therian, M, shiny|100/100 par"
+        },
+        {
+          "event": 80,
+          "line": 5,
+          "quote": "|-ability|p1a: Landorus|Intimidate|boost"
+        },
+        {
+          "event": 80,
+          "line": 6,
+          "quote": "|-unboost|p2a: Ting-Lu|atk|1"
+        }
+      ]
+    },
+    {
+      "id": "zamazenta",
+      "expected": "Self Zamazenta survived Draco Meteor 325→10 on turn 5, defeated Kyurem then switched out; it is alive at 10/325.",
+      "evidence": [
+        {
+          "event": 50,
+          "line": 4,
+          "quote": "|switch|p2a: Zamazenta|Zamazenta|325/325"
+        },
+        {
+          "event": 50,
+          "line": 7,
+          "quote": "|move|p1a: Kyurem|Draco Meteor|p2a: Zamazenta"
+        },
+        {
+          "event": 50,
+          "line": 8,
+          "quote": "|-damage|p2a: Zamazenta|10/325"
+        },
+        {
+          "event": 56,
+          "line": 4,
+          "quote": "|move|p2a: Zamazenta|Close Combat|p1a: Kyurem"
+        },
+        {
+          "event": 56,
+          "line": 9,
+          "quote": "|faint|p1a: Kyurem"
+        },
+        {
+          "event": 64,
+          "line": 4,
+          "quote": "|switch|p2a: Zapdos|Zapdos|220/383"
+        }
+      ]
+    },
+    {
+      "id": "future_sight",
+      "expected": "Slowking cast Future Sight turn 2; it resolved on turn 4 into Ting-Lu immunity, causing no observed HP loss.",
+      "evidence": [
+        {
+          "event": 30,
+          "line": 6,
+          "quote": "|move|p1a: Slowking|Future Sight|p2a: Ting-Lu"
+        },
+        {
+          "event": 30,
+          "line": 7,
+          "quote": "|-start|p1a: Slowking|move: Future Sight"
+        },
+        {
+          "event": 42,
+          "line": 9,
+          "quote": "|-end|p2a: Ting-Lu|move: Future Sight"
+        },
+        {
+          "event": 42,
+          "line": 10,
+          "quote": "|-immune|p2a: Ting-Lu"
+        }
+      ]
+    },
+    {
+      "id": "tinglu_hits",
+      "expected": "Self Ting-Lu survived Surf and two later Pyro Balls; latest HP after Leftovers is 281/513. Its Earthquake KOed Cinderace turn 9.",
+      "evidence": [
+        {
+          "event": 36,
+          "line": 9,
+          "quote": "|-damage|p2a: Ting-Lu|369/513"
+        },
+        {
+          "event": 72,
+          "line": 7,
+          "quote": "|-damage|p2a: Ting-Lu|331/513"
+        },
+        {
+          "event": 78,
+          "line": 5,
+          "quote": "|-damage|p2a: Ting-Lu|249/513"
+        },
+        {
+          "event": 78,
+          "line": 6,
+          "quote": "|move|p2a: Ting-Lu|Earthquake|p1a: Cinderace"
+        },
+        {
+          "event": 78,
+          "line": 10,
+          "quote": "|faint|p1a: Cinderace"
+        },
+        {
+          "event": 78,
+          "line": 12,
+          "quote": "|-heal|p2a: Ting-Lu|281/513|[from] item: Leftovers"
+        }
+      ]
+    },
+    {
+      "id": "zapdos",
+      "expected": "Self Zapdos took Moonblast 383→220, later U-turn 220→187; Static paralyzed opposing Landorus before the pivot.",
+      "evidence": [
+        {
+          "event": 16,
+          "line": 5,
+          "quote": "|-damage|p2a: Zapdos|220/383"
+        },
+        {
+          "event": 64,
+          "line": 4,
+          "quote": "|switch|p2a: Zapdos|Zapdos|220/383"
+        },
+        {
+          "event": 64,
+          "line": 7,
+          "quote": "|-damage|p2a: Zapdos|187/383"
+        },
+        {
+          "event": 64,
+          "line": 8,
+          "quote": "|-status|p1a: Landorus|par|[from] ability: Static|[of] p2a: Zapdos"
+        }
+      ]
+    },
+    {
+      "id": "public_moves",
+      "expected": "Opponent Landorus revealed U-turn/Intimidate, Cinderace revealed Pyro Ball, Slowking revealed Future Sight/Surf; do not promote undisclosed sets.",
+      "evidence": [
+        {
+          "event": 64,
+          "line": 5,
+          "quote": "|move|p1a: Landorus|U-turn|p2a: Zapdos"
+        },
+        {
+          "event": 80,
+          "line": 5,
+          "quote": "|-ability|p1a: Landorus|Intimidate|boost"
+        },
+        {
+          "event": 72,
+          "line": 6,
+          "quote": "|move|p1a: Cinderace|Pyro Ball|p2a: Ting-Lu"
+        },
+        {
+          "event": 30,
+          "line": 6,
+          "quote": "|move|p1a: Slowking|Future Sight|p2a: Ting-Lu"
+        },
+        {
+          "event": 36,
+          "line": 7,
+          "quote": "|move|p1a: Slowking|Surf|p2a: Ting-Lu"
+        }
+      ]
+    }
+  ],
+  "io-one_step-b03-s1-a1-p2": [
+    {
+      "id": "identity",
+      "expected": "Perspective p2; battle io-one_step-b03-s1-a1-p2; latest decision 12.",
+      "evidence": [
+        {
+          "event": 5,
+          "line": 2,
+          "quote": "|player|p2|bp23544bce36159|wally-gen3|"
+        }
+      ]
+    },
+    {
+      "id": "self_iron_valiant",
+      "expected": "Self p2: Iron Valiant (Iron Valiant): latest request HP/status 267/289; active, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 77,
+          "line": 2,
+          "quote": "p2: Iron Valiant"
+        }
+      ]
+    },
+    {
+      "id": "self_slowking",
+      "expected": "Self p2: Slowking (Slowking-Galar, M, shiny): latest request HP/status 239/393; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 77,
+          "line": 2,
+          "quote": "p2: Slowking"
+        }
+      ]
+    },
+    {
+      "id": "self_landorus",
+      "expected": "Self p2: Landorus (Landorus-Therian, M, shiny): latest request HP/status 339/381; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 77,
+          "line": 2,
+          "quote": "p2: Landorus"
+        }
+      ]
+    },
+    {
+      "id": "self_kyurem",
+      "expected": "Self p2: Kyurem (Kyurem, shiny): latest request HP/status 177/391; bench, alive. Exact self HP is available; a correctly qualified rounded percentage is acceptable.",
+      "evidence": [
+        {
+          "event": 77,
+          "line": 2,
+          "quote": "p2: Kyurem"
+        }
+      ]
+    },
+    {
+      "id": "opponent_position",
+      "expected": "Opponent Zamazenta active at public 82/100 tox; Slowking, Ting-Lu and Hydrapple fainted.",
+      "evidence": [
+        {
+          "event": 16,
+          "line": 7,
+          "quote": "|faint|p1a: Slowking"
+        },
+        {
+          "event": 48,
+          "line": 8,
+          "quote": "|faint|p1a: Ting-Lu"
+        },
+        {
+          "event": 56,
+          "line": 7,
+          "quote": "|faint|p1a: Hydrapple"
+        },
+        {
+          "event": 76,
+          "line": 12,
+          "quote": "|-damage|p1a: Zamazenta|82/100 tox|[from] psn"
+        }
+      ]
+    },
+    {
+      "id": "slowking_hits",
+      "expected": "Self Slowking survived Close Combat 393→332 turn 7 and Crunch 332→108 turn 8, then switched to Iron Valiant; it is alive.",
+      "evidence": [
+        {
+          "event": 64,
+          "line": 4,
+          "quote": "|switch|p2a: Slowking|Slowking-Galar, M, shiny|393/393"
+        },
+        {
+          "event": 64,
+          "line": 7,
+          "quote": "|-damage|p2a: Slowking|332/393"
+        },
+        {
+          "event": 70,
+          "line": 4,
+          "quote": "|move|p1a: Zamazenta|Crunch|p2a: Slowking"
+        },
+        {
+          "event": 70,
+          "line": 6,
+          "quote": "|-damage|p2a: Slowking|108/393"
+        },
+        {
+          "event": 76,
+          "line": 4,
+          "quote": "|switch|p2a: Iron Valiant|Iron Valiant|289/289"
+        }
+      ]
+    },
+    {
+      "id": "valiant",
+      "expected": "Self Iron Valiant activated Booster Energy speed on turn 9 and survived Crunch 289→267; it is current and alive.",
+      "evidence": [
+        {
+          "event": 76,
+          "line": 4,
+          "quote": "|switch|p2a: Iron Valiant|Iron Valiant|289/289"
+        },
+        {
+          "event": 76,
+          "line": 5,
+          "quote": "|-enditem|p2a: Iron Valiant|Booster Energy"
+        },
+        {
+          "event": 76,
+          "line": 7,
+          "quote": "|-start|p2a: Iron Valiant|quarkdrivespe"
+        },
+        {
+          "event": 76,
+          "line": 8,
+          "quote": "|move|p1a: Zamazenta|Crunch|p2a: Iron Valiant"
+        },
+        {
+          "event": 76,
+          "line": 10,
+          "quote": "|-damage|p2a: Iron Valiant|267/289"
+        }
+      ]
+    },
+    {
+      "id": "kyurem",
+      "expected": "Self Kyurem survived Body Press at 177/391, then KOed Ting-Lu from 79/100 and Hydrapple from 100/100 with separate Freeze-Dry actions.",
+      "evidence": [
+        {
+          "event": 42,
+          "line": 4,
+          "quote": "|switch|p2a: Kyurem|Kyurem, shiny|391/391|[from] U-turn"
+        },
+        {
+          "event": 42,
+          "line": 8,
+          "quote": "|-damage|p2a: Kyurem|177/391"
+        },
+        {
+          "event": 42,
+          "line": 10,
+          "quote": "|-heal|p1a: Ting-Lu|79/100|[from] item: Leftovers"
+        },
+        {
+          "event": 48,
+          "line": 4,
+          "quote": "|move|p2a: Kyurem|Freeze-Dry|p1a: Ting-Lu"
+        },
+        {
+          "event": 48,
+          "line": 8,
+          "quote": "|faint|p1a: Ting-Lu"
+        },
+        {
+          "event": 50,
+          "line": 4,
+          "quote": "|switch|p1a: Hydrapple|Hydrapple, F|100/100"
+        },
+        {
+          "event": 56,
+          "line": 4,
+          "quote": "|move|p2a: Kyurem|Freeze-Dry|p1a: Hydrapple"
+        },
+        {
+          "event": 56,
+          "line": 7,
+          "quote": "|faint|p1a: Hydrapple"
+        }
+      ]
+    },
+    {
+      "id": "hazards",
+      "expected": "Stealth Rock on opponent side was installed turn 3; no self-side hazard is present.",
+      "evidence": [
+        {
+          "event": 30,
+          "line": 4,
+          "quote": "|move|p2a: Landorus|Stealth Rock|p1a: Ting-Lu"
+        },
+        {
+          "event": 30,
+          "line": 5,
+          "quote": "|-sidestart|p1: bp13544bce36159|move: Stealth Rock"
+        },
+        {
+          "event": 30,
+          "line": 13,
+          "quote": "|turn|4"
+        }
+      ]
+    },
+    {
+      "id": "poison",
+      "expected": "Self Slowking successfully badly poisoned opponent Zamazenta turn 8; poison damage leaves 82/100 after turn 9, Close Combat had reduced its defenses.",
+      "evidence": [
+        {
+          "event": 64,
+          "line": 8,
+          "quote": "|-unboost|p1a: Zamazenta|def|1"
+        },
+        {
+          "event": 64,
+          "line": 9,
+          "quote": "|-unboost|p1a: Zamazenta|spd|1"
+        },
+        {
+          "event": 70,
+          "line": 7,
+          "quote": "|move|p2a: Slowking|Toxic|p1a: Zamazenta"
+        },
+        {
+          "event": 70,
+          "line": 8,
+          "quote": "|-status|p1a: Zamazenta|tox"
+        },
+        {
+          "event": 70,
+          "line": 10,
+          "quote": "|-damage|p1a: Zamazenta|94/100 tox|[from] psn"
+        },
+        {
+          "event": 76,
+          "line": 12,
+          "quote": "|-damage|p1a: Zamazenta|82/100 tox|[from] psn"
+        }
+      ]
+    }
+  ]
+}
