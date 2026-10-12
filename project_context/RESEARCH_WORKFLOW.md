@@ -2,7 +2,7 @@
 
 [D-131](decisions/D-131-research-branch-preservation.md)에 따라 연구 목적과 실행 위치를
 분리한다. 원본 소스·실험·환경은 삭제하거나 이동하지 않는다. 분리 검증의 원문은
-[EP-135](exec-plans/active/EP-135-research-branch-preservation.md)다.
+[EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)다.
 
 ## 브랜치와 작업 위치
 

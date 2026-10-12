@@ -34,4 +34,4 @@ API/CLI/학습 알고리즘 변경, 환경 이동·재설치·upgrade, submodule
 새 실험 출력은 기존 CLI의 명시적 출력 인자로 `runs/model-training/<새 실험 ID>`를 선택한다.
 출력 선택이 없는 과거 실행기를 새 실험용으로 자동 재사용하지 않는다.
 
-진행·검증·복원 연결은 [EP-135](../exec-plans/active/EP-135-research-branch-preservation.md)가 관리한다.
+진행·검증·복원 연결은 [EP-135](../exec-plans/completed/EP-135-research-branch-preservation.md)가 관리한다.

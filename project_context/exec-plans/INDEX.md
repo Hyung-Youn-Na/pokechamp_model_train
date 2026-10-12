@@ -23,7 +23,6 @@ verification에 대한 source of truth는 각 개별 plan이다. `active/` 안�
 
 | ID | Plan | Status | 현재 objective | 최종 갱신일 |
 |---|---|---|---|---|
-| [EP-135](active/EP-135-research-branch-preservation.md) | 연구 브랜치·자산 보존 | Active | 외부 보존 검증 통과·공통 기준선 생성 | 2026-10-12 |
 | [EP-134](active/EP-134-jev27b-ex058-reproduction.md) | JEV-27B 동일32 재현 | Blocked | GPU 한도 중단·목표 미달 · [후속 교훈](evidence/ep134-lessons/report.md) | 2026-10-08 |
 | [EP-127](active/EP-127-fixed-matchup-first-round.md) | 첫1라운드 학습 | Blocked | 원실행 시간초과·학습0·후속 시간상한 해제 | 2026-10-07 |
 | [EP-126](active/EP-126-fixed-matchup-day.md) | 하루 내 고정 대진 실행 | Paused | 사용자 중지·학습/test0·자료 보존/정리 완료 | 2026-10-07 |
@@ -70,6 +69,7 @@ verification에 대한 source of truth는 각 개별 plan이다. `active/` 안�
 
 | ID / 개별 검증 근거 | 완료일 | Outcome |
 |---|---|---|
+| [EP-135](completed/EP-135-research-branch-preservation.md) | 2026-10-12 | 동일 코드 두 연구선·고정 태그·외부 자산 복사/검증·기존 환경 유지 |
 | [EP-132](completed/EP-132-qwen-matrix-selfplay.md) | 2026-10-09 | 시도3 40라운드 둔화 종료·36 선택·시험640/감사/뷰어/봉인·정리 완료; 주효능 미입증(직접 0.805) |
 | [EP-133](completed/EP-133-joint-q-battle.md) | 2026-10-08 | GPU0 재현·실제20경기·감사/정정/뷰어/봉인·자원 정리 완료 |
 | [EP-131](completed/EP-131-fixed-matchup-stopping.md) | 2026-10-07 | 32라운드 종료·최고24 선택·시험/감사/뷰어/봉인·정리 완료; 주효능 미달 |

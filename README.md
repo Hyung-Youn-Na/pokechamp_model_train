@@ -6,7 +6,7 @@
 별도 `research/l1-l5-port`에서 보존·후속 설계한다. 양쪽은 같은 공통 코드 기준선에서 출발한다.
 
 브랜치·기준 태그·worktree·대형 자산 복사/검증과 목적 문서 분리의 범위·완료 근거는
-[EP-135](project_context/exec-plans/active/EP-135-research-branch-preservation.md)에서 관리한다.
+[EP-135](project_context/exec-plans/completed/EP-135-research-branch-preservation.md)에서 관리한다.
 새 연구 실험은 실행 중이지 않다.
 기존 source·환경·모델·실험 evidence와 Blocked/Paused 판정을 보존한다.
 

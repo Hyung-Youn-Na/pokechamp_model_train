@@ -7,7 +7,7 @@
 
 **Authority:** 이 브랜치의 프로젝트 목적과 기본 invariant에 대한 최상위 원문이다.
 연구선 분리는 기존 ADR·EX·동결 protocol·봉인·Blocked/Paused 판정을 바꾸지 않는다.
-분리 기반 구성의 범위·검증은 [EP-135](exec-plans/active/EP-135-research-branch-preservation.md)에서 관리한다. 실행 중인 학습·평가 실험은 없다.
+분리 기반 구성의 범위·검증은 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)에서 관리한다. 실행 중인 학습·평가 실험은 없다.
 
 ## 프로젝트 목표 (Project Goal)
 
@@ -26,9 +26,9 @@ LAYA-RLCD·EVE-RLCD·RLCD-Lite의 기존 환경과 Qwen·Kev·고정 대진 탐�
 
 ### 당면 목표
 
-이번 분리 단계의 범위는 Git 기준선·공통 보존 태그·브랜치별 목적 문서·worktree·대형 자산
-복사와 검증이며 진행·완료 근거는 [EP-135](exec-plans/active/EP-135-research-branch-preservation.md)에 연결한다. 새 학습·GPU 실행·외부 모델 호출·
-실제 배틀은 분리 범위에 포함하지 않는다.
+공통 Git 기준선·보존 태그·목적 문서·worktree·외부 자산 복사와 검증은
+[EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)에서 완료했다.
+현재 실행 중인 연구 실험은 없으며, 후속 학습·정책 개선·독립 평가의 조건을 새 범위에서 정한다.
 기존 [D-096](decisions/D-096-pokemon-training-objective.md)의 학습 목표와
 [D-112](decisions/D-112-imitation-self-play-objectives.md)의 모방 학습·정책 개선 방향,
 [D-119](decisions/D-119-fixed-matchup-mcts.md) 이후 고정 공개 상태 연구는 후속 설계의 근거다.
@@ -39,7 +39,7 @@ EX-079·EX-080의 완료 결과와 기존 중단 결과를 각각의 조건·해
 
 - 대상: `pokechamp`의 모델 학습·정책 개선·독립 평가와 이를 뒷받침하는 입력·데이터·검증 기반.
 - 작업 위치: `/workspace`, 브랜치 `research/model-training`; 기존 interpreter·환경·캐시 경로 유지.
-- 이번 작업: 공통 소스 기준선, 목적 문서 분리, 외부 보존·검증·복원 연결.
+- 보존된 기반: 공통 소스 기준선, 목적 문서 분리, 외부 보존·검증·복원 연결.
 - 후속 학습의 모델·데이터·방법·평가·자원 조건: 새 bounded plan/EX에서 구체화한다.
 - L1–L5 이식은 별도 연구선의 목적이며 학습 모델과의 결합은 미정이다.
 

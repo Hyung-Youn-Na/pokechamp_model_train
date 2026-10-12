@@ -3,7 +3,7 @@
 이 문서의 현재 연구선은 `research/model-training`이며 최상위 목적은 **모델 학습·정책 개선·독립 평가**다.
 [D-131](decisions/D-131-research-branch-preservation.md)에 따라 두 목적의 현재 작업을 분리한다. 기존 실험의 조건·평가·해석과
 Blocked/Paused 판정은 보존하며, 현재 실행 중인 연구 실험은 없다.
-분리 기반 구성은 [EP-135](exec-plans/active/EP-135-research-branch-preservation.md), 경로·외부 자산·복원은 [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)를 따른다.
+분리 기반 구성은 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md), 경로·외부 자산·복원은 [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)를 따른다.
 
 - 상태 (Status): Current — 모델 학습·정책 개선·독립 평가; 새 실험 실행 없음
 - 편집 기준일 (As of): 2026-10-12 — D-131 연구선 분리
@@ -821,7 +821,7 @@ Kev 후속 승률의 정확한 추정을 보장하지 않는다. 이미 결과�
 ## 15. 현재 연구 단계 (Current Research Stage)
 
 **모델 학습·정책 개선·독립 평가를 주 개발 연구선으로 관리한다.**
-분리 기반의 보존·Git 기준선·문서·worktree·검증과 완료 근거는 [EP-135](exec-plans/active/EP-135-research-branch-preservation.md)가 소유한다.
+분리 기반의 보존·Git 기준선·문서·worktree·검증과 완료 근거는 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)가 소유한다.
 학습·평가 실험은 실행 중이지 않으며 후속 방법·초기 모델·데이터·독립 평가·자원 조건을
 새 범위에서 정한다. 기존 EX-079·EX-080의 종료·시험 결과와 주효능 미입증을 보존한다.
 기존 Qwen·Kev·Abyssal·JEV 결과 및 중단 판정도 해당 EX의 조건·분모·한계 안에서 해석한다.
