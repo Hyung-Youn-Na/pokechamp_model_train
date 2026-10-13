@@ -1,7 +1,8 @@
 # EP-136 — 분리된 연구선의 매뉴얼 정비
 
-- 상태: Active
+- 상태: Completed
 - 생성일: 2026-10-13
+- 완료일: 2026-10-13
 - 책임자: Codex
 - 승인 근거·범위: 사용자의 연구 매뉴얼을 분리된 환경에 맞춰 정비하라는 명시적 요청
 - 관련: [D-131](../../decisions/D-131-research-branch-preservation.md),
@@ -30,7 +31,7 @@ receipt를 유지한다. L1의 `.tools/.../docs` 등은 보존 링크이므로 �
 - [x] 실행기별 실제 출력 인자와 읽기/쓰기·서버/모델 호출 경계를 소스와 대조한다.
 - [x] 현재 안내와 과거 EX 전용 명령을 구분하고 새 실험 자동 실행을 유도하지 않는다.
 - [x] 문서 링크·anchor·템플릿 복사 경로·diff와 보존 invariant를 검증한다.
-- [ ] 각 브랜치 문서를 커밋하고 기존에 승인된 학습 원격에 반영·검증한다.
+- [x] 각 브랜치 문서를 커밋하고 기존에 승인된 학습 원격에 반영·검증한다.
 
 ## 검증과 증거
 
@@ -50,6 +51,9 @@ receipt를 유지한다. L1의 `.tools/.../docs` 등은 보존 링크이므로 �
   독립 CLI/규범 검토와 정적 검증에서 새 링크 오류가 없고, 각 연구선의 기존 규범·개별 기록
   392개와 기존 plan 색인 135행·submodule pin·보존 ref/receipt가 유지됨을 확인했다.
   기존 상속 설치 문서의 README anchor 누락은 검증 기록에 별도로 남겼다.
+- 2026-10-13 — 학습 매뉴얼 커밋 `aabd0dd`, L1 매뉴얼 커밋 `288f981`을 만들었다.
+  학습 브랜치만 기존 `model-train` 원격에 게시하고 원격 SHA 일치·두 checkout의 clean 상태를
+  확인했다. 상세 근거는 `manual-commits-push.json`에 기록하고 plan·색인·STATUS를 종결했다.
 
 ## 차단·중단
 
@@ -59,7 +63,10 @@ receipt를 유지한다. L1의 `.tools/.../docs` 등은 보존 링크이므로 �
 
 ## 결과
 
-매뉴얼·등록 템플릿·실행기 기술 참조 정비와 정적 검증을 완료했다. 커밋·게시 검증 후 종결한다.
+두 연구선의 매뉴얼·등록 템플릿·실행기 기술 참조 정비와 정적 검증·커밋·학습 원격 게시를
+완료했다. L1 브랜치는 로컬에 유지하며 새 실험·코드/환경 변경은 없다.
 시작 branch/commit·보존 해시는 외부 검증 디렉터리의 `before.json`, 링크·template·shell 구문·
 기존 기록 대조는 `document-validation.json`, 독립 검토는 `cli-review.json`과
-`governance-review.json`에서 확인한다. 명령 예시는 실행하지 않았고 runtime 검사는 해당 없음이다.
+`governance-review.json`에서 확인한다. 종결 후 Git 상태와 게시 검증은 `final-receipt.json`에 연결한다.
+명령 예시는 실행하지 않았고 runtime 검사는 해당 없음이다. 기존 EP132 준비 경로 한계와
+개별 실험의 미완료·Blocked/Paused는 그대로 유지한다.

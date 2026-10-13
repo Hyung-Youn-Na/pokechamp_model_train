@@ -21,9 +21,7 @@ verification에 대한 source of truth는 각 개별 plan이다. `active/` 안�
 
 ### 실행 중
 
-| ID | Plan | Status | 현재 objective | 최종 갱신일 |
-|---|---|---|---|---|
-| [EP-136](active/EP-136-branch-research-manuals.md) | 연구선별 매뉴얼 정비 | Active | 환경·등록·출력·보존 안내와 링크 정비 | 2026-10-13 |
+현재 실행 중인 plan은 없다.
 
 <a id="blocked-plans"></a>
 
@@ -72,6 +70,7 @@ verification에 대한 source of truth는 각 개별 plan이다. `active/` 안�
 
 | ID / 개별 검증 근거 | 완료일 | Outcome |
 |---|---|---|
+| [EP-136](completed/EP-136-branch-research-manuals.md) | 2026-10-13 | 연구선별 매뉴얼·환경/출력 안내·등록 템플릿·정적 검증·학습 원격 반영 완료 |
 | [EP-135](completed/EP-135-research-branch-preservation.md) | 2026-10-12 | 동일 코드 두 연구선·고정 태그·외부 자산 복사/검증·기존 환경 유지 |
 | [EP-132](completed/EP-132-qwen-matrix-selfplay.md) | 2026-10-09 | 시도3 40라운드 둔화 종료·36 선택·시험640/감사/뷰어/봉인·정리 완료; 주효능 미입증(직접 0.805) |
 | [EP-133](completed/EP-133-joint-q-battle.md) | 2026-10-08 | GPU0 재현·실제20경기·감사/정정/뷰어/봉인·자원 정리 완료 |

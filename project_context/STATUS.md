@@ -23,8 +23,10 @@
 
 ## 현재 실행 작업
 
-[EP-136](exec-plans/active/EP-136-branch-research-manuals.md)에서 연구선별 매뉴얼을 정비 중이다.
-실험·환경 변경은 포함하지 않는다. [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)의
+현재 실행 중인 작업은 없다. [EP-136](exec-plans/completed/EP-136-branch-research-manuals.md)에서
+연구선별 매뉴얼·환경/출력 안내·등록 템플릿 정비를 완료했다. 작업 시작은
+[연구 매뉴얼](RESEARCH_MANUAL.md)을 따른다. 실험·환경 변경은 없으며
+[EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)의
 브랜치 분리·공통 태그·외부 보존·검증을 완료했다. 기존 실행 코드와 환경은 유지했으며
 과거 실험을 재개하거나 Blocked/Paused를 완료로 바꾸지 않았다.
 
