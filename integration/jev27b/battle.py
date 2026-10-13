@@ -49,7 +49,7 @@ class Session(j.Session):
     """One logical decision, at most four HTTP attempts, and no elapsed-time cap."""
 
     def __init__(self, directory, *, expected_identity, endpoint=ENDPOINT,
-                 client_factory=None):
+                 client_factory=None, request_namespace="ex082"):
         # Preserve the old Session's observation setup and fsync event recording.
         # Its historical budget implementation is not used by this profile.
         super().__init__(Path(directory), environ={}, call_limit=None,
@@ -73,6 +73,9 @@ class Session(j.Session):
         self._decisions_idle.set()
         self._inference_lock = asyncio.Lock()
         self._request_ids = set()
+        if request_namespace not in ("ex082", "ex083"):
+            raise ValueError("unknown local JEV request namespace")
+        self.request_namespace = request_namespace
         if client_factory is None:
             from .client import LocalClient
             client_factory = LocalClient
@@ -122,7 +125,7 @@ class Session(j.Session):
         body = dict(model=MODEL, **copy.deepcopy(payload))
         encoded = request_bytes(body)
         body_sha256 = hashlib.sha256(encoded).hexdigest()
-        request_id = "ex082-" + hashlib.sha256(
+        request_id = self.request_namespace + "-" + hashlib.sha256(
             (str(self.directory.resolve()) + ":" + decision).encode()).hexdigest()
         async with self._inference_lock:
             if decision in self._request_ids:
@@ -365,6 +368,21 @@ async def bot_worker(attempt):
 
 async def run(directory, *, expected_identity, gate_receipt, endpoint=ENDPOINT):
     """Attempt every frozen slot once; a technical failure prevents later admission."""
+    from . import study
+    directory = Path(directory).resolve()
+    if directory != study.LIVE:
+        raise ValueError("EX-082 live output is fixed")
+    if directory.exists():
+        raise FileExistsError("EX-082 cannot resume or overwrite an existing attempt")
+    if Path.cwd().resolve() != ROOT / "pokechamp":
+        raise ValueError("EX-082 battle actor requires /workspace/pokechamp working directory")
+    manifest = study.prepare_manifest(expected_identity, gate_receipt, endpoint=endpoint)
+    return await _run_frozen(directory, manifest=manifest,
+        expected_identity=expected_identity, gate_receipt=gate_receipt, endpoint=endpoint)
+
+
+async def _run_frozen(directory, *, manifest, expected_identity, gate_receipt, endpoint):
+    """Shared owned battle lifecycle; public entry points authorize the schedule."""
     import numpy as np
     from poke_env.ps_client.account_configuration import AccountConfiguration
     from poke_env.ps_client.server_configuration import ServerConfiguration
@@ -374,22 +392,28 @@ async def run(directory, *, expected_identity, gate_receipt, endpoint=ENDPOINT):
     from . import audit, study
 
     directory = Path(directory).resolve()
-    if directory != study.LIVE:
-        raise ValueError("EX-082 live output is fixed")
     if directory.exists():
-        raise FileExistsError("EX-082 cannot resume or overwrite an existing attempt")
+        raise FileExistsError("local JEV cannot resume or overwrite an existing attempt")
     if Path.cwd().resolve() != ROOT / "pokechamp":
-        raise ValueError("EX-082 battle actor requires /workspace/pokechamp working directory")
-    manifest = study.prepare_manifest(expected_identity, gate_receipt, endpoint=endpoint)
+        raise ValueError("local JEV battle actor requires /workspace/pokechamp working directory")
+    continuation = manifest["experiment_id"] == "EX-083"
+    if continuation:
+        from .continuation import validate_manifest
+        validate_manifest(manifest)
+    elif manifest["experiment_id"] != "EX-082":
+        raise ValueError("unknown local JEV collection")
+    schedule = manifest["collection_schedule"] if continuation else manifest["schedule"]
+    summary_options = dict(expected_games=9, expected_pairs=None) if continuation else {}
     directory.mkdir(parents=True, exist_ok=False)
-    session = Session(directory, expected_identity=expected_identity, endpoint=endpoint)
+    session = Session(directory, expected_identity=expected_identity, endpoint=endpoint,
+                      request_namespace="ex083" if continuation else "ex082")
     outcomes, error = [], None
     try:
         study.write_json(directory / "manifest.json", manifest)
         study.write_json(directory / "entry-gates.json", gate_receipt)
         study.snapshot_sources(directory, manifest["source"])
         install_identity_adapter()
-        for number, row in enumerate(manifest["schedule"], 1):
+        for number, row in enumerate(schedule, 24 if continuation else 1):
             if session.failure_event.is_set():
                 raise RuntimeError("local JEV collection halted")
             study.verify_live_identity(manifest)
@@ -495,7 +519,7 @@ async def run(directory, *, expected_identity, gate_receipt, endpoint=ENDPOINT):
                 outcome["opponent_cleaned"] = process is None or process.poll() is not None
                 outcome["requests"] = session.calls - start_calls
                 study.write_json(attempt / "outcome.json", outcome)
-            partial = study.summarize(session, [outcome], manifest["schedule"], error=None)
+            partial = study.summarize(session, [outcome], schedule, error=None, **summary_options)
             partial["requests"] = outcome["requests"]
             partial["sent_actions"] = sum(e["type"] == "wire" for e in session.records[start_event:])
             check = await asyncio.to_thread(audit.audit, directory, checkpoint=True,
@@ -507,12 +531,12 @@ async def run(directory, *, expected_identity, gate_receipt, endpoint=ENDPOINT):
                 raise ValueError("per-match technical audit failed: " + repr(check["errors"]))
             if technical is not None:
                 raise technical
-            progress = study.summarize(session, outcomes, manifest["schedule"])
+            progress = study.summarize(session, outcomes, schedule, **summary_options)
             study.write_json(directory / "progress.json", progress)
             print(json.dumps(dict(slot=number, slot_id=row["slot_id"],
                 completed=progress["completed"], outcome=outcome.get("outcome"),
                 requests=session.calls, elapsed=progress["elapsed_collection_seconds"])), flush=True)
-    except (Exception, asyncio.CancelledError) as exc:
+    except (Exception, asyncio.CancelledError, KeyboardInterrupt) as exc:
         error = dict(type=type(exc).__name__, detail=str(exc))
         session.fail(exc)
         session.record(dict(type="failure", error=error))
@@ -522,7 +546,7 @@ async def run(directory, *, expected_identity, gate_receipt, endpoint=ENDPOINT):
         study.verify_live_identity(manifest)
     except Exception as exc:
         error = dict(type=type(exc).__name__, detail=str(exc))
-    result = study.summarize(session, outcomes, manifest["schedule"], error=error)
+    result = study.summarize(session, outcomes, schedule, error=error, **summary_options)
     study.write_json(directory / "result.json", result)
     study.seal(directory)
     checked = await asyncio.to_thread(audit.audit, directory)

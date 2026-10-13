@@ -131,11 +131,11 @@ def audit_transport(events, inputs, *, expected_identity, endpoint):
                 successful=successful, last_attempts=previous, raw_requests=requests)
 
 
-def audit_registry(path, events, transport, *, expected_identity):
+def audit_registry(path, events, transport, *, expected_identity, immutable=False):
     """Inspect the durable server journal without modifying the live database."""
     path = Path(path).resolve()
     require(path.is_file(), "missing local server request journal")
-    database = sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)
+    database = sqlite3.connect(path.as_uri() + ("?mode=ro&immutable=1" if immutable else "?mode=ro"), uri=True)
     database.row_factory = sqlite3.Row
     try:
         require(database.execute("PRAGMA integrity_check").fetchone()[0] == "ok",
@@ -179,7 +179,7 @@ def audit_registry(path, events, transport, *, expected_identity):
         database.close()
 
 
-def audit(directory, *, checkpoint=False, events=None, result=None):
+def audit(directory, *, checkpoint=False, events=None, result=None, immutable_journal=False):
     from integration.pokechamp.observation.build import DEFAULT_BUILD
     from integration.pokechamp.observation.runtime import OfficialClient
     directory = Path(directory)
@@ -190,8 +190,13 @@ def audit(directory, *, checkpoint=False, events=None, result=None):
     try:
         manifest = json.loads((directory / "manifest.json").read_text())
         result = result if result is not None else json.loads((directory / "result.json").read_text())
-        require(manifest["experiment_id"] == "EX-082" and manifest["execution_profile"] == study.PROFILE,
-                "wrong EX-082 audit source")
+        continuation = manifest["experiment_id"] == "EX-083"
+        if continuation:
+            from .continuation import validate_manifest
+            validate_manifest(manifest)
+        else:
+            require(manifest["experiment_id"] == "EX-082" and manifest["execution_profile"] == study.PROFILE,
+                    "wrong EX-082 audit source")
         require(manifest["schema_version"] == "jev-choice-v4"
                 and manifest["validation_version"] == j.VALIDATION_VERSION,
                 "input/selection version differs")
@@ -314,7 +319,9 @@ def audit(directory, *, checkpoint=False, events=None, result=None):
             else:
                 require(outcome.get("error") is not None, "incomplete game lacks failure evidence")
         if not checkpoint:
-            require([o["slot_id"] for o in result["outcomes"]] == list(schedule)[:len(result["outcomes"])],
+            admitted = ([row["slot_id"] for row in manifest["collection_schedule"]]
+                        if continuation else list(schedule))
+            require([o["slot_id"] for o in result["outcomes"]] == admitted[:len(result["outcomes"])],
                     "attempt order or single-attempt policy differs")
             require(len(wires) == result["sent_actions"], "wire denominator differs")
             require(transport_summary["physical_attempts"] == result["requests"], "HTTP denominator differs")
@@ -326,7 +333,7 @@ def audit(directory, *, checkpoint=False, events=None, result=None):
         journal = manifest.get("server_journal")
         require(bool(journal), "server inference journal is required")
         registry = audit_registry(journal, events, transport_summary,
-                                  expected_identity=manifest["model"]["serving_identity"])
+            expected_identity=manifest["model"]["serving_identity"], immutable=immutable_journal)
     except Exception as exc:
         errors.append(dict(type=type(exc).__name__, detail=str(exc)))
     finally:

@@ -5,9 +5,11 @@ import json
 import math
 import os
 from pathlib import Path
+import signal
 import time
 
-from .config import BASELINE, EVIDENCE, MAX_TOKENS, MODEL_DIR, MODEL_ID, ROOT
+from .config import (BASELINE, EVIDENCE, MAX_TOKENS, MODEL_DIR, MODEL_ID, PROFILES,
+                     ROOT, runtime_profile)
 from .storage import digest, file_hash, read, write
 
 
@@ -71,22 +73,28 @@ def lengths():
     return report
 
 
-def infer(output):
+def infer(output, *, profile='ex082', evidence=EVIDENCE, budget_root=None):
     from .model import Jev27BModel
     from .resource import own_gpus
 
+    settings = runtime_profile(profile)
+    evidence = Path(evidence)
     output = Path(output)
     output.mkdir(parents=True, exist_ok=False)
-    census = read(EVIDENCE / 'lengths/report.json')
-    if not census['passed'] or not read(EVIDENCE / 'download.json')['passed']:
+    census = read(evidence / 'lengths/report.json')
+    if not census['passed'] or not read(evidence / 'download.json')['passed']:
         raise RuntimeError('required length/download gate missing')
+    cases = read(evidence / 'lengths/cases.json')
+    if [case['name'] for case in cases] != [
+            'lead-1', 'lead-2', 'turn-sample-01', 'forced-switch', 'longest-ex058']:
+        raise RuntimeError('the five frozen EX-082 reload cases are required')
     rows = []
-    with own_gpus(output):
-        model = Jev27BModel(MODEL_DIR, max_tokens=MAX_TOKENS)
+    with own_gpus(output, profile=settings.name, budget_root=budget_root, extra_roots=(evidence,)):
+        model = Jev27BModel(MODEL_DIR, max_tokens=MAX_TOKENS, profile=settings.name)
         started = time.monotonic()
         model.load()
         write(output / 'loaded.json', dict(seconds=time.monotonic()-started, metadata=model.metadata()))
-        for case in read(EVIDENCE / 'lengths/cases.json'):
+        for case in cases:
             started = time.monotonic()
             body = model.evaluate(case['body'])
             row = dict(name=case['name'], payload_sha256=digest(case['body']),
@@ -95,6 +103,8 @@ def infer(output):
             rows.append(row)
             print(json.dumps(dict(completed=case['name'], seconds=row['seconds'])), flush=True)
         write(output / 'result.json', dict(passed=True, pid=os.getpid(),
+              profile=settings.name, parent_evidence=str(evidence.resolve()),
+              cases_source_sha256=file_hash(evidence / 'lengths/cases.json'),
               metadata=model.metadata(), cases=rows))
 
 
@@ -107,8 +117,13 @@ def compare(left, right, output):
         if x['name'] != y['name'] or x['payload_sha256'] != y['payload_sha256']:
             raise ValueError('reload inputs differ')
         aa, bb = x['body']['answers']['action'], y['body']['answers']['action']
-        if set(aa['probabilities']) != set(bb['probabilities']):
+        if (set(aa['probabilities']) != set(bb['probabilities'])
+                or x['body'].get('metadata', {}).get('candidate_ids')
+                != y['body'].get('metadata', {}).get('candidate_ids')):
             raise ValueError('reload candidate mapping differs')
+        if (not aa['probabilities'] or any(not math.isfinite(value)
+                for values in (aa['probabilities'], bb['probabilities']) for value in values.values())):
+            raise ValueError('reload probability is nonfinite or empty')
         delta = max(abs(aa['probabilities'][key]-bb['probabilities'][key]) for key in aa['probabilities'])
         same = aa['choice'] == bb['choice']
         rows.append(dict(name=x['name'], max_probability_difference=delta, same_choice=same,
@@ -123,14 +138,26 @@ def compare(left, right, output):
     return result
 
 
-if __name__ == '__main__':
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('command', choices=['lengths', 'infer', 'compare'])
     parser.add_argument('paths', nargs='*')
-    args = parser.parse_args()
+    parser.add_argument('--profile', choices=tuple(PROFILES), default='ex082')
+    parser.add_argument('--evidence', type=Path, default=EVIDENCE)
+    parser.add_argument('--budget-root', type=Path)
+    args = parser.parse_args(argv)
     if args.command == 'lengths':
+        if args.profile != 'ex082' or args.evidence != EVIDENCE or args.budget_root is not None:
+            parser.error('lengths retains the original EX-082 output and does not accept a new profile')
         lengths()
     elif args.command == 'infer':
-        infer(*args.paths)
+        def terminate(signum, frame):
+            raise SystemExit(128 + signum)
+        signal.signal(signal.SIGTERM, terminate)
+        infer(*args.paths, profile=args.profile, evidence=args.evidence, budget_root=args.budget_root)
     else:
         print(json.dumps(compare(*args.paths), ensure_ascii=False))
+
+
+if __name__ == '__main__':
+    main()

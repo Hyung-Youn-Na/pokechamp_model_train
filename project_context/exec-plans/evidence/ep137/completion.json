@@ -1,0 +1,148 @@
+{
+  "passed": true,
+  "experiment_id": "EX-083",
+  "at": 1791868087.4371326,
+  "branch": "research/model-training",
+  "run_directory": "/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-083",
+  "source_start_commit": "2b427bacc8f4c767497fd00ff6f881fe73bf1c8f",
+  "run_source_receipt_sha256": "f85cdf1a2af9e13955a419abf09169635f9337f436d3a82424e23ee74bb919b6",
+  "original_run_seal_sha256": "6adb93634407abcb940eee18c21979051d611456ec92b77dffdabf2cb3eebe33",
+  "original_run_seal_verified": true,
+  "original_run_seal_scope": "실행 종료 시 봉인된 원목록; 이후 corrections/viewer-summary-v2는 별도 봉인",
+  "parent_seal_sha256": "8eca312fb6666a2dba6a60f16929b9490c1db6fe1efe60fadab87603f5ac24a8",
+  "parent_original_status": "Blocked",
+  "parent_preserved": true,
+  "inherited_completed": 23,
+  "new_completed": 9,
+  "unique_completed_games": 32,
+  "completed_pairs": 16,
+  "total_battle_attempts": 33,
+  "original_failed_attempts": 1,
+  "new_failed_attempts": 0,
+  "wins": 17,
+  "draws": 0,
+  "losses": 15,
+  "score": 0.53125,
+  "baseline_score": 0.34375,
+  "mean_pair_delta": 0.1875,
+  "pair_changes": {
+    "improved": 7,
+    "same": 7,
+    "worsened": 2
+  },
+  "pair_deltas": {
+    "b01-r3": 0.0,
+    "b01-r2": 1.0,
+    "b02-r2": 0.5,
+    "b01-r1": -0.5,
+    "b03-r1": 0.5,
+    "b04-r4": 0.5,
+    "b04-r2": 0.5,
+    "b04-r3": 0.0,
+    "b02-r4": 0.5,
+    "b03-r2": 0.0,
+    "b02-r1": 0.0,
+    "b02-r3": 0.0,
+    "b04-r1": 0.0,
+    "b03-r3": -0.5,
+    "b03-r4": 0.5,
+    "b01-r4": 0.0
+  },
+  "streams": {
+    "parent": {
+      "inputs": 608,
+      "responses": 591,
+      "wires": 607,
+      "confirmed_input_tokens": 8376120
+    },
+    "continuation": {
+      "inputs": 235,
+      "responses": 228,
+      "wires": 235,
+      "confirmed_input_tokens": 3267783
+    }
+  },
+  "all_attempt_inputs": 843,
+  "all_attempt_responses": 819,
+  "all_attempt_wires": 842,
+  "confirmed_input_tokens": 11643903,
+  "total_usage": null,
+  "usage_unknown_requests": 1,
+  "cpu_tests": 229,
+  "reload_comparisons": 30,
+  "reload_max_probability_difference": 0.0,
+  "replayed_original_responses": 591,
+  "replay_max_probability_difference": 0.0,
+  "server_validation_requests": 597,
+  "direct_reload_inferences": 10,
+  "new_server_requests": 825,
+  "total_new_successful_model_inferences": 835,
+  "duplicate_inferences": 0,
+  "memory_gate_passed": true,
+  "continuously_validated_max_tokens": 16604,
+  "new_collection_max_tokens": 16604,
+  "original_browser_main_decisions": 832,
+  "original_browser_parent_history_decisions": 608,
+  "repeated_historical_decisions_in_two_views": 597,
+  "unique_all_attempt_decisions": 843,
+  "viewer": "/workspace/exports/battle_viewers/ex083/index.html",
+  "viewer_seal_sha256": "ea17cb4f0635b9ddb7c6d7363098c497b6ec542dab960987fb5b042d0990419f",
+  "viewer_display_correction": "/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-083/corrections/viewer-summary-v2",
+  "viewer_display_correction_seal_sha256": "a5d044738dba3d6d95ddd0d6e6929c75f8a3a61c1ee3993686860c504223de90",
+  "corrected_failure_browser_passed": true,
+  "corrected_failure_display": "진행 중 중단 · JEV p2 · 11개 결정. 모델 입력, 응답, 실행 행동을 차례로 확인하세요.",
+  "current_checkout_source_changes_after_collection": [
+    "integration/jev27b/study.py"
+  ],
+  "resources_returned": {
+    "passed": true,
+    "at": 1791868085.1889303,
+    "gpus": {
+      "0": {
+        "index": 0,
+        "uuid": "GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4",
+        "name": "NVIDIA RTX A6000",
+        "memory_total_mib": 49140,
+        "memory_used_mib": 0,
+        "utilization_percent": 0
+      },
+      "1": {
+        "index": 1,
+        "uuid": "GPU-c7e2d577-573f-0412-1ed6-ad6648efa454",
+        "name": "NVIDIA RTX A6000",
+        "memory_total_mib": 49140,
+        "memory_used_mib": 0,
+        "utilization_percent": 0
+      },
+      "2": {
+        "index": 2,
+        "uuid": "GPU-c79ce3fd-81e7-454b-75ce-e63fad63baa4",
+        "name": "NVIDIA RTX A6000",
+        "memory_total_mib": 49140,
+        "memory_used_mib": 0,
+        "utilization_percent": 0
+      },
+      "3": {
+        "index": 3,
+        "uuid": "GPU-fd337c1e-b087-b26d-4dc0-a195c2b3a8d6",
+        "name": "NVIDIA RTX A6000",
+        "memory_total_mib": 49140,
+        "memory_used_mib": 0,
+        "utilization_percent": 0
+      }
+    },
+    "gpu_locks_released": {
+      "0": true,
+      "1": true,
+      "2": true,
+      "3": true
+    },
+    "owned_ports_released": {
+      "18782": true,
+      "8109": true
+    },
+    "remaining_selected_gpu_processes": []
+  },
+  "final_registered_disk_bytes": 64757718478,
+  "scientific_limits": "2GPU 완료23와4GPU 완료9의 수치 검증 후 계승 평가; 고정 대진 탐색 비교이며 일반 성능 우위·학습 효과는 주장하지 않음"
+}

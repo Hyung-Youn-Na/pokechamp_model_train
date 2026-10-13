@@ -1,7 +1,8 @@
 # 프로젝트 상태 (Project Status)
 
 현재 연구선은 `research/model-training`이며 목적은 **모델 학습·정책 개선·독립 평가**다.
-[D-131](decisions/D-131-research-branch-preservation.md)에 따라 연구 목적을 분리하며, 현재 실행 중인 학습·평가·배틀 실험은 없다.
+[D-131](decisions/D-131-research-branch-preservation.md)에 따라 연구 목적을 분리하며,
+[EP-137](exec-plans/completed/EP-137-jev27b-four-gpu-continuation.md)의 EX-083 계승 평가를 완료했다.
 기존 Blocked/Paused와 동결 protocol·봉인은 유지한다.
 
 - 기준일: 2026-10-13
@@ -16,16 +17,25 @@
 
 포켓몬 관측·합법 행동에 맞춘 모델 학습과 정책 개선을 주 개발 목표로 관리한다.
 개선 여부는 학습·모델 선택과 분리한 평가로 판단한다. 기존 세 RLCD 환경과 Qwen·Kev·
-고정 대진 구현은 활용 가능한 기반이며, 다음 실험의 방법·초기 모델·데이터·평가·예산은
-아직 새 실행 작업으로 등록하지 않았다. L1-L5 구조 이식은 별도 연구선에서 보존·후속 설계한다.
+고정 대진 구현은 활용 가능한 기반이며, 후속 학습의 방법·초기 모델·데이터·평가·예산은
+아직 정하지 않았다. 독립 평가의 EX-083 계승은 승인 범위에서 완료했다.
+L1-L5 구조 이식은 별도 연구선에서 보존·후속 설계한다.
 
 <a id="active-work"></a>
 
 ## 현재 실행 작업
 
-현재 실행 중인 작업은 없다. [EP-136](exec-plans/completed/EP-136-branch-research-manuals.md)에서
+현재 실행 중인 작업은 없다.
+
+[EP-137](exec-plans/completed/EP-137-jev27b-four-gpu-continuation.md) /
+[EX-083](experiments/EX-083-jev27b-four-gpu-continuation.md): EX-082 정상23 계승·4GPU 신규9의
+수집·수치/메모리 검증·전수 감사·비교·오프라인 뷰어·봉인·자원 반환을 완료했다.
+원 EX-082의 Blocked·실패·미확정 usage는 보존한다.
+[최종 보고](exec-plans/evidence/ep137/report.md) · [뷰어](../exports/battle_viewers/ex083/index.html).
+
+[EP-136](exec-plans/completed/EP-136-branch-research-manuals.md)에서
 연구선별 매뉴얼·환경/출력 안내·등록 템플릿 정비를 완료했다. 작업 시작은
-[연구 매뉴얼](RESEARCH_MANUAL.md)을 따른다. 실험·환경 변경은 없으며
+[연구 매뉴얼](RESEARCH_MANUAL.md)을 따른다. 이 문서 정비 작업에는 실험·환경 변경이 없었으며
 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)의
 브랜치 분리·공통 태그·외부 보존·검증을 완료했다. 기존 실행 코드와 환경은 유지했으며
 과거 실험을 재개하거나 Blocked/Paused를 완료로 바꾸지 않았다.

@@ -8,6 +8,7 @@
 
 | 필요한 근거 | 실제 위치와 읽기 범위 |
 |---|---|
+| EX-083 JEV-27B 4GPU 계승 평가 | [최종 보고](ep137/report.md) → [완료/봉인/자원 반환](ep137/completion.json); 정상23 계승·신규9·고유32/16쌍·원실패 포함33시도 |
 | EX-082 JEV-27B 개선 입력 동일32 재현·자원 중단 | [중단 보고](ep134/report.md) → [최종 감사](ep134/live-audit.json)·[최종 오프라인 뷰어](ep134/viewer-browser-v2.json)·[종결 확인](ep134/closure.json) · [메모리 후속 교훈](ep134-lessons/report.md) |
 | EX-079 종료조건 추가 학습·독립시험 | [최종 보고](ep131/report.md) · [종결 검증](ep131/completion-verification.json); 주효능 미달·초기상대 우세 |
 | EX-078 첫라운드 복구·학습 완료 및 모델 전후 비교 | [복구 보고](ep129/report.md) · [동일 관측 비교](ep130/report.md); 독립 성능 미평가 |

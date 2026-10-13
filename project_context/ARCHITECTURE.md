@@ -604,6 +604,12 @@ v4 입력·명령·계산기를 재사용하고 공개 JEV-27B를 loopback Choic
 Session은600초 통신 감지·경과시간 상한 null·경기 실패 격리·전수 감사를 제공한다.
 진입 gate·자원·중단/비교 원문은 [EX-082](experiments/EX-082-jev27b-ex058-reproduction.md)다.
 
+[D-132](decisions/D-132-jev27b-four-gpu-continuation.md)의 EX-083은 명시 `ex083` 프로필과
+`jev27b continue --parent --directory`로4GPU 계승을 별도 연결한다. controller가 부모 봉인·
+독립 재로딩·원591응답 재생·같은 서버 연속 메모리/일반턴 gate를 마친 뒤 collection에 진입한다.
+전체 일정과 원시도 이력은 보존하며 신규 실행은 원24–32번뿐이다. 자원/배치/서빙 identity와
+분모의 계약은 C-064/EX-083을 따르며 기존 EX-082 기본2GPU 경로와 자료는 유지한다.
+
 jev_v4.Adapter는 EP-093 생성기를 그대로 호출하고 state.version만 jev-choice-v4로 바꾼다.
 Session이 계산기·역할 DB·추천 세트 캐시를 소유하고 입력 생성은 asyncio.to_thread에서 처리한다.
 JevPlayer는 자기 제출 팀 문자열만 전달한다. 계산/로그 감사는 input-audits의 별도 gzip 파일과

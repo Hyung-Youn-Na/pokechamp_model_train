@@ -8,6 +8,7 @@ list 또는 contract의 대체물이 아니다.
 
 | ID | Status | Date | Title |
 |---|---|---|---|
+| [D-132](decisions/D-132-jev27b-four-gpu-continuation.md) | Accepted | 2026-10-13 | EX-082 정상23 계승·4GPU 검증 후 잔여9경기 |
 | [D-131](decisions/D-131-research-branch-preservation.md) | Accepted | 2026-10-12 | 연구 목적별 브랜치·고정 기준 태그·외부 자산 복사 검증 |
 | [D-130](decisions/D-130-jev27b-ex058-reproduction.md) | Accepted | 2026-10-08 | JEV-27B 공개 가중치·GPU0/1·EX-058 동일32·경과시간 상한 없음 |
 | [D-129](decisions/D-129-joint-q-battle.md) | Accepted | 2026-10-08 | EX066 epoch3·GPU0·재현 기준 복구 후 test20·8시간 |

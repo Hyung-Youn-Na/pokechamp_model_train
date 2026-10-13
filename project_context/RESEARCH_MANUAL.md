@@ -96,7 +96,7 @@ sed -n '1,12p' /ref/kev/.venv/pyvenv.cfg
 | `pokechamp-qwen` | probe/battle/state-study/study-run의 `--output` | `start`는 `--output`을 받아도 서버 출력은 고정이다. `status`는 HTTP 확인이다. [구현](../integration/pokechamp/qwen_control.py) |
 | `pokechamp-kev`, `pokechamp-kev-main`, `pokechamp-kev-continuation` | `--output` | 기존 EX 전용 경로이며 viewer export 목적지는 고정인 경우가 있다. `kev status`는 HTTP·GPU 상태를 확인한다. [Kev 안내](../integration/pokechamp/KEV.md) |
 | `pokechamp-env` | 범용 출력 인자 없음 | qualification 출력은 `.artifacts/pokechamp` 고정. research 기록은 별도 `POKECHAMP_DATA_ROOT`를 쓴다. [통합 안내](../integration/pokechamp/README.md) |
-| `jev27b` | 단계별로 다름 | execute/download/lengths는 고정 경로. 범용 `--output` 지원으로 취급하지 않는다. [wrapper](../scripts/jev27b) |
+| `jev27b` | continue의 `--parent`, `--directory` | EX-083 계승은 새 출력 루트를 명시한다. execute/download/lengths는 기존 고정 경로다. [안내](../integration/jev27b/README.md) · [wrapper](../scripts/jev27b) |
 
 이미 준비된 승인 실행의 상태를 읽는 예시다. `EX-NEW`를 실제 기록의 ID로 바꾼다.
 

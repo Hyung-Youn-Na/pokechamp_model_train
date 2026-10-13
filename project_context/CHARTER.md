@@ -7,7 +7,9 @@
 
 **Authority:** 이 브랜치의 프로젝트 목적과 기본 invariant에 대한 최상위 원문이다.
 연구선 분리는 기존 ADR·EX·동결 protocol·봉인·Blocked/Paused 판정을 바꾸지 않는다.
-분리 기반 구성의 범위·검증은 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)에서 관리한다. 실행 중인 학습·평가 실험은 없다.
+분리 기반 구성의 범위·검증은 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)에서 관리한다.
+[D-132](decisions/D-132-jev27b-four-gpu-continuation.md)로 승인한 독립 평가 계승의 완료 근거는
+[EP-137](exec-plans/completed/EP-137-jev27b-four-gpu-continuation.md)에서 관리한다.
 
 ## 프로젝트 목표 (Project Goal)
 
@@ -28,7 +30,8 @@ LAYA-RLCD·EVE-RLCD·RLCD-Lite의 기존 환경과 Qwen·Kev·고정 대진 탐�
 
 공통 Git 기준선·보존 태그·목적 문서·worktree·외부 자산 복사와 검증은
 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)에서 완료했다.
-현재 실행 중인 연구 실험은 없으며, 후속 학습·정책 개선·독립 평가의 조건을 새 범위에서 정한다.
+후속 학습·정책 개선의 조건은 새 범위에서 정한다. EX-082의 정상 결과를 보존한
+EX-083 독립 평가 계승을 완료했으며 현재 실행 중인 학습·평가 실험은 없다.
 기존 [D-096](decisions/D-096-pokemon-training-objective.md)의 학습 목표와
 [D-112](decisions/D-112-imitation-self-play-objectives.md)의 모방 학습·정책 개선 방향,
 [D-119](decisions/D-119-fixed-matchup-mcts.md) 이후 고정 공개 상태 연구는 후속 설계의 근거다.

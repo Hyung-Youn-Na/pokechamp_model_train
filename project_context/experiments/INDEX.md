@@ -19,6 +19,7 @@ of truth는 개별 experiment record다.
 
 | ID | Record | Status | 읽을 때 주의할 범위 |
 |---|---|---|---|
+| EX-083 | [JEV-27B 4GPU 계승](EX-083-jev27b-four-gpu-continuation.md) | Completed | 정상23+신규9·고유32/16쌍·원실패 포함33시도·감사/뷰어/봉인 완료 |
 | EX-082 | [JEV-27B 개선 입력 동일32](EX-082-jev27b-ex058-reproduction.md) | Blocked | GPU 자원 한도 중단·부분 종결 · [메모리 후속 교훈](../exec-plans/evidence/ep134-lessons/report.md) |
 | EX-081 | [공동 q 모델 배틀20](EX-081-joint-q-battle.md) | Completed | GPU0 재현·유효20경기·정정/뷰어/봉인 완료,0승20패 |
 | EX-080 | [Qwen0.8B 행렬 탐색 자기대국](EX-080-qwen-matrix-selfplay.md) | Completed | 시도3 40라운드 둔화·36 선택·시험/감사/뷰어/봉인 완료; P0 직접 0.805·Abyssal 개선 미입증 |

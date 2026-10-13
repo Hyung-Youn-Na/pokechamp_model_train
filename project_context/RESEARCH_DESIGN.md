@@ -48,6 +48,10 @@ artifact를 설명할 때는 현재 연구 설계로 채택했다는 의미가 �
 “현재 실행”, “이번 실행”은 각 결정이 채택한 당시 범위에 적용되며 현재 실행 지시가 아니다.
 동결 D별 본문·EX/ADR 원문을 유지하고 현재 실행 여부는 [STATUS](STATUS.md)에서 확인한다.
 
+[D-132](decisions/D-132-jev27b-four-gpu-continuation.md)의 별도
+[EX-083](experiments/EX-083-jev27b-four-gpu-continuation.md)는 정상23경기 계승·4GPU 잔여9경기의
+진입/자원/재시도/분모·혼합구간 해석 원문으로 편입한다. EX-082의 당시 판정·조건은 보존한다.
+
 [D-130](decisions/D-130-jev27b-ex058-reproduction.md)에 따라
 [EX-082](experiments/EX-082-jev27b-ex058-reproduction.md)의 질문·처치·동결 조건·진입 gate·
 자원/시간·분모·실패/복구·비교/해석을 공개 JEV-27B의 EX-058 재현 평가 규범으로 편입한다.

@@ -5,6 +5,22 @@ reference document는 현재의 정확한 field catalog 및 initialization evide
 file을 변경해도 이 contract가 조용히 재정의되지는 않는다. 충돌은
 [`INDEX.md`](INDEX.md)의 hierarchy를 따른다.
 
+<a id="c-064-jev27b-continuation"></a>
+
+## C-064 — EX-083 4GPU 계승 실행 경계
+
+[D-132](decisions/D-132-jev27b-four-gpu-continuation.md)과
+[EX-083](experiments/EX-083-jev27b-four-gpu-continuation.md)에 적용한다.
+C-063의 입력/후보·무절단·HTTP 형식·중복 추론 방지 의미를 유지하고 EX-083에 한해
+장치 배치·자원/서빙 identity·부모 계승·새 진입 gate를 명시 변경한다.
+`jev27b continue --parent --directory`는 봉인된 EX-082의 정상23만 계승하고 원24–32번만
+새로 실행한다. 원24번 추가1회 이외 재경기0, 기존 execute의 덮어쓰기/재개 거부는 유지한다.
+네 GPU0–3의 잠금/UUID/유휴 확인 후 CUDA 초기화·40GiB allocator/44GiB 전체 사용량 감시와
+소유 자원 회수를 같은 장치 집합에 적용한다. 부모 원자료·실패·봉인·Blocked는 불변이며
+새 manifest에 전체32슬롯·계승/신규구간·각 시도 및 원자료 hash를 기록한다.
+독립 재로딩·591응답 전수 대조·같은 서버 연속 메모리/일반턴 gate의 조건과 중단/집계 원문은
+EX-083이다. 부모와 신규구간을 감사하고 실패를 포함한 총시도·고유경기 분모를 구분한다.
+
 <a id="c-063-jev27b-local"></a>
 
 ## C-063 — JEV-27B 로컬 Choice 재현 경계

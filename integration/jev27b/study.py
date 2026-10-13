@@ -168,7 +168,7 @@ def verify_live_identity(manifest):
         raise ValueError("observation build differs from EX-058")
 
 
-def summarize(session, outcomes, schedule, error=None):
+def summarize(session, outcomes, schedule, error=None, *, expected_games=32, expected_pairs=16):
     records = session.records
     inputs = {e["decision"]: e for e in records if e["type"] == "input"}
     selections = {e["decision"]: e for e in records if e["type"] == "selection"}
@@ -243,7 +243,8 @@ def summarize(session, outcomes, schedule, error=None):
         error=error, efficacy_evidence=False, explanation_review="미평가(기본 제외)")
     result.update(actual_wins=result["overall"]["wins"], actual_draws=result["overall"]["draws"],
                   actual_losses=result["overall"]["losses"])
-    result["passed"] = (len(valid) == len(schedule) == 32 and len(pairs) == 16
+    result["passed"] = (len(valid) == len(schedule) == expected_games
+        and (expected_pairs is None or len(pairs) == expected_pairs)
         and not error and action_audit and len(wires) == len(inputs)
         and len(transports) == session.calls)
     return result
@@ -260,7 +261,7 @@ def compare_data(before, after):
     from integration.pokechamp.jev_comparison import match_metrics
     bm, br, be = before
     nm, nr, ne = after
-    if (bm["experiment_id"], nm["experiment_id"]) != ("EX-058", "EX-082"):
+    if bm["experiment_id"] != "EX-058" or nm["experiment_id"] not in ("EX-082", "EX-083"):
         raise ValueError("wrong comparison identities")
     for key in ("schema_version", "schedule", "teams", "prompt", "input_data_identity"):
         if bm[key] != nm[key]:
@@ -288,7 +289,7 @@ def compare_data(before, after):
         pairs.setdefault(row["paired_slot_id"], []).append(item)
     deltas = {key: sum(row["score_delta"] for row in pair) / 2 for key, pair in pairs.items()
               if len(pair) == 2 and all(row["comparable"] for row in pair)}
-    return dict(before_experiment="EX-058", after_experiment="EX-082",
+    return dict(before_experiment="EX-058", after_experiment=nm["experiment_id"],
         requested_model_before=bm["model"], requested_model_after=nm["model"],
         actual_models_before=br["actual_models"], actual_models_after=nr["actual_models"],
         planned_games=len(rows), comparable_games=sum(row["comparable"] for row in rows),
@@ -353,8 +354,9 @@ def export(source, output=EXPORT, *, compared=None):
     verify_seal(source)
     manifest = json.loads((source / "manifest.json").read_text())
     result = json.loads((source / "result.json").read_text())
-    if manifest["experiment_id"] != "EX-082":
-        raise ValueError("wrong EX-082 export source")
+    experiment = manifest["experiment_id"]
+    if experiment not in ("EX-082", "EX-083"):
+        raise ValueError("wrong local JEV export source")
     groups = decision_groups(source)
     protocols = {}
     for event in event_rows(source):
@@ -368,6 +370,8 @@ def export(source, output=EXPORT, *, compared=None):
     template = template.replace('href="../decisions.html"', 'href="decisions.json"')
     template = template.replace("(data.outcome.outcome==='player_won'?'승리':'패배')",
         "({player_won:'승리',player_lost:'패배',tied:'무승부',output_failure:'모델 선택 실패'}[data.outcome.outcome]||'기술 실패')")
+    template = template.replace("data.outcome.turns+'턴 · JEV '",
+        "(Number.isFinite(data.outcome.turns)?data.outcome.turns+'턴':'진행 중 중단')+' · JEV '")
     template = template.replace("function stateView(d,p)",
         "function displayEffect(v){return typeof v==='object'&&v!==null?(v.name||v.id||'미확인'):v;}\nfunction stateView(d,p)")
     template = template.replace("m.ability,m.item", "displayEffect(m.ability),displayEffect(m.item)")
@@ -382,15 +386,15 @@ def export(source, output=EXPORT, *, compared=None):
         target.mkdir()
         protocol = "\n".join(protocols.get(user, [])) + "\n"
         (target / "showdown.log").write_text(protocol)
-        replay = _replay_html(dict(battle_id=f"ex082-battle-{slot}", teams=[]), protocol)
+        replay = _replay_html(dict(battle_id=f"{experiment.lower().replace('-', '')}-battle-{slot}", teams=[]), protocol)
         replay = replay.replace("Static protocol fallback", "오프라인 경기 로그")
         (target / "replay.html").write_text(replay)
         decisions = groups.get(user, [])
-        data = dict(experiment="EX-082", slot=slot, username=user, outcome=outcome, decisions=decisions)
+        data = dict(experiment=experiment, slot=slot, username=user, outcome=outcome, decisions=decisions)
         write_json(target / "decisions.json", data)
         if decisions:
             encoded = json.dumps(data, ensure_ascii=False).replace("&", "\\u0026").replace("<", "\\u003c").replace(">", "\\u003e")
-            page = template.replace("__TITLE__", f"EX-082 · {slot}경기 · JEV-27B")
+            page = template.replace("__TITLE__", f"{experiment} · {slot}경기 · JEV-27B")
             page = page.replace("__DATA__", encoded)
         else:
             page = ('<!doctype html><html lang="ko"><meta charset="utf-8">'
@@ -415,11 +419,11 @@ def export(source, output=EXPORT, *, compared=None):
     if compared is not None:
         write_json(output / "comparison.json", compared)
     (output / "index.html").write_text('<!doctype html><html lang="ko"><meta charset="utf-8">'
-        '<meta name="viewport" content="width=device-width,initial-scale=1"><title>EX-082 · JEV-27B</title>'
+        f'<meta name="viewport" content="width=device-width,initial-scale=1"><title>{experiment} · JEV-27B</title>'
         '<style>body{font:16px system-ui;max-width:1200px;margin:32px auto;padding:0 20px;line-height:1.7}'
         'table{border-collapse:collapse;width:100%}td,th{padding:10px;text-align:left;border-bottom:1px solid #ccc}'
         '.scroll{overflow:auto}a{color:#165fa5}</style><a href="../index.html">← 실험 목록</a>'
-        f'<h1>EX-082 · JEV-27B 대 Abyssal</h1><p>{summary}</p>'
+        f'<h1>{experiment} · JEV-27B 대 Abyssal</h1><p>{summary}</p>'
         '<p>추가 학습 없는 로컬 공개 JEV-27B와 과거 클라우드 JEV(EX-058)의 고정 대진 탐색 비교입니다. '
         '모델·토크나이저·서빙이 다르며 일반 성능 우위를 입증하지 않습니다.</p>'
         '<p>입력·응답·선택·경기 로그는 폴더 이동 후 오프라인으로 열립니다. 애니메이션에는 인터넷 연결이 필요합니다.</p>'
@@ -428,10 +432,10 @@ def export(source, output=EXPORT, *, compared=None):
         '<th>JEV 진영</th><th>결과</th><th>턴</th><th>열기</th></tr></thead><tbody>'
         + "".join(table) + '</tbody></table></div><p><a href="result.json">상세 결과</a>'
         + (' · <a href="comparison.json">공통 완료쌍 비교</a>' if compared is not None else "") + "</p></html>")
-    (output / "README.md").write_text("# EX-082 JEV-27B 뷰어\n\n폴더 전체를 이동한 뒤 index.html을 여세요.\n"
+    (output / "README.md").write_text(f"# {experiment} JEV-27B 뷰어\n\n폴더 전체를 이동한 뒤 index.html을 여세요.\n"
         "입력·응답·선택·공개 로그는 오프라인에서 열립니다. 애니메이션에는 인터넷 연결이 필요합니다.\n"
         f"원자료: {source}\n원자료의 봉인과 이 열람용 복사본은 별도입니다.\n")
-    write_json(output / "provenance.json", dict(experiment="EX-082", source=str(source),
+    write_json(output / "provenance.json", dict(experiment=experiment, source=str(source),
         source_files={name: file_hash(source / name) for name in
                       ("manifest.json", "events.jsonl", "result.json", "checksums.sha256")},
         planned=result["planned"], completed=result["completed"], matches=matches,
@@ -440,7 +444,7 @@ def export(source, output=EXPORT, *, compared=None):
         action_labels_sha256=file_hash(assets / "action-labels.js"),
         request_provenance="recorded actual HTTP request JSON; original bytes and hash in technical history"))
     seal(output)
-    return dict(passed=True, matches=len(matches), decisions=sum(len(v) for v in groups.values()),
+    return dict(passed=True, matches=len(matches), decisions=sum(row["decisions"] for row in matches),
                 source_seal=file_hash(source / "checksums.sha256"),
                 export_seal=file_hash(output / "checksums.sha256"), summary=summary)
 

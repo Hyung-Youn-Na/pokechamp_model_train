@@ -18,10 +18,11 @@ case "$command" in
     exec "$model_python" -m integration.jev27b.preflight "$command" "$@" ;;
   serve) exec "$model_python" -m integration.jev27b.server "$@" ;;
   execute) exec "$actor_python" -m integration.jev27b.execute "$@" ;;
+  continue) exec "$actor_python" -m integration.jev27b.continue_execute "$@" ;;
   finalize) exec "$actor_python" -m integration.jev27b.study finalize "$@" ;;
   verify-browser) exec /tmp/ep037/tools/bin/python -m integration.jev27b.study verify-browser "$@" ;;
   --help|-h)
-    echo 'usage: scripts/jev27b {download|lengths|infer|compare-reloads|serve|execute|finalize|verify-browser} [arguments]'
+    echo 'usage: scripts/jev27b {download|lengths|infer|compare-reloads|serve|execute|continue|finalize|verify-browser} [arguments]'
     ;;
   *) echo "unknown EX-082 command: $command" >&2; exit 2 ;;
 esac

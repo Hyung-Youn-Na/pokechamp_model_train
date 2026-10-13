@@ -19,7 +19,7 @@ import sqlite3
 import threading
 import time
 
-from .config import MAX_TOKENS, MODEL_ID, REVISION
+from .config import MAX_TOKENS, MODEL_ID, PROFILES, REVISION
 
 PROTOCOL = "jev27b-local-v1"
 MAX_REQUEST_BYTES = 16 * 1024**2
@@ -412,9 +412,12 @@ def main(argv=None):
     parser.add_argument("--run-dir", required=True, type=Path)
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", default=18782, type=int)
+    parser.add_argument("--profile", choices=tuple(PROFILES), default="ex082")
+    parser.add_argument("--budget-root", type=Path,
+                        help="include the complete run output in the combined disk budget")
     args = parser.parse_args(argv)
     if args.host != "127.0.0.1" or args.port != 18782:
-        parser.error("EX-082 production serving is pinned to 127.0.0.1:18782")
+        parser.error("JEV-27B production serving is pinned to 127.0.0.1:18782")
     from .model import Jev27BModel
     from .resource import own_gpus
 
@@ -423,9 +426,9 @@ def main(argv=None):
 
     signal.signal(signal.SIGTERM, terminate)
     service = httpd = None
-    with own_gpus(args.run_dir):
+    with own_gpus(args.run_dir, profile=args.profile, budget_root=args.budget_root):
         try:
-            model = Jev27BModel(args.model_dir, max_tokens=MAX_TOKENS).load()
+            model = Jev27BModel(args.model_dir, max_tokens=MAX_TOKENS, profile=args.profile).load()
             service = LocalService(model, args.run_dir)
             httpd = LocalHTTPServer((args.host, args.port), service)
             httpd.serve_forever(poll_interval=0.25)

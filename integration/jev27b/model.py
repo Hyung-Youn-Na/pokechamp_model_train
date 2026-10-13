@@ -2,7 +2,7 @@
 
 Official inference recipe:
 https://huggingface.co/autotrust/JEV-27B/blob/51740a8891c2a8baefd969237fd44187b3e3a115/README.md
-The caller owns physical GPU 0/1 locks, process limits, and the isolated environment.
+The caller owns the selected profile's GPU locks, limits, and isolated environment.
 """
 from __future__ import annotations
 
@@ -18,6 +18,7 @@ from pathlib import Path
 import time
 from typing import Any
 
+from .config import runtime_profile
 from .formatting import (FORMAT_VERSION, MAX_TOKENS, answer_from_probabilities,
                          format_request, tokenize_request)
 
@@ -70,10 +71,29 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
-def fixed_device_map() -> dict[str, int]:
+def fixed_device_map(profile='ex082') -> dict[str, int]:
     """Balance 64 intact decoder layers and the two large embedding matrices."""
+    settings = runtime_profile(profile)
+    if settings.name == 'ex083':
+        return {"model.embed_tokens": 0, "model.rotary_emb": 0, "model.norm": 3, "lm_head": 3,
+                **{f"model.layers.{i}": 0 if i < 14 else 1 if i < 32 else 2 if i < 50 else 3
+                   for i in range(64)}}
     return {"model.embed_tokens": 0, "model.rotary_emb": 0, "model.norm": 1, "lm_head": 1,
             **{f"model.layers.{i}": 0 if i < 32 else 1 for i in range(64)}}
+
+
+def _check_placement(model, device_map):
+    """Verify actual tensors at every module boundary, including all decoder layers."""
+    tensors = list(model.named_parameters()) + list(model.named_buffers())
+    if not tensors:
+        raise ModelIntegrityError('loaded model has no tensors')
+    for name, value in tensors:
+        matches = [prefix for prefix in device_map if name == prefix or name.startswith(prefix + '.')]
+        if not matches:
+            raise ModelIntegrityError(f'unmapped model tensor: {name}')
+        expected = device_map[max(matches, key=len)]
+        if value.device.type != 'cuda' or value.device.index != expected:
+            raise ModelIntegrityError(f'wrong tensor placement: {name} is {value.device}, expected cuda:{expected}')
 
 
 def _deterministic_autotune() -> None:
@@ -168,9 +188,11 @@ def _check_finite_parameters(model, torch) -> None:
 class Jev27BModel:
     """Explicitly load once per process, then run one uncached Choice prefill at a time."""
 
-    def __init__(self, model_dir: str | Path, *, max_tokens: int = MAX_TOKENS):
+    def __init__(self, model_dir: str | Path, *, max_tokens: int = MAX_TOKENS, profile='ex082'):
+        self.profile = runtime_profile(profile)
+        self.devices = tuple(range(len(self.profile.physical_gpus)))
         if max_tokens != MAX_TOKENS:
-            raise ValueError("EX-082 freezes the input limit at 32768 tokens")
+            raise ValueError("JEV-27B freezes the input limit at 32768 tokens")
         self.model_dir = Path(model_dir).resolve()
         self.max_tokens = max_tokens
         self.loaded = False
@@ -205,8 +227,8 @@ class Jev27BModel:
         from peft import PeftModel
         from safetensors.torch import load_file
         from transformers import AutoModelForCausalLM, AutoTokenizer
-        if not torch.cuda.is_available() or torch.cuda.device_count() != 2:
-            raise ModelIntegrityError("exactly the two owned GPUs must be visible")
+        if not torch.cuda.is_available() or torch.cuda.device_count() != len(self.devices):
+            raise ModelIntegrityError("exactly the profile's owned GPUs must be visible")
         torch.cuda.set_device(0)
         torch.manual_seed(0)
         torch.cuda.manual_seed_all(0)
@@ -221,7 +243,7 @@ class Jev27BModel:
         self._torch = torch
         self.tokenizer = AutoTokenizer.from_pretrained(str(self.model_dir), local_files_only=True,
                                                        trust_remote_code=False)
-        device_map = fixed_device_map()
+        device_map = fixed_device_map(self.profile.name)
         from transformers.modeling_utils import _is_on_hf_mount
         if _is_on_hf_mount(str(self.model_dir)):
             raise ModelIntegrityError("HF mount would bypass the bounded pread checkpoint reader")
@@ -237,10 +259,7 @@ class Jev27BModel:
         self.model.requires_grad_(False)
         self.model.config.use_cache = False
         _check_finite_parameters(self.model, torch)
-        wrong = [name for name, value in list(self.model.named_parameters()) + list(self.model.named_buffers())
-                 if value.device.type != "cuda" or value.device.index not in (0, 1)]
-        if wrong:
-            raise ModelIntegrityError(f"CPU/disk/meta placement forbidden: {wrong[:5]}")
+        _check_placement(self.model, device_map)
         if any("lora_" in name for name, _ in self.model.named_parameters()):
             raise ModelIntegrityError("adapter did not fully merge")
         head = load_file(str(self.model_dir / "head.safetensors"), device="cpu")
@@ -249,8 +268,12 @@ class Jev27BModel:
                 or tuple(head["proj.bias"].shape) != (24,)
                 or any(value.dtype != torch.float32 for value in head.values())):
             raise ModelIntegrityError("decision head is not the pinned FP32 24-slot head")
-        self._weight = head["proj.weight"].to("cuda:1")
-        self._bias = head["proj.bias"].to("cuda:1")
+        head_device = f'cuda:{self.devices[-1]}'
+        self._weight = head["proj.weight"].to(head_device)
+        self._bias = head["proj.bias"].to(head_device)
+        if any(value.device.type != 'cuda' or value.device.index != self.devices[-1]
+               or value.dtype != torch.float32 for value in (self._weight, self._bias)):
+            raise ModelIntegrityError('decision head placement or FP32 dtype changed')
         cfg = json.loads((self.model_dir / "judge_config.json").read_text())
         calibration = json.loads((self.model_dir / "calibration.json").read_text())
         if (cfg["slots"]["ranges"]["choice"] != [8, 24]
@@ -263,6 +286,14 @@ class Jev27BModel:
             "model_files_sha256": dict(MODEL_FILES_SHA256), "packages": packages,
             "device_map": device_map,
             "serving_config": {
+                "runtime_profile": self.profile.name,
+                "physical_gpus": list(self.profile.physical_gpus),
+                "allocator_limit_bytes": self.profile.allocator_bytes,
+                "nvml_gpu_limit_bytes": self.profile.gpu_bytes,
+                "host_limit_bytes": self.profile.host_bytes,
+                "disk_limit_bytes": self.profile.disk_bytes,
+                "decision_head_device": head_device,
+                "tensor_placement_verified": True,
                 "format": FORMAT_VERSION, "max_input_tokens": MAX_TOKENS,
                 "native_max_position_embeddings": self.model.config.max_position_embeddings,
                 "truncation": False, "add_special_tokens": False, "batch_size": 1,
@@ -283,7 +314,8 @@ class Jev27BModel:
                 "torch_cuda_version": torch.version.cuda,
                 "parameter_dtypes": dict(Counter(str(p.dtype) for p in self.model.parameters())),
                 "source_sha256": {p.name: sha256_file(p) for p in
-                                  (Path(__file__), Path(__file__).with_name("formatting.py"))},
+                                  (Path(__file__), Path(__file__).with_name("formatting.py"),
+                                   Path(__file__).with_name("config.py"), Path(__file__).with_name("resource.py"))},
             },
         }
         encoded = json.dumps(self._metadata, sort_keys=True, ensure_ascii=False,
@@ -297,14 +329,14 @@ class Jev27BModel:
         if not self.loaded:
             return {}
         torch = self._torch
-        return {"gpu_allocated_bytes": [torch.cuda.memory_allocated(i) for i in (0, 1)],
-                "gpu_reserved_bytes": [torch.cuda.memory_reserved(i) for i in (0, 1)],
-                "gpu_peak_allocated_bytes": [torch.cuda.max_memory_allocated(i) for i in (0, 1)]}
+        return {"gpu_allocated_bytes": [torch.cuda.memory_allocated(i) for i in self.devices],
+                "gpu_reserved_bytes": [torch.cuda.memory_reserved(i) for i in self.devices],
+                "gpu_peak_allocated_bytes": [torch.cuda.max_memory_allocated(i) for i in self.devices]}
 
     def _check_memory(self) -> None:
         resource = self._resource()
-        if any(value > GPU_LIMIT_BYTES for values in resource.values() for value in values):
-            raise ModelIntegrityError("GPU allocator use exceeded 44 GiB")
+        if any(value > self.profile.allocator_bytes for values in resource.values() for value in values):
+            raise ModelIntegrityError(f'GPU allocator use exceeded {self.profile.allocator_bytes // 1024**3} GiB')
 
     def metadata(self) -> dict[str, Any]:
         result = copy.deepcopy(self._metadata)

@@ -70,6 +70,7 @@ verification에 대한 source of truth는 각 개별 plan이다. `active/` 안�
 
 | ID / 개별 검증 근거 | 완료일 | Outcome |
 |---|---|---|
+| [EP-137](completed/EP-137-jev27b-four-gpu-continuation.md) | 2026-10-13 | JEV-27B 정상23 계승·4GPU 신규9·전수 감사/비교/뷰어·봉인/자원 반환 완료 |
 | [EP-136](completed/EP-136-branch-research-manuals.md) | 2026-10-13 | 연구선별 매뉴얼·환경/출력 안내·등록 템플릿·정적 검증·학습 원격 반영 완료 |
 | [EP-135](completed/EP-135-research-branch-preservation.md) | 2026-10-12 | 동일 코드 두 연구선·고정 태그·외부 자산 복사/검증·기존 환경 유지 |
 | [EP-132](completed/EP-132-qwen-matrix-selfplay.md) | 2026-10-09 | 시도3 40라운드 둔화 종료·36 선택·시험640/감사/뷰어/봉인·정리 완료; 주효능 미입증(직접 0.805) |
