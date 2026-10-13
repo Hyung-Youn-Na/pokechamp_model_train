@@ -1,5 +1,14 @@
 # PokéChamp 기술 자격 검증 환경
 
+## 분리된 연구선에서 읽는 방법
+
+현재 checkout의 작업·환경 선택은 [연구 매뉴얼](../../project_context/RESEARCH_MANUAL.md), 실행 여부는
+[STATUS](../../project_context/STATUS.md#active-work)를 먼저 확인한다. 아래 실행 명령은 `/workspace`의 기존 환경을
+기준으로 한 기술 참조다. L1–L5 worktree는 보존·설계용이며 실행용 환경이 구성되어 있지 않다.
+D/EX가 지정된 조건·경로·재개 명령은 해당 실험의 범위로 읽고, 공통 규칙은 기존 적용 범위를
+유지한다. 새 실험의 입력·출력·실행 범위는 등록된 작업에서 정한다.
+
+
 ## 고정 대진 공개 상태 MCTS
 
 EX-076의 작은 전용 모델·동시행동 탐색·학습/평가 실행기는 별도
@@ -87,7 +96,11 @@ Timer가 연구 변수인 run만 실행 전에 condition과 설정을 선언하�
 CLI의 battle watchdog은 hung process를 종료하기 위한 infrastructure safety 경계로 계속 적용되고,
 Showdown timeout loss나 efficacy defeat로 해석하지 않는다.
 
-## 사용 순서
+## 환경 구성·자격 검증 명령 (기술 참조)
+
+현재 연구 주기의 기존 환경을 이용할 때는 [환경 선택](../../project_context/RESEARCH_MANUAL.md#environment)을
+따른다. 아래 bootstrap은 설치 작업이며 server·probe·smoke는 각각 서버/모델 호출·배틀을
+포함할 수 있다. 기본 시작 확인 명령으로 일괄 실행하지 않는다.
 
 ```bash
 scripts/pokechamp-env bootstrap

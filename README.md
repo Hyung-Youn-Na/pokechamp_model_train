@@ -10,6 +10,7 @@
 새 연구 실험은 실행 중이지 않다.
 기존 source·환경·모델·실험 evidence와 Blocked/Paused 판정을 보존한다.
 
+- [모델 학습 연구 시작 매뉴얼](project_context/RESEARCH_MANUAL.md)
 - [프로젝트 맥락과 작업 규칙](project_context/INDEX.md)
 - [이 연구선의 목표](project_context/CHARTER.md) · [연구 설계](project_context/RESEARCH_DESIGN.md)
 - [현재 작업·제한](project_context/STATUS.md) · [구성](project_context/ARCHITECTURE.md)

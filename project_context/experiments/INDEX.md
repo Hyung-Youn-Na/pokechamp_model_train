@@ -7,6 +7,9 @@ mutable store 자체를 복제하지 않는다.
 이 파일은 navigation과 운영 규칙을 제공한다. Question, procedure, status, result에 대한 source
 of truth는 개별 experiment record다.
 
+새 기록의 연구선·branch/commit·실행 환경·입출력은 [EX 템플릿](TEMPLATE.md)에 남긴다.
+현재 연구선의 작업 순서는 [연구 매뉴얼](../RESEARCH_MANUAL.md)을 따른다.
+
 ## Experiment 목록
 
 아래는 실행 지시가 아닌 기록 탐색용 목록이다. 상태값은 각 기록의 기존 값을 유지한다.

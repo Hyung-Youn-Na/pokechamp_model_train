@@ -1,8 +1,14 @@
 # 연구선 작업·출력·복원 안내
 
+현재 checkout에서 시작할 순서는 [브랜치별 연구 매뉴얼](RESEARCH_MANUAL.md)을 따른다.
+이 문서는 두 연구선의 공통 경로·Git 연결·보존 시점·복원 방법을 안내하며, 실험 규범은
+[INDEX](INDEX.md#workflow)와 해당 RD/CONTRACTS/EP/EX에 유지한다.
+
 [D-131](decisions/D-131-research-branch-preservation.md)에 따라 연구 목적과 실행 위치를
 분리한다. 원본 소스·실험·환경은 삭제하거나 이동하지 않는다. 분리 검증의 원문은
 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)다.
+
+<a id="checkouts"></a>
 
 ## 브랜치와 작업 위치
 
@@ -16,8 +22,32 @@
 브랜치들은 같은 실행 코드·submodule pin에서 출발한다. 프롬프트·JEV·학습·AgenticSTS
 구성은 유지한다. 별도 L1–L5 worktree는 실제 Git checkout이며 `/workspace` 코드로 향하는
 symlink가 아니다. 이 worktree에 실행용 가상환경·자격증명·GPU lock을 구성하지 않는다.
-현재 새 학습·L1–L5 구현·실험 실행 작업은 없다. 기존 Blocked/Paused plan과 EX의 당시
-판정·동결 protocol을 유지하며 연구선 분리는 재개 또는 실험 완료를 뜻하지 않는다.
+현재 실행 여부는 각 checkout의 [STATUS](STATUS.md#active-work)와 [plan 색인](exec-plans/INDEX.md)을
+확인한다. 기존 Blocked/Paused plan과 EX의 당시 판정·동결 protocol은 유지하며, 연구선 분리는
+재개 또는 실험 완료를 뜻하지 않는다.
+
+<a id="remotes"></a>
+
+## Git 원격과 작업 기록
+
+2026-10-12 사용자의 후속 push 지시로 학습 브랜치를 게시했다. EP-135 당시의 “push 없음”은
+그 분리 작업의 완료 기록이며 이후 승인된 push 이력을 소급해 덮어쓰지 않는다.
+
+| 원격 | 대상 | 현재 역할 |
+|---|---|---|
+| `origin` | `https://github.com/AlayaLab/AgenticSTS.git` | 상속된 upstream; 로컬 `main`의 기존 연결 |
+| `model-train` | `https://github.com/Hyung-Youn-Na/pokechamp_model_train.git` | `research/model-training`의 게시·추적 원격 |
+
+연결 상태는 `git status --short --branch`와 `git branch -vv`로 확인한다. Git 원격 설정은
+worktree들이 공유하지만 현재 L1–L5 브랜치는 별도 원격을 추적하지 않는다. 다른 branch·tag의
+게시 범위는 원격 이름만으로 확대하지 않고 사용자 지시를 따른다.
+
+새 [EP](exec-plans/TEMPLATE.md)·[EX](experiments/TEMPLATE.md)는 기준 연구선과 실제 branch,
+commit/미커밋 변경, checkout·interpreter, 새 출력 위치, 원자료·보존 manifest를 구분해 기록한다.
+기존 ID와 기록은 유지하고 새로운 번호 체계를 만들지 않는다. 같은 ID가 다른 연구선에 보일 때는
+출처 branch·commit을 함께 확인하여 동일 실행이나 별도 실험이라고 임의로 판단하지 않는다.
+
+<a id="preservation"></a>
 
 ## 보존 위치와 manifest
 
@@ -33,11 +63,15 @@ symlink가 아니다. 이 worktree에 실행용 가상환경·자격증명·GPU 
 | `manifests/exclusions.json` | 자격증명, Git 별도 보존, 파일로 복구할 수 없는 runtime endpoint의 명시적 제외 |
 | `manifests/copy-verification.json` | 전수 파일 복사·해시 대조와 원본 목록/metadata 불변 검사 |
 | `manifests/repositories.json`, `manifests/additional-repositories.json` | 별도 소스 저장소·worktree와 bundle/변경 기록의 전체 목록 |
-| `manifests/git-receipt.json` | 최종 브랜치·태그·submodule·자산 manifest 해시·bundle/검증 연결 |
+| `manifests/git-receipt.json` | EP-135 완료 시점의 브랜치·태그·submodule·자산 manifest 해시·bundle/검증 연결 |
 | `repositories/` | 주/별도 저장소 bundle, worktree별 index·staged/unstaged diff·미추적 파일 목록 |
-| `repositories/workspace-final.bundle` | 최종 두 연구 브랜치·보존 태그·main을 포함한 bundle |
+| `repositories/workspace-final.bundle` | EP-135 완료 시점의 두 연구 브랜치·보존 태그·main을 포함한 bundle |
 | `validation/` | CPU 전후 회귀, 보존 도구 표본, 링크·환경·Git·표본 복원 결과 |
 | `runs/model-training/` | 이후 새로 승인된 학습 실험의 출력 위치 |
+
+`snapshot/pre-split`, 위 snapshot·bundle·receipt는 분리 시점의 고정 보존 기록이다.
+이후 README·매뉴얼·코드 커밋이나 원격 HEAD를 가리키도록 태그를 옮기거나 과거 receipt를
+갱신하지 않는다. 후속 작업의 검증·게시 기록은 해당 EP 또는 별도 receipt에 남긴다.
 
 예를 들어 `/workspace/.pokechamp-data/...`의 사본은
 `snapshots/pre-split/fs/workspace/.pokechamp-data/...`다. `/ref`, `/tmp`, 모델 캐시,
@@ -52,7 +86,9 @@ receipt는 외부에 따로 둬 커밋 해시의 순환 참조를 피한다. 과
 
 Git에는 기존 추적 파일과 명시적으로 선택한 소스·테스트·설정·문서·작은 고정 입력을 둔다.
 대형 exports·과거 evidence·replay corpus·환경·모델은 외부 사본으로 연결한다.
-L1–L5 worktree의 무시된 evidence/exports/data 링크는 보존 자료 열람용이며 실행 환경 설치가 아니다.
+L1–L5 worktree의 무시된 evidence/exports/data와 `.tools/.../docs` 링크는 보존 자료 열람용이다.
+그 링크를 통한 편집·출력 쓰기는 사본을 바꿀 수 있으므로 새 작업의 쓰기 경로로 사용하지 않는다.
+환경 안내가 보이는 것은 실행용 가상환경이 설치되어 있다는 뜻이 아니다.
 Git bundle만으로 대형 자산까지 복구되는 것은 아니다.
 
 다음 외부 항목은 실행 코드가 읽는 고정 입력·참조 패키지도 포함한다. 출력물이라는 이유로
@@ -68,10 +104,13 @@ Git bundle만으로 대형 자산까지 복구되는 것은 아니다.
 각 경로의 사본은 `snapshots/pre-split/fs/workspace/` 아래 같은 상대경로다. 이 연결은 과거
 평가 자료를 새로운 학습에 자동 편입하거나 사용 범위를 확대하는 승인이 아니다.
 
+<a id="outputs"></a>
+
 ## 새 학습 출력
 
 새 EX/plan에서 모델·데이터·분할·평가·예산·중단 조건을 확정한 뒤, 해당 실행기가 지원하는
-명시적 출력 인자로 다음 경로를 선택한다. 이번 분리 작업은 새 실험을 실행하지 않는다.
+명시적 출력 인자로 다음 경로를 선택한다. 이 경로 안내는 새 실험 실행 지시가 아니다.
+명령별 지원 인자·쓰기/서버 호출 경계는 현재 checkout의 [연구 매뉴얼](RESEARCH_MANUAL.md)을 따른다.
 
 ```bash
 # EX-NEW는 승인된 새 실험 ID로 바꾼다.
@@ -82,7 +121,8 @@ POKECHAMP_RUN_DIR='/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/mod
 승인 실행의 상태 열람 문법은 다음과 같다.
 
 ```bash
-scripts/pokechamp-fixed-matchup status --directory "$POKECHAMP_RUN_DIR"
+cd /workspace
+PYTHONDONTWRITEBYTECODE=1 scripts/pokechamp-fixed-matchup status --directory "$POKECHAMP_RUN_DIR"
 ```
 
 출력 폴더 이름만 바꿔 동결된 과거 protocol을 새 실험으로 재사용하지 않는다. 기존 실행기의
@@ -91,12 +131,17 @@ scripts/pokechamp-fixed-matchup status --directory "$POKECHAMP_RUN_DIR"
 [C-047](CONTRACTS.md#c-047-viewer-export)의 `/workspace/exports/battle_viewers/` 내보내기
 요건도 유지한다. 새 run 경로는 그 완료 요건을 대체하지 않는다.
 
+<a id="restore"></a>
+
 ## 복구 절차
 
 아래는 별도 복구 작업을 위한 안내이며 현재 `/workspace`에 덮어쓰는 명령이 아니다.
 
-1. `manifests/git-receipt.json`의 Git SHA와 파일 해시를 확인하고 bundle을 검증한다.
-   원래 `main`, 두 브랜치, 고정 태그, submodule pin을 receipt와 대조한다.
+1. 복원하려는 시점을 먼저 구분한다. EP-135 분리 상태를 복원할 때는
+   `manifests/git-receipt.json`의 Git SHA와 파일 해시를 확인하고 당시 bundle을 검증한다.
+   원래 `main`, 두 브랜치, 고정 태그, submodule pin을 receipt와 대조한다. 이후 학습 브랜치
+   코드가 필요하면 승인된 원격/작업 기록의 commit을 별도로 확인하며 과거 receipt의 SHA를
+   최신 HEAD의 값으로 바꾸지 않는다.
 2. 충돌하지 않는 빈 경로에 `repositories/workspace-final.bundle`을 clone한다.
    `research/model-training` 또는 `research/l1-l5-port`를 checkout한다. submodule은
    `repositories/workspace__pokechamp/source.bundle`과
@@ -120,6 +165,8 @@ scripts/pokechamp-fixed-matchup status --directory "$POKECHAMP_RUN_DIR"
    설치·upgrade나 실제 GPU/배틀 검증은 이 안내만으로 자동 수행하지 않는다.
 6. 자격증명은 보존 패키지에 없다. 기존 `.env`와 Hugging Face 인증 파일은 원위치에 유지한다.
    공유·Git 추적·환경 복제에 포함하지 않는다. 복구 과정에서도 소유자의 별도 설정을 사용한다.
+
+<a id="limitations"></a>
 
 ## 알려진 후속 항목
 

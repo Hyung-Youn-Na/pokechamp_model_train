@@ -3,6 +3,8 @@
 실질적인 작업 전 [project_context/INDEX.md](project_context/INDEX.md)와
 [CHARTER.md](project_context/CHARTER.md)를 읽고,
 [작업별 읽기 경로](project_context/INDEX.md#reading-paths)로 관련 계약·설계·결정 원문을 확인한다.
+분리된 checkout·환경·출력·자료 열람 순서는
+[현재 연구선 매뉴얼](project_context/RESEARCH_MANUAL.md)을 따른다.
 
 - 구현·실험 전 [exec-plan 색인](project_context/exec-plans/INDEX.md)과 범위가 겹치는 모든
   `active/` plan을 확인한다. 실행 중/중단 보존 표시는 읽기·승인 요건을 면제하지 않는다.

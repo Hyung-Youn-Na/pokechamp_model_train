@@ -1,5 +1,14 @@
 # EX081 공동 q 모델 배틀 평가
 
+## 분리된 연구선에서 읽는 방법
+
+현재 checkout의 작업·환경 선택은 [연구 매뉴얼](../../../../project_context/RESEARCH_MANUAL.md), 실행 여부는
+[STATUS](../../../../project_context/STATUS.md#active-work)를 먼저 확인한다. 아래 실행 명령은 `/workspace`의 기존 환경을
+기준으로 한 기술 참조다. L1–L5 worktree는 보존·설계용이며 실행용 환경이 구성되어 있지 않다.
+D/EX가 지정된 조건·경로·재개 명령은 해당 실험의 범위로 읽고, 공통 규칙은 기존 적용 범위를
+유지한다. 새 실험의 입력·출력·실행 범위는 등록된 작업에서 정한다.
+
+
 EX066 epoch3를 변경 없이 GPU0에서 서빙하고 EX065 test20의 고정 대진을 실행한다.
 실행 조건·8시간·재현 gate·실패/복구는 [EX-081](../../../../project_context/experiments/EX-081-joint-q-battle.md),
 진행은 [EP-133](../../../../project_context/exec-plans/completed/EP-133-joint-q-battle.md)을 따른다.

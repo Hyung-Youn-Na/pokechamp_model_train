@@ -16,12 +16,13 @@ machine-readable 값·원문 인용은 원형을 유지한다. `Active`, `Accept
 | 필요한 정보 | 원문 |
 |---|---|
 | 장기 목적·범위·상위 invariant | [CHARTER](CHARTER.md) |
-| 당면 학습 목표·연구 질문·미정 설계 | [포켓몬 전용 학습](RESEARCH_DESIGN.md#pokemon-training-objective) |
-| Qwen 모방 학습 이후 Abyssal 우선 단기 목표 | [단기 학습 목표](RESEARCH_DESIGN.md#pokemon-imitation-self-play) |
+| 현재 연구선의 질문·범위·미정 설계 | [연구 목표](RESEARCH_DESIGN.md#branch-research-objective) |
+| 학습 연구선의 방향·기존 단계 | [학습 설계](RESEARCH_DESIGN.md#pokemon-training-objective) · [기존 단계](RESEARCH_DESIGN.md#pokemon-imitation-self-play) |
 | 연구 질문·처치·평가·해석과 규칙 적용 범위 | [RESEARCH_DESIGN](RESEARCH_DESIGN.md#current-rules) |
 | schema·runtime·검증·provenance 계약과 버전별 범위 | [CONTRACTS](CONTRACTS.md#current-rules) |
 | 결정 목록 / 승인·대체 근거 | [DECISIONS](DECISIONS.md) / 해당 개별 ADR |
 | 현재 구성·data/control flow | [ARCHITECTURE](ARCHITECTURE.md) |
+| 현재 연구선의 작업 시작·환경·등록 순서 | [연구 매뉴얼](RESEARCH_MANUAL.md) |
 | 연구선·외부 보존본·새 출력·복원 | [작업 안내](RESEARCH_WORKFLOW.md) · [보존 manifest 연결](preservation/pre-split.json) |
 | 현재 목표·작업·기능 제한 | [STATUS](STATUS.md) |
 | 실행 중·중단 보존·완료 작업 | [exec-plan 색인](exec-plans/INDEX.md) |
@@ -40,6 +41,7 @@ machine-readable 값·원문 인용은 원형을 유지한다. `Active`, `Accept
 
 | 작업 | 이어서 확인할 범위 |
 |---|---|
+| 분리된 환경에서 작업 시작 | 현재 checkout의 [연구 매뉴얼](RESEARCH_MANUAL.md) → STATUS와 관련 plan. 보존/복원은 [공통 안내](RESEARCH_WORKFLOW.md) |
 | 문서·링크·색인 정리 | STATUS, 대상 문서의 authority·참조 원문, 관련 plan. 조건/판정 문구를 줄이면 해당 RD/C/EX 근거까지 대조 |
 | 구현·버그 수정 | STATUS → plan 색인과 겹치는 plan → 해당 ARCHITECTURE·CONTRACTS 절 및 ADR |
 | 기본 IO 테스트·viewer | 위 구현 경로와 [설명 검토 적용 규칙](RESEARCH_DESIGN.md#io-explanation-review), [실행기 경계](CONTRACTS.md#c-032-io-explanation-review) |

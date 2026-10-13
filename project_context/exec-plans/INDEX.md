@@ -23,19 +23,22 @@ verification에 대한 source of truth는 각 개별 plan이다. `active/` 안�
 
 | ID | Plan | Status | 현재 objective | 최종 갱신일 |
 |---|---|---|---|---|
-| [EP-134](active/EP-134-jev27b-ex058-reproduction.md) | JEV-27B 동일32 재현 | Blocked | GPU 한도 중단·목표 미달 · [후속 교훈](evidence/ep134-lessons/report.md) | 2026-10-08 |
-| [EP-127](active/EP-127-fixed-matchup-first-round.md) | 첫1라운드 학습 | Blocked | 원실행 시간초과·학습0·후속 시간상한 해제 | 2026-10-07 |
-| [EP-126](active/EP-126-fixed-matchup-day.md) | 하루 내 고정 대진 실행 | Paused | 사용자 중지·학습/test0·자료 보존/정리 완료 | 2026-10-07 |
-| [EP-041](active/EP-041-b2-lead-comparison.md) | B2 선봉 정책 비교 | Blocked | 사용자 지시로 실행·감시 종료·비교 미완료 | 2026-09-14 |
+| [EP-136](active/EP-136-branch-research-manuals.md) | 연구선별 매뉴얼 정비 | Active | 환경·등록·출력·보존 안내와 링크 정비 | 2026-10-13 |
 
 <a id="blocked-plans"></a>
 
 ### 중단 보존
 
 실험 재개 지시가 아니다. 보고·보존·정리 완료를 실험 목표 달성으로 바꾸지 않는다.
+파일은 기존 `active/` 위치에 유지하며 개별 상태·조건을 그대로 따른다.
+`active/EP-111`·`EP-112`·`EP-113`의 호환 링크는 completed 본문을 가리킨다.
 
 | ID | Plan | Status | 현재 objective | 최종 갱신일 |
 |---|---|---|---|---|
+| [EP-134](active/EP-134-jev27b-ex058-reproduction.md) | JEV-27B 동일32 재현 | Blocked | GPU 한도 중단·목표 미달 · [후속 교훈](evidence/ep134-lessons/report.md) | 2026-10-08 |
+| [EP-127](active/EP-127-fixed-matchup-first-round.md) | 첫1라운드 학습 | Blocked | 원실행 시간초과·학습0·후속 시간상한 해제 | 2026-10-07 |
+| [EP-126](active/EP-126-fixed-matchup-day.md) | 하루 내 고정 대진 실행 | Paused | 사용자 중지·학습/test0·자료 보존/정리 완료 | 2026-10-07 |
+| [EP-041](active/EP-041-b2-lead-comparison.md) | B2 선봉 정책 비교 | Blocked | 사용자 지시로 실행·감시 종료·비교 미완료 | 2026-09-14 |
 | [EP-125](active/EP-125-fixed-matchup-run.md) | 고정 대진 GPU 실험 | Blocked | 교정·측정 통과, 예산 gate 초과·학습/test0·보고/뷰어/자원 정리 완료 | 2026-10-07 |
 | [EP-119](active/EP-119-abyssal-rl.md) | Abyssal 4GPU 학습 | Blocked | test·감사 종료, 최종 뷰어 timeout·실험 미완료·자원 해제 | 2026-10-04 |
 | [EP-108](active/EP-108-joint-q-training.md) | Base 공동 q 학습 | Blocked | 재로딩 q 차이 gate 실패·자료 보존·GPU 점유0 | 2026-10-03 |

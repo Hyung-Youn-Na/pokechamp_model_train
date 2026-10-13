@@ -5,6 +5,10 @@
 - 책임자 (Owner): TBD
 - 관련 exec plan (Related exec plan): TBD
 - 관련 decision (Related decision): TBD
+- 기준 연구선: `research/model-training` 또는 `research/l1-l5-port`
+
+현재 연구선의 [시작 매뉴얼](../RESEARCH_MANUAL.md)에서 환경·등록·출력 경로를 확인한다.
+템플릿 작성이나 출력 폴더 선택은 새 실험 실행 지시가 아니다.
 
 ## 질문 및 목적 (Question and Purpose)
 
@@ -31,7 +35,9 @@ TBD. Exploratory work는 명시적으로 표시한다. Directional guess는 resu
 
 ## 환경 및 출처 (Environment and Provenance)
 
-- Code commit: TBD
+- 실제 작업 branch / code commit / 미커밋 변경과 보존 위치: TBD
+- 작업 checkout / interpreter / 실행기와 명령: TBD
+- 실제 지원되는 출력 인자·고정 경로·단계별 쓰기/호출 범위: TBD
 - Data/store SHA 또는 clean-start 선언: TBD
 - Game version: TBD
 - Mod/protocol version: TBD
@@ -46,7 +52,9 @@ Credential, private endpoint 또는 개인 machine identifier를 이 record에 �
 ## 격리 및 오염 통제 (Isolation and Contamination Controls)
 
 - Experiment tag: TBD
-- Writable-store 위치: TBD
+- 새 실행 출력 / writable-store 위치: TBD
+- 입력 자료 / 원본 evidence / 보존본 연결: TBD (새 출력과 구분)
+- viewer 출력과 완료 요건: 해당하는 경우 [C-047](../CONTRACTS.md#c-047-viewer-export) 참조
 - Shared-state exception: TBD
 - Resume behavior: TBD
 - Prior-data inclusion rule: TBD

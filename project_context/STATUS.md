@@ -4,7 +4,7 @@
 [D-131](decisions/D-131-research-branch-preservation.md)에 따라 연구 목적을 분리하며, 현재 실행 중인 학습·평가·배틀 실험은 없다.
 기존 Blocked/Paused와 동결 protocol·봉인은 유지한다.
 
-- 기준일: 2026-10-12
+- 기준일: 2026-10-13
 - 현재 작업 위치: `/workspace`
 - 목표 원문: [CHARTER](CHARTER.md) · [연구 설계](RESEARCH_DESIGN.md)
 - 경로·출력·외부 보존본·복원: [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)
@@ -23,7 +23,8 @@
 
 ## 현재 실행 작업
 
-현재 실행 작업은 없다. [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)의
+[EP-136](exec-plans/active/EP-136-branch-research-manuals.md)에서 연구선별 매뉴얼을 정비 중이다.
+실험·환경 변경은 포함하지 않는다. [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)의
 브랜치 분리·공통 태그·외부 보존·검증을 완료했다. 기존 실행 코드와 환경은 유지했으며
 과거 실험을 재개하거나 Blocked/Paused를 완료로 바꾸지 않았다.
 

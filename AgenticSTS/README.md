@@ -216,4 +216,4 @@ prompts require a written justification in the PR description.
 **Apache-2.0** (see [`LICENSE`](LICENSE)). The license of this directory does not
 extend to [`../AgenticSTS-Mod/`](../AgenticSTS-Mod) (AGPL-3.0, inherited from
 upstream) or [`../AgenticSTS-Data/`](../AgenticSTS-Data) (CC-BY-4.0) — see the
-[monorepo README](../README.md#-license).
+[monorepo LICENSE](../LICENSE).

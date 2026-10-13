@@ -1,5 +1,14 @@
 # Kev-4B pokechamp r1 배틀 연결
 
+## 분리된 연구선에서 읽는 방법
+
+현재 checkout의 작업·환경 선택은 [연구 매뉴얼](../../project_context/RESEARCH_MANUAL.md), 실행 여부는
+[STATUS](../../project_context/STATUS.md#active-work)를 먼저 확인한다. 아래 실행 명령은 `/workspace`의 기존 환경을
+기준으로 한 기술 참조다. L1–L5 worktree는 보존·설계용이며 실행용 환경이 구성되어 있지 않다.
+D/EX가 지정된 조건·경로·재개 명령은 해당 실험의 범위로 읽고, 공통 규칙은 기존 적용 범위를
+유지한다. 새 실험의 입력·출력·실행 범위는 등록된 작업에서 정한다.
+
+
 `kev-joint-noul-v1`은 공식 관측과 공개 cutoff에서 기존 JointInput을 만들고, 각 합법 후보의
 noul p(true) 최댓값을 제출한다. 동률은 원 후보 순서다. 단일 후보도 호출한다. 요청의 state는
 `JointInput.payload_json` 문자열 그대로이며 학습 QUESTION/describe 외 프롬프트나 criteria를

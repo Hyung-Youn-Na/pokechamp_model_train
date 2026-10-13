@@ -5,6 +5,14 @@
 - 책임자: TBD
 - 승인 근거·범위: 현재 명시적 사용자 지시 또는 유효한 plan/Decision 참조
 - 관련 contract / decision / experiment: 해당 원문 링크
+- 기준 연구선: `research/model-training` 또는 `research/l1-l5-port`
+- 실제 작업 branch·시작 commit·미커밋 변경: TBD
+- 작업 checkout·사용할 interpreter/launcher: TBD (문서/설계만이면 해당 없음)
+- 새 산출물·검증 출력 위치: TBD
+- 참조 원자료·보존본·manifest: TBD (새 쓰기 위치와 구분)
+
+브랜치별 진입·환경·출력은 [연구 매뉴얼](../RESEARCH_MANUAL.md), 보존 시점은
+[공통 안내](../RESEARCH_WORKFLOW.md#preservation)를 따른다. 기존 ID·기록은 재사용/재작성하지 않는다.
 
 ## 목표와 맥락
 
