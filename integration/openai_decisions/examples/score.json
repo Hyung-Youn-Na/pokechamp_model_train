@@ -1,0 +1,25 @@
+{
+  "model": "gpt-6-luna",
+  "input": "결제가 두 번 청구되었습니다. 중복 결제 금액을 환불해 주세요.",
+  "questions": [
+    {
+      "type": "score",
+      "name": "urgency",
+      "instructions": "요청의 긴급도를 평가하세요.",
+      "levels": [
+        {
+          "label": "low",
+          "description": "일반 문의"
+        },
+        {
+          "label": "medium",
+          "description": "기능이나 결제 문제"
+        },
+        {
+          "label": "high",
+          "description": "즉각 대응이 필요한 심각한 문제"
+        }
+      ]
+    }
+  ]
+}

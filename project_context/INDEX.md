@@ -23,6 +23,8 @@ machine-readable 값·원문 인용은 원형을 유지한다. `Active`, `Accept
 | 결정 목록 / 승인·대체 근거 | [DECISIONS](DECISIONS.md) / 해당 개별 ADR |
 | 현재 구성·data/control flow | [ARCHITECTURE](ARCHITECTURE.md) |
 | 현재 연구선의 작업 시작·환경·등록 순서 | [연구 매뉴얼](RESEARCH_MANUAL.md) |
+| 보관 데이터셋의 특징·구조·위치 | [데이터셋 안내](RESEARCH_MANUAL.md#archived-datasets) |
+| 보관 Strategist 모델의 구조·위치 | [모델 안내](RESEARCH_MANUAL.md#archived-strategist-model) |
 | 연구선·외부 보존본·새 출력·복원 | [작업 안내](RESEARCH_WORKFLOW.md) · [보존 manifest 연결](preservation/pre-split.json) |
 | 현재 목표·작업·기능 제한 | [STATUS](STATUS.md) |
 | 실행 중·중단 보존·완료 작업 | [exec-plan 색인](exec-plans/INDEX.md) |

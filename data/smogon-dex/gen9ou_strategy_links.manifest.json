@@ -1,0 +1,44 @@
+{
+  "schema_version": "smogon-ou-strategy-links/v1",
+  "source_url": "https://www.smogon.com/dex/sv/formats/ou/",
+  "resolved_url": "https://www.smogon.com/dex/sv/formats/ou/",
+  "retrieved_at_utc": "2026-10-19T06:17:04.065835+00:00",
+  "format": "gen9ou",
+  "generation": 9,
+  "language": "en",
+  "count": 110,
+  "fields": [
+    "pokemon",
+    "strategy_url"
+  ],
+  "order": "source page DOM order",
+  "source_anchor_count": 111,
+  "excluded_non_pokemon_links": [
+    {
+      "name": "Pokemon",
+      "url": "https://www.smogon.com/dex/sv/pokemon/",
+      "parent_class": "DexNav-pokemon",
+      "parent_text": "Pokemon"
+    }
+  ],
+  "duplicate_anchor_count": 0,
+  "attribution": "Smogon Strategy Dex",
+  "scope": "OU 목록 페이지에 연결된 포켓몬 이름과 전략 URL. 실제 사용률 또는 모든 종의 OU 티어 소속을 뜻하지 않음.",
+  "strategy_content_fetched": false,
+  "all_destinations_checked": false,
+  "evidence_directory": "link-index-evidence/20261019T061720Z",
+  "validation": {
+    "source_anchors_match": true,
+    "csv_json_equal": true,
+    "unique_names": true,
+    "unique_urls": true,
+    "empty_fields": 0
+  },
+  "sha256": {
+    "gen9ou_strategy_links.json": "e937bacd1d83f756675d8336f41cbe5ea79c789f79c667317d05c9c4dc3ec0e7",
+    "gen9ou_strategy_links.csv": "56735e0e8398b33770c83cc213e2c930b710d0b93b3460027401903387bb9a99",
+    "link-index-evidence/20261019T061720Z/source.html": "5c73030a2dc957706d2e435af5042f15b27e6966b7357f6b74c2c4c1e40e2eba",
+    "link-index-evidence/20261019T061720Z/anchors.json": "c4b4d000c3701e8aea275293802a882655f109d6ee78d2eac30a0330c8068d3b",
+    "link-index-evidence/20261019T061720Z/rendered.html": "e4ddb7a9de007813dea7bff5ad3f29406915a0292cd0606b719980cbe434a1cb"
+  }
+}

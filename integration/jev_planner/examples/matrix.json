@@ -1,0 +1,18 @@
+{
+  "schema_version": "jev-planner-config-v1",
+  "name": "planner-matrix-demo",
+  "executor": {"model": "jev9b", "input_version": "jev-choice-v6", "candidate_display": "names-v1"},
+  "prompts": {"guide": "../prompts/role-resource-guide-v1.txt"},
+  "evaluation": {"kind": "trace", "fixture": "../fixtures/demo.json"},
+  "matrix": {
+    "triggers": [
+      "off", "initial_only", "every_decision",
+      {"policy": "periodic", "interval_turns": 3},
+      "events", {"policy": "events_or_periodic", "interval_turns": 3}
+    ],
+    "planner_prompts": [
+      {"name": "compact", "path": "../prompts/strategy-compact.txt"},
+      {"name": "conditional", "path": "../prompts/strategy-conditional.txt"}
+    ]
+  }
+}

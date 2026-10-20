@@ -1,0 +1,13 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EX-108 · Tacit RuleQA</title><style>__STYLE__
+.log{max-height:35vh}.replay iframe{min-height:260px}.replay details{margin:0;padding:12px}.replay .code{max-height:30vh}.panel{margin-bottom:14px}#state-content{overflow-wrap:anywhere}.page-header{overflow-wrap:anywhere}@media(max-width:1000px){.layout{display:flex;flex-direction:column;padding:0 12px 12px}.replay{position:static;height:auto;order:-1}.replay iframe{height:340px;flex:auto}.page-header{padding:12px}.main{width:100%}}
+</style></head><body><header class="page-header"><a href="index.html">← 경기 목록</a><h1 id="heading"></h1><p id="game-summary" class="muted"></p></header>
+<main class="layout"><div class="main">
+<nav class="panel navigation" aria-label="결정 탐색"><button id="previous">← 이전 결정</button><select id="decision" aria-label="결정 선택"></select><button id="next">다음 결정 →</button><span id="position" class="muted"></span></nav>
+<nav class="panel navigation" aria-label="턴 탐색"><button id="previous-turn">← 이전 턴</button><select id="turn" aria-label="턴 선택"></select><button id="next-turn">다음 턴 →</button></nav>
+<section class="panel"><div class="summary"><div id="phase" class="eyebrow"></div><div id="choice" class="chosen"></div><div id="metrics" class="metrics"></div></div>
+<div class="tabs" role="tablist" aria-label="결정 내용"></div>
+<div class="toolbar"><p id="note" class="muted"></p><button id="copy">복사</button><button id="download">다운로드</button></div>
+<section id="content" role="tabpanel"><div id="state-content" class="state" hidden></div><pre id="raw" class="code"></pre></section><div id="status" class="status" role="status"></div></section>
+<p class="muted">← → 결정 탐색 · 입력은 당시 저장 메시지 그대로 표시합니다. 단일 후보 자동 선택은 모델 미호출입니다.</p>
+</div><aside class="panel replay"><header><strong>배틀 리플레이</strong><div class="muted"><a id="replay-link" target="_blank" rel="noopener">크게 열기</a> · <a id="log-link">공개 로그</a> · 애니메이션은 인터넷 연결 필요</div></header><iframe id="animation" title="배틀 리플레이" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe><details open><summary>선택한 턴의 오프라인 공개 로그</summary><pre id="replay-log" class="code log"></pre></details></aside></main>
+<script type="application/json" id="viewer-data">__DATA__</script><script>__SCRIPT__</script></body></html>

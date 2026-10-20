@@ -8,6 +8,41 @@
 
 | 필요한 근거 | 실제 위치와 읽기 범위 |
 |---|---|
+| 후보별 요약 EX112 분모미달 종결 | [보고](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/report.md) → [비교](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/comparison/report.md) · [사례](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/case-review.md) · [종결](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/completion.json) · [뷰어](../../../exports/battle_viewers/ex112/index.html) |
+| JevK5-9B v6 상세32 EX111 | [보고](ep181/report.md) → [오프라인](ep181/final-browser.json) · [봉인](ep181/seal-receipt.json) · [뷰어](../../../exports/battle_viewers/ex111/index.html) |
+| 후보별 현재대면 요약 EP182 | [보고](ep182/report.md) → [전후예시](ep182/examples.md) · [보존/coverage](ep182/validation.json) · [검사](ep182/tests.log) · [종결](ep182/completion.json) |
+| OpenAI Decisions v6 상세32 EX110 | [보고](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/report.md) → [지표](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/metrics.json) · [종결](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/completion.json) · [뷰어](../../../exports/battle_viewers/ex110/index.html) |
+| 학습 Tacit 실전32 EX-108 | [보고](ep176/report.md) → [지표](ep176/final-summary.json) · [감사](ep176/audit.json) · [브라우저](ep176/browser-check.json) · [무결성/반환](ep176/final-integrity.json) · [종결](ep176/completion.json) |
+| Tacit 규칙QA LoRA EX-107 | [보고](ep173/report.md) → [감사](ep173/final-audit.json) · [블라인드검토](ep173/semantic-review.json) · [checkpoint](ep173/checkpoint-audit.json) · [종결/봉인](ep173/seal-receipt.json) |
+| Smogon OU 전략 전수 수집 | [보고](ep175/report.md) → [통계](ep175/statistics.json) · [원문 대조](ep175/validation.json) · [브라우저](ep175/browser-validation.json) · [Parquet](ep175/parquet-validation.json) · [종결](ep175/completion.json) |
+| Strategist 첫 배틀 EX-106 | [보고](ep172/report.md) → [지표](ep172/report.json) · [감사](ep172/audit.json) · [오프라인 뷰어](ep172/browser-check.json) · [종결/봉인](ep172/completion.json) |
+| Tacit vLLM low EX-105 | [보고](ep164/report.md) → [감사](ep164/audit.json) · [비교](ep164/comparison.md) · [사례](ep164/case-review.md) · [속도](ep164/decision-latency.json) · [뷰어](ep164/browser.json) · [종결](ep164/completion.json) |
+| Tacit Thinking low EX-104 부분 종결 | [보고](ep163/report.md) → [부분 감사](ep163/partial-audit.json) · [비교](ep163/partial-comparison.json) · [뷰어 검증](ep163/browser.json) · [종결](ep163/completion.json) |
+| Omni low EX-103 | [보고](ep162/report.md) → [감사](ep162/audit.json) · [비교](ep162/comparison.json) · [오프라인](ep162/browser.json) · [자원](ep162/resources.json) |
+| 매치업 사건 high EX-102 | [보고](ep161/report.md) → [사건감사](ep161/trigger-audit.json) · [비교](ep161/comparison.json) · [오프라인](ep161/browser.json) · [자원](ep161/resources.json) |
+| 매치업 사건 EX-101 | [보고](ep160/report.md) → [사건감사](ep160/trigger-audit.json) · [비교](ep160/comparison.json) · [오프라인](ep160/browser.json) · [자원](ep160/resources.json) |
+| GLM-5.3 low EX-100 | [보고](ep159/report.md) → [감사](ep159/audit.json) · [비교](ep159/comparison.json) · [오프라인](ep159/browser.json) · [자원](ep159/resources.json) |
+| 시간null·GLM 최대출력 EX-099 | [보고](ep158/report.md) → [감사](ep158/audit.json) · [비교](ep158/comparison.json) · [오프라인](ep158/browser.json) · [자원](ep158/resources.json) |
+| GLM high 동일대진 EX-098 | [보고](ep157/report.md) → [감사](ep157/audit.json) · [low 비교](ep157/comparison.json) · [오프라인](ep157/browser.json) · [자원](ep157/resources.json) |
+| GLM 기본온도0·형식 재시도 EX-097 | [보고](ep156/report.md) → [감사](ep156/audit.json) · [브라우저](ep156/browser.json) · [자원](ep156/resources.json) · [실패 재생](ep156/replay-failure.json) |
+| NVFP4 확률 진단 EX-096 | [실패 종결](ep155/report.md) → [감사](ep155/audit.json) · [브라우저](ep155/browser.json) · [자원](ep155/resources.json); 7턴 스키마 오류·정상0/1 |
+| JEV-35B-NVFP4 GPU0 동일 대진 | [실패 종결](ep154/report.md) → [감사](ep154/audit.json) · [반복 쌍](ep154/all-repeats.json) · [브라우저](ep154/browser.json) · [자원](ep154/resources.json); 8사전추론 반복성 실패·GLM0·본경기 미실행1 |
+| 새 GLM·JEV 디스크 상한 해제 | [보고](ep153/report.md) → [설정](ep153/settings.json) · [CPU](ep153/tests.xml) · [자원/배치](ep153/placement-tests.xml); disk=null·기록/기타한도 유지·새 호출0 |
+| GLM JSON 구문 재시도·EX-094 | [완료 보고](ep152/report.md) → [CPU](ep152/final-tests.xml) · [실패 재생](ep152/replay-failure.json) · [실제 감사](ep152/audit.json) · [브라우저](ep152/browser.json) · [GPU/반환](ep152/resources.json); 정상1경기/64턴 패배·실제구문재시도0 |
+| 변경 수행 지시문 실제 샘플1경기 | [실패 종결](ep151/report.md) → [감사](ep151/audit.json) · [브라우저](ep151/browser.json) · [자원](ep151/resources.json) · [행동 비교](ep151/comparison.json); 14턴 GLM JSON 오류·정상0/1·부분기록 보존 |
+| GLM·JEV 탭·리플레이 통합 뷰어 | [완료 보고](ep150/report.md) → [전수 대조·브라우저](ep150/verification.json) · [브라우저 회귀](ep150/browser-tests.xml); 기존 EX-088/092 보존·새 호출/배틀0 |
+| JEV 계획 목표 충족 확인 지시 | [보고](ep149/report.md) → [CPU 연결 검증](ep149/verification.json) · [기존 검사](ep149/tests.xml); 새 기본 지시·기존 동결 입력 보존 |
+| EX-092 GLM planner–JEV 실제 샘플1경기 | [최종 보고](ep148/report.md) → [완료](ep148/completion.json) · [독립 감사](ep148/audit.json) · [브라우저](ep148/browser.json) · [자원](ep148/resources.json); 55턴 승리·1경기 범위 |
+| Planner/JEV 후보 표시 이름 | [보고](ep147/report.md) → [완료](ep147/completion.json) · [저장입력 대조](ep147/saved-verification.json) · [화면](ep147/browser.json); ID/명령 보존·모의재생·실제 API/GPU/새배틀0 |
+| Planner 역할·승리경로·자원 안내 | [완료 보고](ep146/report.md) → [검증](ep146/completion.json) · [메시지 미리보기](ep146/preview.json); 문헌/CPU 검증·실제 API/GPU/새배틀0 |
+| GLM planner–JEV 호출/프롬프트 설정 환경 | [최종 보고](ep145/report.md) → [완료](ep145/completion.json) · [CPU 검사](ep145/cpu-tests.log) · [브라우저](ep145/browser.json); 모의/CPU 검증·실제 API/GPU0 |
+| EX-091 MiniCPM5-2B-Jev·EX-089 비교 | [최종 보고](ep144/report.md) → [완료](ep144/completion.json) · [독립 산술](ep144/final-arithmetic.json) · [봉인/반환/알람](ep144/final-integrity.json); GPU0·계산기 포함 새32/16쌍·패키지 탐색 비교 |
+| EX-090 피해 예측 제거·EX-089 비교 | [최종 보고](ep143/report.md) → [완료](ep143/completion.json) · [독립 산술/봉인/반환](ep143/final-check.json) · [디스크](ep143/disk-accounting.json); 새32/16쌍·과거 결과 재사용·스피드 유지 |
+| EX-088/089 Damage-calc 표시 판본 | [완료 보고](ep142/report.md) → [전수 대조·브라우저·봉인/디스크](ep142/completion.json); 기존 봉인 보존·저장 시나리오 연결·새 계산/모델 호출0 |
+| EX-088/089 교정v6 신규64평가 | [최종 보고](ep141/report.md) → [완료](ep141/completion.json) · [3종 비교](ep141/final-comparisons.json) · [봉인](ep141/final-integrity.json) · [반환](ep141/closure.json); 각32경기/16쌍·이전 중단 결과 별도 보존 |
+| EX-086/087 공개 정보 v6·턴 로그·중단/교정 | [중단 보고](ep140/report.md) → [종결/분모](ep140/completion.json) · [입력 교정](ep140/poststop-input/report.md) · [집계 교정](ep140/poststop-accounting/correction.json); 27B실패1/미실행31·9B미실행32·추가GPU0 |
+| EX-085 JEV-9B 단일 Choice 동일32 평가 | [최종 보고](ep139/report.md) → [완료/봉인/자원 반환](ep139/completion.json) · [공유 환경 계수 보완](ep139/disk-accounting.json); 새32경기·EX-083 공통쌍 비교 |
+| EX-084 Quyet-Medium 2단계 동일32 평가 | [최종 보고](ep138/report.md) → [완료/봉인/자원 반환](ep138/completion.json); 새32경기·단계별 사용량·EX-083 공통쌍 비교 |
 | EX-083 JEV-27B 4GPU 계승 평가 | [최종 보고](ep137/report.md) → [완료/봉인/자원 반환](ep137/completion.json); 정상23 계승·신규9·고유32/16쌍·원실패 포함33시도 |
 | EX-082 JEV-27B 개선 입력 동일32 재현·자원 중단 | [중단 보고](ep134/report.md) → [최종 감사](ep134/live-audit.json)·[최종 오프라인 뷰어](ep134/viewer-browser-v2.json)·[종결 확인](ep134/closure.json) · [메모리 후속 교훈](ep134-lessons/report.md) |
 | EX-079 종료조건 추가 학습·독립시험 | [최종 보고](ep131/report.md) · [종결 검증](ep131/completion-verification.json); 주효능 미달·초기상대 우세 |

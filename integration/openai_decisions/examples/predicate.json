@@ -1,0 +1,11 @@
+{
+  "model": "gpt-6-luna",
+  "input": "결제가 두 번 청구되었습니다. 중복 결제 금액을 환불해 주세요.",
+  "questions": [
+    {
+      "type": "predicate",
+      "name": "refund_requested",
+      "instructions": "고객이 환불을 요청하고 있습니까?"
+    }
+  ]
+}

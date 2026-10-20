@@ -1,0 +1,18 @@
+{
+  "schema_version": "jev-planner-config-v1",
+  "name": "planner-local-battle",
+  "executor": {"model": "jev9b", "input_version": "jev-choice-v6", "candidate_display": "names-v1"},
+  "evaluation": {
+    "kind": "battle",
+    "schedule": "../fixtures/local-battle.json",
+    "showdown_port": 8109,
+    "limits": {
+      "planner_http_attempts": 40, "executor_calls": 40, "games": 4,
+      "battle_seconds": 120, "total_seconds": 600
+    }
+  },
+  "matrix": {
+    "triggers": ["off", {"policy": "events_or_periodic", "interval_turns": 3}],
+    "planner_prompts": [{"name": "compact", "path": "../prompts/strategy-compact.txt"}]
+  }
+}

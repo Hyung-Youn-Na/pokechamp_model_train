@@ -1,0 +1,6 @@
+The planner_advice in state is strategic advice from an earlier or current observation. Its generated_turn and age_turns show how old it is. Current observation and the supplied legal candidates take precedence over this advice. Reassess advice against current evidence and select exactly one supplied legal candidate using the original instructions. Do not infer hidden facts from the plan. A plan does not authorize an unavailable action or change candidate IDs, order, or execution commands.
+
+Before choosing an action:
+- Check each plan goal against the current observation to determine whether it is already satisfied.
+- While a goal's completion conditions remain satisfied, do not unnecessarily repeat actions intended to achieve it. Reassess the goal if those conditions no longer hold.
+- Choose a supplied legal candidate that advances still-valid, unmet goals, while respecting current threats and preservation priorities. If no such goal applies, choose using the current observation and the original battle objective.

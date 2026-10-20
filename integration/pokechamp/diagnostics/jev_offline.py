@@ -9,8 +9,8 @@ import subprocess
 from pathlib import Path
 
 from .damage_sets import ROOT, SetSnapshot, digest, token
-from .jev_damage import Engine, transform as damage_transform
-from .jev_speed import compare as compare_speed
+from .jev_damage import Engine, prepare_matchup, transform as damage_transform
+from .jev_speed import SpeedOnlyEngine, compare as compare_speed
 from .. import effects
 from ..jev_battle import INITIAL_PP_POLICY, make_input
 from ..observation.build import DEFAULT_BUILD, verify
@@ -154,7 +154,8 @@ def natural_events(events, actor, current_turn, asset):
     return output, audit
 
 
-def project(payload, *, dex, roles, damage_payload=None, speed=None):
+def project(payload, *, dex, roles, damage_payload=None, speed=None, public_facts=None,
+            damage_predictions=True):
     """Presentation only, with unchanged inputs retained by the calling audit."""
     result = copy.deepcopy(payload)
     state = result['state']
@@ -193,6 +194,14 @@ def project(payload, *, dex, roles, damage_payload=None, speed=None):
             for key, kind in [('item', 'items'), ('ability', 'abilities'), ('baseAbility', 'abilities')]:
                 if key in mon:
                     mon[key] = effect_object(kind, raw[key], asset)
+            if public_facts is not None and not own:
+                facts = public_facts['pokemon'].get(raw['ident'], {})
+                if facts.get('suppressed') is True:
+                    value = facts.get('ability', 'unknown')
+                    mon['ability'].update(suppressed=True, underlying_ability=(
+                        effect_object('abilities', value, asset) if value != 'unknown' else 'unknown'))
+                elif facts.get('suppressed') == 'unknown':
+                    mon['ability']['suppressed'] = 'unknown'
             # Attach rules directly to their observed condition, not a lookup table.
             for field in ('volatiles', 'turnstatuses', 'movestatuses'):
                 if isinstance(mon[field], dict):
@@ -202,7 +211,7 @@ def project(payload, *, dex, roles, damage_payload=None, speed=None):
                 mon['hp_percent'] = hp['current'] * 100 / hp['maximum'] if isinstance(hp, dict) else 'unknown'
                 mon['hp_precision'] = 'rounded' if isinstance(hp, dict) else 'unknown'
             # Opponent reserves always use only public summary and conditional roles.
-            if not own and not active:
+            if not own and not active and public_facts is None:
                 keep = {'preview_slot', 'species', 'nickname', 'active', 'fainted', 'hp_percent', 'hp_precision', 'status',
                         'defensive_types', 'terastallized', 'applied_tera_type', 'role_summary'}
                 for key in list(mon):
@@ -222,7 +231,7 @@ def project(payload, *, dex, roles, damage_payload=None, speed=None):
                                  accuracy='not_applicable', priority='not_applicable', target='not_applicable')
                 rule = effect_object('moves', entry['id'], asset)
                 entry.update(name=rule['name'], general_effect=rule['general_effect'])
-                if active and state['decision_kind'] == 'turn_action':
+                if damage_predictions and active and state['decision_kind'] == 'turn_action':
                     calc = by_id.get(entry['id'], {})
                     target_team = 'opponent_team' if own else 'self_team'
                     target = next((m for m in state[target_team] if m['active']), None)
@@ -259,6 +268,13 @@ def project(payload, *, dex, roles, damage_payload=None, speed=None):
                     mon['known_move_set'] = [enrich(m) for m in moves.values()]
             else:
                 mon['moves'] = [dict(enrich(m), knowledge='observed') for m in damage_mon.get('moves', mon['moves'])] or 'unknown'
+                if not active and public_facts is not None:
+                    keep = {'preview_slot', 'species', 'nickname', 'active', 'fainted', 'hp_percent', 'hp_precision', 'status',
+                            'defensive_types', 'terastallized', 'applied_tera_type', 'role_summary',
+                            'moves', 'item', 'ability', 'baseAbility'}
+                    for key in list(mon):
+                        if key not in keep:
+                            del mon[key]
     for candidate in criteria.values():
         if candidate['kind'] == 'move':
             candidate.pop('move')
@@ -316,18 +332,36 @@ def compact_bench(payload):
     return result
 
 
-def generate_input(official, prefix, own_team, dex, *, snapshot=None, engine=None, roles=None, compact=False):
+def generate_input(official, prefix, own_team, dex, *, snapshot=None, engine=None, roles=None, compact=False,
+                   public_facts=None, damage_predictions=True):
     actor = official['request']['side']['id']
     before, commands = make_input(official, prefix, actor=actor, dex=dex, initial_pp_policy=INITIAL_PP_POLICY)
+    original = before
+    supplements = []
+    if public_facts is not None:
+        from .public_facts_v6 import apply
+        if (public_facts['official_sha256'] != digest(official)
+                or public_facts['prefix_sha256'] != digest(prefix) or public_facts['actor'] != actor):
+            raise ValueError('v6 facts differ from official observation/cutoff')
+        before, supplements = apply(before, public_facts, dex)
     roles = roles or RoleDB()
     if engine is None:
         verify()
         with Engine() as owned:
-            return generate_input(official, prefix, own_team, dex, snapshot=snapshot, engine=owned, roles=roles, compact=compact)
-    damage, calc_audit = damage_transform(before, official, prefix, own_team, dex, snapshot or SetSnapshot(), engine,
-                                         request_moves=True, observed_only=True)
-    speed, speed_audit = compare_speed(calc_audit, dex, engine)
-    after, log_audit = project(before, dex=dex, roles=roles, damage_payload=damage, speed=speed)
+            return generate_input(official, prefix, own_team, dex, snapshot=snapshot, engine=owned, roles=roles,
+                                  compact=compact, public_facts=public_facts, damage_predictions=damage_predictions)
+    if damage_predictions:
+        damage, calc_audit = damage_transform(before, official, prefix, own_team, dex, snapshot or SetSnapshot(), engine,
+                                             request_moves=True, observed_only=True, public_facts=public_facts)
+        speed_engine = engine
+    else:
+        damage, calc_audit = prepare_matchup(before, official, prefix, own_team, dex, snapshot or SetSnapshot(),
+                                            request_moves=True, observed_only=True, public_facts=public_facts)
+        calc_audit.update(damage_predictions_enabled=False, disabled_reason='input_profile_no_damage')
+        speed_engine = SpeedOnlyEngine(engine)
+    speed, speed_audit = compare_speed(calc_audit, dex, speed_engine)
+    after, log_audit = project(before, dex=dex, roles=roles, damage_payload=damage, speed=speed,
+                              public_facts=public_facts, damage_predictions=damage_predictions)
     # Official battle_types preserves pre-Tera STAB/type changes; species Dex is
     # used only at the verified initial preview or a never-entered own slot.
     sides = {s['id']: s for s in official['sides']}
@@ -344,4 +378,10 @@ def generate_input(official, prefix, own_team, dex, *, snapshot=None, engine=Non
     audit = dict(version=VERSION, original_payload=before, official=copy.deepcopy(official), prefix=copy.deepcopy(prefix),
                  source_sha256=digest(before), commands=commands, damage=calc_audit, logs=log_audit,
                  roles=roles.identity, speed=speed_audit, compact_self_bench=compact, result_sha256=digest(after))
+    if not damage_predictions:
+        audit.update(damage_predictions_enabled=False,
+                     calculator_calls=dict(speed=speed_engine.calls, outgoing=0, incoming=0))
+    if public_facts is not None:
+        audit.update(raw_observation_payload=original, public_facts=copy.deepcopy(public_facts),
+                     public_supplements=supplements)
     return after, commands, audit

@@ -11,7 +11,7 @@ import threading
 import time
 from uuid import UUID
 
-from .config import (CONTINUATION_RUN, EVIDENCE, ROOT, RUN, RUNTIME,
+from .config import (CONTINUATION_RUN, EVIDENCE, JEV9B_RUN, JEV9B_RUNTIME, ROOT, RUN, RUNTIME,
                      runtime_profile)
 from .storage import read, write
 
@@ -111,9 +111,14 @@ def disk_roots(*, profile='ex082', budget_root=None, extra_roots=()):
     """Count preserved assets and new evidence together, without nested-root doubles."""
     settings = runtime_profile(profile)
     paths = [RUNTIME, RUN, EVIDENCE, ROOT / 'exports/battle_viewers/ex082']
-    if settings.name == 'ex083':
+    if settings.name.removeprefix('planner-') == 'ex083':
         paths.extend([Path(budget_root) if budget_root is not None else CONTINUATION_RUN,
                       ROOT / 'exports/battle_viewers/ex083'])
+    elif settings.name.removeprefix('planner-') == 'ex085':
+        paths.extend([JEV9B_RUNTIME, CONTINUATION_RUN,
+                      Path(budget_root) if budget_root is not None else JEV9B_RUN,
+                      ROOT / 'exports/battle_viewers/ex083',
+                      ROOT / 'exports/battle_viewers/ex085'])
     elif budget_root is not None:
         paths.append(Path(budget_root))
     paths.extend(Path(path) for path in extra_roots)
@@ -143,7 +148,7 @@ def limit_errors(sample, *, profile='ex082'):
     errors = []
     if sample['rss_bytes'] > settings.host_bytes:
         errors.append('host_memory_exceeded')
-    if sample['disk_bytes'] > settings.disk_bytes:
+    if settings.disk_bytes is not None and sample['disk_bytes'] > settings.disk_bytes:
         errors.append('disk_budget_exceeded')
     for gpu in settings.physical_gpus:
         if sample['gpus'][gpu]['memory_used_mib'] * 1024**2 > settings.gpu_bytes:
@@ -275,7 +280,7 @@ class ResourceMonitor:
 
 
 @contextmanager
-def own_gpus(directory, *, profile='ex082', budget_root=None, extra_roots=()):
+def own_gpus(directory, *, profile='ex082', budget_root=None, extra_roots=(), initialize_cuda=True):
     directory = Path(directory)
     settings = runtime_profile(profile)
     indices = settings.physical_gpus
@@ -306,12 +311,13 @@ def own_gpus(directory, *, profile='ex082', budget_root=None, extra_roots=()):
         if selected:
             raise RuntimeError('owned GPUs have an existing compute process')
         _stop_on_parent_exit()
+        cache_runtime = JEV9B_RUNTIME if settings.name.removeprefix('planner-') in ('ex085', 'ex087') else RUNTIME
         os.environ.update(CUDA_VISIBLE_DEVICES=','.join(expected[i] for i in indices),
                           CUDA_DEVICE_ORDER='PCI_BUS_ID', CUBLAS_WORKSPACE_CONFIG=':4096:8',
                           TOKENIZERS_PARALLELISM='false', PYTHONDONTWRITEBYTECODE='1',
                           HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1',
-                          TRITON_CACHE_DIR=str(RUNTIME / 'cache/triton'),
-                          TORCHINDUCTOR_CACHE_DIR=str(RUNTIME / 'cache/inductor'),
+                          TRITON_CACHE_DIR=str(cache_runtime / 'cache/triton'),
+                          TORCHINDUCTOR_CACHE_DIR=str(cache_runtime / 'cache/inductor'),
                           TORCHINDUCTOR_COMPILE_THREADS='1', OMP_NUM_THREADS='4')
         write(directory / f'gpu-acquire-{os.getpid()}.json', dict(pid=os.getpid(), at=time.time(),
               profile=settings.name, physical_gpus=list(indices),
@@ -321,6 +327,10 @@ def own_gpus(directory, *, profile='ex082', budget_root=None, extra_roots=()):
                                                          extra_roots=(*extra_roots, directory))]))
         with ResourceMonitor(directory, profile=profile, budget_root=budget_root,
                              extra_roots=extra_roots, expected_uuids=expected):
+            if not initialize_cuda:
+                # A separate engine worker owns CUDA; the parent retains locks/NVML/host monitoring.
+                yield {i: facts[i] for i in indices}
+                return
             import torch
             if torch.cuda.is_initialized():
                 raise RuntimeError('CUDA was initialized before GPU ownership')

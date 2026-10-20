@@ -32,7 +32,8 @@ def cutoff_prefix(frames, boundary):
     return result
 
 
-def audit_transport(events, inputs, *, expected_identity, endpoint):
+def audit_transport(events, inputs, *, expected_identity, endpoint, model=MODEL,
+                    protocol=PROTOCOL, encode_request=request_bytes):
     transports = [event for event in events if event["type"] == "transport"]
     by_type = {}
     for event in events:
@@ -52,14 +53,14 @@ def audit_transport(events, inputs, *, expected_identity, endpoint):
         decision, number = transport["decision"], transport["request_number"]
         require(decision in inputs and len(inputs[decision]["commands"]) > 1,
                 "model called without a multi-candidate input")
-        require(transport["model"] == MODEL and transport["endpoint"] == endpoint,
+        require(transport["model"] == model and transport["endpoint"] == endpoint,
                 "local provider configuration drift")
         require(transport["serving_identity"] == expected_identity and transport["timeout"] == TIMEOUT,
                 "local serving identity or timeout drift")
         request = requests[number]
         require(request["decision"] == decision, "request decision differs")
-        expected_body = dict(model=MODEL, **inputs[decision]["payload"])
-        expected_bytes = request_bytes(expected_body)
+        expected_body = dict(model=model, **inputs[decision]["payload"])
+        expected_bytes = encode_request(expected_body)
         expected_hash = hashlib.sha256(expected_bytes).hexdigest()
         require(request["body"] == expected_body and request["raw_body"].encode() == expected_bytes,
                 "actual HTTP payload or candidate order differs")
@@ -113,7 +114,7 @@ def audit_transport(events, inputs, *, expected_identity, endpoint):
                 "failed/unrecorded HTTP used as model response")
         require(json.loads(raw["raw_body"]) == event["body"], "raw response differs")
         metadata = event["body"].get("transport", {})
-        require(metadata.get("protocol") == PROTOCOL
+        require(metadata.get("protocol") == protocol
                 and metadata.get("serving_identity") == expected_identity
                 and metadata.get("request_id") == transport["request_id"]
                 and metadata.get("body_sha256") == transport["body_sha256"]
@@ -131,7 +132,8 @@ def audit_transport(events, inputs, *, expected_identity, endpoint):
                 successful=successful, last_attempts=previous, raw_requests=requests)
 
 
-def audit_registry(path, events, transport, *, expected_identity, immutable=False):
+def audit_registry(path, events, transport, *, expected_identity, immutable=False,
+                   protocol=PROTOCOL):
     """Inspect the durable server journal without modifying the live database."""
     path = Path(path).resolve()
     require(path.is_file(), "missing local server request journal")
@@ -142,7 +144,7 @@ def audit_registry(path, events, transport, *, expected_identity, immutable=Fals
                 "server journal integrity check failed")
         metadata = dict(database.execute("SELECT key,value FROM metadata"))
         require(metadata.get("serving_identity") == expected_identity
-                and metadata.get("protocol") == PROTOCOL, "server journal serving identity differs")
+                and metadata.get("protocol") == protocol, "server journal serving identity differs")
         starts = dict(database.execute("SELECT request_id,COUNT(*) FROM events "
                                        "WHERE kind='inference_started' GROUP BY request_id"))
         require(all(count == 1 for count in starts.values()), "server executed a request more than once")

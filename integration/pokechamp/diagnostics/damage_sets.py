@@ -168,10 +168,10 @@ def expand_sets(sets):
             yield row
 
 
-def candidates(sets, mon, history):
+def candidates(sets, mon, history, *, public_facts=False):
     accepted, excluded = [], []
     original_moves = set(history["original_moves"])
-    if not history["replacements"]:
+    if not history["replacements"] and not public_facts:
         original_moves.update(mon["moves"])
     for candidate in expand_sets(sets):
         reasons = []

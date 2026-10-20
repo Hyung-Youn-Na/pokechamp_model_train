@@ -8,6 +8,43 @@ list 또는 contract의 대체물이 아니다.
 
 | ID | Status | Date | Title |
 |---|---|---|---|
+| [D-169](decisions/D-169-jevk5-ruleqa-lora.md) | Accepted | 2026-10-20 | JevK5 규칙 선택형 LoRA |
+| [D-168](decisions/D-168-openai-candidate-matchup-battle.md) | Accepted | 2026-10-20 | 후보별 요약 OpenAI 동일32경기 |
+| [D-167](decisions/D-167-candidate-matchup-summary.md) | Accepted | 2026-10-20 | 후보별 현재 대면 적용결과 보강 |
+| [D-166](decisions/D-166-jevk5-v6-battle32.md) | Accepted | 2026-10-20 | JevK5-9B v6 상세32경기 |
+| [D-165](decisions/D-165-openai-decisions-retry32.md) | Accepted | 2026-10-20 | OpenAI 통신 재시도·시간무상한 새32경기 |
+| [D-164](decisions/D-164-openai-decisions-v6-battle32.md) | Accepted | 2026-10-20 | OpenAI Decisions v6 상세32경기 |
+| [D-163](decisions/D-163-openai-decisions-environment.md) | Accepted | 2026-10-20 | 독립 OpenAI Decisions API 환경 |
+| [D-162](decisions/D-162-tacit-ruleqa-battle32.md) | Accepted | 2026-10-19 | 학습 Tacit 실전32 예약 |
+| [D-161](decisions/D-161-tacit-ruleqa-lora.md) | Accepted | 2026-10-19 | Tacit 규칙 Q&A LoRA1회 |
+| [D-160](decisions/D-160-strategist-first-battle.md) | Accepted | 2026-10-19 | Strategist 첫 배틀 탐색 평가 |
+| [D-159](decisions/D-159-showdown-ruleqa.md) | Accepted | 2026-10-19 | 신규 Showdown 규칙 Q&A 데이터셋 |
+| [D-158](decisions/D-158-tacit-vllm-low.md) | Accepted | 2026-10-16 | 기존 Tacit vLLM 서버 새 평가 |
+| [D-157](decisions/D-157-tacit-thinking-low.md) | Accepted | 2026-10-16 | Tacit Thinking + GLM-5.3 Low 판단 비교 |
+| [D-156](decisions/D-156-jev-omni-low.md) | Accepted | 2026-10-15 | Jev-Omni BF16·GLM low 동일1경기 |
+| [D-155](decisions/D-155-matchup-events-high.md) | Accepted | 2026-10-15 | 매치업 사건 GLM high 동일1경기 |
+| [D-154](decisions/D-154-matchup-events.md) | Accepted | 2026-10-15 | 매치업 변화 기반 계획 갱신 |
+| [D-153](decisions/D-153-glm53-low-sample.md) | Accepted | 2026-10-15 | GLM-5.3 low 동일 대진 새1경기 |
+| [D-152](decisions/D-152-planner-unlimited-time-max-output.md) | Accepted | 2026-10-15 | 경기/전체 시간 상한 해제·GLM 최대 출력 새1경기 |
+| [D-151](decisions/D-151-planner-high-effort-sample.md) | Accepted | 2026-10-15 | GLM high 추론 강도 동일 대진1경기 |
+| [D-150](decisions/D-150-planner-format-retries-temperature-zero.md) | Accepted | 2026-10-15 | GLM 형식 재시도·기본 temperature0 |
+| [D-149](decisions/D-149-nvfp4-battle-with-probability-diagnostics.md) | Accepted | 2026-10-15 | 확률 변동을 진단으로 유지하며 NVFP4 실제1경기 |
+| [D-148](decisions/D-148-jev35b-nvfp4-sample.md) | Accepted | 2026-10-15 | JEV-35B-NVFP4 GPU0 동일 대진 샘플 |
+| [D-147](decisions/D-147-planner-unlimited-disk.md) | Accepted | 2026-10-15 | 새 GLM·JEV 실행의 디스크 용량 상한 해제 |
+| [D-146](decisions/D-146-planner-json-retries.md) | Accepted | 2026-10-15 | GLM JSON 구문 최대5회 재시도·새1경기 |
+| [D-145](decisions/D-145-goal-completion-sample.md) | Accepted | 2026-10-15 | 목표 충족 확인 수행 지시문·동일 대진 샘플1경기 |
+| [D-144](decisions/D-144-planner-replay-viewer.md) | Accepted | 2026-10-15 | 향후 GLM·JEV 탭·리플레이 통합 표시 |
+| [D-143](decisions/D-143-executor-goal-completion.md) | Accepted | 2026-10-15 | JEV 계획 목표 충족 확인·불필요한 반복 회피 |
+| [D-142](decisions/D-142-planner-first-battle-sample.md) | Accepted | 2026-10-15 | EX-088 첫 대진·현재 GLM planner/JEV-9B 실제1경기 |
+| [D-141](decisions/D-141-candidate-display-names.md) | Accepted | 2026-10-15 | Planner/JEV 후보의 포켓몬·기술 표시 이름 |
+| [D-140](decisions/D-140-planner-role-resource-guide.md) | Accepted | 2026-10-15 | Planner 역할·양측 승리 경로·자원 관리 안내 |
+| [D-139](decisions/D-139-jev-planner-environment.md) | Accepted | 2026-10-15 | GLM 전략 planner·JEV 수행·호출/프롬프트 독립 설정·로컬 검증 |
+| [D-138](decisions/D-138-minicpm5-2b-jev.md) | Accepted | 2026-10-14 | MiniCPM5-2B-Jev·GPU0·디스크 무상한·EX-089 비교 |
+| [D-137](decisions/D-137-jev9b-no-damage.md) | Accepted | 2026-10-14 | JEV-9B 피해 예측 제거·스피드 유지·EX-089 비교 |
+| [D-136](decisions/D-136-jev-v6-corrected-evaluation.md) | Accepted | 2026-10-13 | 교정v6·별도27B/9B 신규64경기 재승인 |
+| [D-135](decisions/D-135-jev-public-memory-v6.md) | Accepted | 2026-10-13 | 상대 공개 정보 v6·턴 로그·27B/9B 신규64평가 |
+| [D-134](decisions/D-134-jev9b-single-choice.md) | Accepted | 2026-10-13 | JEV-9B 단일 Choice 동일32 평가 |
+| [D-133](decisions/D-133-quyet-medium-two-stage.md) | Accepted | 2026-10-13 | Quyet-Medium 2단계 동일32 평가 |
 | [D-132](decisions/D-132-jev27b-four-gpu-continuation.md) | Accepted | 2026-10-13 | EX-082 정상23 계승·4GPU 검증 후 잔여9경기 |
 | [D-131](decisions/D-131-research-branch-preservation.md) | Accepted | 2026-10-12 | 연구 목적별 브랜치·고정 기준 태그·외부 자산 복사 검증 |
 | [D-130](decisions/D-130-jev27b-ex058-reproduction.md) | Accepted | 2026-10-08 | JEV-27B 공개 가중치·GPU0/1·EX-058 동일32·경과시간 상한 없음 |

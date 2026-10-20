@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1
+export TOKENIZERS_PARALLELISM=false
+export CUDA_VISIBLE_DEVICES=''
+exec /ref/kev/.venv/bin/python -m integration.jevk5_ruleqa_training.cli "$@"

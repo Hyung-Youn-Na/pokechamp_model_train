@@ -60,15 +60,15 @@ def base_url(value):
     return f"{parsed.scheme}://{parsed.netloc}"
 
 
-def request_bytes(payload):
+def request_bytes(payload, *, model_id=MODEL_ID):
     """Preserve insertion order, including candidate order, in exact wire bytes."""
     if not isinstance(payload, dict):
         raise ValueError("JEV-27B payload must be an object")
-    if payload.get("model", MODEL_ID) != MODEL_ID:
+    if payload.get("model", model_id) != model_id:
         raise ValueError("unexpected JEV-27B model")
     body = copy.deepcopy(payload)
     if "model" not in body:
-        body = dict(model=MODEL_ID, **body)
+        body = dict(model=model_id, **body)
     if set(body) != {"model", "state", "questions"}:
         raise ValueError("JEV-27B request requires model, state and questions only")
     return json.dumps(body, ensure_ascii=False, separators=(",", ":"),
@@ -101,9 +101,13 @@ class LocalClient:
     """One physical attempt by default; the battle Session owns its retry ledger."""
 
     def __init__(self, endpoint=DEFAULT_ENDPOINT, *, expected_identity=None,
-                 timeout=TIMEOUT, record: Callable | None = None, transport=None):
+                 timeout=TIMEOUT, record: Callable | None = None, transport=None,
+                 model_id=MODEL_ID, revision=REVISION, protocol=PROTOCOL):
         self.base_url = base_url(endpoint)
         self.endpoint = self.base_url + "/v1/systemone"
+        self.model_id = model_id
+        self.revision = revision
+        self.protocol = protocol
         if (type(timeout) not in (int, float) or not math.isfinite(timeout)
                 or not 0 < timeout <= TIMEOUT):
             raise ValueError("invalid local JEV timeout")
@@ -133,7 +137,7 @@ class LocalClient:
     def health(self):
         """Check revision/config identity and pin identity on the first healthy call."""
         started = time.monotonic()
-        metadata = dict(type="health", endpoint=self.base_url + "/health", model=MODEL_ID,
+        metadata = dict(type="health", endpoint=self.base_url + "/health", model=self.model_id,
                         status_code=None, raw_body=None, timeout=self.timeout)
         try:
             response = self._client.get(self.base_url + "/health")
@@ -152,8 +156,8 @@ class LocalClient:
         if not isinstance(body, dict):
             raise self._failure("invalid_health", metadata)
         identity = body.get("identity")
-        if (body.get("model") != MODEL_ID or body.get("revision") != REVISION
-                or body.get("protocol") != PROTOCOL or not isinstance(identity, str)
+        if (body.get("model") != self.model_id or body.get("revision") != self.revision
+                or body.get("protocol") != self.protocol or not isinstance(identity, str)
                 or not SHA256_PATTERN.fullmatch(identity)
                 or body.get("serving_identity") != identity
                 or (self.expected_identity is not None and identity != self.expected_identity)):
@@ -172,7 +176,7 @@ class LocalClient:
             raise ValueError("invalid local JEV request ID")
         if type(retries) is not int or not 0 <= retries <= 3:
             raise ValueError("local JEV retries must be between zero and three")
-        raw = request_bytes(payload)
+        raw = request_bytes(payload, model_id=self.model_id)
         if self.expected_identity is None:
             self.health()
         for attempt in range(retries + 1):
@@ -188,7 +192,7 @@ class LocalClient:
         digest = hashlib.sha256(raw).hexdigest()
         headers = {"Content-Type": "application/json", "X-Request-ID": request_id,
                    "X-Body-SHA256": digest, "X-Serving-Identity": self.expected_identity}
-        metadata = dict(type="transport", endpoint=self.endpoint, model=MODEL_ID,
+        metadata = dict(type="transport", endpoint=self.endpoint, model=self.model_id,
                         request_id=request_id, body_sha256=digest,
                         request_body=raw.decode("utf-8"), serving_identity=self.expected_identity,
                         status_code=None, raw_body=None, attempt=attempt, timeout=self.timeout)
@@ -219,9 +223,9 @@ class LocalClient:
                         serving_identity=self.expected_identity, inference_calls=1,
                         inference_id=hashlib.sha256((self.expected_identity + "\0" + request_id
                                                     + "\0" + digest).encode("utf-8")).hexdigest())
-        if (not isinstance(body, dict) or body.get("model") != MODEL_ID
+        if (not isinstance(body, dict) or body.get("model") != self.model_id
                 or not isinstance(body.get("transport"), dict)
-                or body["transport"].get("protocol") != PROTOCOL
+                or body["transport"].get("protocol") != self.protocol
                 or any(body["transport"].get(key) != value for key, value in expected.items())
                 or response.headers.get("X-Request-ID") != request_id
                 or response.headers.get("X-Body-SHA256") != digest

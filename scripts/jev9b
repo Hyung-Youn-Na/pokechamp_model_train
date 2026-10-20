@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+script_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+workspace_root="$(cd -- "$script_dir/.." && pwd)"
+export PYTHONPATH="$workspace_root:$workspace_root/pokechamp"
+export POKECHAMP_WORKSPACE_ROOT="$workspace_root"
+export PYTHONDONTWRITEBYTECODE=1
+export TOKENIZERS_PARALLELISM=false
+model_python="$workspace_root/.pokechamp-data/jev27b-runtime/.venv/bin/python"
+actor_python="$workspace_root/pokechamp/.venv/bin/python"
+cd "$workspace_root"
+command="${1:---help}"
+if [[ $# -gt 0 ]]; then shift; fi
+case "$command" in
+  download) exec "$model_python" -m integration.jev9b.download "$@" ;;
+  serve) exec "$model_python" -m integration.jev9b.server "$@" ;;
+  prepare|execute|status)
+    exec "$actor_python" -m integration.jev9b.execute "$command" "$@" ;;
+  verify-browser)
+    exec /tmp/ep037/tools/bin/python -m integration.jev9b.viewer verify-browser "$@" ;;
+  --help|-h)
+    echo 'usage: scripts/jev9b {download|prepare|serve|execute|status|verify-browser} [arguments]'
+    ;;
+  *) echo "unknown EX-085 command: $command" >&2; exit 2 ;;
+esac

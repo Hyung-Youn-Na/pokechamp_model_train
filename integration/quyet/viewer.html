@@ -1,0 +1,44 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EX-084 · Quyet 2단계 결정</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#18313b;background:#f3f6f7}body{max-width:1380px;margin:24px auto;padding:0 22px;line-height:1.6}a{color:#087678}header,section,details{background:white;border:1px solid #d8e2e5;border-radius:10px;padding:18px;margin:14px 0}h1{font-size:25px}h2{font-size:18px;margin:0 0 12px}.nav{display:flex;gap:10px;align-items:center;flex-wrap:wrap}button,select{font:inherit;padding:7px 12px;border:1px solid #9cb8bf;background:white;border-radius:6px}button{cursor:pointer}button.active{background:#155e63;color:white}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:620px;overflow:auto;font:13px/1.6 ui-monospace,monospace;background:#f6f8fa;padding:14px;border-radius:6px}.key{color:#1e6486}.str{color:#54771b}.num{color:#9a4185}.bad{color:#a93030;font-weight:600}.muted{color:#526e75}table{border-collapse:collapse}td,th{padding:5px 16px;text-align:left;border-bottom:1px solid #ddd}@media(max-width:800px){.grid{display:block}}
+</style>
+<nav><a href="../index.html">← 경기 목록</a> · <a href="replay.html">리플레이·공개 로그</a> · <a href="decisions.json" download>전체 결정 JSON</a></nav>
+<header><h1 id="title"></h1><p id="outcome"></p><p id="synthetic" class="bad"></p>
+<div class="nav"><button id="prev">← 이전</button><select id="decision" aria-label="행동 결정"></select><button id="next">다음 →</button></div>
+<p id="final"></p></header>
+<div class="nav"><button data-stage="action_type">1단계 · 행동 유형</button><button data-stage="action_detail">2단계 · 세부 행동</button></div>
+<section><h2 id="stage-title"></h2><p id="status"></p><p id="probability-scope" class="muted"></p><table id="probabilities"></table></section>
+<div class="grid"><section><h2>실제 요청</h2><button data-copy="request-json">복사</button> <button data-download="request-json">JSON 저장</button><pre id="request-json"></pre></section>
+<section><h2>응답</h2><button data-copy="response-json">복사</button> <button data-download="response-json">JSON 저장</button><pre id="response-json"></pre></section></div>
+<details><summary>공식 formatter 출력</summary><pre id="formatter"></pre></details>
+<details><summary>결정 당시 전체 관측·후보</summary><pre id="observation-json"></pre></details>
+<details><summary>단계별 전송·재시도·자동 선택·실패 기록</summary><pre id="events-json"></pre></details>
+<script id="data" type="application/json">__DATA__</script><script>
+__ACTION_LABELS__
+const data=JSON.parse(document.querySelector('#data').textContent), decisions=data.decisions;
+let index=0,stage='action_type'; const $=s=>document.querySelector(s);
+const esc=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+function json(sel,value){let s=JSON.stringify(value,null,2);$(sel).innerHTML=esc(s).replace(/("(?:\\.|[^"\\])*"\s*:)|("(?:\\.|[^"\\])*")|\b(-?\d+(?:\.\d+)?|true|false|null)\b/g,(m,k,s,n)=>`<span class="${k?'key':s?'str':'num'}">${m}</span>`);}
+$('#title').textContent=`EX-084 · ${data.slot}경기 · Quyet-Medium`;
+$('#outcome').textContent=`${data.outcome.slot_id} · ${data.outcome.jev_actor} · ${({player_won:'승리',player_lost:'패배',tied:'무승부',output_failure:'모델 선택 실패'})[data.outcome.outcome]||'기술 중단'} · ${data.outcome.turns??'완료 턴 미기록'}턴`;
+$('#synthetic').textContent=data.synthetic?'표시 검증용 합성 자료 · 실제 경기 성적에 포함되지 않습니다.':'';
+decisions.forEach((d,i)=>{let o=document.createElement('option');o.value=i;o.textContent=`${i+1} · ${d.input.payload.state.turn}턴 · ${d.input.payload.state.decision_kind}`;$('#decision').append(o)});
+function render(){if(!decisions.length){$('#final').textContent='입력 수집 전 종료된 경기입니다.';return}const d=decisions[index],events=d.stages[stage]||[],get=t=>events.find(e=>e.type===t),request=get('http_request'),response=get('stage_response'),selection=get('stage_selection'),failure=get('stage_failure');
+$('#decision').value=index;document.querySelectorAll('[data-stage]').forEach(b=>b.classList.toggle('active',b.dataset.stage===stage));
+$('#stage-title').textContent=stage==='action_type'?'1단계 · 기술 또는 교체':'2단계 · 선택한 유형의 세부 행동';
+$('#status').textContent=failure?`실패 · ${failure.error.type}: ${failure.error.detail}`:selection?.skipped?`생략 · ${selection.automatic_reason}`:selection?.automatic?`자동 선택 · ${selection.choice} · ${selection.automatic_reason}`:selection?`모델 선택 · ${selection.choice}`:'응답 또는 선택이 완료되지 않았습니다.';
+$('#status').className=failure?'bad':'';
+$('#probability-scope').textContent=stage==='action_type'?'유형 선택 확률':selection?.probability_scope==='direct_candidates'?'직접 선택 후보 안의 확률':'선택한 유형 안의 조건부 확률';
+const ans=response?.body.answers.action;$('#probabilities').replaceChildren();Object.entries(ans?.probabilities||{}).forEach(([key,p])=>{let tr=document.createElement('tr');for(const text of [key,p]){let td=document.createElement('td');td.textContent=text;tr.append(td)}$('#probabilities').append(tr)});
+json('#request-json',request?request.body:null);json('#response-json',response?response.body:null);json('#observation-json',d.input.payload);json('#events-json',events);
+$('#formatter').textContent=response?.body.metadata?.formatter?.prompt||'모델 호출 또는 formatter 출력이 없습니다.';
+const choice=d.selection?.choice,description=d.input.payload.questions.action.criteria[choice];
+$('#final').textContent=d.wire?`전송 완료 · ${actionLabel(d.input.payload,choice,description)} · ${d.wire.command}`:'최종 게임 명령을 전송하지 않았습니다.';
+$('#prev').disabled=index===0;$('#next').disabled=index===decisions.length-1;}
+$('#decision').onchange=e=>{index=Number(e.target.value);render()};$('#prev').onclick=()=>{index=Math.max(0,index-1);render()};$('#next').onclick=()=>{index=Math.min(decisions.length-1,index+1);render()};
+document.querySelectorAll('[data-stage]').forEach(b=>b.onclick=()=>{stage=b.dataset.stage;render()});
+document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA','BUTTON'].includes(e.target.tagName))return;if(e.key==='ArrowLeft')$('#prev').click();if(e.key==='ArrowRight')$('#next').click()});
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=async()=>{const text=$('#'+b.dataset.copy).textContent;try{await navigator.clipboard.writeText(text)}catch{const t=document.createElement('textarea');t.value=text;document.body.append(t);t.select();document.execCommand('copy');t.remove()}});
+document.querySelectorAll('[data-download]').forEach(b=>b.onclick=()=>{const a=document.createElement('a'),u=URL.createObjectURL(new Blob([$('#'+b.dataset.download).textContent],{type:'application/json'}));a.href=u;a.download=b.dataset.download+'.json';a.click();URL.revokeObjectURL(u)});render();
+</script></html>

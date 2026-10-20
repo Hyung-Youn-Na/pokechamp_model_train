@@ -6,7 +6,12 @@
 
 현재 실행 환경·interpreter·가상환경·캐시는 `/workspace`의 원경로에 둔다. 새 실험은 출력 경로를
 선택할 수 있는 기존 CLI의 명시적 인자로 `/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/<새 실험 ID>`를
-사용하며 과거 실행기의 고정 출력 경로를 바꾸지 않는다. 현재 실행 중인 연구 실험은 없다.
+사용하며 과거 실행기의 고정 출력 경로를 바꾸지 않는다. EX-084/085를 완료했으며
+EP-140의 EX-086/087 공개 정보 v6 재평가는 공유 입력 결함으로 중단했다.
+현재 구현에는 사후CPU 교정이 반영됐고 원 수집source와 구분해 보존한다.
+D-136/EP-141의 새 승인으로 EX-088/089를 별도 코호트/출력에서 각32경기 평가하고
+감사·비교·뷰어·봉인·반환을 완료했다. D-137/EP-143의 EX-090은 별도 피해 예측 제거 프로필을
+사용하며 현재 실행 상태는 STATUS와 개별 EP/EX에서 관리한다.
 보존본·별도 Git 저장소·모델 blob·복원 연결은 [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)를 따른다.
 
 L1-L5 구조 이식은 별도 `research/l1-l5-port`의 보존·후속 설계 목적이다.
@@ -17,6 +22,136 @@ L1-L5 구조 이식은 별도 `research/l1-l5-port`의 보존·후속 설계 목
 현재 공통 경로와 특정 정책의 실행 경로를 구별한다. 실행 승인·조건은 [CONTRACTS](CONTRACTS.md)와
 [RESEARCH_DESIGN](RESEARCH_DESIGN.md), 단계별 자격·결과는 [STATUS](STATUS.md)와 개별 EX 기록을 따른다.
 기능이 존재한다는 사실은 중단 실험의 재개 권한이 아니다.
+
+D-156의 `integration/jev_omni/`는 공식 JevOmni 텍스트 processor·숫자형 선택지·BF16
+분류기를 `jev-planner`의 독립 모델로 연결한다. 전용 환경·GPU0/동시1·32768/16 무절단·
+원 index 역매핑·원확률·출력0과 별도 실제 forward 원장을 유지한다. 구체 실행 상태는 EP-162다.
+
+## 공개 정보 v6와 JEV 공통 평가
+
+### 전략 planner 설정 경로
+
+D-148/EX-095의 `jev35b-nvfp4`는 전용 Python3.11 환경과 GPU0 Marlin W4A16을 사용한다.
+장부 앞단18845→원본 공식 serve_decide.py 엔진18846으로 System1 Choice를 전달하고
+원ID·후보순서·공식응답/usage를 보존한다. 세 기존 모델 경로와 분리하며 gate는 EX-095를 따른다.
+
+D-139/EP-145의 `integration/jev_planner/`와 `scripts/jev-planner`는 기존 고정EX 경로와
+분리된 설정 기반 실행기다. JSON에서 planner·executor·trigger·prompt·evaluation을 분리하고
+prepare가 코드·입력·설정·prompt 원문을 고정한다. off는 선택한 입력 표현으로 JEV만 사용한다.
+D-141/EP-147의 새 names-v1은 현재 자기 팀/기술 slot에서 표시명을 만들어 후보에 추가한다.
+Planner와 JEV의 후보는 동일하고 ID/순서/참조/명령은 보존한다. original과 과거 설정은
+원 v6 입력을 유지하며 새 뷰어는 전달된 display_name을 우선 표시한다.
+D-140/EP-146부터 새 설정은 prompts.guide의 역할·승리 경로·자원 안내를 별도로 동결해
+planner 지시문 뒤에 붙인다. guide 없는 과거 준비본만 당시 v6 안내 조립을 유지한다.
+guide별 조합과 비교는 front prompt+guide 본문을 하나의 프롬프트 조건으로 식별한다.
+동기 controller는 같은 불변 관측/cutoff에서 계획을 갱신하고 JEV에 전략 조언과 생성/경과턴을
+추가한다. D-143의 새 수행 지시문은 현재 목표 충족 확인·불필요한 반복 회피·유효한 미완료 목표
+진전을 안내한다. 공개사건 위치와 자기 강제교체 request를 추적하며 동일rqid 중복/변경과 단일후보를 구별한다.
+D-154의 명시 사건 선택은 공개 switch/drag/replace와 출전 폼변화 행을 같은 좌표 기반
+보류 큐로 처리한다. 기본 사건 목록/모델 입력은 유지한다.
+경기별 실제 Showdown 방 이름 재사용은 논리 경기ID와 protocol_battle 분리로 처리한다.
+
+새 runtime은 기존 모델 패키지·formatter·배치/자원감시·영속 요청원장을 재사용한다.
+모든 조건에서 하나의 호출예산/최초시계를 공유하고, 동일rqid 내용/후보와 취소를 전송 직전까지
+검사한다. 모의 provider는 실제 모델 호출 없이 로컬 Showdown 전송을 검사한다.
+출력 실패는 경기로 격리하고 기술/예산 오류는 의존 수집 중단·소유자원 반환·분모 보존으로 연결한다.
+모델서버는 별도 프로세스이며 actor 이벤트루프의 planner/결정 task 종료도 그 소유루프에서 수행한다.
+
+D-158의 tacit9b-vllm은 사용자 소유 vLLM 서버와 CPU 프런트의 수명을 분리한다. 프런트의 논리 요청 원장은 중복 실행을 막고 외부 HTTP 세 단계의 모든 후보 logprob·원 token ID·usage를 저장한다. 외부 GPU/합산 host와 PID identity를 감시하되 사용자 서버는 종료하지 않는다. 내부 forward/allocator 미관측과 판독 생성2토큰은 EX-105의 계측 조건에 따른다.
+
+D-157의 tacit9b는 별도 BF16 Transformers 환경에서 첫 라벨 판독·thinking 생성·마감 후 라벨 판독을 순서대로 수행한다. 첫 판단은 그림자 기록이며 최종판단만 명령으로 전달한다. 단일 논리 파이프라인 원장과 단계별 실제 forward/생성 기록을 구분하고 전후 분포·원추론·종료상태를 뷰어에 연결한다. 조건/한도는 EX-104를 따른다.
+
+D-147부터 새 planner의 runtime_name은 디스크 상한 없는 `planner-*` 자원 profile이다.
+model_runtime_name으로 기존 모델을 구성한 뒤 디스크 정책만null로 복사하여 모델 메타데이터에도
+반영한다. 부모/서버/추가 감시는 같은 자원 profile을 사용한다. 기존 GPU 배치/메모리·사용량 기록과
+실제 I/O 오류 처리는 유지하고 과거 실험 profile/봉인은 보존한다.
+
+D-150의 새 planner 기본 temperature0·retry_scope=response_format은 JSON 구문·계획 스키마·
+빈/잘린 응답·성공HTTP envelope 오류를 같은 입력/옵션으로 최대5회 추가 재생성한다.
+원문/usage·생성/물리HTTP를 보존하고 planner_format_retry와 planner_json_retry를 구별한다.
+과거 retry_scope 부재는json_syntax이며 명시 온도도 원값을 유지한다.
+
+D-146 당시 planner.json_retries 기본5는 같은 논리계획 안에서 JSON content 구문 실패만
+최초+5회까지 다시 생성한다. `planner_output_attempt`/`planner_json_retry`와 JSON차수별
+transport_attempt·논리계획 전체 누적attempt를 기록하고 모든 HTTP를 같은 예산에 센다.
+과거 필드 부재는0이며 최종 검증계획만 JEV에 전달한다. 집계는 구문재시도와 HTTP재시도를 구분한다.
+EX-094는 이 정책의 새1경기에서64턴 패배로 정상종료했으며 실제 구문재시도는0이다.
+합성/EX-093 실패원문으로 재시도 상한·회복을 검증하고 실제69GPU추론·원문·뷰어·반환을 감사했다.
+
+보고기는 모의/저장재생/실제자료, 논리호출/HTTP시도, 미확인usage와 실패/미실행을 분리한다.
+대응쌍은 paired_slot_id 그룹의 고유2슬롯/양쪽 actor로 집계하고 두 실험축이 함께 바뀌면 교란을 표시한다.
+D-144/EP-150의 새 HTML/JS 경기 화면은 GLM 계획 기본7탭과 sticky 리플레이를 함께 제공한다.
+`viewer_data.py`는 observation의 감사와 표시명/계획 추가 전 입력을 저장 피해에 연결하고,
+EX-088 계열 `turn_logs`의 actor 공개행·고정 parser·결정 cutoff를 재사용한다.
+큰 원문/피해는 결정별 로컬JS packet으로 지연 적재하고 선택 epoch로 늦은 덮어쓰기를 막는다.
+`replay.js`는 sandbox iframe에서 부모의 최신 pause/seek만 적용하며 탭/재생 조작은 정보와 독립이다.
+외부 공식 Showdown 자산 로딩 실패 시 로컬 로그를 표시한다. 계약은 [C-073](CONTRACTS.md#c-073-planner-viewer)이다. 기존 renderer·뷰어·봉인은
+보존한다. D-142/EX-092에서는 GLM planner와 JEV-9B의 실제1경기 연결·종결·감사/뷰어를
+확인했다. 다른 조합의 새 실행 성공이나 일반 성능 개선으로 확대하지 않는다.
+D-145/EX-093은 변경 수행 지시문의 실제1경기 시도에서14턴 GLM JSON 출력 오류로 실패했다.
+부분17결정/16전송·통합뷰어·전수 감사·소유자원 반환을 보존하며 정상 완료로 해석하지 않는다.
+[기술 안내](../integration/jev_planner/README.md)와 [C-070](CONTRACTS.md#c-070-jev-planner)을 따른다.
+
+### 보존된 v6 평가 경로
+
+`integration/pokechamp/jev_v6_no_damage.py`는 D-137/EX-090의 별도 입력 프로필이다.
+공통 `prepare_matchup`에서 관측 정규화·추천 세트·현재 기술을 준비한 뒤 피해 변환을 건너뛰고
+스피드 비교만 실행한다. `SpeedOnlyEngine`은 speed 시나리오만 통과시키며 감사에 비활성화와
+실제 스피드 호출 수를 남긴다. 피해 범위/사유 필드와 해당 prompt 설명만 생략하고 기존 기본값은 유지한다.
+공통 실행기는 EX-090에 이 프로필을 명시 연결하며 EX-089 결과를 기준선으로 단독 평가한다.
+신규 뷰어에는 피해 예측 비활성화·스피드 비교 유지를 표시하며 기존 Damage-calc 판본은 보존한다.
+
+`integration/pokechamp/jev_v6.py`는 현재 공식 관측과 같은 행 cutoff의 전체 공개prefix에서
+`diagnostics/public_facts_v6.py`로 공개 사실을 재구성한다. 현재 도구/특성·공개 기본 특성·
+일반 기술과 일시/지속 복사를 구분하고 상대 벤치에 공개 정보를 유지한다. 같은 facts를
+상태 투영·현재 대면 정규화·추천 세트 필터에 전달하며 계산식/자료·현재 출전끼리의 범위는 유지한다.
+원관측·공개 근거·보완 이유는 모델 밖 감사에 저장한다. 기존 v4/v5는 선택 인자를 쓰지 않는 기본 경로다.
+
+`integration/jev_eval/`과 `scripts/jev-eval`은 실험ID에27B/9B·v6·출력·4GPU 배치를 고정 연결한다.
+기존 모델·환경·formatter·단일 Choice 전송과 원장을 재사용한다. CPU 재생성/토큰화 뒤
+본서버를 한 번 적재해 최대8요청을 검증하고 같은 서버로 각32경기를 새로 수집한다.
+공유 디스크 범위에 두 모델/공유환경/기존 참조/두 신규 출력·뷰어·임시 복사를 포함한다.
+수집기는 경기별 한 번 감사하고 최종 산술/완전성을 검사하며 기존 출력 재개/덮어쓰기를 거부한다.
+
+새 뷰어는 해당 모델username의 수신 protocol만 턴0/각턴으로 나누고 원래sequence/line_index를
+유지한다. 고정BattleTextParser로 내보낼 때 변환하며 해석 불가 공개 행은 원문을 유지한다.
+저장 입력의 HP/공개정보 요약, 같은턴 다중결정·결정없는턴, 결정전 정확cutoff·결정후 결과 구분과
+원문 복사/다운로드를 로컬HTML/JS로 제공한다. EX-083/085 뷰어는 변경하지 않는다.
+EP-142의 `jev-eval reexport`는 완료된 EX-088/089의 원자료·기존 뷰어 봉인을 검증하고
+`ex088-damage-v1`·`ex089-damage-v1`에 Damage-calc 표시 판본을 만든다.
+`damage_data.py`가 입력 이벤트의 감사 경로/해시·입력 identity로 저장 계산을 연결하고,
+`damage_viewer.js`가 결정별 로컬 스크립트를 지연 적재한다. 모델 입력 요약과 원래 시나리오
+조건/결과를 분리하며 필터·50행 페이지·상세·JSON 내보내기를 제공한다.
+기존 요청/응답/선택·턴 로그를 보존하고 계산기나 모델을 실행하지 않는다. 출처에는 수집 당시
+소스와 새 renderer 복사본을 별도로 기록하며 원 판본·봉인은 유지한다.
+규범·실행조건은 [C-067](CONTRACTS.md#c-067-jev-public-memory-v6)과 EX-088/089를 따른다.
+공유 결함으로 중단한 EX-086/087의 당시 조건·자료·봉인은 보존한다.
+
+## MiniCPM5-2B-Jev 계산기 포함 평가
+
+D-138/EP-144의 EX-091은 `integration/minicpm5_jev/`에 두 고정 revision의 다운로드/공식 파일
+검증, 손실 없는 MiniCPM formatter, strict 헤드/LoRA 로더와 CPU 전수검사를 둔다.
+공식 `MiniCPMSystemOne`의 BF16 backbone·FP32 비병합 LoRA·FP32 선택 헤드와 prior/온도를
+사용하며 단일 causal row를 SDPA flash로 실행한다. JSON 평탄화·지시문 strip·절단·날짜 보강·
+후보 순환은 호출하지 않는다. 사용자 텍스트의 제어토큰 표기는 일반 텍스트로 토큰화한다.
+기반 모델의255 label-token 행과 저장 헤드를 대조하고 실제 token ID/후보 대응을 기록한다.
+
+공통 `jev-eval`은 EX-091에 `jev-choice-v6`, GPU0 하나, 디스크 한도null과 EX-089 기준선을
+연결한다. 준비·모델·감사·usage는 같은 formatter를 사용하며 기존 프로필의 제한은 유지한다.
+저장1,139입력 CPU 검사는 피해량을 재계산하지 않고, 그중6/13/5후보·최장/최단 입력으로
+8사전추론을 준비한다. 새 뷰어는 저장 피해 계산을 기본 연결하고 최대5대표 화면 안에서 검사한다.
+EP-144의 독립 감지기는 단계 receipt와 workflow PID identity만30초마다 읽어 현재 대화에
+한 번씩 알린다. 실행기/최종화는 알람 응답과 무관하게 진행하며 다른 모델 자동 실행은 없다.
+
+## Quyet-Medium 2단계 로컬 평가
+
+`integration/quyet/`와 `scripts/quyet`는 EX-084 전용 경로다. 기존 jev-choice-v4 관측 생성기와
+Abyssal/Showdown 실행·고정 대진·리플레이를 재사용한다. 같은 관측에서 유형(move/switch)을
+고르고 해당 유형의 세부 후보를 선택하며 최종 명령만 한 번 전송한다. 선봉/강제교체는 직접 선택한다.
+공식 Quyet 패키지의 prompt v1·보정값·strict 추론을 기존 JEV 환경에서 사용하고 텍스트32층을
+GPU0–3에8층씩 배치한다. HTTP 영속 원장은 결정/단계별 중복 추론을 차단한다.
+새 경기별 감사·단계별 원문 뷰어·EX-083 고유 결과와의 대응 비교를 분리한다.
+조건/한도/중단·검증 원문은 [EX-084](experiments/EX-084-quyet-medium-two-stage.md)다.
 
 ## 고정 대진 공개 상태 정책 학습
 
@@ -576,6 +711,16 @@ upstream/build·schema·계산 의미는 유지한다. [EP-058 검증·보고](e
 source와 중단 판정은 [EP-057 최종 보고](exec-plans/evidence/ep057/final-report.md)에 보존한다.
 별도 fake 전용 ep058-local-eight 진단은 후속 공급자별4경기씩 동시에 실행하고 본 gate를 만들지 않는다.
 
+## JEV-9B 명시 단일 Choice 경로 (D-134)
+
+`integration/jev9b/`와 `scripts/jev9b`는 EX-085 전용 모델 identity·32층 배치·출력·실행을
+연결한다. 기존 JEV-27B 로더/HTTP 원장·jev-choice-v4 관측 생성·배틀 player·Abyssal과
+감사/뷰어 자산을 재사용하며 기존 기본 프로필은 유지한다. 공식 BF16 backbone+LoRA 병합·
+FP32 24×4096 head·bare-v1 보정값을 명시해 전체 후보를 단일 Choice로 선택한다.
+GPU0–3의6/10/10/6층 배치·40/44GiB 한도와 최대8회 사전 추론 후 같은 서버 수집을 연결한다.
+경기별 감사 receipt·종료 완전성/산술·EX-083 공통쌍 비교·전수 원문 내보내기와 대표 오프라인
+검증을 구분한다. 조건·분모·중단·해석은 C-066/EX-085를 따른다.
+
 ## JEV provider 재시도 (D-084)
 
 새 JevClient/Session/StudySession 기본은 jev-provider-retry-v1(최초+3회)이다.
@@ -862,3 +1007,96 @@ runtime은 [C-059](CONTRACTS.md#c-059-abyssal-rl-next), 구현·검증 증거는
 Life Orb의 `-damage ... [from] item: Life Orb`도 도구 공개로 기록한다. 공개 여부는 이력
 window와 독립적으로 유지하고 현재 도구 값·제거·재획득은 기존 parser를 따른다.
 기존 동결 실행 source와 저장 입력은 당시 형태를 보존한다.
+
+## Showdown 규칙 Q&A 데이터 경로 (D-159 / C-074)
+
+`integration/pokechamp/rule_qa/`와 `scripts/pokechamp-ruleqa`가 별도 데이터 생성 경로다.
+Gen9 OU 팀 validator와 CPU simulator가 제어 장면/선택 경계/독립 oracle 분기를 만들고,
+`state.Builder`가 actor 공개 prefix와 자기 request로 공식 관측·v6·names-v1을 재사용한다.
+배틀 행동 지시문은 QA 입력에 넣지 않고 원 State/실제 후보와 QA 선택지를 분리한다.
+데이터 전용 confusion 설명 교정은 원 v6와 별도로 검증한다.
+
+공개 사실의 질문 판정과 실제 Showdown/Dex/기존 계산기 대조 후, 동일 핵심 사실·동일 State를
+공유하는 원천 묶음을 연결해 분할한다. canonical의 세 표현에서 SFT messages와 선택형을 만든다.
+전수 의미/경계/분할/토큰 검사와96상황 별도 의미 검토가 export를 차단하는 gate다.
+검증된 동일 장면의 표현 교정은 보호된 scene 구성요소를 유지하는 relabel 경로로 기록한다.
+[완료/검증](exec-plans/completed/EP-169-showdown-ruleqa.md) · [구현 안내](../integration/pokechamp/rule_qa/README.md).
+
+## Strategist 텍스트 행동 평가
+
+`integration/strategist_eval`·`scripts/strategist-eval`은 EX-106 전용 단계 실행기다.
+공식 관측·public_facts_v6의 공개 사실을 간결한 SFT 영어 문자열로 투영하고
+별도 FP32 비병합 PEFT 프로세스에 JSONL 요청을 한 번 전달한다. 이름을 합법 후보의
+슬롯 명령으로 연결하며 출력 오류만 seeded 균등 대체한다. JEV 입력·계산기는 사용하지 않는다.
+공식 수신 cursor/요청 잠금·Showdown 소유 수명 관리를 재사용하고 Abyssal을 별도 seed 프로세스로
+실행한다. 양측 테라 전송을 차단한다. 감사·분모·오프라인 입력/원응답/텍스트 리플레이와
+네트워크 애니메이션 링크를 제공한다. 원문은 C-075와 EX-106이다.
+
+## Tacit 규칙 Q&A 학습 경로 (D-161 / C-076)
+
+`integration/pokechamp/rule_qa_training/`의 CPU controller가 기존 messages/canonical을 검증·토큰화하고,
+물리GPU1·2·3 공용 잠금과 UUID를 설정한 뒤 DDP worker3개를 시작한다. assistant 위치 logits의
+문항 평균 loss로 LoRA를 학습한다. validation 선택과 test 잠금을 분리하며 저장 adapter를 재로딩한다.
+실험 원문은 [EX-107](experiments/EX-107-tacit-ruleqa-lora.md), CLI/출력은 [안내](../integration/pokechamp/rule_qa_training/README.md)를 따른다.
+
+## 학습 Tacit 실전 예약 경로 (D-162 / C-077)
+
+`integration/tacit_ruleqa_battle/`은 EX106의 관측/전송/감사/뷰어 경계를 분리 계승한다.
+EX107의 선택 adapter와 재로딩 완료 후 GPU1 단독 서버에서 전체 공개State의 행동ID를 생성한다.
+`scripts/tacit-ruleqa-battle schedule`의 단일 예약은 prepare→6gate→32경기→감사/뷰어/반환을 수행한다.
+실행 조건은 [EX108](experiments/EX-108-tacit-ruleqa-battle32.md), 운영은 [안내](../integration/tacit_ruleqa_battle/README.md)를 따른다.
+
+## 독립 OpenAI Decisions API 환경
+
+[D-163](decisions/D-163-openai-decisions-environment.md) / [C-078](CONTRACTS.md#c-078-openai-decisions):
+`scripts/openai-decisions` → `.tools/openai-decisions/.venv` →
+`integration.openai_decisions` → 공식 `POST /v1/decisions` (`gpt-6-luna`).
+프로세스 환경/루트 `.env`에서 키를 읽으며 `--dry-run`은 요청만 출력한다.
+사용자 JSON 또는 predicate/choice/score 예제를 입력받는다. 기존 배틀 경로와 분리되며
+환경 구성 검증은 모의 HTTP만 수행했다. [사용법](../integration/openai_decisions/README.md).
+
+## OpenAI Decisions v6 상세 평가
+
+[D-164](decisions/D-164-openai-decisions-v6-battle32.md)/C-079의 EX-109는
+`scripts/openai-decisions-battle` → 기존 CPU actor/공식 관측·v6 Adapter →
+`integration/openai_decisions_battle`의 손실 없는 HTTP 변환 → OpenAI Decisions →
+합법 원choice·현재rqid/명령 재검증 → Showdown 순서다. 단일후보는 API 미호출이며
+Abyssal은 별도 seeded 프로세스다. GPU·planner·모델학습을 사용하지 않는다.
+원 v6 입력과 실제 HTTP/내부 호환응답을 구분하고 경기별 공식cutoff·계산·전송을 재생성 감사한다.
+[실행 안내](../integration/openai_decisions_battle/README.md).
+
+D-165/EX110은 같은배틀 경로에 `RetrySession`을 주입하며 연결/timeout·408/429/5xx에서
+논리ID/본문을 유지한 채 backoff 후 재전송한다. 개별시도60초·전체/경기/횟수 상한 없음과
+상시취소를 분리한다. 반복HTTP도 단일선택/명령이며 원장/감사는 각 시도를 대조한다.
+기존 EX109 Session과 당시 source/봉인은 별도로 보존한다.
+
+
+## JevK5-9B v6 상세 평가
+
+D-166/EX111의 integration/jevk5_battle은 기존 v6 관측·대진/공식cutoff 실행을 재사용하고
+사용자 소유 vLLM18847/GPU0의 모든 후보 logprob을 읽는다. native 비Thinking prompt·공식temperature1.316과 원ID 역매핑을 사용한다. 독립 Showdown8108과 출력·원장·뷰어를 가지며 EX110/기존 서빙 수명은 변경하지 않는다.
+
+## 후보별 현재 대면 요약
+
+D-167/C-081의 `integration/candidate_matchup`은 v6 payload를 복사하고 기술후보에만
+current_matchup을 추가한다. pinned Showdown Dex의 공개타입/기술/특성 metadata와 현재
+v6 상태·기존피해범위를 사용하며 원state/지시문/후보/명령은 유지한다.
+CLI는 저장JSON→v6보강본 또는 OpenAI 요청을 생성하고 source/rules/output provenance를 기록한다.
+옵트인 Adapter는 기존v6 생성기를 합성하며 기존runtime 기본값/진행중실험은 변경하지 않는다.
+지원밖/미상은unknown이다. EP182는 오프라인 검증이며 후속 모델 선택/배틀 비교는 EX112에서 별도로 수행했다. [사용법](../integration/candidate_matchup/README.md).
+
+## EX112 후보별 요약 배틀 연결
+
+`integration/openai_decisions_matchup_battle`은 기존 OpenAI 배틀 lifecycle·RetrySession과
+명시 candidate_matchup.adapter를 연결한다. study의 source/data 검증과 경기별 audit는 manifest의
+candidate_matchup_profile에 따라 생성기를 고른다. 기반 schema는 jev-choice-v6다.
+분석기는 원본 복원 후 같은 동결 요약 판정기로 EX110/112를 평가하고 미래 로그는 사후 사례 검토에만 쓴다.
+뷰어는 실제 요청·요약 포함 입력·요약 제거 원본·후보별 요약·선택·공개로그를 별도 탭으로 제공한다.
+
+
+## JevK5 규칙 선택형 추가 LoRA
+
+`integration/jevk5_ruleqa_training/`과 `scripts/jevk5-ruleqa-train`은 EX113 전용 독립 경로다.
+원state_mc→공식비Thinking prompt→마지막위치 선택지 CE/DDP→validation 선택/보정→test→비병합export로 이어진다.
+순차모델적재·공용GPU잠금·hostRSS감시·완전checkpoint와 출력봉인을 포함한다.
+조건은 [EX113](experiments/EX-113-jevk5-ruleqa-lora.md), 운영은 [안내](../integration/jevk5_ruleqa_training/README.md).

@@ -203,7 +203,7 @@ class Session(j.Session):
             await asyncio.to_thread(self.client.close)
 
 
-def player_class():
+def player_class(*, input_adapter=jev_v4):
     base = j.player_class()
 
     class LocalJevPlayer(base):
@@ -250,7 +250,7 @@ def player_class():
             snapshot = await asyncio.to_thread(self.official.snapshot,
                 copy.deepcopy(self.prefix), battle.battle_tag, boundary=self.boundary)
             input_started = time.monotonic()
-            payload, commands, input_audit, _ = await jev_v4.generate(
+            payload, commands, input_audit, _ = await input_adapter.generate(
                 self.session, snapshot, self.prefix, self.submitted_team, actor=actor)
             criteria = payload["questions"]["action"]["criteria"]
             if list(criteria) != list(commands):
@@ -261,7 +261,7 @@ def player_class():
                 boundary=self.boundary, official=snapshot,
                 observation_identity=self.official.identity,
                 effect_reference_identity=self.session.effect_reference_identity,
-                input_audit=jev_v4.save_audit(self.session.directory, decision, input_audit),
+                input_audit=input_adapter.save_audit(self.session.directory, decision, input_audit),
                 input_generation_seconds=time.monotonic() - input_started))
             inference_started = time.monotonic()
             body = None

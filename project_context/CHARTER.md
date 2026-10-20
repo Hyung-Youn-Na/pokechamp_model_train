@@ -31,7 +31,26 @@ LAYA-RLCD·EVE-RLCD·RLCD-Lite의 기존 환경과 Qwen·Kev·고정 대진 탐�
 공통 Git 기준선·보존 태그·목적 문서·worktree·외부 자산 복사와 검증은
 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)에서 완료했다.
 후속 학습·정책 개선의 조건은 새 범위에서 정한다. EX-082의 정상 결과를 보존한
-EX-083 독립 평가 계승을 완료했으며 현재 실행 중인 학습·평가 실험은 없다.
+EX-083 독립 평가 계승과 [D-133](decisions/D-133-quyet-medium-two-stage.md)의
+[EX-084](experiments/EX-084-quyet-medium-two-stage.md) Quyet 2단계 고정 대진 평가를 완료했으며
+[D-134](decisions/D-134-jev9b-single-choice.md)의
+[EX-085](experiments/EX-085-jev9b-single-choice.md) JEV-9B 단일 Choice 동일32 평가도 완료했다.
+[D-135](decisions/D-135-jev-public-memory-v6.md)의
+[EP-140](exec-plans/active/EP-140-jev-public-memory-v6.md)의 상대 공개 정보 v6·턴 로그와
+JEV-27B/9B 평가는 공유 입력 결함으로 중단했다. CPU교정·부분 기록/뷰어·봉인/자원 반환은
+완료했으나64경기 목표는 미달이며 자동재개하지 않는다. 기존 입력·평가 자료·봉인은 보존한다.
+[D-136](decisions/D-136-jev-v6-corrected-evaluation.md)의 명시적 사용자 재승인에 따라
+[EP-141](exec-plans/completed/EP-141-jev-v6-corrected-evaluation.md)에서 교정본을 별도EX-088/089로
+새64경기 평가하고 감사·비교·뷰어·봉인·반환까지 완료했다. 과거 실행의 상태·성적·봉인은
+새 평가와 구분하며 후속 실행은 승인 범위에 포함하지 않는다.
+[D-137](decisions/D-137-jev9b-no-damage.md)의 별도 사용자 지시에 따라
+[EP-143](exec-plans/completed/EP-143-jev9b-no-damage.md)에서 피해 예측 제거·스피드 유지
+[EX-090](experiments/EX-090-jev9b-no-damage.md)와 EX-089 비교를 완료했다.
+기존 결과·범위는 보존하며 추가 실험은 별도 승인과 등록을 따른다.
+[D-138](decisions/D-138-minicpm5-2b-jev.md)의 현재 사용자 지시에 따라
+[EP-144](exec-plans/completed/EP-144-minicpm5-2b-jev.md)에서 MiniCPM5-2B-Jev의
+계산기 포함 새32경기와 EX-089 비교·감사·뷰어·봉인·GPU0/알람 반환을 완료했다.
+조건·결과·해석은 EX-091에 두며 추가 실행은 별도 승인과 등록을 따른다.
 기존 [D-096](decisions/D-096-pokemon-training-objective.md)의 학습 목표와
 [D-112](decisions/D-112-imitation-self-play-objectives.md)의 모방 학습·정책 개선 방향,
 [D-119](decisions/D-119-fixed-matchup-mcts.md) 이후 고정 공개 상태 연구는 후속 설계의 근거다.

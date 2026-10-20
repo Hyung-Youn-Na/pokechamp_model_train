@@ -1,0 +1,19 @@
+{
+  "schema_version": "jev-planner-config-v1",
+  "name": "planner-demo",
+  "executor": {"model": "jev9b", "input_version": "jev-choice-v6", "candidate_display": "names-v1"},
+  "planner": {
+    "provider": "zai", "model": "glm-5.3-flash", "thinking": {"type": "enabled"},
+    "reasoning_effort": "low", "temperature": 0, "top_p": 0.95, "max_tokens": 8192
+  },
+  "trigger": {
+    "policy": "events_or_periodic", "interval_turns": 3,
+    "events": ["faint", "tera", "forced_switch"]
+  },
+  "prompts": {
+    "planner": "../prompts/strategy-compact.txt",
+    "executor": "../prompts/executor-guidance.txt",
+    "guide": "../prompts/role-resource-guide-v1.txt"
+  },
+  "evaluation": {"kind": "trace", "fixture": "../fixtures/demo.json"}
+}

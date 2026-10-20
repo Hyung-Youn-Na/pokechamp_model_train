@@ -1,0 +1,442 @@
+[
+  {
+    "pokemon": "Alomomola",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/alomomola/"
+  },
+  {
+    "pokemon": "Ceruledge",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ceruledge/"
+  },
+  {
+    "pokemon": "Cinderace",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/cinderace/"
+  },
+  {
+    "pokemon": "Clefable",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/clefable/"
+  },
+  {
+    "pokemon": "Corviknight",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/corviknight/"
+  },
+  {
+    "pokemon": "Darkrai",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/darkrai/"
+  },
+  {
+    "pokemon": "Deoxys-Speed",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/deoxys-speed/"
+  },
+  {
+    "pokemon": "Dondozo",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/dondozo/"
+  },
+  {
+    "pokemon": "Dragapult",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/dragapult/"
+  },
+  {
+    "pokemon": "Dragonite",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/dragonite/"
+  },
+  {
+    "pokemon": "Enamorus",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/enamorus/"
+  },
+  {
+    "pokemon": "Gholdengo",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/gholdengo/"
+  },
+  {
+    "pokemon": "Glimmora",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/glimmora/"
+  },
+  {
+    "pokemon": "Gliscor",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/gliscor/"
+  },
+  {
+    "pokemon": "Great Tusk",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/great-tusk/"
+  },
+  {
+    "pokemon": "Hatterene",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/hatterene/"
+  },
+  {
+    "pokemon": "Iron Moth",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/iron-moth/"
+  },
+  {
+    "pokemon": "Iron Treads",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/iron-treads/"
+  },
+  {
+    "pokemon": "Iron Valiant",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/iron-valiant/"
+  },
+  {
+    "pokemon": "Kingambit",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/kingambit/"
+  },
+  {
+    "pokemon": "Kyurem",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/kyurem/"
+  },
+  {
+    "pokemon": "Landorus-Therian",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/landorus-therian/"
+  },
+  {
+    "pokemon": "Moltres",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/moltres/"
+  },
+  {
+    "pokemon": "Ogerpon",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ogerpon/"
+  },
+  {
+    "pokemon": "Ogerpon-Wellspring",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ogerpon-wellspring/"
+  },
+  {
+    "pokemon": "Pecharunt",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/pecharunt/"
+  },
+  {
+    "pokemon": "Primarina",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/primarina/"
+  },
+  {
+    "pokemon": "Raging Bolt",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/raging-bolt/"
+  },
+  {
+    "pokemon": "Rillaboom",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/rillaboom/"
+  },
+  {
+    "pokemon": "Samurott-Hisui",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/samurott-hisui/"
+  },
+  {
+    "pokemon": "Slowking-Galar",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/slowking-galar/"
+  },
+  {
+    "pokemon": "Ting-Lu",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ting-lu/"
+  },
+  {
+    "pokemon": "Tornadus-Therian",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/tornadus-therian/"
+  },
+  {
+    "pokemon": "Walking Wake",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/walking-wake/"
+  },
+  {
+    "pokemon": "Zamazenta",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/zamazenta/"
+  },
+  {
+    "pokemon": "Zapdos",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/zapdos/"
+  },
+  {
+    "pokemon": "Amoonguss",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/amoonguss/ou/"
+  },
+  {
+    "pokemon": "Araquanid",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/araquanid/ou/"
+  },
+  {
+    "pokemon": "Arcanine-Hisui",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/arcanine-hisui/ou/"
+  },
+  {
+    "pokemon": "Barraskewda",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/barraskewda/ou/"
+  },
+  {
+    "pokemon": "Blaziken",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/blaziken/ou/"
+  },
+  {
+    "pokemon": "Blissey",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/blissey/ou/"
+  },
+  {
+    "pokemon": "Chesnaught",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/chesnaught/ou/"
+  },
+  {
+    "pokemon": "Clodsire",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/clodsire/ou/"
+  },
+  {
+    "pokemon": "Comfey",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/comfey/ou/"
+  },
+  {
+    "pokemon": "Cresselia",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/cresselia/ou/"
+  },
+  {
+    "pokemon": "Ditto",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ditto/ou/"
+  },
+  {
+    "pokemon": "Enamorus-Therian",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/enamorus-therian/ou/"
+  },
+  {
+    "pokemon": "Excadrill",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/excadrill/ou/"
+  },
+  {
+    "pokemon": "Fezandipiti",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/fezandipiti/ou/"
+  },
+  {
+    "pokemon": "Garchomp",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/garchomp/ou/"
+  },
+  {
+    "pokemon": "Garganacl",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/garganacl/ou/"
+  },
+  {
+    "pokemon": "Goodra-Hisui",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/goodra-hisui/ou/"
+  },
+  {
+    "pokemon": "Greninja",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/greninja/ou/"
+  },
+  {
+    "pokemon": "Grimmsnarl",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/grimmsnarl/ou/"
+  },
+  {
+    "pokemon": "Hawlucha",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/hawlucha/ou/"
+  },
+  {
+    "pokemon": "Heatran",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/heatran/ou/"
+  },
+  {
+    "pokemon": "Hoopa-Unbound",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/hoopa-unbound/ou/"
+  },
+  {
+    "pokemon": "Hydrapple",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/hydrapple/ou/"
+  },
+  {
+    "pokemon": "Hydreigon",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/hydreigon/ou/"
+  },
+  {
+    "pokemon": "Indeedee",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/indeedee/ou/"
+  },
+  {
+    "pokemon": "Iron Boulder",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/iron-boulder/ou/"
+  },
+  {
+    "pokemon": "Iron Crown",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/iron-crown/ou/"
+  },
+  {
+    "pokemon": "Iron Hands",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/iron-hands/ou/"
+  },
+  {
+    "pokemon": "Iron Jugulis",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/iron-jugulis/ou/"
+  },
+  {
+    "pokemon": "Jolteon",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/jolteon/ou/"
+  },
+  {
+    "pokemon": "Keldeo",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/keldeo/ou/"
+  },
+  {
+    "pokemon": "Kommo-o",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/kommo-o/ou/"
+  },
+  {
+    "pokemon": "Latias",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/latias/ou/"
+  },
+  {
+    "pokemon": "Latios",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/latios/ou/"
+  },
+  {
+    "pokemon": "Lilligant-Hisui",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/lilligant-hisui/ou/"
+  },
+  {
+    "pokemon": "Lokix",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/lokix/ou/"
+  },
+  {
+    "pokemon": "Mamoswine",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/mamoswine/ou/"
+  },
+  {
+    "pokemon": "Manaphy",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/manaphy/ou/"
+  },
+  {
+    "pokemon": "Mandibuzz",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/mandibuzz/ou/"
+  },
+  {
+    "pokemon": "Meowscarada",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/meowscarada/ou/"
+  },
+  {
+    "pokemon": "Mimikyu",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/mimikyu/ou/"
+  },
+  {
+    "pokemon": "Moltres-Galar",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/moltres-galar/ou/"
+  },
+  {
+    "pokemon": "Ninetales",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ninetales/ou/"
+  },
+  {
+    "pokemon": "Ninetales-Alola",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ninetales-alola/ou/"
+  },
+  {
+    "pokemon": "Ogerpon-Cornerstone",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ogerpon-cornerstone/ou/"
+  },
+  {
+    "pokemon": "Okidogi",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/okidogi/ou/"
+  },
+  {
+    "pokemon": "Overqwil",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/overqwil/ou/"
+  },
+  {
+    "pokemon": "Pelipper",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/pelipper/ou/"
+  },
+  {
+    "pokemon": "Quagsire",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/quagsire/ou/"
+  },
+  {
+    "pokemon": "Quaquaval",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/quaquaval/ou/"
+  },
+  {
+    "pokemon": "Reuniclus",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/reuniclus/ou/"
+  },
+  {
+    "pokemon": "Ribombee",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ribombee/ou/"
+  },
+  {
+    "pokemon": "Rotom-Wash",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/rotom-wash/ou/"
+  },
+  {
+    "pokemon": "Scizor",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/scizor/ou/"
+  },
+  {
+    "pokemon": "Serperior",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/serperior/ou/"
+  },
+  {
+    "pokemon": "Sinistcha",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/sinistcha/ou/"
+  },
+  {
+    "pokemon": "Skarmory",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/skarmory/ou/"
+  },
+  {
+    "pokemon": "Skeledirge",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/skeledirge/ou/"
+  },
+  {
+    "pokemon": "Slither Wing",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/slither-wing/ou/"
+  },
+  {
+    "pokemon": "Slowking",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/slowking/ou/"
+  },
+  {
+    "pokemon": "Talonflame",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/talonflame/ou/"
+  },
+  {
+    "pokemon": "Tinkaton",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/tinkaton/ou/"
+  },
+  {
+    "pokemon": "Torkoal",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/torkoal/ou/"
+  },
+  {
+    "pokemon": "Toxapex",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/toxapex/ou/"
+  },
+  {
+    "pokemon": "Tyranitar",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/tyranitar/ou/"
+  },
+  {
+    "pokemon": "Umbreon",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/umbreon/ou/"
+  },
+  {
+    "pokemon": "Ursaluna",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ursaluna/ou/"
+  },
+  {
+    "pokemon": "Venusaur",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/venusaur/ou/"
+  },
+  {
+    "pokemon": "Volcanion",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/volcanion/ou/"
+  },
+  {
+    "pokemon": "Weavile",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/weavile/ou/"
+  },
+  {
+    "pokemon": "Weezing-Galar",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/weezing-galar/ou/"
+  },
+  {
+    "pokemon": "Zarude",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/zarude/ou/"
+  },
+  {
+    "pokemon": "Ogerpon-Teal-Tera",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ogerpon-teal-tera/"
+  },
+  {
+    "pokemon": "Ogerpon-Wellspring-Tera",
+    "strategy_url": "https://www.smogon.com/dex/sv/pokemon/ogerpon-wellspring-tera/"
+  }
+]

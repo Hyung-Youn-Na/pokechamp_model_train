@@ -52,7 +52,7 @@ class RegistryError(RuntimeError):
 class RequestRegistry:
     """One process owns this SQLite journal; thread access is serialized."""
 
-    def __init__(self, path, identity):
+    def __init__(self, path, identity, *, protocol=PROTOCOL):
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.lock = threading.RLock()
@@ -89,8 +89,8 @@ class RequestRegistry:
             saved_identity = self._metadata("serving_identity")
             if saved_identity is None:
                 self.db.execute("INSERT INTO metadata VALUES (?,?)", ("serving_identity", identity))
-                self.db.execute("INSERT INTO metadata VALUES (?,?)", ("protocol", PROTOCOL))
-            elif saved_identity != identity or self._metadata("protocol") != PROTOCOL:
+                self.db.execute("INSERT INTO metadata VALUES (?,?)", ("protocol", protocol))
+            elif saved_identity != identity or self._metadata("protocol") != protocol:
                 self.halt("serving_identity", "request journal belongs to another serving identity")
             unfinished = []
             for row in self.db.execute("SELECT * FROM requests"):
@@ -199,23 +199,29 @@ class RequestRegistry:
 class LocalService:
     """All arrivals share one model-call mutex, including duplicate requests."""
 
-    def __init__(self, model, run_dir):
+    def __init__(self, model, run_dir, *, model_id=MODEL_ID, revision=REVISION,
+                 protocol=PROTOCOL, validate_before_inference=False):
         self.model = model
+        self.model_id = model_id
+        self.revision = revision
+        self.protocol = protocol
+        self.validate_before_inference = validate_before_inference
         initial = model.metadata()
         identity = initial.get("serving_identity")
-        if (initial.get("model") != MODEL_ID or initial.get("revision") != REVISION
+        if (initial.get("model") != self.model_id or initial.get("revision") != self.revision
                 or initial.get("loaded") is not True or not isinstance(identity, str)
                 or not SHA256_PATTERN.fullmatch(identity)):
             raise RegistryError("model is not loaded with the pinned serving identity")
         self.identity = identity
         self.initial_metadata = initial
-        self.registry = RequestRegistry(Path(run_dir) / "server" / "requests.sqlite3", identity)
+        self.registry = RequestRegistry(Path(run_dir) / "server" / "requests.sqlite3", identity,
+                                        protocol=self.protocol)
         self.inference_lock = threading.Lock()
         self.closed = False
 
     def _check_identity(self):
         metadata = self.model.metadata()
-        if (metadata.get("model") != MODEL_ID or metadata.get("revision") != REVISION
+        if (metadata.get("model") != self.model_id or metadata.get("revision") != self.revision
                 or metadata.get("loaded") is not True or metadata.get("serving_identity") != self.identity):
             self.registry.halt("serving_identity", "loaded model identity changed")
         return metadata
@@ -228,14 +234,14 @@ class LocalService:
                 self.registry.halt("model_integrity", "model metadata failed: " + str(error))
                 metadata = self.initial_metadata
             return dict(metadata, identity=self.identity, serving_identity=self.identity,
-                        protocol=PROTOCOL, ready=self.registry.halt_state is None and not self.closed,
+                        protocol=self.protocol, ready=self.registry.halt_state is None and not self.closed,
                         halt=self.registry.halt_state, requests=self.registry.counts(),
                         max_inference_concurrency=1, max_input_tokens=MAX_TOKENS,
                         server_pid=os.getpid())
 
     def _error(self, category, *, status=503, request_id=None, digest=None, message=None, halted=True):
-        body = dict(model=MODEL_ID, error=dict(category=category, message=message or category, halted=halted),
-                    transport=dict(protocol=PROTOCOL, request_id=request_id, body_sha256=digest,
+        body = dict(model=self.model_id, error=dict(category=category, message=message or category, halted=halted),
+                    transport=dict(protocol=self.protocol, request_id=request_id, body_sha256=digest,
                                    serving_identity=self.identity))
         return status, json_bytes(body), False
 
@@ -276,22 +282,24 @@ class LocalService:
                     raise ValueError("request byte limit exceeded")
                 payload = json.loads(raw, object_pairs_hook=_object, parse_constant=_invalid_number)
                 if (not isinstance(payload, dict) or set(payload) != {"model", "state", "questions"}
-                        or payload["model"] != MODEL_ID):
+                        or payload["model"] != self.model_id):
                     raise ValueError("invalid model/state/questions request envelope")
+                if self.validate_before_inference:
+                    self.model.validate_input(payload)
                 self.registry.start(request_id)
                 result = self.model.evaluate(payload)
                 with self.registry.lock:
                     self._check_identity()
                     if self.closed or self.registry.halt_state is not None:
                         raise RegistryError("service halted during model inference")
-                    if not isinstance(result, dict) or result.get("model") != MODEL_ID:
+                    if not isinstance(result, dict) or result.get("model") != self.model_id:
                         raise RegistryError("unexpected model result identity")
                     model_metadata = result.get("metadata", {})
                     if (not isinstance(model_metadata, dict)
-                            or model_metadata.get("revision", REVISION) != REVISION
+                            or model_metadata.get("revision", self.revision) != self.revision
                             or model_metadata.get("serving_identity", self.identity) != self.identity):
                         raise RegistryError("model result metadata identity changed")
-                    body = dict(result, transport=dict(protocol=PROTOCOL, request_id=request_id,
+                    body = dict(result, transport=dict(protocol=self.protocol, request_id=request_id,
                                 body_sha256=digest, serving_identity=self.identity,
                                 inference_id=inference_id, inference_calls=1))
                     encoded = json_bytes(body)
@@ -412,7 +420,7 @@ def main(argv=None):
     parser.add_argument("--run-dir", required=True, type=Path)
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", default=18782, type=int)
-    parser.add_argument("--profile", choices=tuple(PROFILES), default="ex082")
+    parser.add_argument("--profile", choices=('ex082', 'ex083'), default="ex082")
     parser.add_argument("--budget-root", type=Path,
                         help="include the complete run output in the combined disk budget")
     args = parser.parse_args(argv)

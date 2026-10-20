@@ -37,13 +37,13 @@ def verify(path, entry):
                 official_sha256=entry.get('lfs', {}).get('oid'), git_oid=entry['oid'])
 
 
-def download_one(entry):
-    target = MODEL_DIR / entry['path']
+def download_one(entry, *, model_dir=MODEL_DIR, model_id=MODEL_ID, revision=REVISION):
+    target = model_dir / entry['path']
     target.parent.mkdir(parents=True, exist_ok=True)
     if target.exists():
         return verify(target, entry)
     temporary = target.with_name(target.name + '.partial')
-    url = f'https://huggingface.co/{MODEL_ID}/resolve/{REVISION}/{entry["path"]}'
+    url = f'https://huggingface.co/{model_id}/resolve/{revision}/{entry["path"]}'
     for attempt in range(4):
         offset = temporary.stat().st_size if temporary.exists() else 0
         if offset == entry['size']:
@@ -70,13 +70,13 @@ def download_one(entry):
     return result
 
 
-def download_xet(entry):
-    target = MODEL_DIR / entry['path']
+def download_xet(entry, *, model_dir=MODEL_DIR, model_id=MODEL_ID, revision=REVISION):
+    target = model_dir / entry['path']
     if target.exists():
         return verify(target, entry)
     from huggingface_hub import hf_hub_download
-    path = Path(hf_hub_download(MODEL_ID, entry['path'], revision=REVISION,
-        local_dir=MODEL_DIR, token=False))
+    path = Path(hf_hub_download(model_id, entry['path'], revision=revision,
+        local_dir=model_dir, token=False))
     result = verify(path, entry)
     print(json.dumps(dict(downloaded=entry['path'], bytes=entry['size'], transfer='xet')), flush=True)
     return result

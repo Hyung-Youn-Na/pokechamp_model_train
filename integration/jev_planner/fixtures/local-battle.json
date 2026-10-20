@@ -1,0 +1,40 @@
+{
+  "schedule": [
+    {
+      "slot_id": "technical-p1",
+      "paired_slot_id": "technical",
+      "jev_actor": "p1",
+      "teams": [
+        "strong",
+        "weak"
+      ],
+      "battle_seed": "18280,52471,51036,2470",
+      "actor_seeds": [
+        101,
+        202
+      ]
+    },
+    {
+      "slot_id": "technical-p2",
+      "paired_slot_id": "technical",
+      "jev_actor": "p2",
+      "teams": [
+        "weak",
+        "strong"
+      ],
+      "battle_seed": "18280,52471,51036,2470",
+      "actor_seeds": [
+        202,
+        101
+      ]
+    }
+  ],
+  "teams": {
+    "strong": {
+      "showdown_team": "Garchomp\nAbility: Rough Skin\nLevel: 100\nEVs: 1 HP\n- Earthquake\n- Protect\n"
+    },
+    "weak": {
+      "showdown_team": "Pikachu\nAbility: Static\nLevel: 1\nEVs: 1 HP\n- Thunderbolt\n- Quick Attack\n"
+    }
+  }
+}

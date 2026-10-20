@@ -188,16 +188,54 @@ def _check_finite_parameters(model, torch) -> None:
 class Jev27BModel:
     """Explicitly load once per process, then run one uncached Choice prefill at a time."""
 
+    model_id = MODEL_ID
+    revision = REVISION
+    head_shape = (24, 5120)
+    choice_temperature = CHOICE_TEMPERATURE
+    format_version = FORMAT_VERSION
+    allowed_profiles = ('ex082', 'ex083')
+    device_map_factory = staticmethod(fixed_device_map)
+
     def __init__(self, model_dir: str | Path, *, max_tokens: int = MAX_TOKENS, profile='ex082'):
+        if profile not in self.allowed_profiles:
+            raise ValueError(f'{self.model_id} does not support runtime profile {profile!r}')
         self.profile = runtime_profile(profile)
         self.devices = tuple(range(len(self.profile.physical_gpus)))
         if max_tokens != MAX_TOKENS:
-            raise ValueError("JEV-27B freezes the input limit at 32768 tokens")
+            raise ValueError(f"{self.model_id} freezes the input limit at 32768 tokens")
         self.model_dir = Path(model_dir).resolve()
         self.max_tokens = max_tokens
         self.loaded = False
-        self._metadata: dict[str, Any] = {"model": MODEL_ID, "revision": REVISION,
+        self._metadata: dict[str, Any] = {"model": self.model_id, "revision": self.revision,
                                           "loaded": False, "serving_identity": None}
+
+    def _verify_model_files(self):
+        for name, expected in MODEL_FILES_SHA256.items():
+            path = self.model_dir / name
+            if not path.is_file() or sha256_file(path) != expected:
+                raise ModelIntegrityError(f"pinned model file mismatch: {name}")
+        return dict(MODEL_FILES_SHA256)
+
+    def _validate_head(self, head, torch):
+        if (set(head) != {"proj.weight", "proj.bias"}
+                or tuple(head["proj.weight"].shape) != self.head_shape
+                or tuple(head["proj.bias"].shape) != (self.head_shape[0],)
+                or any(value.dtype != torch.float32 for value in head.values())):
+            raise ModelIntegrityError("decision head is not the pinned FP32 24-slot head")
+
+    def _validate_configuration(self, cfg, calibration):
+        if (cfg["slots"]["ranges"]["choice"] != [8, 24]
+                or cfg["slots"]["template_version"] != "bare-v1"
+                or calibration["per_kind"]["choice"] != self.choice_temperature):
+            raise ModelIntegrityError("choice slot layout or calibration changed")
+
+    def _source_hashes(self):
+        return {p.name: sha256_file(p) for p in
+                (Path(__file__), Path(__file__).with_name("formatting.py"),
+                 Path(__file__).with_name("config.py"), Path(__file__).with_name("resource.py"))}
+
+    def _additional_metadata(self):
+        return {}
 
     def load(self) -> Jev27BModel:
         if self.loaded:
@@ -216,10 +254,7 @@ class Jev27BModel:
             packages["kernels"] = None
         else:
             raise ModelIntegrityError("Hub kernels are not part of the frozen FLA/causal-conv1d backend")
-        for name, expected in MODEL_FILES_SHA256.items():
-            path = self.model_dir / name
-            if not path.is_file() or sha256_file(path) != expected:
-                raise ModelIntegrityError(f"pinned model file mismatch: {name}")
+        model_files_sha256 = self._verify_model_files()
         # The caller may already have imported Torch to establish its allocation cap.
         # All modifications here affect only this owned server process.
         os.environ.setdefault("TORCHINDUCTOR_COMPILE_THREADS", "1")
@@ -243,7 +278,7 @@ class Jev27BModel:
         self._torch = torch
         self.tokenizer = AutoTokenizer.from_pretrained(str(self.model_dir), local_files_only=True,
                                                        trust_remote_code=False)
-        device_map = fixed_device_map(self.profile.name)
+        device_map = self.device_map_factory(self.profile.name)
         from transformers.modeling_utils import _is_on_hf_mount
         if _is_on_hf_mount(str(self.model_dir)):
             raise ModelIntegrityError("HF mount would bypass the bounded pread checkpoint reader")
@@ -263,11 +298,7 @@ class Jev27BModel:
         if any("lora_" in name for name, _ in self.model.named_parameters()):
             raise ModelIntegrityError("adapter did not fully merge")
         head = load_file(str(self.model_dir / "head.safetensors"), device="cpu")
-        if (set(head) != {"proj.weight", "proj.bias"}
-                or tuple(head["proj.weight"].shape) != (24, 5120)
-                or tuple(head["proj.bias"].shape) != (24,)
-                or any(value.dtype != torch.float32 for value in head.values())):
-            raise ModelIntegrityError("decision head is not the pinned FP32 24-slot head")
+        self._validate_head(head, torch)
         head_device = f'cuda:{self.devices[-1]}'
         self._weight = head["proj.weight"].to(head_device)
         self._bias = head["proj.bias"].to(head_device)
@@ -276,14 +307,11 @@ class Jev27BModel:
             raise ModelIntegrityError('decision head placement or FP32 dtype changed')
         cfg = json.loads((self.model_dir / "judge_config.json").read_text())
         calibration = json.loads((self.model_dir / "calibration.json").read_text())
-        if (cfg["slots"]["ranges"]["choice"] != [8, 24]
-                or cfg["slots"]["template_version"] != "bare-v1"
-                or calibration["per_kind"]["choice"] != CHOICE_TEMPERATURE):
-            raise ModelIntegrityError("choice slot layout or calibration changed")
+        self._validate_configuration(cfg, calibration)
         self.temperature = calibration["per_kind"]["choice"]
         self._metadata = {
-            "model": MODEL_ID, "revision": REVISION, "loaded": True,
-            "model_files_sha256": dict(MODEL_FILES_SHA256), "packages": packages,
+            "model": self.model_id, "revision": self.revision, "loaded": True,
+            "model_files_sha256": model_files_sha256, "packages": packages,
             "device_map": device_map,
             "serving_config": {
                 "runtime_profile": self.profile.name,
@@ -294,7 +322,7 @@ class Jev27BModel:
                 "disk_limit_bytes": self.profile.disk_bytes,
                 "decision_head_device": head_device,
                 "tensor_placement_verified": True,
-                "format": FORMAT_VERSION, "max_input_tokens": MAX_TOKENS,
+                "format": self.format_version, "max_input_tokens": MAX_TOKENS,
                 "native_max_position_embeddings": self.model.config.max_position_embeddings,
                 "truncation": False, "add_special_tokens": False, "batch_size": 1,
                 "backbone_dtype": "bfloat16", "head_dtype": "float32", "adapter": "merged",
@@ -313,10 +341,9 @@ class Jev27BModel:
                 "cuda_visible_devices": os.environ.get("CUDA_VISIBLE_DEVICES"),
                 "torch_cuda_version": torch.version.cuda,
                 "parameter_dtypes": dict(Counter(str(p.dtype) for p in self.model.parameters())),
-                "source_sha256": {p.name: sha256_file(p) for p in
-                                  (Path(__file__), Path(__file__).with_name("formatting.py"),
-                                   Path(__file__).with_name("config.py"), Path(__file__).with_name("resource.py"))},
+                "source_sha256": self._source_hashes(),
             },
+            **self._additional_metadata(),
         }
         encoded = json.dumps(self._metadata, sort_keys=True, ensure_ascii=False,
                              separators=(",", ":"), allow_nan=False).encode()
@@ -346,6 +373,13 @@ class Jev27BModel:
     def health(self) -> dict[str, Any]:
         return self.metadata()
 
+    def validate_input(self, payload):
+        """Let explicit services reject invalid inputs before reserving an inference."""
+        if not self.loaded:
+            raise ModelIntegrityError("load the model before evaluation")
+        formatted = format_request(payload)
+        tokenize_request(self.tokenizer, formatted, self.max_tokens)
+
     def evaluate(self, payload: dict[str, Any]) -> dict[str, Any]:
         if not self.loaded:
             raise ModelIntegrityError("load the model before evaluation")
@@ -374,10 +408,10 @@ class Jev27BModel:
         except ValueError as error:
             raise ModelIntegrityError("nonfinite or malformed native decision probabilities") from error
         count = len(encoded["input_ids"])
-        return {"model": MODEL_ID, "answers": {formatted.question_name: answer},
+        return {"model": self.model_id, "answers": {formatted.question_name: answer},
                 "usage": {"input_tokens": count, "output_tokens": 0},
-                "metadata": {"revision": REVISION,
+                "metadata": {"revision": self.revision,
                              "serving_identity": self._metadata["serving_identity"],
-                             "format": FORMAT_VERSION, "prompt_sha256": formatted.prompt_sha256,
+                             "format": self.format_version, "prompt_sha256": formatted.prompt_sha256,
                              "candidate_ids": list(formatted.candidate_ids),
                              "elapsed_seconds": time.monotonic() - started, **self._resource()}}

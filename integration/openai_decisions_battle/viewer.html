@@ -1,0 +1,36 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__TITLE__</title><style>
+body{font:15px/1.55 system-ui;margin:0;background:#f4f6f8;color:#152637}header{padding:18px 24px;background:#fff;border-bottom:1px solid #ccd5df}main{display:grid;grid-template-columns:minmax(420px,1fr) minmax(360px,1fr);gap:18px;padding:18px}section,aside{background:white;border:1px solid #d4dce5;border-radius:8px;padding:16px;min-width:0}button,select{padding:8px;margin:3px;border:1px solid #bac8d6;background:#fff;border-radius:5px}button[aria-selected=true]{background:#164f84;color:white}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f3f5f7;padding:12px;max-height:65vh;overflow:auto}.key{color:#124b9c}.str{color:#16733e}.num{color:#8f36a8}iframe{width:100%;height:65vh;border:0}#turntext{max-height:24vh}@media(max-width:900px){main{grid-template-columns:1fr}}a{color:#165fa5}</style>
+<header><a href="../index.html">전체 경기</a><h1 id="title"></h1><div id="summary"></div><button id="prev">이전 결정</button><select id="decisions" aria-label="결정"></select><button id="next">다음 결정</button><span id="selected"></span></header>
+<main><section><nav id="tabs"><button data-tab="request" aria-selected="true">API 요청</button><button data-tab="response">API 응답</button><button data-tab="state">v6 상세 입력</button><button data-tab="base" hidden>요약 제거 원본</button><button data-tab="matchup" hidden>후보별 상성 요약</button><button data-tab="selection">선택·전송</button><button data-tab="technical">기술 기록</button></nav><p id="note"></p><button id="copy">복사</button><button id="download">JSON 다운로드</button><span id="copied"></span><pre id="json"></pre></section>
+<aside><h2>경기 리플레이</h2><p>애니메이션은 외부 Showdown 자산을 사용할 수 있습니다. 아래 공개 로그와 입력·응답은 오프라인에서 열립니다.</p><iframe title="경기 리플레이" src="replay.html" sandbox="allow-scripts allow-same-origin"></iframe><h2>공개 턴 로그</h2><select id="turns" aria-label="턴"></select><label><input type="checkbox" id="cutoff">선택 결정 직전까지</label><button id="turn-first">이 턴 첫 결정</button><pre id="turntext"></pre><a href="showdown.log" download>전체 공개 원문</a> · <a href="decisions.json" download>경기 입력·응답</a></aside></main>
+<script id="data" type="application/json">__DATA__</script><script>
+const data=JSON.parse(document.getElementById('data').textContent),ds=data.decisions;
+const $=id=>document.getElementById(id);let index=0,tab='request',current='';
+if(data.experiment==='EX-112')document.querySelectorAll('[data-tab=base],[data-tab=matchup]').forEach(b=>b.hidden=false);
+const labels={player_won:'승리',player_lost:'패배',tied:'무승부',output_failure:'모델 응답 실패',incomplete:'상한 도달'};
+$('title').textContent=`${data.experiment} · ${data.slot}경기 · gpt-6-luna`;
+$('summary').textContent=`${data.outcome.slot_id} · ${data.outcome.jev_actor} · ${labels[data.outcome.outcome]||'기술 중단'} · ${data.outcome.turns??'미완료'}턴`;
+ds.forEach((d,i)=>$('decisions').add(new Option(`${i+1} · ${d.turn}턴 · ${d.kind}${d.automatic?' · 자동':''}`,i)));
+data.turn_log.turns.forEach(t=>$('turns').add(new Option(t.label,t.turn)));
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function highlight(s){return esc(s).replace(/("(?:\\.|[^"\\])*"\s*:)|("(?:\\.|[^"\\])*")|\b(-?\d+(?:\.\d+)?|true|false|null)\b/g,(m,k,s,n)=>`<span class="${k?'key':s?'str':'num'}">${m}</span>`);}
+function show(){const d=ds[index];$('decisions').value=index;if(!d){$('note').textContent='입력 수집 전 종료';return;}
+ $('selected').textContent=d.selection?`선택: ${d.selection.choice} → ${d.selection.command}`:'전송 없음';
+ const values={request:d.request,response:d.raw_response,state:d.observation,base:d.base_observation,matchup:Object.fromEntries(Object.entries(d.observation.questions.action.criteria).filter(([k,v])=>v.current_matchup).map(([k,v])=>[k,v.current_matchup])),selection:{selection:d.selection,wire:d.wire},technical:d.technical};
+ $('note').textContent=tab==='request'?(d.automatic?'단일 후보 자동선택: API 미호출':'실제로 전송한 OpenAI Decisions JSON입니다.'):
+ tab==='response'?'실제 HTTP 응답입니다. 내부 호환 변환과 구분해 원값을 표시합니다.':
+ tab==='base'?'current_matchup만 제거하여 복원한 원 v6 입력입니다.':tab==='matchup'?'현재 상대가 유지되는 조건의 후보별 요약입니다. 실제 결과와 구분합니다.':tab==='state'?'전송 형식 변환 전의 전체 v6 상세 입력입니다.':'저장된 결정·전송 기록입니다.';
+ current=JSON.stringify(values[tab]??null,null,2);$('json').innerHTML=highlight(current);
+ document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));
+ $('turns').value=d.turn;turn();}
+function turn(){const t=data.turn_log.turns.find(t=>t.turn===Number($('turns').value));let rows=t?.rows||[];
+ const cut=data.turn_log.decision_cutoffs[ds[index]?.id];if($('cutoff').checked&&cut)rows=rows.filter(r=>r.sequence<cut.sequence||(r.sequence===cut.sequence&&r.line_index<=cut.line_index));
+ $('turntext').textContent=rows.map(r=>r.text+'\n'+r.protocol).join('\n\n');}
+$('decisions').onchange=()=>{index=Number($('decisions').value);show()};$('prev').onclick=()=>{index=Math.max(0,index-1);show()};$('next').onclick=()=>{index=Math.min(ds.length-1,index+1);show()};
+document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;show()});
+$('turns').onchange=turn;$('cutoff').onchange=turn;$('turn-first').onclick=()=>{const i=ds.findIndex(d=>d.turn===Number($('turns').value));if(i>=0){index=i;show()}};
+$('copy').onclick=async()=>{try{await navigator.clipboard.writeText(current);$('copied').textContent='복사됨'}catch{const t=document.createElement('textarea');t.value=current;document.body.append(t);t.select();document.execCommand('copy');t.remove();$('copied').textContent='복사됨'}};
+$('download').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([current],{type:'application/json'}));a.download=tab+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+document.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName))return;if(e.key==='ArrowLeft')$('prev').click();if(e.key==='ArrowRight')$('next').click()});show();
+</script></html>

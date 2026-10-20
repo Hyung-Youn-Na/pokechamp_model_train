@@ -5,10 +5,11 @@
 [EP-137](exec-plans/completed/EP-137-jev27b-four-gpu-continuation.md)의 EX-083 계승 평가를 완료했다.
 기존 Blocked/Paused와 동결 protocol·봉인은 유지한다.
 
-- 기준일: 2026-10-13
+- 기준일: 2026-10-20
 - 현재 작업 위치: `/workspace`
 - 목표 원문: [CHARTER](CHARTER.md) · [연구 설계](RESEARCH_DESIGN.md)
 - 경로·출력·외부 보존본·복원: [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)
+- 보관 데이터셋의 특징·구조·위치: [연구 매뉴얼](RESEARCH_MANUAL.md#archived-datasets)
 - 진행·검증은 개별 plan, 실험 조건·결과·분모는 개별 EX와 보고서를 따른다.
 
 <a id="current-objective"></a>
@@ -17,15 +18,185 @@
 
 포켓몬 관측·합법 행동에 맞춘 모델 학습과 정책 개선을 주 개발 목표로 관리한다.
 개선 여부는 학습·모델 선택과 분리한 평가로 판단한다. 기존 세 RLCD 환경과 Qwen·Kev·
-고정 대진 구현은 활용 가능한 기반이며, 후속 학습의 방법·초기 모델·데이터·평가·예산은
-아직 정하지 않았다. 독립 평가의 EX-083 계승은 승인 범위에서 완료했다.
+고정 대진 구현은 활용 가능한 기반이다. 규칙QA 학습·오프라인 평가는 EX107에서 완료했고,
+선택 모델의 실전32경기 탐색도 EX108에서 완료했다. 그 밖의 후속 학습 조건은 별도 범위에서 정한다.
+독립 평가의 EX-083 계승은 승인 범위에서 완료했다.
 L1-L5 구조 이식은 별도 연구선에서 보존·후속 설계한다.
 
 <a id="active-work"></a>
 
 ## 현재 실행 작업
 
-현재 실행 중인 작업은 없다.
+[EP-183](exec-plans/active/EP-183-openai-candidate-matchup-battle.md): EX112의32시도 중 정상31·응답거부실패1·완료15쌍으로 분모 미달. 비교·전수감사·오프라인뷰어·봉인·소유반환 종결, Blocked 보존. [결과](experiments/EX-112-openai-candidate-matchup-battle.md) · [뷰어](../exports/battle_viewers/ex112/index.html).
+
+[EP-182](exec-plans/completed/EP-182-candidate-matchup-summary.md): candidate-matchup-v1 후보별 현재대면 요약 구현·규칙/전수 오프라인 검증 완료. 원v6/후보 유지·명시 선택 프로필이다. 후속 실제모델 탐색 비교는 EX112에서 별도 수행했다. [전후예시](exec-plans/evidence/ep182/examples.md) · [사용법](../integration/candidate_matchup/README.md).
+
+[EP-181](exec-plans/completed/EP-181-jevk5-v6-battle32.md): JevK5-9B v6 상세 EX111 새32경기/16쌍·감사·오프라인뷰어·봉인·소유자원 반환 완료. 사용자 vLLM18847/GPU0 유지. [결과/뷰어](../exports/battle_viewers/ex111/index.html).
+
+[EP-180](exec-plans/completed/EP-180-openai-decisions-retry32.md): OpenAI gpt-6-luna·v6 상세 EX110 신규32경기/16쌍 완료(16승16패·50%). 감사·오프라인뷰어·봉인·소유 반환 완료. [결과/뷰어](../exports/battle_viewers/ex110/index.html). EX109 중단 기록은 보존.
+
+[EP-179](exec-plans/active/EP-179-openai-decisions-v6-battle32.md): EX109 정상10·통신실패1·미실행21로 중단, 부분종결/뷰어/원자료 보존.
+
+[EP-178](exec-plans/completed/EP-178-openai-decisions-environment.md): 독립 OpenAI Decisions API 환경과 예제·모의 검증 완료. 루트 `.env`의 OPENAI_API_KEY 입력 후 `scripts/openai-decisions`로 호출한다. 당시 실 API는 미호출했으며 후속 EX110에서 연결/32경기 검증을 완료했다. [사용법](../integration/openai_decisions/README.md).
+
+[EP-177](exec-plans/completed/EP-177-ex108-viewer-layout.md): EX108 뷰어를 기존 결정/턴 탐색·탭·리플레이 병렬 구성으로 교정했다. 이전 판본은 ex108-v1에 보존했으며 실험 결과는 동일하다. [현재 뷰어](../exports/battle_viewers/ex108/index.html).
+
+[EP-176](exec-plans/completed/EP-176-tacit-ruleqa-battle32.md): 학습Tacit 실전32경기·감사·오프라인뷰어·봉인·소유GPU1/예약프로세스 반환 완료. [EX-108](experiments/EX-108-tacit-ruleqa-battle32.md) · [최종보고](exec-plans/evidence/ep176/report.md) · [뷰어](../exports/battle_viewers/ex108/index.html).
+
+[EP-175](exec-plans/completed/EP-175-smogon-ou-strategy-data.md): Smogon110링크의 OU 전략 전수 수집·구조화·브라우저/필드 대조 완료. 원문 빈 설명을 구분한 [전략 데이터](../data/smogon-dex/strategies/gen9ou-20261019/README.txt)와 [완료 보고](exec-plans/evidence/ep175/report.md)를 참조한다.
+
+[EP-174](exec-plans/completed/EP-174-smogon-ou-strategy-links.md): 현재 Smogon OU 목록의 포켓몬–전략 링크110항목을 [JSON](../data/smogon-dex/gen9ou_strategy_links.json)·[CSV](../data/smogon-dex/gen9ou_strategy_links.csv)로 저장하고 원 DOM 전수 대조 완료.
+
+[EP-173](exec-plans/completed/EP-173-tacit-ruleqa-lora.md): 규칙QA LoRA 학습·잠긴test·선택adapter/재로딩·블라인드검토·보고/봉인·소유반환 완료. [EX-107](experiments/EX-107-tacit-ruleqa-lora.md) · [최종보고](exec-plans/evidence/ep173/report.md).
+
+[EP-172](exec-plans/completed/EP-172-strategist-first-battle.md): Strategist32경기·16쌍 정상 완료, 감사·뷰어·봉인·GPU0 반환 완료. 조건·대체 정책 결합 성적과 교체 출력 한계는 [EX-106](experiments/EX-106-strategist-first-battle.md), [최종 보고](exec-plans/evidence/ep172/report.md)를 따른다. 현재 실행·감시 없음.
+
+[EP-171](exec-plans/completed/EP-171-strategist-model-archive.md): Strategist 어댑터 원본 보관·정적 검증 완료. [모델 정보·학습 설정 차이](exec-plans/evidence/ep171/report.md) · [위치](RESEARCH_MANUAL.md#archived-strategist-model). 추론·배틀 성능은 미평가.
+
+[EP-170](exec-plans/completed/EP-170-pokemon-training-data-archive.md): pokemon-training-data 고정 revision 원본 보관·해시/행 수 검증 완료. stage2b 표본의 비표준 NaN을 원형 보존하고 기록했다. [구조·위치·manifest](RESEARCH_MANUAL.md#pokemon-training-dataset).
+
+[EP-169](exec-plans/completed/EP-169-showdown-ruleqa.md): 신규 Showdown 규칙 Q&A 5,760문항의 생성·전수/96상황 의미 검증·SFT/선택형 내보내기를 완료했다. [자료·사용 안내](RESEARCH_MANUAL.md#generated-ruleqa) · [검증](exec-plans/evidence/ep169/report.md). 학습·추론·승률 평가는 수행하지 않았다.
+
+[EP-168](exec-plans/completed/EP-168-pretrain-data-archive.md): pokechamp-pretrain-data 고정 revision 원본 보관·해시/행 수/JSON 표본 검증을 완료했다. [특징·보관 위치·manifest](RESEARCH_MANUAL.md#pretrain-dataset).
+
+[EP-166](exec-plans/completed/EP-166-pokechamp-dataset-archive.md): milkkarten/pokechamp 고정 revision 원본 보관·파일 및 Parquet 검증을 완료했다. [보관 위치](/mnt/digicap/combined/hyna/backup/pokechamp-research/datasets/milkkarten/pokechamp/) · [manifest](/mnt/digicap/combined/hyna/backup/pokechamp-research/datasets/milkkarten/pokechamp/manifest.json). 전처리·학습은 수행하지 않았다.
+
+[EP-165](exec-plans/completed/EP-165-showdown-sft-archive.md): Pokémon Showdown SFT 고정 revision의 원본 보관·전수 구조 검증을 완료했다. [보관 위치](/mnt/digicap/combined/hyna/backup/pokechamp-research/datasets/stevenkhan/pokemon-showdown-battle-sft/) · [manifest](/mnt/digicap/combined/hyna/backup/pokechamp-research/datasets/stevenkhan/pokemon-showdown-battle-sft/manifest.json). 학습·전처리는 수행하지 않았다.
+
+[EP-164](exec-plans/completed/EP-164-tacit-vllm-low.md): EX-105 외부 Tacit vLLM 평가 정상1/1·67턴패배. 감사·비교·사례·뷰어·봉인·소유자원 반환을 완료했고 사용자 서버는 유지했다. [보고](exec-plans/evidence/ep164/report.md). 추가실행0.
+
+[EP-163](exec-plans/active/EP-163-tacit-thinking-low.md): EX-104는 18턴 도중 프로세스 종료로 정상0/1·Blocked. SIGTERM 발신원은 미확정이며 부분 감사·비교·뷰어·봉인·자원 반환을 완료했다. [보고](exec-plans/evidence/ep163/report.md). 자동재개하지 않는다.
+
+[EP-162](exec-plans/completed/EP-162-jev-omni-low.md): D-156/EX-103 Omni low 정상1/1·player_lost·71턴·감사/비교/뷰어/봉인/반환 완료. [보고](exec-plans/evidence/ep162/report.md). 추가실행0.
+
+[EP-161](exec-plans/completed/EP-161-matchup-events-high.md): D-155/EX-102 high
+정상1/1·실패0·player_won·39턴·감사/비교/뷰어/봉인/반환 종결.
+[최종 보고](exec-plans/evidence/ep161/report.md). 추가실행0.
+
+[EP-160](exec-plans/completed/EP-160-matchup-events.md): D-154/EX-101 매치업 사건호출
+정상1/1·player_won·82턴·감사/비교/뷰어/봉인/반환 종결.
+[최종 보고](exec-plans/evidence/ep160/report.md). 추가실행0.
+
+[EP-159](exec-plans/completed/EP-159-glm53-low-sample.md): D-153/EX-100의 GLM-5.3 low
+정상1/1·player_won·마지막관측50턴·감사/비교/뷰어/봉인/반환을 종결했다.
+[최종 보고](exec-plans/evidence/ep159/report.md). 추가실행0.
+
+[EP-158](exec-plans/completed/EP-158-planner-unlimited-time-max-output.md): D-152/EX-099의 시간null·최대출력131072
+정상1/1·player_won·마지막관측47턴·감사/비교/뷰어/봉인/반환을 종결했다.
+[최종 보고](exec-plans/evidence/ep158/report.md). 추가실행0.
+
+[EP-157](exec-plans/active/EP-157-planner-high-effort-sample.md): D-151/EX-098의 GLM high 동일대진
+정상0/1·None·턴None·low 비교/감사/뷰어/봉인/반환을 완료했다. 추가실행0.
+[최종 보고](exec-plans/evidence/ep157/report.md).
+
+[EP-156](exec-plans/completed/EP-156-planner-format-temperature-zero.md): D-150의 GLM 기본 temperature0·응답 형식 재시도를 적용했다.
+EX-097 정상1/1·player_lost·턴35·감사/뷰어/봉인/반환. 추가 실행0.
+[최종 보고](exec-plans/evidence/ep156/report.md).
+
+[EP-155](exec-plans/active/EP-155-nvfp4-battle-probability-diagnostics.md): EX-096은7턴 GLM 스키마
+오류로 정상0/1·실패1이다. 부분감사/뷰어/봉인/반환과 자원감시 오류를 보존하며 자동재개하지 않는다.
+[실패 보고](exec-plans/evidence/ep155/report.md).
+
+[EP-154](exec-plans/active/EP-154-jev35b-nvfp4-sample.md): D-148/EX-095의 GPU0 Marlin
+단일 적재·8사전추론에서 반복성 gate가 실패했다. 정상1경기 목표 미달·본경기 미실행1·GLM0이며
+전수감사·부분뷰어·봉인·GPU/PID/잠금/세포트 반환을 완료했다. Blocked를 보존하고 자동재개하지
+않는다. [실패 종결 보고](exec-plans/evidence/ep154/report.md).
+
+[EP-153](exec-plans/completed/EP-153-planner-unlimited-disk.md): D-147에 따라 새 GLM/JEV의
+디스크 상한을null로 해제했다. 사용량 기록·실제 I/O 오류 처리와 GPU/host·장치/배치·시간/호출
+한도는 유지한다. 과거100GiB 실험 조건/봉인은 보존하며 새 모델/배틀 호출0이다.
+[검증 보고](exec-plans/evidence/ep153/report.md).
+
+[EP-152](exec-plans/completed/EP-152-planner-json-retry-sample.md): D-146의 GLM JSON 구문
+최초+추가5회 재시도와 EX-094 정상1경기·64턴 패배·전수감사/통합뷰어/봉인/반환을 완료했다.
+실제 구문재시도0이며 복구는 무호출 합성/EX-093 원문으로 검증했다. 기존 EX-093 Blocked·
+원자료/봉인은 보존한다. [완료 보고](exec-plans/evidence/ep152/report.md).
+
+[EP-151](exec-plans/active/EP-151-planner-goal-completion-sample.md): D-145/EX-093 변경 수행 지시문
+샘플은14턴 GLM JSON 구문 오류로 실패했다. 정상0/1·실패1이며17관측/16전송 부분기록의
+전수감사·통합뷰어·봉인·소유자원 반환을 완료했다. 정상1경기 목표 미달로 Blocked를 보존하며
+추가호출/재경기/자동재개0이다. [실패 종결 보고](exec-plans/evidence/ep151/report.md).
+
+[EP-150](exec-plans/completed/EP-150-planner-replay-viewer.md): D-144의 향후 GLM·JEV7탭·리플레이
+통합 화면을 새 export 기본값으로 구현했다. CPU·브라우저·EX-092 읽기전용 임시68결정/피해 전수
+대조·이동후 오프라인·공식 animation 정지/턴 이동 검증을 완료했다. 기존 EX-088/092 뷰어·봉인은
+보존하며 새 배틀/모델/API/GPU·재계산0. [검증 보고](exec-plans/evidence/ep150/report.md).
+
+[EP-149](exec-plans/completed/EP-149-executor-goal-completion.md): D-143의 JEV 목표 충족 확인·
+불필요한 반복 회피·유효한 미완료 목표 진전 지시와 CPU 연결 검증을 완료했다.
+새 기본 설정부터 적용하며 기존 동결 입력은 보존한다. 실제 모델/배틀 호출0·행동 효과 미평가.
+[검증](exec-plans/evidence/ep149/report.md).
+
+[EP-148](exec-plans/completed/EP-148-planner-first-battle-sample.md): D-142/EX-092의 EX-088 첫 대진
+GLM planner–JEV-9B 실제 샘플1경기·감사/뷰어·봉인·소유자원 반환을 완료했다.
+역할guide·표시명·기본호출 정책의55턴 승리 사례이며 일반 성능 향상은 주장하지 않는다.
+조건/결과는 [EX-092](experiments/EX-092-planner-first-battle-sample.md),
+[검증 보고](exec-plans/evidence/ep148/report.md)와 [뷰어](../exports/battle_viewers/ex092/index.html)에 둔다.
+
+[EP-147](exec-plans/completed/EP-147-candidate-display-names.md): D-141의 후보 display_name을
+새 names-v1 기본 입력·planner/JEV·미리보기·뷰어에 연결하고 CPU/저장입력/화면 검증을 완료했다.
+현재 슬롯에서 이름을 해석하며 ID·순서·명령과 과거 자료는 보존한다. 실제 API/GPU/새배틀0.
+[검증](exec-plans/evidence/ep147/report.md) · [표시 예시](../exports/battle_viewers/ep147-candidate-names/index.html).
+
+[EP-146](exec-plans/completed/EP-146-planner-role-resource-guide.md): D-140의 planner 역할·양측
+승리 경로·보존/소모 guide를 새 기본값으로 구현하고 선택/동결·비교 식별·CPU검증을 완료했다.
+기존 입력/계산·출력·호출 경계는 유지하며 실제API/GPU/새배틀0이다.
+[구조·출처](../docs/pokechamp-planner-macro-strategy.md) · [검증](exec-plans/evidence/ep146/report.md).
+
+[EP-145](exec-plans/completed/EP-145-jev-planner-environment.md): D-139의 GLM 전략 planner–JEV
+호출/프롬프트 독립 설정 환경 구현·모의 실행·로컬 검증을 완료했다. 설정 파일로6정책·2프롬프트·
+3모델을 선택하며 기본은9B/v6·최초+3턴/기절/Tera/강제교체다. 실제 API·GPU 추론·새 실제 모델
+배틀은0이며 후속 실행 조건은 별도 등록한다. [사용법](../integration/jev_planner/README.md) ·
+[검증 보고](exec-plans/evidence/ep145/report.md) ·
+[11조건 모의 뷰어](../exports/battle_viewers/ep145-planner-demo/index.html).
+
+[EP-144](exec-plans/completed/EP-144-minicpm5-2b-jev.md): D-138로 승인된
+[EX-091](experiments/EX-091-minicpm5-2b-jev.md)의 MiniCPM5-2B-Jev 계산기 포함 새32경기/16쌍과
+EX-089 비교·감사·Damage-calc 뷰어·봉인·GPU0/잠금/포트 반환을 완료했다. workflow·모델서버·
+단계 감지기도 종료했다. 성적·비용·해석과 독립 검증은 개별 EX와
+[최종 보고](exec-plans/evidence/ep144/report.md)에 둔다. 기존 결과·봉인·Blocked는 보존한다.
+[전체32경기 뷰어](../exports/battle_viewers/ex091/index.html).
+
+[EP-143](exec-plans/completed/EP-143-jev9b-no-damage.md): D-137로 승인된
+[EX-090](experiments/EX-090-jev9b-no-damage.md)의 피해 예측 제거·스피드 유지 입력과
+단독 실행기를 구현하고 새32경기/16쌍·EX-089 비교·감사·뷰어·봉인·자원 반환까지 완료했다.
+기존 결과·봉인·중단 상태를 보존하며 성적·비용·해석과 검증 근거는
+[최종 보고](exec-plans/evidence/ep143/report.md)와 개별 EX에 둔다.
+[전체 뷰어](../exports/battle_viewers/ex090/index.html).
+
+[EP-142](exec-plans/completed/EP-142-jev-damage-viewer.md): EX-088·089의 저장 계산을
+결정별 Damage-calc 탭으로 표시하는 별도 판본을 완료했다. 전수 원문/시나리오 대조와
+모델별5대표 오프라인 검사를 통과하고 새 판본을 봉인했다. 기존 원자료·뷰어 봉인은 보존하며
+새 경기·모델 호출·피해 재계산은 없다. [검증 보고](exec-plans/evidence/ep142/report.md).
+
+[EP-141](exec-plans/completed/EP-141-jev-v6-corrected-evaluation.md): 수정본의 새64경기 승인으로
+[EX-088](experiments/EX-088-jev27b-v6-corrected.md)/
+[EX-089](experiments/EX-089-jev9b-v6-corrected.md)를27B→9B 순서로 각32경기/16쌍 완료했다.
+경기별 감사·3종 공통쌍 비교·원문/턴로그 전수 내보내기·대표 오프라인 화면·봉인·자원 반환과
+최종 문서 갱신을 완료했다. 기존 중단 실험은 보존하며 일반 성능 개선은 주장하지 않는다.
+두 controller와 단계 알람 감지기도 종료됐고 추가 경기·재개는 없다.
+[최종 보고](exec-plans/evidence/ep141/report.md) ·
+[27B Damage-calc 뷰어](../exports/battle_viewers/ex088-damage-v1/index.html) ·
+[9B Damage-calc 뷰어](../exports/battle_viewers/ex089-damage-v1/index.html).
+
+[EP-140](exec-plans/active/EP-140-jev-public-memory-v6.md): 상대 공개정보 v6·턴로그 뷰어·
+[EX-086](experiments/EX-086-jev27b-public-memory-v6.md)/[EX-087](experiments/EX-087-jev9b-public-memory-v6.md)
+신규64경기 재평가는 공유 입력 결함으로 **Blocked**다. EX-086은 첫 경기 실패·미실행31,
+EX-087은CPU준비 후GPU/경기0·미실행32다. 두 결함의CPU교정과 부분 감사/뷰어/봉인·
+GPU/잠금/포트 반환을 완료했으나 원 실험은 자동재개하지 않았다. 새 승인은 EP-141에서 관리한다.
+[중단 보고](exec-plans/evidence/ep140/report.md) · [부분 뷰어](../exports/battle_viewers/ex086/index.html).
+
+[EP-139](exec-plans/completed/EP-139-jev9b-single-choice.md) /
+[EX-085](experiments/EX-085-jev9b-single-choice.md): 공식 JEV-9B 단일 Choice의 새32경기·16쌍과
+감사·EX-083 비교·오프라인 뷰어·봉인·자원 반환을 완료했다. 공유 환경의 디스크 계수를
+별도로 보완하고 후속 자원 경로 교정을 검증했다. 상세 결과/사용량·한계는 EX-085와
+[최종 보고](exec-plans/evidence/ep139/report.md)를 따른다. [뷰어](../exports/battle_viewers/ex085/index.html).
+
+[EP-138](exec-plans/completed/EP-138-quyet-medium-two-stage.md) /
+[EX-084](experiments/EX-084-quyet-medium-two-stage.md): Quyet-Medium 2단계 정책의 새32경기·
+16쌍 수집과 감사·EX-083 비교·오프라인 뷰어·봉인·자원 반환을 완료했다. 모델·정책·긴 입력을
+함께 변경한 탐색 평가이며, 상세 성적/사용량·종료 봉인 교정은 EX-084와
+[최종 보고](exec-plans/evidence/ep138/report.md)를 따른다. [뷰어](../exports/battle_viewers/ex084/index.html).
 
 [EP-137](exec-plans/completed/EP-137-jev27b-four-gpu-continuation.md) /
 [EX-083](experiments/EX-083-jev27b-four-gpu-continuation.md): EX-082 정상23 계승·4GPU 신규9의
@@ -420,3 +591,7 @@ EX-049 API0 준비 실패와 과거 EX-047/048 중단·봉인은 보존한다.
 
 중단 실험의 남은 예산은 재수집 허가가 아니다. 추가 실험·처치·방법 변경은 새 명시적
 지시와 관련 authority/plan의 범위에서 다루며, 과거 실패·무효·미완료와 검토 종료 상태를 유지한다.
+
+
+
+현재 [EP184](exec-plans/active/EP-184-jevk5-ruleqa-lora.md)에서 사용자 승인 JevK5 규칙 선택형 LoRA EX113을 실행한다. CPU/GPU 사전검사를 통과했다. 기존 EX112와 중단 기록은 보존한다.

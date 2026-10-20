@@ -64,7 +64,7 @@ def calculator_identity():
                     for name in ("worker.cjs", "scenarios-v2.cjs", "patch.cjs", "state-patch.cjs", "package-lock.json")})
 
 
-def active_context(official, prefix, own_team, dex, actor):
+def active_context(official, prefix, own_team, dex, actor, *, public_facts=None):
     """Use the project's observation/state adapters, only for the two active mons."""
     from poke_env.environment.field import Field
     from poke_env.environment.side_condition import SideCondition
@@ -100,7 +100,13 @@ def active_context(official, prefix, own_team, dex, actor):
     def shared(mon):
         history = for_pokemon(histories, complete, battle_id="offline", actor_id=actor,
                               pokemon_ident=mon["ident"])
-        if "gastroacid" in mon["volatiles"]:
+        if public_facts is not None:
+            mon = copy.deepcopy(mon)
+            current = public_facts['pokemon'].get(mon['ident'], {})
+            history['suppressed'] = current.get('suppressed') is True
+            if mon['ident'].startswith(other + ':'):
+                mon['ability'] = '' if history['suppressed'] else current.get('ability', '')
+        elif "gastroacid" in mon["volatiles"]:
             history["suppressed"] = True
         supplements = []
         try:
@@ -139,6 +145,16 @@ def active_context(official, prefix, own_team, dex, actor):
                     moves=list(dict.fromkeys(token(m[0]) for m in enemy["moves"]
                                if not m[0].startswith("*") and token(m[0]) not in ("struggle", "recharge"))),
                     **shared(enemy))
+    if public_facts is not None:
+        current = public_facts['pokemon'][enemy['ident']]
+        hp = current['hp']
+        if not isinstance(hp, dict):
+            raise ValueError('opponent HP has no v6 public evidence')
+        suppressed = current['suppressed'] is True
+        opponent.update(hp=hp['current'], max_hp=hp['maximum'], status=current['status'],
+                        item='unknown_item' if current['item'] == 'unknown' else current['item'],
+                        ability='' if suppressed else (None if current['ability'] == 'unknown' else current['ability']),
+                        ability_known=suppressed or current['ability'] != 'unknown', moves=current['moves'][:])
 
     def enum_id(value, enum):
         names = {token(e.name): e.name for e in enum}
@@ -252,8 +268,9 @@ def move_record(move, dex):
     return {"id": token(move), **{k: entry.get(k, 0) for k in ("type", "category", "accuracy", "priority")}}
 
 
-def transform(payload, official, prefix, own_team, dex, snapshot, engine, *, request_moves=False, observed_only=False):
-    """Return a new payload and audit; never mutate the archived input."""
+def prepare_matchup(payload, official, prefix, own_team, dex, snapshot, *, request_moves=False,
+                    observed_only=False, public_facts=None):
+    """Normalize the matchup, public move slots and recommended support without calculations."""
     result = copy.deepcopy(payload)
     audit = dict(version=VERSION, source_payload_sha256=digest(payload), prefix_sha256=digest(prefix),
                  official_sha256=digest(official), own_team_sha256=hashlib.sha256(own_team.encode()).hexdigest(),
@@ -264,12 +281,19 @@ def transform(payload, official, prefix, own_team, dex, snapshot, engine, *, req
     actor = payload["state"]["actor"]
     original, _ = make_input(official, prefix, actor=actor, dex=dex, version=JEV_VERSION,
                              initial_pp_policy=INITIAL_PP_POLICY)
+    if public_facts is not None:
+        from .public_facts_v6 import apply, history as public_fact_history
+        original, _ = apply(original, public_facts, dex)
     if original != payload:
         raise ValueError("payload differs from bounded JEV observation")
-    own, opponent, field, self_can, other_can = active_context(official, prefix, own_team, dex, actor)
-    history = public_history(prefix, opponent["ident"])
+    own, opponent, field, self_can, other_can = active_context(official, prefix, own_team, dex, actor,
+                                                             public_facts=public_facts)
+    history = (public_fact_history(public_facts, opponent['ident']) if public_facts is not None
+               else public_history(prefix, opponent["ident"]))
+    if public_facts is not None:
+        history['unsupported'].extend(public_facts['pokemon'].get(own['ident'], {}).get('unsupported', []))
     sets, source = snapshot.load(opponent["species"])
-    supported, excluded = candidates(sets, opponent, history)
+    supported, excluded = candidates(sets, opponent, history, public_facts=public_facts is not None)
     audit.update(source=source, history=history, candidates=supported, excluded_candidates=excluded,
                  self_can_tera=self_can, opponent_can_tera=other_can,
                  normalized_active={"self": own, "opponent": opponent}, field=field)
@@ -296,6 +320,21 @@ def transform(payload, official, prefix, own_team, dex, snapshot, engine, *, req
         other_target["moves"].extend(move_record(m, dex) for m in expected_moves)
     for move in other_target["moves"]:
         move["knowledge"] = "observed" if move["id"] in observed else "hypothesized"
+    return result, audit
+
+
+def transform(payload, official, prefix, own_team, dex, snapshot, engine, *, request_moves=False, observed_only=False,
+              public_facts=None):
+    """Return a new payload and audit; never mutate the archived input."""
+    result, audit = prepare_matchup(payload, official, prefix, own_team, dex, snapshot,
+        request_moves=request_moves, observed_only=observed_only, public_facts=public_facts)
+    if 'normalized_active' not in audit:
+        return result, audit
+    own, opponent = audit['normalized_active']['self'], audit['normalized_active']['opponent']
+    field, history, supported = audit['field'], audit['history'], audit['candidates']
+    self_can, other_can = audit['self_can_tera'], audit['opponent_can_tera']
+    self_target = next(m for m in result['state']['self_team'] if m['active'])
+    other_target = next(m for m in result['state']['opponent_team'] if m['active'])
     branches = [("current", False, False)]
     if self_can:
         branches.append(("self_tera", True, False))
@@ -387,7 +426,13 @@ def transform(payload, official, prefix, own_team, dex, snapshot, engine, *, req
     result["questions"]["action"]["instructions"] += "\n\n" + RULES
     # Keep v3's dictionary complete for newly supplied hypothetical move IDs.
     # These are rule descriptions, not extra opponent item/ability hypotheses.
+    reference_state = result['state']
+    if public_facts is not None:
+        reference_state = copy.deepcopy(reference_state)
+        for mon in reference_state['opponent_team']:
+            if mon.get('ability') == '(suppressed)':
+                mon['ability'] = public_facts['pokemon'][mon['ident']]['ability']
     result["state"]["effect_reference"] = jev_effects.build(
-        result["state"], result["questions"]["action"]["criteria"])
+        reference_state, result["questions"]["action"]["criteria"])
     audit["result_payload_sha256"] = digest(result)
     return result, audit

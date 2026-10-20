@@ -1,0 +1,620 @@
+{
+  "schema_version": "jev-planner-fixture-v1",
+  "synthetic": true,
+  "purpose": "호출·입력·중복 경계의 합성 기술 예제; 실제 경기 또는 성능 자료 아님",
+  "cases": [
+    {
+      "battle": "battle-planner-synthetic",
+      "actor": "p1",
+      "rqid": 1,
+      "payload": {
+        "state": {
+          "version": "jev-choice-v6",
+          "format": "gen9ou singles",
+          "actor": "p1",
+          "turn": 0,
+          "request_id": 1,
+          "decision_kind": "lead",
+          "self_team": [
+            {
+              "slot": 1,
+              "species": "Garchomp",
+              "hp_percent": 100
+            },
+            {
+              "slot": 2,
+              "species": "Corviknight",
+              "hp_percent": 100
+            },
+            {
+              "slot": 3,
+              "species": "Rotom-Wash",
+              "hp_percent": 100
+            }
+          ],
+          "opponent_team": [
+            {
+              "preview_slot": 1,
+              "species": "Pikachu",
+              "moves": "unknown"
+            }
+          ],
+          "information_rules": "Synthetic interface fixture. Opponent hidden facts remain unknown.",
+          "recent_completed_turn_log": []
+        },
+        "questions": {
+          "action": {
+            "type": "choice",
+            "instructions": "Choose exactly one supplied legal candidate that best improves your chance of winning this Generation 9 OU singles battle. Compare moves and switches, survival, positioning, hazards, status, team capabilities and the limited Tera resource. Candidate IDs are executable choices. team/switch slot is a self_team slot; move_ref links to self_team[slot].current_move_slots[slot] by the explicit slot numbers, not array offsets. A terastallize candidate spends Tera and uses that slot's move. For lead or forced_switch choose the best supplied team/switch candidate. No explanation or tool call is required.\n\nCurrent state is authoritative. unknown means unavailable evidence, not zero or absence. confirmed_absent means verified absence; not_applicable means the concept does not apply. Empty status means no major status; empty boosts means zero stages; empty volatile maps mean no effects. Client counters are observed counters, not guaranteed remaining durations. At lead selection, active is a request slot flag, not a Pokemon already in battle. known_move_set preserves self moves when current request slots are absent. Compact self reserves omit moves and stats only in ordinary turns; omitted information is not known absence.\n\nEach general_effect is a general Generation 9 rule, never proof of current activation. A condition with general_rules retains its original value in observed; empty condition maps still mean no effect. Apply it to confirmed state and explicitly labeled calculation assumptions. Opponent moves contains only publicly observed moves, or unknown when none is revealed. A role_summary lists conditional capabilities: opponent species possibilities do not establish hidden moves, items, abilities, spreads or the actual role of its current set. Self roles are supported capabilities, not guaranteed favorable matchups or a current win condition. Do not guess hidden facts from these descriptions.\n\nDamage ranges name their target and use percent of that target's maximum HP. [minimum, maximum] is conditional on all accuracy checks succeeding, current effects, compatible fixed 2026-09-18 Smogon recommended sets, feasible rounded public HP and move-specific hit counts. It is not a mean, a probability or a guarantee. Ranges round outward to 0.1% and may exceed 100%. Null with a reason means uncalculated, inapplicable or unsupported; [0,0] is calculated zero. The finite recommended support is not all legal sets and is not observed opponent possession. current includes already applied Tera; self_tera/opponent_tera/both_tera are new Tera branches relative to your side even for incoming damage. Unavailable branches are omitted. Ordinary critical-hit chance, misses, unknown pending actions, switching and future action-order changes are excluded; move success requirements such as Sucker Punch remain conditional. Base type/category/power/accuracy/priority describe Dex metadata, not every dynamic rule.\n\nspeed_comparison concerns effective Speed of the two current active Pokemon before actions, not probability of acting first. Read speed_certainty and by_set: self_speed_relation is faster, tie or slower relative to each compatible recommended opponent set. When these differ, Speed advantage cannot be assured. Named sets describe assumptions, not identified hidden sets; differences within a set may also reflect variants or unresolved public state. Agreement across these finite recommended candidates is not certainty over all legal sets. Unavailable means no conclusion. Do not infer probabilities from candidate counts. Consider the consequences of the possible Speed relations in the current battle situation. Compare move priority first, including ability/terrain/HP-dependent changes; then effective Speed. At equal priority Trick Room reverses unequal Speed order, while a Speed tie remains random (normally 50/50 between two actors). Switching, Quick Claw/Quick Draw, Stall, forced ordering effects, inability to act and state changes can alter execution independently. Observed earlier action alone does not establish superior Speed. Keep per-move priority in this interpretation.\n\nThe type_matchups matrix rows are attack_types, columns defense_types and cells are the complete 18 by 18 single-type multipliers. Multiply the defender's type factors for dual types; abilities, items, move exceptions, grounding and other current effects can override this type-only result. defensive_types is current defensive typing; terastallized is actual use, not availability. configured_tera_type is the configured self choice, applied_tera_type is already used. stab_types preserves pre-Tera battle typing for offensive STAB. Account for retained original STAB and Tera-enhanced STAB separately from defense. Stellar Tera keeps defensive types and has special offensive rules.\n\nrecent_completed_turn_log preserves public events in order for the last at most three completed turns, from state.actor's perspective. Participants distinguish Your and Opposing even with nicknames; a team nickname links a differing log name to its species and slot. These events do not replace current state. Remaining public HP approximately 63% means remaining HP, not 63% damage, and does not expose hidden maximum HP. Stage change +1 is a delta, not final stage +1. Consecutive public ability/boost events retain their order; do not infer an unobserved cause. An Unsupported event retains its raw protocol; use only facts actually present. Effect start/end and observed status/Tera apply at the recorded time.\n\nGENERATION 9 SINGLES MECHANICS\n\nApply standard Pokemon Scarlet/Violet Generation 9 singles mechanics.\n\nMajor status:\n- Burn: 1/16 max HP residual damage each turn and normally halves physical damage dealt.\n- Paralysis: Speed is halved and each attempted action has a 25% chance of full paralysis.\n- Poison: 1/8 max HP residual damage each turn.\n- Toxic poison: damage increases each turn from 1/16, 2/16, 3/16, etc.; the Toxic counter resets on switching.\n- Sleep: normally prevents actions for 1-3 sleep turns, subject to moves such as Sleep Talk.\n- Freeze: normally prevents actions and has a 20% natural thaw chance each turn; some moves can thaw immediately.\n- A Pokemon normally cannot have more than one major status condition at once.\n- Confusion is volatile and disappears on switching.\n\nRelevant type immunities include Fire to burn, Electric to paralysis, Poison/Steel to poison, Ice to freeze, and Grass to powder/spore moves, unless an explicit effect overrides the normal interaction.\n\nStat stages range from -6 to +6. +1 = 1.5x, +2 = 2x, -1 = 2/3x, and -2 = 1/2x. Most stat stages and volatile conditions reset when switching.\n\nMove order is determined by priority first, then effective Speed. Do not assume a faster base Speed moves first if priority, paralysis, Choice Scarf, boosts, weather, or other effects alter the order.\n\nDamage depends on more than base power. Account for attacking and defensive stats, stat stages, STAB, type effectiveness, abilities, items, weather, terrain, critical hits, and damage rolls.\n\nEntry hazards:\n- Stealth Rock damages switch-ins according to their Rock weakness/resistance; neutral damage is 1/8 max HP.\n- Spikes damage grounded switch-ins: 1 layer = 1/8, 2 = 1/6, 3 = 1/4.\n- Toxic Spikes poison grounded switch-ins; two layers badly poison them.\n- Sticky Web lowers the Speed of grounded switch-ins by one stage.\n- Heavy-Duty Boots normally prevent entry-hazard effects.\n\nSwitching normally removes stat changes, confusion, Substitute, and many other volatile effects, but HP loss and major status remain.\n\nWeather, terrain, screens, hazards, residual damage, recovery, item removal, and field duration must be considered when evaluating future turns.\n\nEach side may Terastallize once per battle. Terastallization changes defensive typing to the Tera type and can alter offensive STAB. Treat unused Tera as a limited strategic resource, not merely an immediate damage boost.\n\nDo not assume unknown opponent moves, items, abilities, EVs, Tera type, or future actions. Apply special abilities, items, and move-specific exceptions only when they are confirmed or otherwise supplied by the battle state.\n\n\nOpponent public information persists across turns and switches. Bench moves, held-item state and ability identities are retained only when publicly disclosed. Temporary Mimic/Transform copies expire on switching; Sketch changes persist. confirmed_absent items stay absent until public acquisition. baseAbility records a publicly disclosed native ability separately from a copied current ability. An ability identity does not prove that its effect is active: respect suppressed and unknown suppression, and unavailable calculation reasons. Bench HP is the last public HP observation; do not infer unreported recovery. Damage and Speed calculations still concern the current active matchup only.\n",
+            "criteria": {
+              "team_1": {
+                "kind": "team",
+                "slot": 1,
+                "pokemon": "Garchomp"
+              },
+              "team_2": {
+                "kind": "team",
+                "slot": 2,
+                "pokemon": "Corviknight"
+              }
+            }
+          }
+        }
+      },
+      "commands": {
+        "team_1": "/team 12",
+        "team_2": "/team 21"
+      },
+      "prefix": [
+        {
+          "event_seq": 1,
+          "protocol": "|init|battle\n|gametype|singles\n|gen|9\n|teampreview\n|request|{\"rqid\": 1, \"side\": {\"id\": \"p1\"}}"
+        }
+      ],
+      "boundary": {
+        "protocol_event_seq": 1,
+        "line_index": 4
+      }
+    },
+    {
+      "battle": "battle-planner-synthetic",
+      "actor": "p1",
+      "rqid": 2,
+      "payload": {
+        "state": {
+          "version": "jev-choice-v6",
+          "format": "gen9ou singles",
+          "actor": "p1",
+          "turn": 1,
+          "request_id": 2,
+          "decision_kind": "turn_action",
+          "self_team": [
+            {
+              "slot": 1,
+              "species": "Garchomp",
+              "hp_percent": 100
+            },
+            {
+              "slot": 2,
+              "species": "Corviknight",
+              "hp_percent": 100
+            },
+            {
+              "slot": 3,
+              "species": "Rotom-Wash",
+              "hp_percent": 100
+            }
+          ],
+          "opponent_team": [
+            {
+              "preview_slot": 1,
+              "species": "Pikachu",
+              "moves": "unknown"
+            }
+          ],
+          "information_rules": "Synthetic interface fixture. Opponent hidden facts remain unknown.",
+          "recent_completed_turn_log": []
+        },
+        "questions": {
+          "action": {
+            "type": "choice",
+            "instructions": "Choose exactly one supplied legal candidate that best improves your chance of winning this Generation 9 OU singles battle. Compare moves and switches, survival, positioning, hazards, status, team capabilities and the limited Tera resource. Candidate IDs are executable choices. team/switch slot is a self_team slot; move_ref links to self_team[slot].current_move_slots[slot] by the explicit slot numbers, not array offsets. A terastallize candidate spends Tera and uses that slot's move. For lead or forced_switch choose the best supplied team/switch candidate. No explanation or tool call is required.\n\nCurrent state is authoritative. unknown means unavailable evidence, not zero or absence. confirmed_absent means verified absence; not_applicable means the concept does not apply. Empty status means no major status; empty boosts means zero stages; empty volatile maps mean no effects. Client counters are observed counters, not guaranteed remaining durations. At lead selection, active is a request slot flag, not a Pokemon already in battle. known_move_set preserves self moves when current request slots are absent. Compact self reserves omit moves and stats only in ordinary turns; omitted information is not known absence.\n\nEach general_effect is a general Generation 9 rule, never proof of current activation. A condition with general_rules retains its original value in observed; empty condition maps still mean no effect. Apply it to confirmed state and explicitly labeled calculation assumptions. Opponent moves contains only publicly observed moves, or unknown when none is revealed. A role_summary lists conditional capabilities: opponent species possibilities do not establish hidden moves, items, abilities, spreads or the actual role of its current set. Self roles are supported capabilities, not guaranteed favorable matchups or a current win condition. Do not guess hidden facts from these descriptions.\n\nDamage ranges name their target and use percent of that target's maximum HP. [minimum, maximum] is conditional on all accuracy checks succeeding, current effects, compatible fixed 2026-09-18 Smogon recommended sets, feasible rounded public HP and move-specific hit counts. It is not a mean, a probability or a guarantee. Ranges round outward to 0.1% and may exceed 100%. Null with a reason means uncalculated, inapplicable or unsupported; [0,0] is calculated zero. The finite recommended support is not all legal sets and is not observed opponent possession. current includes already applied Tera; self_tera/opponent_tera/both_tera are new Tera branches relative to your side even for incoming damage. Unavailable branches are omitted. Ordinary critical-hit chance, misses, unknown pending actions, switching and future action-order changes are excluded; move success requirements such as Sucker Punch remain conditional. Base type/category/power/accuracy/priority describe Dex metadata, not every dynamic rule.\n\nspeed_comparison concerns effective Speed of the two current active Pokemon before actions, not probability of acting first. Read speed_certainty and by_set: self_speed_relation is faster, tie or slower relative to each compatible recommended opponent set. When these differ, Speed advantage cannot be assured. Named sets describe assumptions, not identified hidden sets; differences within a set may also reflect variants or unresolved public state. Agreement across these finite recommended candidates is not certainty over all legal sets. Unavailable means no conclusion. Do not infer probabilities from candidate counts. Consider the consequences of the possible Speed relations in the current battle situation. Compare move priority first, including ability/terrain/HP-dependent changes; then effective Speed. At equal priority Trick Room reverses unequal Speed order, while a Speed tie remains random (normally 50/50 between two actors). Switching, Quick Claw/Quick Draw, Stall, forced ordering effects, inability to act and state changes can alter execution independently. Observed earlier action alone does not establish superior Speed. Keep per-move priority in this interpretation.\n\nThe type_matchups matrix rows are attack_types, columns defense_types and cells are the complete 18 by 18 single-type multipliers. Multiply the defender's type factors for dual types; abilities, items, move exceptions, grounding and other current effects can override this type-only result. defensive_types is current defensive typing; terastallized is actual use, not availability. configured_tera_type is the configured self choice, applied_tera_type is already used. stab_types preserves pre-Tera battle typing for offensive STAB. Account for retained original STAB and Tera-enhanced STAB separately from defense. Stellar Tera keeps defensive types and has special offensive rules.\n\nrecent_completed_turn_log preserves public events in order for the last at most three completed turns, from state.actor's perspective. Participants distinguish Your and Opposing even with nicknames; a team nickname links a differing log name to its species and slot. These events do not replace current state. Remaining public HP approximately 63% means remaining HP, not 63% damage, and does not expose hidden maximum HP. Stage change +1 is a delta, not final stage +1. Consecutive public ability/boost events retain their order; do not infer an unobserved cause. An Unsupported event retains its raw protocol; use only facts actually present. Effect start/end and observed status/Tera apply at the recorded time.\n\nGENERATION 9 SINGLES MECHANICS\n\nApply standard Pokemon Scarlet/Violet Generation 9 singles mechanics.\n\nMajor status:\n- Burn: 1/16 max HP residual damage each turn and normally halves physical damage dealt.\n- Paralysis: Speed is halved and each attempted action has a 25% chance of full paralysis.\n- Poison: 1/8 max HP residual damage each turn.\n- Toxic poison: damage increases each turn from 1/16, 2/16, 3/16, etc.; the Toxic counter resets on switching.\n- Sleep: normally prevents actions for 1-3 sleep turns, subject to moves such as Sleep Talk.\n- Freeze: normally prevents actions and has a 20% natural thaw chance each turn; some moves can thaw immediately.\n- A Pokemon normally cannot have more than one major status condition at once.\n- Confusion is volatile and disappears on switching.\n\nRelevant type immunities include Fire to burn, Electric to paralysis, Poison/Steel to poison, Ice to freeze, and Grass to powder/spore moves, unless an explicit effect overrides the normal interaction.\n\nStat stages range from -6 to +6. +1 = 1.5x, +2 = 2x, -1 = 2/3x, and -2 = 1/2x. Most stat stages and volatile conditions reset when switching.\n\nMove order is determined by priority first, then effective Speed. Do not assume a faster base Speed moves first if priority, paralysis, Choice Scarf, boosts, weather, or other effects alter the order.\n\nDamage depends on more than base power. Account for attacking and defensive stats, stat stages, STAB, type effectiveness, abilities, items, weather, terrain, critical hits, and damage rolls.\n\nEntry hazards:\n- Stealth Rock damages switch-ins according to their Rock weakness/resistance; neutral damage is 1/8 max HP.\n- Spikes damage grounded switch-ins: 1 layer = 1/8, 2 = 1/6, 3 = 1/4.\n- Toxic Spikes poison grounded switch-ins; two layers badly poison them.\n- Sticky Web lowers the Speed of grounded switch-ins by one stage.\n- Heavy-Duty Boots normally prevent entry-hazard effects.\n\nSwitching normally removes stat changes, confusion, Substitute, and many other volatile effects, but HP loss and major status remain.\n\nWeather, terrain, screens, hazards, residual damage, recovery, item removal, and field duration must be considered when evaluating future turns.\n\nEach side may Terastallize once per battle. Terastallization changes defensive typing to the Tera type and can alter offensive STAB. Treat unused Tera as a limited strategic resource, not merely an immediate damage boost.\n\nDo not assume unknown opponent moves, items, abilities, EVs, Tera type, or future actions. Apply special abilities, items, and move-specific exceptions only when they are confirmed or otherwise supplied by the battle state.\n\n\nOpponent public information persists across turns and switches. Bench moves, held-item state and ability identities are retained only when publicly disclosed. Temporary Mimic/Transform copies expire on switching; Sketch changes persist. confirmed_absent items stay absent until public acquisition. baseAbility records a publicly disclosed native ability separately from a copied current ability. An ability identity does not prove that its effect is active: respect suppressed and unknown suppression, and unavailable calculation reasons. Bench HP is the last public HP observation; do not infer unreported recovery. Damage and Speed calculations still concern the current active matchup only.\n",
+            "criteria": {
+              "move_1": {
+                "kind": "move",
+                "move_ref": {
+                  "slot": 1,
+                  "team_slot": 1
+                },
+                "name": "Earthquake",
+                "terastallize": false
+              },
+              "move_2": {
+                "kind": "move",
+                "move_ref": {
+                  "slot": 2,
+                  "team_slot": 1
+                },
+                "name": "Protect",
+                "terastallize": false
+              }
+            }
+          }
+        }
+      },
+      "commands": {
+        "move_1": "/choose move 1",
+        "move_2": "/choose move 2"
+      },
+      "prefix": [
+        {
+          "event_seq": 1,
+          "protocol": "|init|battle\n|gametype|singles\n|gen|9\n|teampreview\n|request|{\"rqid\": 1, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 2,
+          "protocol": "|start\n|turn|1\n|request|{\"rqid\": 2, \"side\": {\"id\": \"p1\"}}"
+        }
+      ],
+      "boundary": {
+        "protocol_event_seq": 2,
+        "line_index": 2
+      }
+    },
+    {
+      "battle": "battle-planner-synthetic",
+      "actor": "p1",
+      "rqid": 3,
+      "payload": {
+        "state": {
+          "version": "jev-choice-v6",
+          "format": "gen9ou singles",
+          "actor": "p1",
+          "turn": 2,
+          "request_id": 3,
+          "decision_kind": "forced_switch",
+          "self_team": [
+            {
+              "slot": 1,
+              "species": "Garchomp",
+              "hp_percent": 100
+            },
+            {
+              "slot": 2,
+              "species": "Corviknight",
+              "hp_percent": 100
+            },
+            {
+              "slot": 3,
+              "species": "Rotom-Wash",
+              "hp_percent": 100
+            }
+          ],
+          "opponent_team": [
+            {
+              "preview_slot": 1,
+              "species": "Pikachu",
+              "moves": "unknown"
+            }
+          ],
+          "information_rules": "Synthetic interface fixture. Opponent hidden facts remain unknown.",
+          "recent_completed_turn_log": []
+        },
+        "questions": {
+          "action": {
+            "type": "choice",
+            "instructions": "Choose exactly one supplied legal candidate that best improves your chance of winning this Generation 9 OU singles battle. Compare moves and switches, survival, positioning, hazards, status, team capabilities and the limited Tera resource. Candidate IDs are executable choices. team/switch slot is a self_team slot; move_ref links to self_team[slot].current_move_slots[slot] by the explicit slot numbers, not array offsets. A terastallize candidate spends Tera and uses that slot's move. For lead or forced_switch choose the best supplied team/switch candidate. No explanation or tool call is required.\n\nCurrent state is authoritative. unknown means unavailable evidence, not zero or absence. confirmed_absent means verified absence; not_applicable means the concept does not apply. Empty status means no major status; empty boosts means zero stages; empty volatile maps mean no effects. Client counters are observed counters, not guaranteed remaining durations. At lead selection, active is a request slot flag, not a Pokemon already in battle. known_move_set preserves self moves when current request slots are absent. Compact self reserves omit moves and stats only in ordinary turns; omitted information is not known absence.\n\nEach general_effect is a general Generation 9 rule, never proof of current activation. A condition with general_rules retains its original value in observed; empty condition maps still mean no effect. Apply it to confirmed state and explicitly labeled calculation assumptions. Opponent moves contains only publicly observed moves, or unknown when none is revealed. A role_summary lists conditional capabilities: opponent species possibilities do not establish hidden moves, items, abilities, spreads or the actual role of its current set. Self roles are supported capabilities, not guaranteed favorable matchups or a current win condition. Do not guess hidden facts from these descriptions.\n\nDamage ranges name their target and use percent of that target's maximum HP. [minimum, maximum] is conditional on all accuracy checks succeeding, current effects, compatible fixed 2026-09-18 Smogon recommended sets, feasible rounded public HP and move-specific hit counts. It is not a mean, a probability or a guarantee. Ranges round outward to 0.1% and may exceed 100%. Null with a reason means uncalculated, inapplicable or unsupported; [0,0] is calculated zero. The finite recommended support is not all legal sets and is not observed opponent possession. current includes already applied Tera; self_tera/opponent_tera/both_tera are new Tera branches relative to your side even for incoming damage. Unavailable branches are omitted. Ordinary critical-hit chance, misses, unknown pending actions, switching and future action-order changes are excluded; move success requirements such as Sucker Punch remain conditional. Base type/category/power/accuracy/priority describe Dex metadata, not every dynamic rule.\n\nspeed_comparison concerns effective Speed of the two current active Pokemon before actions, not probability of acting first. Read speed_certainty and by_set: self_speed_relation is faster, tie or slower relative to each compatible recommended opponent set. When these differ, Speed advantage cannot be assured. Named sets describe assumptions, not identified hidden sets; differences within a set may also reflect variants or unresolved public state. Agreement across these finite recommended candidates is not certainty over all legal sets. Unavailable means no conclusion. Do not infer probabilities from candidate counts. Consider the consequences of the possible Speed relations in the current battle situation. Compare move priority first, including ability/terrain/HP-dependent changes; then effective Speed. At equal priority Trick Room reverses unequal Speed order, while a Speed tie remains random (normally 50/50 between two actors). Switching, Quick Claw/Quick Draw, Stall, forced ordering effects, inability to act and state changes can alter execution independently. Observed earlier action alone does not establish superior Speed. Keep per-move priority in this interpretation.\n\nThe type_matchups matrix rows are attack_types, columns defense_types and cells are the complete 18 by 18 single-type multipliers. Multiply the defender's type factors for dual types; abilities, items, move exceptions, grounding and other current effects can override this type-only result. defensive_types is current defensive typing; terastallized is actual use, not availability. configured_tera_type is the configured self choice, applied_tera_type is already used. stab_types preserves pre-Tera battle typing for offensive STAB. Account for retained original STAB and Tera-enhanced STAB separately from defense. Stellar Tera keeps defensive types and has special offensive rules.\n\nrecent_completed_turn_log preserves public events in order for the last at most three completed turns, from state.actor's perspective. Participants distinguish Your and Opposing even with nicknames; a team nickname links a differing log name to its species and slot. These events do not replace current state. Remaining public HP approximately 63% means remaining HP, not 63% damage, and does not expose hidden maximum HP. Stage change +1 is a delta, not final stage +1. Consecutive public ability/boost events retain their order; do not infer an unobserved cause. An Unsupported event retains its raw protocol; use only facts actually present. Effect start/end and observed status/Tera apply at the recorded time.\n\nGENERATION 9 SINGLES MECHANICS\n\nApply standard Pokemon Scarlet/Violet Generation 9 singles mechanics.\n\nMajor status:\n- Burn: 1/16 max HP residual damage each turn and normally halves physical damage dealt.\n- Paralysis: Speed is halved and each attempted action has a 25% chance of full paralysis.\n- Poison: 1/8 max HP residual damage each turn.\n- Toxic poison: damage increases each turn from 1/16, 2/16, 3/16, etc.; the Toxic counter resets on switching.\n- Sleep: normally prevents actions for 1-3 sleep turns, subject to moves such as Sleep Talk.\n- Freeze: normally prevents actions and has a 20% natural thaw chance each turn; some moves can thaw immediately.\n- A Pokemon normally cannot have more than one major status condition at once.\n- Confusion is volatile and disappears on switching.\n\nRelevant type immunities include Fire to burn, Electric to paralysis, Poison/Steel to poison, Ice to freeze, and Grass to powder/spore moves, unless an explicit effect overrides the normal interaction.\n\nStat stages range from -6 to +6. +1 = 1.5x, +2 = 2x, -1 = 2/3x, and -2 = 1/2x. Most stat stages and volatile conditions reset when switching.\n\nMove order is determined by priority first, then effective Speed. Do not assume a faster base Speed moves first if priority, paralysis, Choice Scarf, boosts, weather, or other effects alter the order.\n\nDamage depends on more than base power. Account for attacking and defensive stats, stat stages, STAB, type effectiveness, abilities, items, weather, terrain, critical hits, and damage rolls.\n\nEntry hazards:\n- Stealth Rock damages switch-ins according to their Rock weakness/resistance; neutral damage is 1/8 max HP.\n- Spikes damage grounded switch-ins: 1 layer = 1/8, 2 = 1/6, 3 = 1/4.\n- Toxic Spikes poison grounded switch-ins; two layers badly poison them.\n- Sticky Web lowers the Speed of grounded switch-ins by one stage.\n- Heavy-Duty Boots normally prevent entry-hazard effects.\n\nSwitching normally removes stat changes, confusion, Substitute, and many other volatile effects, but HP loss and major status remain.\n\nWeather, terrain, screens, hazards, residual damage, recovery, item removal, and field duration must be considered when evaluating future turns.\n\nEach side may Terastallize once per battle. Terastallization changes defensive typing to the Tera type and can alter offensive STAB. Treat unused Tera as a limited strategic resource, not merely an immediate damage boost.\n\nDo not assume unknown opponent moves, items, abilities, EVs, Tera type, or future actions. Apply special abilities, items, and move-specific exceptions only when they are confirmed or otherwise supplied by the battle state.\n\n\nOpponent public information persists across turns and switches. Bench moves, held-item state and ability identities are retained only when publicly disclosed. Temporary Mimic/Transform copies expire on switching; Sketch changes persist. confirmed_absent items stay absent until public acquisition. baseAbility records a publicly disclosed native ability separately from a copied current ability. An ability identity does not prove that its effect is active: respect suppressed and unknown suppression, and unavailable calculation reasons. Bench HP is the last public HP observation; do not infer unreported recovery. Damage and Speed calculations still concern the current active matchup only.\n",
+            "criteria": {
+              "switch_2": {
+                "kind": "switch",
+                "slot": 2,
+                "pokemon": "Corviknight"
+              }
+            }
+          }
+        }
+      },
+      "commands": {
+        "switch_2": "/choose switch 2"
+      },
+      "prefix": [
+        {
+          "event_seq": 1,
+          "protocol": "|init|battle\n|gametype|singles\n|gen|9\n|teampreview\n|request|{\"rqid\": 1, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 2,
+          "protocol": "|start\n|turn|1\n|request|{\"rqid\": 2, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 3,
+          "protocol": "|-terastallize|p2a: Pikachu|Flying\n|faint|p1a: Garchomp\n|turn|2\n|request|{\"rqid\": 3, \"side\": {\"id\": \"p1\"}}"
+        }
+      ],
+      "boundary": {
+        "protocol_event_seq": 3,
+        "line_index": 3
+      }
+    },
+    {
+      "battle": "battle-planner-synthetic",
+      "actor": "p1",
+      "rqid": 4,
+      "payload": {
+        "state": {
+          "version": "jev-choice-v6",
+          "format": "gen9ou singles",
+          "actor": "p1",
+          "turn": 2,
+          "request_id": 4,
+          "decision_kind": "forced_switch",
+          "self_team": [
+            {
+              "slot": 1,
+              "species": "Garchomp",
+              "hp_percent": 100
+            },
+            {
+              "slot": 2,
+              "species": "Corviknight",
+              "hp_percent": 100
+            },
+            {
+              "slot": 3,
+              "species": "Rotom-Wash",
+              "hp_percent": 100
+            }
+          ],
+          "opponent_team": [
+            {
+              "preview_slot": 1,
+              "species": "Pikachu",
+              "moves": "unknown"
+            }
+          ],
+          "information_rules": "Synthetic interface fixture. Opponent hidden facts remain unknown.",
+          "recent_completed_turn_log": []
+        },
+        "questions": {
+          "action": {
+            "type": "choice",
+            "instructions": "Choose exactly one supplied legal candidate that best improves your chance of winning this Generation 9 OU singles battle. Compare moves and switches, survival, positioning, hazards, status, team capabilities and the limited Tera resource. Candidate IDs are executable choices. team/switch slot is a self_team slot; move_ref links to self_team[slot].current_move_slots[slot] by the explicit slot numbers, not array offsets. A terastallize candidate spends Tera and uses that slot's move. For lead or forced_switch choose the best supplied team/switch candidate. No explanation or tool call is required.\n\nCurrent state is authoritative. unknown means unavailable evidence, not zero or absence. confirmed_absent means verified absence; not_applicable means the concept does not apply. Empty status means no major status; empty boosts means zero stages; empty volatile maps mean no effects. Client counters are observed counters, not guaranteed remaining durations. At lead selection, active is a request slot flag, not a Pokemon already in battle. known_move_set preserves self moves when current request slots are absent. Compact self reserves omit moves and stats only in ordinary turns; omitted information is not known absence.\n\nEach general_effect is a general Generation 9 rule, never proof of current activation. A condition with general_rules retains its original value in observed; empty condition maps still mean no effect. Apply it to confirmed state and explicitly labeled calculation assumptions. Opponent moves contains only publicly observed moves, or unknown when none is revealed. A role_summary lists conditional capabilities: opponent species possibilities do not establish hidden moves, items, abilities, spreads or the actual role of its current set. Self roles are supported capabilities, not guaranteed favorable matchups or a current win condition. Do not guess hidden facts from these descriptions.\n\nDamage ranges name their target and use percent of that target's maximum HP. [minimum, maximum] is conditional on all accuracy checks succeeding, current effects, compatible fixed 2026-09-18 Smogon recommended sets, feasible rounded public HP and move-specific hit counts. It is not a mean, a probability or a guarantee. Ranges round outward to 0.1% and may exceed 100%. Null with a reason means uncalculated, inapplicable or unsupported; [0,0] is calculated zero. The finite recommended support is not all legal sets and is not observed opponent possession. current includes already applied Tera; self_tera/opponent_tera/both_tera are new Tera branches relative to your side even for incoming damage. Unavailable branches are omitted. Ordinary critical-hit chance, misses, unknown pending actions, switching and future action-order changes are excluded; move success requirements such as Sucker Punch remain conditional. Base type/category/power/accuracy/priority describe Dex metadata, not every dynamic rule.\n\nspeed_comparison concerns effective Speed of the two current active Pokemon before actions, not probability of acting first. Read speed_certainty and by_set: self_speed_relation is faster, tie or slower relative to each compatible recommended opponent set. When these differ, Speed advantage cannot be assured. Named sets describe assumptions, not identified hidden sets; differences within a set may also reflect variants or unresolved public state. Agreement across these finite recommended candidates is not certainty over all legal sets. Unavailable means no conclusion. Do not infer probabilities from candidate counts. Consider the consequences of the possible Speed relations in the current battle situation. Compare move priority first, including ability/terrain/HP-dependent changes; then effective Speed. At equal priority Trick Room reverses unequal Speed order, while a Speed tie remains random (normally 50/50 between two actors). Switching, Quick Claw/Quick Draw, Stall, forced ordering effects, inability to act and state changes can alter execution independently. Observed earlier action alone does not establish superior Speed. Keep per-move priority in this interpretation.\n\nThe type_matchups matrix rows are attack_types, columns defense_types and cells are the complete 18 by 18 single-type multipliers. Multiply the defender's type factors for dual types; abilities, items, move exceptions, grounding and other current effects can override this type-only result. defensive_types is current defensive typing; terastallized is actual use, not availability. configured_tera_type is the configured self choice, applied_tera_type is already used. stab_types preserves pre-Tera battle typing for offensive STAB. Account for retained original STAB and Tera-enhanced STAB separately from defense. Stellar Tera keeps defensive types and has special offensive rules.\n\nrecent_completed_turn_log preserves public events in order for the last at most three completed turns, from state.actor's perspective. Participants distinguish Your and Opposing even with nicknames; a team nickname links a differing log name to its species and slot. These events do not replace current state. Remaining public HP approximately 63% means remaining HP, not 63% damage, and does not expose hidden maximum HP. Stage change +1 is a delta, not final stage +1. Consecutive public ability/boost events retain their order; do not infer an unobserved cause. An Unsupported event retains its raw protocol; use only facts actually present. Effect start/end and observed status/Tera apply at the recorded time.\n\nGENERATION 9 SINGLES MECHANICS\n\nApply standard Pokemon Scarlet/Violet Generation 9 singles mechanics.\n\nMajor status:\n- Burn: 1/16 max HP residual damage each turn and normally halves physical damage dealt.\n- Paralysis: Speed is halved and each attempted action has a 25% chance of full paralysis.\n- Poison: 1/8 max HP residual damage each turn.\n- Toxic poison: damage increases each turn from 1/16, 2/16, 3/16, etc.; the Toxic counter resets on switching.\n- Sleep: normally prevents actions for 1-3 sleep turns, subject to moves such as Sleep Talk.\n- Freeze: normally prevents actions and has a 20% natural thaw chance each turn; some moves can thaw immediately.\n- A Pokemon normally cannot have more than one major status condition at once.\n- Confusion is volatile and disappears on switching.\n\nRelevant type immunities include Fire to burn, Electric to paralysis, Poison/Steel to poison, Ice to freeze, and Grass to powder/spore moves, unless an explicit effect overrides the normal interaction.\n\nStat stages range from -6 to +6. +1 = 1.5x, +2 = 2x, -1 = 2/3x, and -2 = 1/2x. Most stat stages and volatile conditions reset when switching.\n\nMove order is determined by priority first, then effective Speed. Do not assume a faster base Speed moves first if priority, paralysis, Choice Scarf, boosts, weather, or other effects alter the order.\n\nDamage depends on more than base power. Account for attacking and defensive stats, stat stages, STAB, type effectiveness, abilities, items, weather, terrain, critical hits, and damage rolls.\n\nEntry hazards:\n- Stealth Rock damages switch-ins according to their Rock weakness/resistance; neutral damage is 1/8 max HP.\n- Spikes damage grounded switch-ins: 1 layer = 1/8, 2 = 1/6, 3 = 1/4.\n- Toxic Spikes poison grounded switch-ins; two layers badly poison them.\n- Sticky Web lowers the Speed of grounded switch-ins by one stage.\n- Heavy-Duty Boots normally prevent entry-hazard effects.\n\nSwitching normally removes stat changes, confusion, Substitute, and many other volatile effects, but HP loss and major status remain.\n\nWeather, terrain, screens, hazards, residual damage, recovery, item removal, and field duration must be considered when evaluating future turns.\n\nEach side may Terastallize once per battle. Terastallization changes defensive typing to the Tera type and can alter offensive STAB. Treat unused Tera as a limited strategic resource, not merely an immediate damage boost.\n\nDo not assume unknown opponent moves, items, abilities, EVs, Tera type, or future actions. Apply special abilities, items, and move-specific exceptions only when they are confirmed or otherwise supplied by the battle state.\n\n\nOpponent public information persists across turns and switches. Bench moves, held-item state and ability identities are retained only when publicly disclosed. Temporary Mimic/Transform copies expire on switching; Sketch changes persist. confirmed_absent items stay absent until public acquisition. baseAbility records a publicly disclosed native ability separately from a copied current ability. An ability identity does not prove that its effect is active: respect suppressed and unknown suppression, and unavailable calculation reasons. Bench HP is the last public HP observation; do not infer unreported recovery. Damage and Speed calculations still concern the current active matchup only.\n",
+            "criteria": {
+              "switch_2": {
+                "kind": "switch",
+                "slot": 2,
+                "pokemon": "Corviknight"
+              },
+              "switch_3": {
+                "kind": "switch",
+                "slot": 3,
+                "pokemon": "Rotom-Wash"
+              }
+            }
+          }
+        }
+      },
+      "commands": {
+        "switch_2": "/choose switch 2",
+        "switch_3": "/choose switch 3"
+      },
+      "prefix": [
+        {
+          "event_seq": 1,
+          "protocol": "|init|battle\n|gametype|singles\n|gen|9\n|teampreview\n|request|{\"rqid\": 1, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 2,
+          "protocol": "|start\n|turn|1\n|request|{\"rqid\": 2, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 3,
+          "protocol": "|-terastallize|p2a: Pikachu|Flying\n|faint|p1a: Garchomp\n|turn|2\n|request|{\"rqid\": 3, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 4,
+          "protocol": "|request|{\"rqid\": 4, \"side\": {\"id\": \"p1\"}}"
+        }
+      ],
+      "boundary": {
+        "protocol_event_seq": 4,
+        "line_index": 0
+      }
+    },
+    {
+      "battle": "battle-planner-synthetic",
+      "actor": "p1",
+      "rqid": 5,
+      "payload": {
+        "state": {
+          "version": "jev-choice-v6",
+          "format": "gen9ou singles",
+          "actor": "p1",
+          "turn": 2,
+          "request_id": 5,
+          "decision_kind": "turn_action",
+          "self_team": [
+            {
+              "slot": 1,
+              "species": "Garchomp",
+              "hp_percent": 100
+            },
+            {
+              "slot": 2,
+              "species": "Corviknight",
+              "hp_percent": 100
+            },
+            {
+              "slot": 3,
+              "species": "Rotom-Wash",
+              "hp_percent": 100
+            }
+          ],
+          "opponent_team": [
+            {
+              "preview_slot": 1,
+              "species": "Pikachu",
+              "moves": "unknown"
+            }
+          ],
+          "information_rules": "Synthetic interface fixture. Opponent hidden facts remain unknown.",
+          "recent_completed_turn_log": []
+        },
+        "questions": {
+          "action": {
+            "type": "choice",
+            "instructions": "Choose exactly one supplied legal candidate that best improves your chance of winning this Generation 9 OU singles battle. Compare moves and switches, survival, positioning, hazards, status, team capabilities and the limited Tera resource. Candidate IDs are executable choices. team/switch slot is a self_team slot; move_ref links to self_team[slot].current_move_slots[slot] by the explicit slot numbers, not array offsets. A terastallize candidate spends Tera and uses that slot's move. For lead or forced_switch choose the best supplied team/switch candidate. No explanation or tool call is required.\n\nCurrent state is authoritative. unknown means unavailable evidence, not zero or absence. confirmed_absent means verified absence; not_applicable means the concept does not apply. Empty status means no major status; empty boosts means zero stages; empty volatile maps mean no effects. Client counters are observed counters, not guaranteed remaining durations. At lead selection, active is a request slot flag, not a Pokemon already in battle. known_move_set preserves self moves when current request slots are absent. Compact self reserves omit moves and stats only in ordinary turns; omitted information is not known absence.\n\nEach general_effect is a general Generation 9 rule, never proof of current activation. A condition with general_rules retains its original value in observed; empty condition maps still mean no effect. Apply it to confirmed state and explicitly labeled calculation assumptions. Opponent moves contains only publicly observed moves, or unknown when none is revealed. A role_summary lists conditional capabilities: opponent species possibilities do not establish hidden moves, items, abilities, spreads or the actual role of its current set. Self roles are supported capabilities, not guaranteed favorable matchups or a current win condition. Do not guess hidden facts from these descriptions.\n\nDamage ranges name their target and use percent of that target's maximum HP. [minimum, maximum] is conditional on all accuracy checks succeeding, current effects, compatible fixed 2026-09-18 Smogon recommended sets, feasible rounded public HP and move-specific hit counts. It is not a mean, a probability or a guarantee. Ranges round outward to 0.1% and may exceed 100%. Null with a reason means uncalculated, inapplicable or unsupported; [0,0] is calculated zero. The finite recommended support is not all legal sets and is not observed opponent possession. current includes already applied Tera; self_tera/opponent_tera/both_tera are new Tera branches relative to your side even for incoming damage. Unavailable branches are omitted. Ordinary critical-hit chance, misses, unknown pending actions, switching and future action-order changes are excluded; move success requirements such as Sucker Punch remain conditional. Base type/category/power/accuracy/priority describe Dex metadata, not every dynamic rule.\n\nspeed_comparison concerns effective Speed of the two current active Pokemon before actions, not probability of acting first. Read speed_certainty and by_set: self_speed_relation is faster, tie or slower relative to each compatible recommended opponent set. When these differ, Speed advantage cannot be assured. Named sets describe assumptions, not identified hidden sets; differences within a set may also reflect variants or unresolved public state. Agreement across these finite recommended candidates is not certainty over all legal sets. Unavailable means no conclusion. Do not infer probabilities from candidate counts. Consider the consequences of the possible Speed relations in the current battle situation. Compare move priority first, including ability/terrain/HP-dependent changes; then effective Speed. At equal priority Trick Room reverses unequal Speed order, while a Speed tie remains random (normally 50/50 between two actors). Switching, Quick Claw/Quick Draw, Stall, forced ordering effects, inability to act and state changes can alter execution independently. Observed earlier action alone does not establish superior Speed. Keep per-move priority in this interpretation.\n\nThe type_matchups matrix rows are attack_types, columns defense_types and cells are the complete 18 by 18 single-type multipliers. Multiply the defender's type factors for dual types; abilities, items, move exceptions, grounding and other current effects can override this type-only result. defensive_types is current defensive typing; terastallized is actual use, not availability. configured_tera_type is the configured self choice, applied_tera_type is already used. stab_types preserves pre-Tera battle typing for offensive STAB. Account for retained original STAB and Tera-enhanced STAB separately from defense. Stellar Tera keeps defensive types and has special offensive rules.\n\nrecent_completed_turn_log preserves public events in order for the last at most three completed turns, from state.actor's perspective. Participants distinguish Your and Opposing even with nicknames; a team nickname links a differing log name to its species and slot. These events do not replace current state. Remaining public HP approximately 63% means remaining HP, not 63% damage, and does not expose hidden maximum HP. Stage change +1 is a delta, not final stage +1. Consecutive public ability/boost events retain their order; do not infer an unobserved cause. An Unsupported event retains its raw protocol; use only facts actually present. Effect start/end and observed status/Tera apply at the recorded time.\n\nGENERATION 9 SINGLES MECHANICS\n\nApply standard Pokemon Scarlet/Violet Generation 9 singles mechanics.\n\nMajor status:\n- Burn: 1/16 max HP residual damage each turn and normally halves physical damage dealt.\n- Paralysis: Speed is halved and each attempted action has a 25% chance of full paralysis.\n- Poison: 1/8 max HP residual damage each turn.\n- Toxic poison: damage increases each turn from 1/16, 2/16, 3/16, etc.; the Toxic counter resets on switching.\n- Sleep: normally prevents actions for 1-3 sleep turns, subject to moves such as Sleep Talk.\n- Freeze: normally prevents actions and has a 20% natural thaw chance each turn; some moves can thaw immediately.\n- A Pokemon normally cannot have more than one major status condition at once.\n- Confusion is volatile and disappears on switching.\n\nRelevant type immunities include Fire to burn, Electric to paralysis, Poison/Steel to poison, Ice to freeze, and Grass to powder/spore moves, unless an explicit effect overrides the normal interaction.\n\nStat stages range from -6 to +6. +1 = 1.5x, +2 = 2x, -1 = 2/3x, and -2 = 1/2x. Most stat stages and volatile conditions reset when switching.\n\nMove order is determined by priority first, then effective Speed. Do not assume a faster base Speed moves first if priority, paralysis, Choice Scarf, boosts, weather, or other effects alter the order.\n\nDamage depends on more than base power. Account for attacking and defensive stats, stat stages, STAB, type effectiveness, abilities, items, weather, terrain, critical hits, and damage rolls.\n\nEntry hazards:\n- Stealth Rock damages switch-ins according to their Rock weakness/resistance; neutral damage is 1/8 max HP.\n- Spikes damage grounded switch-ins: 1 layer = 1/8, 2 = 1/6, 3 = 1/4.\n- Toxic Spikes poison grounded switch-ins; two layers badly poison them.\n- Sticky Web lowers the Speed of grounded switch-ins by one stage.\n- Heavy-Duty Boots normally prevent entry-hazard effects.\n\nSwitching normally removes stat changes, confusion, Substitute, and many other volatile effects, but HP loss and major status remain.\n\nWeather, terrain, screens, hazards, residual damage, recovery, item removal, and field duration must be considered when evaluating future turns.\n\nEach side may Terastallize once per battle. Terastallization changes defensive typing to the Tera type and can alter offensive STAB. Treat unused Tera as a limited strategic resource, not merely an immediate damage boost.\n\nDo not assume unknown opponent moves, items, abilities, EVs, Tera type, or future actions. Apply special abilities, items, and move-specific exceptions only when they are confirmed or otherwise supplied by the battle state.\n\n\nOpponent public information persists across turns and switches. Bench moves, held-item state and ability identities are retained only when publicly disclosed. Temporary Mimic/Transform copies expire on switching; Sketch changes persist. confirmed_absent items stay absent until public acquisition. baseAbility records a publicly disclosed native ability separately from a copied current ability. An ability identity does not prove that its effect is active: respect suppressed and unknown suppression, and unavailable calculation reasons. Bench HP is the last public HP observation; do not infer unreported recovery. Damage and Speed calculations still concern the current active matchup only.\n",
+            "criteria": {
+              "move_1": {
+                "kind": "move",
+                "move_ref": {
+                  "slot": 1,
+                  "team_slot": 1
+                },
+                "name": "Earthquake",
+                "terastallize": false
+              },
+              "move_2": {
+                "kind": "move",
+                "move_ref": {
+                  "slot": 2,
+                  "team_slot": 1
+                },
+                "name": "Protect",
+                "terastallize": false
+              }
+            }
+          }
+        }
+      },
+      "commands": {
+        "move_1": "/choose move 1",
+        "move_2": "/choose move 2"
+      },
+      "prefix": [
+        {
+          "event_seq": 1,
+          "protocol": "|init|battle\n|gametype|singles\n|gen|9\n|teampreview\n|request|{\"rqid\": 1, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 2,
+          "protocol": "|start\n|turn|1\n|request|{\"rqid\": 2, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 3,
+          "protocol": "|-terastallize|p2a: Pikachu|Flying\n|faint|p1a: Garchomp\n|turn|2\n|request|{\"rqid\": 3, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 4,
+          "protocol": "|request|{\"rqid\": 4, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 5,
+          "protocol": "|switch|p1a: Corviknight|Corviknight|100/100\n|request|{\"rqid\": 5, \"side\": {\"id\": \"p1\"}}"
+        }
+      ],
+      "boundary": {
+        "protocol_event_seq": 5,
+        "line_index": 1
+      }
+    },
+    {
+      "battle": "battle-planner-synthetic",
+      "actor": "p1",
+      "rqid": 5,
+      "payload": {
+        "state": {
+          "version": "jev-choice-v6",
+          "format": "gen9ou singles",
+          "actor": "p1",
+          "turn": 2,
+          "request_id": 5,
+          "decision_kind": "turn_action",
+          "self_team": [
+            {
+              "slot": 1,
+              "species": "Garchomp",
+              "hp_percent": 100
+            },
+            {
+              "slot": 2,
+              "species": "Corviknight",
+              "hp_percent": 100
+            },
+            {
+              "slot": 3,
+              "species": "Rotom-Wash",
+              "hp_percent": 100
+            }
+          ],
+          "opponent_team": [
+            {
+              "preview_slot": 1,
+              "species": "Pikachu",
+              "moves": "unknown"
+            }
+          ],
+          "information_rules": "Synthetic interface fixture. Opponent hidden facts remain unknown.",
+          "recent_completed_turn_log": []
+        },
+        "questions": {
+          "action": {
+            "type": "choice",
+            "instructions": "Choose exactly one supplied legal candidate that best improves your chance of winning this Generation 9 OU singles battle. Compare moves and switches, survival, positioning, hazards, status, team capabilities and the limited Tera resource. Candidate IDs are executable choices. team/switch slot is a self_team slot; move_ref links to self_team[slot].current_move_slots[slot] by the explicit slot numbers, not array offsets. A terastallize candidate spends Tera and uses that slot's move. For lead or forced_switch choose the best supplied team/switch candidate. No explanation or tool call is required.\n\nCurrent state is authoritative. unknown means unavailable evidence, not zero or absence. confirmed_absent means verified absence; not_applicable means the concept does not apply. Empty status means no major status; empty boosts means zero stages; empty volatile maps mean no effects. Client counters are observed counters, not guaranteed remaining durations. At lead selection, active is a request slot flag, not a Pokemon already in battle. known_move_set preserves self moves when current request slots are absent. Compact self reserves omit moves and stats only in ordinary turns; omitted information is not known absence.\n\nEach general_effect is a general Generation 9 rule, never proof of current activation. A condition with general_rules retains its original value in observed; empty condition maps still mean no effect. Apply it to confirmed state and explicitly labeled calculation assumptions. Opponent moves contains only publicly observed moves, or unknown when none is revealed. A role_summary lists conditional capabilities: opponent species possibilities do not establish hidden moves, items, abilities, spreads or the actual role of its current set. Self roles are supported capabilities, not guaranteed favorable matchups or a current win condition. Do not guess hidden facts from these descriptions.\n\nDamage ranges name their target and use percent of that target's maximum HP. [minimum, maximum] is conditional on all accuracy checks succeeding, current effects, compatible fixed 2026-09-18 Smogon recommended sets, feasible rounded public HP and move-specific hit counts. It is not a mean, a probability or a guarantee. Ranges round outward to 0.1% and may exceed 100%. Null with a reason means uncalculated, inapplicable or unsupported; [0,0] is calculated zero. The finite recommended support is not all legal sets and is not observed opponent possession. current includes already applied Tera; self_tera/opponent_tera/both_tera are new Tera branches relative to your side even for incoming damage. Unavailable branches are omitted. Ordinary critical-hit chance, misses, unknown pending actions, switching and future action-order changes are excluded; move success requirements such as Sucker Punch remain conditional. Base type/category/power/accuracy/priority describe Dex metadata, not every dynamic rule.\n\nspeed_comparison concerns effective Speed of the two current active Pokemon before actions, not probability of acting first. Read speed_certainty and by_set: self_speed_relation is faster, tie or slower relative to each compatible recommended opponent set. When these differ, Speed advantage cannot be assured. Named sets describe assumptions, not identified hidden sets; differences within a set may also reflect variants or unresolved public state. Agreement across these finite recommended candidates is not certainty over all legal sets. Unavailable means no conclusion. Do not infer probabilities from candidate counts. Consider the consequences of the possible Speed relations in the current battle situation. Compare move priority first, including ability/terrain/HP-dependent changes; then effective Speed. At equal priority Trick Room reverses unequal Speed order, while a Speed tie remains random (normally 50/50 between two actors). Switching, Quick Claw/Quick Draw, Stall, forced ordering effects, inability to act and state changes can alter execution independently. Observed earlier action alone does not establish superior Speed. Keep per-move priority in this interpretation.\n\nThe type_matchups matrix rows are attack_types, columns defense_types and cells are the complete 18 by 18 single-type multipliers. Multiply the defender's type factors for dual types; abilities, items, move exceptions, grounding and other current effects can override this type-only result. defensive_types is current defensive typing; terastallized is actual use, not availability. configured_tera_type is the configured self choice, applied_tera_type is already used. stab_types preserves pre-Tera battle typing for offensive STAB. Account for retained original STAB and Tera-enhanced STAB separately from defense. Stellar Tera keeps defensive types and has special offensive rules.\n\nrecent_completed_turn_log preserves public events in order for the last at most three completed turns, from state.actor's perspective. Participants distinguish Your and Opposing even with nicknames; a team nickname links a differing log name to its species and slot. These events do not replace current state. Remaining public HP approximately 63% means remaining HP, not 63% damage, and does not expose hidden maximum HP. Stage change +1 is a delta, not final stage +1. Consecutive public ability/boost events retain their order; do not infer an unobserved cause. An Unsupported event retains its raw protocol; use only facts actually present. Effect start/end and observed status/Tera apply at the recorded time.\n\nGENERATION 9 SINGLES MECHANICS\n\nApply standard Pokemon Scarlet/Violet Generation 9 singles mechanics.\n\nMajor status:\n- Burn: 1/16 max HP residual damage each turn and normally halves physical damage dealt.\n- Paralysis: Speed is halved and each attempted action has a 25% chance of full paralysis.\n- Poison: 1/8 max HP residual damage each turn.\n- Toxic poison: damage increases each turn from 1/16, 2/16, 3/16, etc.; the Toxic counter resets on switching.\n- Sleep: normally prevents actions for 1-3 sleep turns, subject to moves such as Sleep Talk.\n- Freeze: normally prevents actions and has a 20% natural thaw chance each turn; some moves can thaw immediately.\n- A Pokemon normally cannot have more than one major status condition at once.\n- Confusion is volatile and disappears on switching.\n\nRelevant type immunities include Fire to burn, Electric to paralysis, Poison/Steel to poison, Ice to freeze, and Grass to powder/spore moves, unless an explicit effect overrides the normal interaction.\n\nStat stages range from -6 to +6. +1 = 1.5x, +2 = 2x, -1 = 2/3x, and -2 = 1/2x. Most stat stages and volatile conditions reset when switching.\n\nMove order is determined by priority first, then effective Speed. Do not assume a faster base Speed moves first if priority, paralysis, Choice Scarf, boosts, weather, or other effects alter the order.\n\nDamage depends on more than base power. Account for attacking and defensive stats, stat stages, STAB, type effectiveness, abilities, items, weather, terrain, critical hits, and damage rolls.\n\nEntry hazards:\n- Stealth Rock damages switch-ins according to their Rock weakness/resistance; neutral damage is 1/8 max HP.\n- Spikes damage grounded switch-ins: 1 layer = 1/8, 2 = 1/6, 3 = 1/4.\n- Toxic Spikes poison grounded switch-ins; two layers badly poison them.\n- Sticky Web lowers the Speed of grounded switch-ins by one stage.\n- Heavy-Duty Boots normally prevent entry-hazard effects.\n\nSwitching normally removes stat changes, confusion, Substitute, and many other volatile effects, but HP loss and major status remain.\n\nWeather, terrain, screens, hazards, residual damage, recovery, item removal, and field duration must be considered when evaluating future turns.\n\nEach side may Terastallize once per battle. Terastallization changes defensive typing to the Tera type and can alter offensive STAB. Treat unused Tera as a limited strategic resource, not merely an immediate damage boost.\n\nDo not assume unknown opponent moves, items, abilities, EVs, Tera type, or future actions. Apply special abilities, items, and move-specific exceptions only when they are confirmed or otherwise supplied by the battle state.\n\n\nOpponent public information persists across turns and switches. Bench moves, held-item state and ability identities are retained only when publicly disclosed. Temporary Mimic/Transform copies expire on switching; Sketch changes persist. confirmed_absent items stay absent until public acquisition. baseAbility records a publicly disclosed native ability separately from a copied current ability. An ability identity does not prove that its effect is active: respect suppressed and unknown suppression, and unavailable calculation reasons. Bench HP is the last public HP observation; do not infer unreported recovery. Damage and Speed calculations still concern the current active matchup only.\n",
+            "criteria": {
+              "move_1": {
+                "kind": "move",
+                "move_ref": {
+                  "slot": 1,
+                  "team_slot": 1
+                },
+                "name": "Earthquake",
+                "terastallize": false
+              },
+              "move_2": {
+                "kind": "move",
+                "move_ref": {
+                  "slot": 2,
+                  "team_slot": 1
+                },
+                "name": "Protect",
+                "terastallize": false
+              }
+            }
+          }
+        }
+      },
+      "commands": {
+        "move_1": "/choose move 1",
+        "move_2": "/choose move 2"
+      },
+      "prefix": [
+        {
+          "event_seq": 1,
+          "protocol": "|init|battle\n|gametype|singles\n|gen|9\n|teampreview\n|request|{\"rqid\": 1, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 2,
+          "protocol": "|start\n|turn|1\n|request|{\"rqid\": 2, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 3,
+          "protocol": "|-terastallize|p2a: Pikachu|Flying\n|faint|p1a: Garchomp\n|turn|2\n|request|{\"rqid\": 3, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 4,
+          "protocol": "|request|{\"rqid\": 4, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 5,
+          "protocol": "|switch|p1a: Corviknight|Corviknight|100/100\n|request|{\"rqid\": 5, \"side\": {\"id\": \"p1\"}}"
+        }
+      ],
+      "boundary": {
+        "protocol_event_seq": 5,
+        "line_index": 1
+      }
+    },
+    {
+      "battle": "battle-planner-synthetic",
+      "actor": "p1",
+      "rqid": 6,
+      "payload": {
+        "state": {
+          "version": "jev-choice-v6",
+          "format": "gen9ou singles",
+          "actor": "p1",
+          "turn": 5,
+          "request_id": 6,
+          "decision_kind": "turn_action",
+          "self_team": [
+            {
+              "slot": 1,
+              "species": "Garchomp",
+              "hp_percent": 100
+            },
+            {
+              "slot": 2,
+              "species": "Corviknight",
+              "hp_percent": 100
+            },
+            {
+              "slot": 3,
+              "species": "Rotom-Wash",
+              "hp_percent": 100
+            }
+          ],
+          "opponent_team": [
+            {
+              "preview_slot": 1,
+              "species": "Pikachu",
+              "moves": "unknown"
+            }
+          ],
+          "information_rules": "Synthetic interface fixture. Opponent hidden facts remain unknown.",
+          "recent_completed_turn_log": []
+        },
+        "questions": {
+          "action": {
+            "type": "choice",
+            "instructions": "Choose exactly one supplied legal candidate that best improves your chance of winning this Generation 9 OU singles battle. Compare moves and switches, survival, positioning, hazards, status, team capabilities and the limited Tera resource. Candidate IDs are executable choices. team/switch slot is a self_team slot; move_ref links to self_team[slot].current_move_slots[slot] by the explicit slot numbers, not array offsets. A terastallize candidate spends Tera and uses that slot's move. For lead or forced_switch choose the best supplied team/switch candidate. No explanation or tool call is required.\n\nCurrent state is authoritative. unknown means unavailable evidence, not zero or absence. confirmed_absent means verified absence; not_applicable means the concept does not apply. Empty status means no major status; empty boosts means zero stages; empty volatile maps mean no effects. Client counters are observed counters, not guaranteed remaining durations. At lead selection, active is a request slot flag, not a Pokemon already in battle. known_move_set preserves self moves when current request slots are absent. Compact self reserves omit moves and stats only in ordinary turns; omitted information is not known absence.\n\nEach general_effect is a general Generation 9 rule, never proof of current activation. A condition with general_rules retains its original value in observed; empty condition maps still mean no effect. Apply it to confirmed state and explicitly labeled calculation assumptions. Opponent moves contains only publicly observed moves, or unknown when none is revealed. A role_summary lists conditional capabilities: opponent species possibilities do not establish hidden moves, items, abilities, spreads or the actual role of its current set. Self roles are supported capabilities, not guaranteed favorable matchups or a current win condition. Do not guess hidden facts from these descriptions.\n\nDamage ranges name their target and use percent of that target's maximum HP. [minimum, maximum] is conditional on all accuracy checks succeeding, current effects, compatible fixed 2026-09-18 Smogon recommended sets, feasible rounded public HP and move-specific hit counts. It is not a mean, a probability or a guarantee. Ranges round outward to 0.1% and may exceed 100%. Null with a reason means uncalculated, inapplicable or unsupported; [0,0] is calculated zero. The finite recommended support is not all legal sets and is not observed opponent possession. current includes already applied Tera; self_tera/opponent_tera/both_tera are new Tera branches relative to your side even for incoming damage. Unavailable branches are omitted. Ordinary critical-hit chance, misses, unknown pending actions, switching and future action-order changes are excluded; move success requirements such as Sucker Punch remain conditional. Base type/category/power/accuracy/priority describe Dex metadata, not every dynamic rule.\n\nspeed_comparison concerns effective Speed of the two current active Pokemon before actions, not probability of acting first. Read speed_certainty and by_set: self_speed_relation is faster, tie or slower relative to each compatible recommended opponent set. When these differ, Speed advantage cannot be assured. Named sets describe assumptions, not identified hidden sets; differences within a set may also reflect variants or unresolved public state. Agreement across these finite recommended candidates is not certainty over all legal sets. Unavailable means no conclusion. Do not infer probabilities from candidate counts. Consider the consequences of the possible Speed relations in the current battle situation. Compare move priority first, including ability/terrain/HP-dependent changes; then effective Speed. At equal priority Trick Room reverses unequal Speed order, while a Speed tie remains random (normally 50/50 between two actors). Switching, Quick Claw/Quick Draw, Stall, forced ordering effects, inability to act and state changes can alter execution independently. Observed earlier action alone does not establish superior Speed. Keep per-move priority in this interpretation.\n\nThe type_matchups matrix rows are attack_types, columns defense_types and cells are the complete 18 by 18 single-type multipliers. Multiply the defender's type factors for dual types; abilities, items, move exceptions, grounding and other current effects can override this type-only result. defensive_types is current defensive typing; terastallized is actual use, not availability. configured_tera_type is the configured self choice, applied_tera_type is already used. stab_types preserves pre-Tera battle typing for offensive STAB. Account for retained original STAB and Tera-enhanced STAB separately from defense. Stellar Tera keeps defensive types and has special offensive rules.\n\nrecent_completed_turn_log preserves public events in order for the last at most three completed turns, from state.actor's perspective. Participants distinguish Your and Opposing even with nicknames; a team nickname links a differing log name to its species and slot. These events do not replace current state. Remaining public HP approximately 63% means remaining HP, not 63% damage, and does not expose hidden maximum HP. Stage change +1 is a delta, not final stage +1. Consecutive public ability/boost events retain their order; do not infer an unobserved cause. An Unsupported event retains its raw protocol; use only facts actually present. Effect start/end and observed status/Tera apply at the recorded time.\n\nGENERATION 9 SINGLES MECHANICS\n\nApply standard Pokemon Scarlet/Violet Generation 9 singles mechanics.\n\nMajor status:\n- Burn: 1/16 max HP residual damage each turn and normally halves physical damage dealt.\n- Paralysis: Speed is halved and each attempted action has a 25% chance of full paralysis.\n- Poison: 1/8 max HP residual damage each turn.\n- Toxic poison: damage increases each turn from 1/16, 2/16, 3/16, etc.; the Toxic counter resets on switching.\n- Sleep: normally prevents actions for 1-3 sleep turns, subject to moves such as Sleep Talk.\n- Freeze: normally prevents actions and has a 20% natural thaw chance each turn; some moves can thaw immediately.\n- A Pokemon normally cannot have more than one major status condition at once.\n- Confusion is volatile and disappears on switching.\n\nRelevant type immunities include Fire to burn, Electric to paralysis, Poison/Steel to poison, Ice to freeze, and Grass to powder/spore moves, unless an explicit effect overrides the normal interaction.\n\nStat stages range from -6 to +6. +1 = 1.5x, +2 = 2x, -1 = 2/3x, and -2 = 1/2x. Most stat stages and volatile conditions reset when switching.\n\nMove order is determined by priority first, then effective Speed. Do not assume a faster base Speed moves first if priority, paralysis, Choice Scarf, boosts, weather, or other effects alter the order.\n\nDamage depends on more than base power. Account for attacking and defensive stats, stat stages, STAB, type effectiveness, abilities, items, weather, terrain, critical hits, and damage rolls.\n\nEntry hazards:\n- Stealth Rock damages switch-ins according to their Rock weakness/resistance; neutral damage is 1/8 max HP.\n- Spikes damage grounded switch-ins: 1 layer = 1/8, 2 = 1/6, 3 = 1/4.\n- Toxic Spikes poison grounded switch-ins; two layers badly poison them.\n- Sticky Web lowers the Speed of grounded switch-ins by one stage.\n- Heavy-Duty Boots normally prevent entry-hazard effects.\n\nSwitching normally removes stat changes, confusion, Substitute, and many other volatile effects, but HP loss and major status remain.\n\nWeather, terrain, screens, hazards, residual damage, recovery, item removal, and field duration must be considered when evaluating future turns.\n\nEach side may Terastallize once per battle. Terastallization changes defensive typing to the Tera type and can alter offensive STAB. Treat unused Tera as a limited strategic resource, not merely an immediate damage boost.\n\nDo not assume unknown opponent moves, items, abilities, EVs, Tera type, or future actions. Apply special abilities, items, and move-specific exceptions only when they are confirmed or otherwise supplied by the battle state.\n\n\nOpponent public information persists across turns and switches. Bench moves, held-item state and ability identities are retained only when publicly disclosed. Temporary Mimic/Transform copies expire on switching; Sketch changes persist. confirmed_absent items stay absent until public acquisition. baseAbility records a publicly disclosed native ability separately from a copied current ability. An ability identity does not prove that its effect is active: respect suppressed and unknown suppression, and unavailable calculation reasons. Bench HP is the last public HP observation; do not infer unreported recovery. Damage and Speed calculations still concern the current active matchup only.\n",
+            "criteria": {
+              "move_1": {
+                "kind": "move",
+                "move_ref": {
+                  "slot": 1,
+                  "team_slot": 1
+                },
+                "name": "Earthquake",
+                "terastallize": false
+              },
+              "move_2": {
+                "kind": "move",
+                "move_ref": {
+                  "slot": 2,
+                  "team_slot": 1
+                },
+                "name": "Protect",
+                "terastallize": false
+              }
+            }
+          }
+        }
+      },
+      "commands": {
+        "move_1": "/choose move 1",
+        "move_2": "/choose move 2"
+      },
+      "prefix": [
+        {
+          "event_seq": 1,
+          "protocol": "|init|battle\n|gametype|singles\n|gen|9\n|teampreview\n|request|{\"rqid\": 1, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 2,
+          "protocol": "|start\n|turn|1\n|request|{\"rqid\": 2, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 3,
+          "protocol": "|-terastallize|p2a: Pikachu|Flying\n|faint|p1a: Garchomp\n|turn|2\n|request|{\"rqid\": 3, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 4,
+          "protocol": "|request|{\"rqid\": 4, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 5,
+          "protocol": "|switch|p1a: Corviknight|Corviknight|100/100\n|request|{\"rqid\": 5, \"side\": {\"id\": \"p1\"}}"
+        },
+        {
+          "event_seq": 6,
+          "protocol": "|turn|3\n|turn|4\n|turn|5\n|request|{\"rqid\": 6, \"side\": {\"id\": \"p1\"}}"
+        }
+      ],
+      "boundary": {
+        "protocol_event_seq": 6,
+        "line_index": 3
+      }
+    }
+  ]
+}

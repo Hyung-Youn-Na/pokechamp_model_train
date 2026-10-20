@@ -5,6 +5,229 @@ reference document는 현재의 정확한 field catalog 및 initialization evide
 file을 변경해도 이 contract가 조용히 재정의되지는 않는다. 충돌은
 [`INDEX.md`](INDEX.md)의 hierarchy를 따른다.
 
+D-148/EX-095의 새 모델 jev35b-nvfp4는 전용 interpreter와 공식 Choice 엔진을 사용한다.
+장부 앞단의 중복 방지·원문/usage 보존을 유지하며 세부 진입조건은
+[EX-095](experiments/EX-095-jev35b-nvfp4-sample.md)를 따른다.
+
+D-149/EX-096의 명시 repeat 정책은 확률 차이만 진단으로 기록한다. 필드 부재/strict의 기존
+차단과 선택 일치·분포/매핑·입력/usage·자원 검사는 유지하며 당시 동결 기록을 바꾸지 않는다.
+
+<a id="c-073-planner-viewer"></a>
+
+## C-073 — 향후 GLM·JEV 통합 뷰어
+
+[D-144](decisions/D-144-planner-replay-viewer.md)/EP-150의 새 jev-planner export에 적용한다.
+C-047·C-070/072와 실행 기록 형식을 유지하고 GLM 계획 기본7탭·리플레이를 함께 표시한다.
+계획/선택/원문/계산은 같은 경기·actor·결정으로 연결하며 재사용 계획은 생성 결정을 명시한다.
+턴/결정 선택만 재생을 정지하고 해당 턴 시작으로 이동한다. 같은 턴 다중결정도 같은 위치다.
+리플레이 재생·수동이동·탭 전환은 정보 선택을 바꾸지 않으며 명시적 재정렬 버튼을 제공한다.
+actor가 수신한 공개 행만 리플레이로 사용하고 결정 전 로그는 원래 cutoff를 적용한다.
+결정 없는 턴·계획 없음·자동 선택·실패는 각각 구별한다.
+
+큰 원문·피해 시나리오는 결정별 상대경로 로컬 스크립트로 지연 적재하고 늦은 자료의 덮어쓰기를
+막는다. 피해는 observation의 감사 경로/해시와 표시명·계획 추가 전 입력 identity로 검증한다.
+미제공·미계산·0을 구별하며 재계산하지 않는다. 외부 공식 Showdown 자산 실패 시 로컬 공개
+로그를 제공하고 정보·복사/다운로드는 이동 후 file:// 오프라인에서도 유지한다.
+원자료/복사본·renderer·공개로그 parser 출처를 기록하며 기존 EX-088/092 원자료·뷰어·봉인은 보존한다.
+새 실행·모델·프롬프트·호출정책 변경을 포함하지 않는다.
+
+<a id="c-072-candidate-display-names"></a>
+
+## C-072 — 후보 display_name과 실행 식별자
+
+D-141/EP-147의 새 planner 설정은 executor.candidate_display=names-v1을 기본으로 동결한다.
+original 또는 필드 없는 과거 동결 설정은 입력을 그대로 보존한다. names-v1은 현재 결정의
+자기 팀/기술 명시 slot으로 이름을 해석하여 후보 객체에 display_name만 추가한다.
+일반 기술/Tera·선봉/교체를 구분하며 ID·후보순서·slot·move_ref·명령·확률 대응은 바꾸지 않는다.
+동명이거나 임시복사된 기술도 현재 슬롯을 사용하고 배열 위치·이전 턴·상대 비공개 정보로 추정하지 않는다.
+이름을 해석할 근거가 없으면 미확인을 표시하며 이름 때문에 실행 행동을 바꾸지 않는다.
+
+같은 표시 후보를 planner current.criteria와 JEV Choice 입력에 전달한다. planner off도
+선택한 표현 조건을 사용하므로 새 names-v1 on/off 비교는 표시명이 같은 조건이다.
+기존 C-070의 원입력 off는 과거 설정/original에서 유지한다. 미리보기·기록·뷰어는 실제 전달
+표시명을 사용하고, 기존 이름 없는 기록은 당시 관측으로 표시한다. 표시명으로 명령을 복원하지 않는다.
+이 설정 차이는 executor 입력 조건 차이로 식별하며 단순 planner 프롬프트 효과로 집계하지 않는다.
+기존 v6 생성기·과거 실행/봉인/뷰어는 보존한다. 실제 성능 효과는 미평가다.
+
+<a id="c-071-planner-role-guide"></a>
+
+## C-071 — Planner 역할·자원 guide의 선택과 동결
+
+D-140/EP-146의 새 load_config는 prompts.guide를 UTF-8 파일 원문/path/sha256으로 해석하고
+미지정 시 role-resource-guide-v1.txt를 기본으로 쓴다. 준비·미리보기·실제 요청은 동결된 guide
+본문을 사용한다. 새 system은 planner 역할/출력 지시와 guide를 합치며 원 JEV 계산 안내를
+자동 덧붙이지 않는다. guide 필드가 없는 과거 준비 설정은 C-070 당시 조립을 보존한다.
+matrix.planner_prompts 항목은 선택적 guide 파일로 해당 조합의 안내를 지정할 수 있으며,
+중복 제거/비교는 planner 지시와 guide의 원문을 함께 프롬프트 identity로 센다.
+
+새 안내는 현재 역할·양측 승리 경로·유일 대응책·보존/교환·영구적 진전·위험/계획 전환을 다룬다.
+자기 role_summary는 지원 가능한 능력, 상대 role_summary는 종족의 가능한 역할이다.
+상대의 실제 역할/숨은 세트/미래 선택을 확정하지 않으며 가설과 관측을 구분한다.
+피해/스피드는 현재 출전 대면의 조건부 보조 근거이며 벤치/미래 교체·정확한 보존HP를 보증하지 않는다.
+공식 state·후보·user 이력·JEV 원지시문·Choice 의미·출력6필드·호출정책은 변경하지 않는다.
+기존 봉인·뷰어·보고서를 수정하지 않으며 guide 변경은 새 프롬프트 처치다. 실제 품질/효능은 미평가다.
+
+<a id="c-070-jev-planner"></a>
+
+## C-070 — 전략 planner–JEV 실행 경계
+
+D-158/EX-105의 tacit9b-vllm은 외부 사용자 서버에 연결하는 CPU 프런트다. 모든 후보 logprob_token_ids를 판독하고 공식 thinking/마감 의미를 보존한다. HTTP/실제 출력량과 미관측 physical forward/allocator를 구분하며 외부 서버 소유권을 획득하거나 종료하지 않는다. 조건·자원/identity 감사는 EX-105를 따른다.
+
+D-157/EX-104의 tacit9b는 공식 BF16 Transformers 라벨 판독과 always thinking 경로를 사용한다. 첫 판단은 기록만 하며 추론 입력에 주입하지 않고 최종 선택을 실행한다. 원입력 무절단32768/16, 생성8192와 마감후 native 문맥한도를 각각 검사한다. 논리 pipeline 중복방지와 실제 단계 forward/생성토큰을 구분하고 전후 분포·원추론·자연/강제 종료를 보존한다. 세부 조건은 EX-104를 따른다.
+
+D-156/EX-103의 jev-omni는 공식 숫자형 텍스트 processor·BF16 분류·256슬롯 head를 사용한다. 전체 입력/후보를 보존하며 무절단32768/16 한도·원 index 역매핑·원확률 진단·실입력 usage/output0·단일 GPU0/동시1·장부 중복방지를 유지한다.
+
+D-154의 명시 선택 active_change는 양측 공개 switch/drag/replace, form_change는 현재 출전 대상
+detailschange/-formechange/-transform으로 검출한다. 위치문자 없는 벤치 대상은 제외한다.
+공개 좌표로 사건을 보존하고 다음 다후보 결정에서 갱신한다. 단일후보 보류·중복제거·겹친사유
+한호출을 유지하며 기존 기본 events 목록은 바꾸지 않는다. events 정책은 주기값을 사용하지 않는다.
+
+D-153부터 Z.ai planner.model은glm-5.3-flash 또는glm-5.3을 명시 선택한다.
+공통 기본 Flash/low와 기존 동결 설정·transport는 유지하며 새 모델 권한 실패 시 자동 대체하지 않는다.
+EX-100의glm-5.3/low와 구체 조건은 해당EX 원문을 따른다.
+
+D-152부터 명시적 battle_seconds/total_seconds=null은 경과시간 상한 없음이다.
+전역 RunBudget·조건/Session·양쪽 actor deadline/상대 watchdog까지 적용한다. JSON에는null을
+유지하고 내부 비교에서만 무한대를 사용한다. 유한 과거 값/기본은 불변이며 호출/메모리/
+통신 timeout·재시도·사용자 취소/자식 실패 감시/자원 정리는 유지한다. 실제 경과시간은 기록한다.
+EX-099의 GLM max_tokens131072와 구체 한도/중단 원문은 해당 EX가 소유한다.
+
+D-147부터 새 jev-planner의 세 모델은 disk_bytes=null을 명시하고 용량 상한에 따른
+준비/실행 중단을 하지 않는다. 기존 모델 profile의 배치/메모리 한도는 그대로 두고
+`planner-<기존 profile>` 자원 profile로 부모·모델 서버 감시에 연결한다. 디스크 사용량은
+계속 기록하며 실제 공간/I/O 오류를 무시하지 않는다. 과거 EX/동결 profile의100GiB 기록은 보존한다.
+
+[D-139](decisions/D-139-jev-planner-environment.md)/EP-145의 새 설정 경로에 적용한다.
+호출/프롬프트/모델/평가 설정을 분리하고 실행별 원문·revision·source를 고정한다.
+off는 v6 입력과 지시문을 그대로 전달하며 planner 필드/자격증명/호출을 요구하지 않는다.
+활성 정책은 첫 다후보 결정에서 시작한다. 단일 후보는 두 모델 무호출이며 사건을 소진하지 않는다.
+periodic은 마지막 성공 계획과 현재 Showdown 턴 차이(선봉0)로 계산하고 사건 호출도 기준을 갱신한다.
+기절·공개 Tera는 actor 수신 공개행, 강제교체는 자기 request 사건이며 각각 고유 위치/rqid로 식별한다.
+같은 턴 다른 rqid는 별도 결정, 같은 요청은 모델/전송 중복 없이 재사용한다. 같은 rqid의 서로 다른
+관측/후보는 일관성 오류다. 겹친 trigger는 한 번 호출하고 모든 이유를 보존한다.
+
+Planner와 수행 모델은 동일한 불변 관측·후보·공개 prefix cutoff를 쓴다. Planner는 현재 v6 입력과
+이전 계획·그 이후 공개 사건만 읽으며 비공개 요청·상대 실제세트·미래행을 추가하지 않는다.
+계획은 경기/actor별로 격리하고 갱신 또는 종료까지 유지한다. 출력은 objective/priorities/preserve/
+threats/tera_policy/contingencies JSON이며 전략 조언이다. 후보 생성·삭제·재정렬/명령 대행을 하지 않는다.
+수행 입력에 계획·생성/경과 턴과 현재 관측 우선 지시를 추가한다. Planner reasoning은 별도 기록만 한다.
+응답 후·실제 전송 전 최신 rqid/후보/취소를 검증하며 오래된 결정은 전송하지 않는다.
+
+D-143/EP-149의 새 수행 지시문은 각 계획 목표의 현재 충족 여부를 확인하고, 충족 조건이
+유지되는 동안 불필요한 반복을 피하며, 유효한 미완료 목표를 진전시키도록 한다. 조건 변화 시
+재평가하고 현재 위협·보존 우선순위와 원래 승리 목표를 유지한다. 선택 조언이며 후보 필터나
+완료 상태 추적기를 추가하지 않는다. 기존 동결 지시문은 보존하고 새 기본 설정에만 적용한다.
+
+D-150부터 새 기본 planner.temperature=0, planner.retry_scope=response_format이다.
+json_retries(기본5)를 전체 출력 재생성의 단일 상한으로 사용한다. JSON 구문/중복키/비유한값·
+계획 스키마·빈/잘린 응답·성공HTTP envelope 오류를 같은 입력/옵션으로 재생성한다.
+원문/usage/오류/생성차수와 모든 물리HTTP를 기록·예산에 포함하며 전송 재시도는 별도 기존 정책이다.
+유효 계획의 전략적 의미는 검사/복구 대상이 아니다. retry_scope 부재는json_syntax로 과거를 보존한다.
+과거 명시 온도는 그대로 유지하고 새 기본 설정·예제는0을 사용한다.
+
+D-146 당시 설정 planner.json_retries는0–5(기본5)이며 content JSONDecodeError에만
+최초+추가5회까지 같은 messages/옵션으로 재생성한다. 과거 동결 설정의 필드 부재는0이다.
+매 JSON 생성차수/물리HTTP의 원문·usage와 누적시도를 기록하고 모든 HTTP를 전체 예산에 센다.
+정상JSON의 스키마 위반·중복키/의미 오류와 응답 envelope 오류는 대상이 아니다. 소진된
+파싱불가/형식위반 계획과 실행불가 JEV 선택은 해당 경기만 실패 처리한다. 합법 선택·잘못된 전략은
+원문/진단과 함께 계속하며 의미 오류를 gate로 쓰지 않는다. 공유 입력/무결성 오류는 RD11.1을 따른다.
+Z.ai 전송 재시도는 C-038을 재사용하고 최종429는 신규 수집 중단이다. Planner 생성 기본은
+enabled/low, temperature0/top_p0.95/max_tokens8192이며 새 설정에만 적용한다. 기존 provider 기본값은 불변이다.
+관측·계획·선택·실제 메시지·호출사유/미호출·HTTP시도/usage/지연·실패를 연결하고 비밀은 기록하지 않는다.
+전체 수행 입력32768토큰 한도는 무절단 거부하며 공식 모델별 formatter/Choice 수치를 유지한다.
+
+preview/prepare는 모델 무호출이다. run은 mock/live를 명시하며 실제 모드는 새 실험 기록·일정·
+호출/자원 한도를 필요로 한다. 이번 승인에는 live 실행이 없다. 비교는 mock/replay/live와 예정/완료/
+실패/미실행 분모를 구분한다. 저장 궤적 재생은 승률 실험으로 해석하지 않는다. 새 viewer는 저장된
+planner/수행 원문과 결정 연결을 오프라인 제공하고 기존 viewer·봉인 자료를 덮어쓰지 않는다.
+
+<a id="c-069-minicpm5-2b-jev"></a>
+
+## C-069 — MiniCPM5-2B-Jev 손실 없는 Choice 평가
+
+D-138/EX-091에 적용한다. C-067의 교정v6 정보·후보/명령/순서·프롬프트·감사/턴로그를
+유지하고 MiniCPM 채팅/질문/선택지/답변 틀에 원state·전체 후보 JSON을 손실 없이 넣는다.
+공식 서버의 평탄화·절단은 사용하지 않으며 공식 기본 서버 재현으로 표기하지 않는다.
+모델·기반 revision/공식 파일 identity, 병합하지 않은 LoRA·BF16 backbone·FP32255×2048
+헤드/label-token행·저장 온도/K별prior를 검증한다. PriDe·날짜 보강·보정 환경변수 덮어쓰기는
+금지한다. 동일 formatter를 준비·모델·감사·usage에 적용하며 최대16후보/32768토큰을
+무절단 검증한다. 단일 후보는 무호출이며 전송/영속 중복추론 방지·판단실패 격리를 유지한다.
+GPU0만 소유/잠금/감시/반환하고 EX-091의 nullable 디스크 상한null을 모든 준비/실행/
+브라우저 복사 검사에 적용한다. 사용량과 실제 공간/I/O 오류는 계속 기록한다.
+단독 실행·1,139입력 전수 검사·단일 적재/최대8추론·단계 알람·비교/뷰어/봉인/반환은
+[EX-091](experiments/EX-091-minicpm5-2b-jev.md)을 따른다. 기존 프로필·동결 조건은 불변이다.
+
+<a id="c-068-jev-no-damage"></a>
+
+## C-068 — JEV 피해 예측 제거 입력과 단독 평가
+
+D-137/EX-090의 `jev-choice-v6-no-damage`에 적용한다. C-067의 공개 정보·현재 관측·추천세트
+필터·스피드 비교·자기상세·후보/명령/순서·로그 의미를 유지하며 양방향 피해 범위/계산불가 사유
+필드와 해당 프롬프트 설명만 생략한다. 일반 피해/배틀 규칙·기술위력·타입표는 유지한다.
+관측 정규화와 추천세트 준비를 피해 시나리오 생성에서 분리하며 outgoing/incoming 계산0,
+speed용 계산만 허용한다. 결과를 계산한 뒤 숨기지 않는다. 감사에는 비활성화 처치와 스피드 호출을
+남긴다. 기존 입력 버전/기본 동작과 봉인 자료는 불변이다.
+실행·사전검증·경기별 감사는 동일 프로필을 명시 선택한다. EX-089 저장 입력의 CPU 대조와
+단독 실행·동결/자원·최대8추론/단일서버·감사/비교/뷰어/봉인/반환 원문은 EX-090을 따른다.
+다른 모델 선행/후속 실행이나 기존 수집 재개를 요구하지 않는다.
+
+<a id="c-067-jev-public-memory-v6"></a>
+
+## C-067 — 상대 공개 정보 v6와 턴 로그
+
+D-135/EX-086/087 및 D-136/EX-088/089에 적용한다. EX-088/089는 교정된 구현의 새 평가이며
+이전 중단·봉인을 바꾸지 않는다. 현재 공식 관측과 동일 행 cutoff의 전체 actor 공개prefix로
+상대 facts를 재구성하며 이전payload·정답세트·foreign request·미래·근거 없는 관측 추정을 쓰지 않는다.
+cutoff/개체 식별이 모호하면 실패하고 근거 없는 속성은 unknown이다. 원관측·근거·보완 이유는 감사에만 둔다.
+일반 기술은 교체/시간 후 유지하고 Mimic/Transform 일시복사·Sketch 지속변경·호출/반사를 구별한다.
+도구는 공개 현재소유/소모/Knock Off/Trick/회수 순서를 적용하며 prevItem으로 부활시키지 않는다.
+특성은 Trace/Skill Swap 소유자·공개 baseAbility·현재특성·교체복귀·억제/해제를 구별하며
+숨은 Ability Shield 등을 추정하지 않는다. 기존 effect id/name/general_effect·knowledge·
+suppressed/underlying_ability를 재사용하고 특성 정체를 발동 증거로 사용하지 않는다.
+상대 벤치에도 moves/item/ability/baseAbility를 유지하되 공개HP hp_percent/hp_precision만 사용한다.
+비공개 회복을 추정하지 않고 교체 해제 boosts/volatile/일시효과를 벤치에 누적하지 않는다.
+같은 helper를 현재대면 정규화·추천세트 필터에 연결한다. 피해량/스피드 식·자료·현재출전끼리
+계산범위는 불변이며 벤치계산0, 현재효과 불확정은 기존 unavailable/null+사유다.
+공통함수에는 선택적v6 경로만 추가하고 v4/v5 기본·후보/명령/순서·자기상세·정책은 보존한다.
+
+새 뷰어의 상대HP는 공개비율/정밀도·0/unknown을, 도구/특성은 부재/억제를 실제 저장입력으로 표시한다.
+턴로그 원천은 events.jsonl의 해당 모델username 수신 배틀protocol만이다. sequence/line_index를
+보존하고 request/sentchoice·private control/debug/chat/outbound를 배제하며 미해소split은 거부한다.
+준비0/각턴·고정BattleTextParser의 읽기쉬운 로그·미지원원문·같은 구간의 펼치기/복사/다운로드를 제공한다.
+선택턴 전체와 결정후 결과를 구분하고 결정전까지 전환은 프레임 중간 행cutoff를 지킨다.
+결정→턴, 턴→첫결정 연결·동일턴 다중결정·결정없는턴을 지원한다. win/tie는 마지막턴,
+종료없는 실패는 진행중중단이다. 전체로그를 모델의 최근3턴 로그에 합치지 않는다.
+새HTML/JS/변환기를 실행source에 포함하고 이동후 오프라인 열람을 지원한다.
+자원/단일적재8추론·수집·중단·감사/표본검증·봉인 조건은 각 평가의 EX-086/087 또는
+EX-088/089 원문을 따른다. 새 ID/출력은 명시 코호트로 연결하고 중단 결과를 덮어쓰지 않는다.
+
+<a id="c-066-jev9b-single-choice"></a>
+
+## C-066 — JEV-9B 단일 Choice 실행 경계
+
+[D-134](decisions/D-134-jev9b-single-choice.md) / [EX-085](experiments/EX-085-jev9b-single-choice.md)에 적용한다.
+C-063/C-064의 jev-choice-v4 관측·후보·무절단·전송/중복 추론 방지 의미를 재사용하되
+모델 identity·FP32 24×4096 head·보정값·경로·32층 배치를 명시 프로필로 분리한다.
+기술·테라·교체 전체 후보에서 단일 Choice, 선봉/강제 교체 직접 선택, 단일 후보 무호출이다.
+전체32768토큰·공식16후보 한도를 넘으면 추론 전에 거부한다. 기존 기본 프로필은 유지한다.
+C-046 판단 실패 경기 격리·C-047 원문 내보내기를 적용하며 자원·최대8회 단일 서버 gate·
+경기별1회 감사/종료 완전성·뷰어 표본 예외·복구/분모는 EX-085 원문을 따른다.
+
+<a id="c-065-quyet-two-stage"></a>
+
+## C-065 — Quyet 2단계 Choice 실행 경계
+
+[D-133](decisions/D-133-quyet-medium-two-stage.md) / [EX-084](experiments/EX-084-quyet-medium-two-stage.md)에 적용한다.
+jev-choice-v4의 관측·상세 정보·계산/지식을 유지하고 move/switch와 세부 행동을 분리한다.
+유형 설명은 세부 후보 전체, 세부 질문은 선택 유형의 원 ID/내용/순서만 포함한다.
+같은 상태를 두 단계에 전달하고 중간 관측·추측을 추가하지 않는다. 공식10후보·prompt v1·
+Choice 보정값과 strict=True를 사용하며 상태/전체32768 초과는 무절단 거부한다.
+자동 선택은 실제 호출/응답과 구분하고 단계별 원문/formatter/확률/usage/지연을 보존한다.
+세부 확률은 조건부이며 미선택 유형의 분포를 합성하지 않는다. 결정/단계별 ID와 같은 본문
+재전송·영속 중복 추론 방지, 단계 사이/전송 직전 rqid·후보·취소 검사로 최종 명령을 한 번 보낸다.
+C-046의 판단 오류 경기 격리, C-047의 원문 내보내기를 적용한다. 자원·최대9회 GPU gate·
+경기별1회 감사/종결 확인·뷰어 표본 예외·실패/복구·분모의 원문은 EX-084다.
+
 <a id="c-064-jev27b-continuation"></a>
 
 ## C-064 — EX-083 4GPU 계승 실행 경계
@@ -1369,3 +1592,94 @@ D-129/EX081은 C-052 모델·renderer를 읽기 전용 재사용하는 별도 �
 실험별 모델/검증 gate·GPU/시계/admission·분모·재수집/복구·봉인은 EX081이 소유한다.
 원 EX066 config의 GPU1은 학습 provenance이며 새 자원 GPU0으로 metadata를 덮어쓰지 않는다.
 기존 learning·Kev·Qwen 경로의 schema와 기본값, 환경·가중치·STOP은 유지한다.
+
+<a id="c-074-ruleqa"></a>
+
+## C-074 — 데이터 전용 규칙 Q&A State
+
+D-159/EP-169의 jev-ruleqa-state-v1은 실제 Node 장면의 행동 선택 경계에서 actor 공개 로그와
+자기 request만 공식 관측기→공개 사실 재구성→jev-choice-v6→names-v1에 전달한다.
+양측 행동 제출 전 또는 피벗/강제 교체 중간 선택에서 자른다. 상대 내부세트·미래·seed·oracle은
+입력에 넣지 않고 evidence에 분리한다. v6 복사본의 state.version과 confusion volatile의 name/kind/general_effect만 허용 교정하며,
+confusion 상태와 Confusion 기술을 구별한다. 수치/관측/합법 후보는 그대로 유지한다.
+지원 밖 설명 충돌은 제외한다. 추천세트 조건부 피해를 실제 숨은 세트의 보장으로 해석하지 않는다.
+QA 지시문·QA 선택지는 배틀 행동 지시문·후보와 분리하고 GLM 전략은 사용하지 않는다.
+canonical의 ID/규칙/묶음/표현/조건/State/질문/선택지/정답/근거/split과 비공개 evidence를 분리한다.
+prepare/generate/validate/export만 제공하며 검증 완료 자료만 학습용 messages와 선택형으로 내보낸다.
+
+검증된 장면의 질문 표현을 교정하는 generate --relabel-from은 같은 명세·engine·자료와 관측/계산기
+source를 요구한다. spec/input/result/evidence를 보존하고 새 질문만 생성하며 provenance와 이전 판본을
+남긴다. canonical의 State/후보와 질문 필드를 보호된 공개 투영에 직접 대조하고 전수 validate·의미 검토를
+다시 거친 후 export한다. 질문·표현·실행 제어·검증 코드 외 source 변경에는 이 경로를 사용하지 않는다.
+
+## C-075 — Strategist 텍스트 행동 경계
+
+D-160/EX-106에만 적용한다. 공식 관측과 자기 request로 짧은 입력/합법 후보를 구성한다. 원문 첫 행동 줄을 유일 후보에 연결하고 모델 출력 오류만 등록된 seeded 균등 대체로 처리한다. 단일 후보는 미호출 자동선택이다. 전송 직전 rqid/후보 재검증과 양측 테라 차단을 유지한다. 상세 조건/한도/오류 분류는 [EX-106](experiments/EX-106-strategist-first-battle.md), 공통 결함 경계는 C-018이다.
+
+## C-076 — 규칙 Q&A 학습 경계
+
+D-161/EX-107의 학습 입력은 기존 messages system/user만이며 assistant는 target이다. canonical 관리 ID·규칙·정답 metadata·비공개 evidence는 입력에 합치지 않는다. 생성 prefix 일치·assistant-only loss·정답 예측 위치 logits·GPU1–3 UUID/공용 잠금·완전 checkpoint/test 선택 잠금은 EX-107을 따른다.
+
+## C-077 — 학습 Tacit 배틀 경계
+
+D-162/EX108은 공식관측·자기request·공개prefix·자기팀의 v6/RuleQA 공개State만 사용한다. 단일 option ID를 현재 합법명령에 연결하고 오류는 등록된 결정적 대체, 기술오류는 중단한다. EX107 adapter선택/재로딩·GPU1 UUID/잠금·일회예약을 gate로 삼는다. 세부원문은 EX108, viewer는 C047이다.
+
+<a id="c-078-openai-decisions"></a>
+
+## C-078 — 독립 OpenAI Decisions API 호출
+
+[D-163](decisions/D-163-openai-decisions-environment.md)의 독립 클라이언트에만 적용한다.
+공식 `https://api.openai.com/v1/decisions`와 `gpt-6-luna`를 사용한다. 루트 `.env`는 일반 파일·
+권한600·Git 제외이며 OPENAI_API_KEY는 프로세스 설정(명시적 빈 값 포함)이 우선한다.
+파일 변수 확장·shell 실행은 없다. dry-run은 키 열람과 네트워크 없이 요청 JSON을 출력한다.
+실제 호출은 timeout60초·재시도0·redirect 금지이며 오류 본문/키는 출력하지 않는다.
+응답 answers와 refusal은 JSON 원형으로 제공한다. 기존 배틀 공급자·실험 계약에는 적용하지 않는다.
+
+<a id="c-079-openai-decisions-battle"></a>
+
+## C-079 — OpenAI Decisions v6 배틀 경계
+
+D-164/EX-109에서 C-067의 상세 입력과 원 후보/명령 순서를 유지하며
+OpenAI Decisions의 input/choice 질문으로 손실 없이 변환한다. 원 v6 payload와 실제
+HTTP JSON·응답은 각각 보존하고 내부 호환 응답을 원 HTTP 응답으로 표시하지 않는다.
+단일 후보 무호출, 나머지 choice 원값 실행·C-046 판단 오류 격리, 전송 전 rqid/후보 재검증을 적용한다.
+키/Authorization은 원장·소스·자식 프로세스에 넣지 않는다. 요청·실패·usage·사전/본수집을 구분한다.
+새 provider의 연결·실행 상한/실패·감사/복구는 EX-109, 뷰어는 C-047을 따른다.
+
+<a id="c-080-openai-decisions-retry"></a>
+
+## C-080 — OpenAI 통신 지속 재시도
+
+D-165/EX110에서 C-079의 v6/후보/실행 경계를 유지하고 통신정책만 별도 프로필로 확장한다.
+연결·timeout·408/429/5xx는 같은 논리ID/본문으로 무횟수 상한 재시도하며 모든 물리시도를 기록한다.
+개별HTTP60초는 재시도 경계이고 전체/경기시간·요청수 상한은 없다. backoff/Retry-After·취소를 지원한다.
+명백한 요청/인증/권한 오류와 관측/수집 무결성 오류는 일시적통신으로 숨기지 않는다.
+원choice를 변경하지 않고 raw/내부호환 응답·재시도/미응답사용량을 구분한다. 공급자 내부 중복추론0은 미보장이다.
+EX109의 당시재시도0·중단/봉인은 보존한다.
+
+
+## C-080 — JevK5 외부 vLLM 선택지 판독
+
+D-166/EX111의 v6 상세 입력은 원state/instructions/criteria를 가역 변환한다. JevK5 native 비Thinking prompt와 모든 후보 단일 token ID의 raw logprob을 사용하고 softmax(z/1.316)로 사전 정의한 결정을 산출한다. 원HTTP·prompt token·logprob·보정분포/선택을 구분해 보존한다. 생성 글자는 정책이 아니며 생성1토큰 usage는 포함한다. 사용자 소유 서버 PID/명령/모델/GPU identity를 확인하되 종료하지 않는다. 실패·재시도·상한·검증은 EX111을 따른다.
+
+<a id="c-081-candidate-matchup"></a>
+
+## C-081 — 후보별 현재 대면 요약
+
+D-167의 candidate-matchup-v1은 v6 payload의 기술후보에 current_matchup만 추가하는 독립overlay다.
+원state.version은 기반schema인 jev-choice-v6를 유지하며 overlay버전은 각요약과별도provenance에 표시한다.
+원state/지시문/후보의 기존필드·ID·순서·명령은 불변이며 요약제거로 원payload가 정확히 복원돼야 한다.
+현재 대상/타입배율·공개확인한면역/차단/반사·조건부피해를 분리하고 상대의 교체/테라/상태변화를 예측하지 않는다.
+자기Tera 후보는 자기Tera 피해branch/기술타입을 구분한다. 기존 상대Tera 가정은 원v6에만 유지한다.
+계산피해0은 면역원인의 증거로 역추정하지 않는다. 상태기술에는 일반타입배율을 무조건 적용하지 않는다.
+숨은도구/특성·억제/해제·동적타입/미지원예외가 판정을 바꿀 수 있으면unknown으로 표시한다.
+후보 삭제/재정렬·원선택 강제교정·새확률을 만들지 않는다. 소스/상태와 원본/보강본을 별도 식별한다.
+
+## C-082 — 요약 프로필 배틀·감사 연결
+
+D-168/EX112는 C081 overlay와 C079/통신 C080을 결합한다. manifest의 기반 schema와 candidate_matchup_profile을 분리하고 명시 프로필로 입력생성·자료정체성·공식관측 재생성 감사를 선택한다. 실제 HTTP 요청·원선택·전송명령을 대조한다. 기존 실험의 기본 입력/감사를 변경하지 않는다.
+
+
+## C-083 — JevK5 규칙 선택형 학습
+
+D169/EX113은 QA선택지와 배틀행동을 분리하고 공식 비Thinking 입력 마지막 위치의 선택지 제한 CE를 DDP forward로 계산한다. 완전checkpoint·test선택/보정잠금·원확률재로딩·자원 경계는 EX113을 따른다.

@@ -19,6 +19,36 @@ of truth는 개별 experiment record다.
 
 | ID | Record | Status | 읽을 때 주의할 범위 |
 |---|---|---|---|
+| EX-113 | [JevK5 규칙 선택형 LoRA](EX-113-jevk5-ruleqa-lora.md) | Active | 동일 템플릿 QA·배틀 미평가 |
+| EX-112 | [후보별 요약 gpt-6-luna 동일32](EX-112-openai-candidate-matchup-battle.md) | Stopped | 정상31/32·15쌍·거부실패1·분모미달 비교/보존 |
+| EX-111 | [JevK5-9B v6 상세32](EX-111-jevk5-v6-battle32.md) | Completed | 정상32/16쌍·전수감사/뷰어/봉인·외부서버 유지 |
+| EX-110 | [OpenAI 통신 재시도 새32](EX-110-openai-decisions-retry32.md) | Completed | 정상32/16쌍·16승16패·50%·감사/뷰어/반환 완료 |
+| EX-109 | [OpenAI Decisions v6 상세32경기](EX-109-openai-decisions-v6-battle32.md) | Stopped | 정상10·통신실패1·미실행21·원자료/뷰어 보존 |
+| EX-108 | [학습 Tacit 실전32](EX-108-tacit-ruleqa-battle32.md) | Completed | 정상32·16쌍·오류대체0·감사/뷰어/반환 완료 |
+| EX-107 | [Tacit 규칙 Q&A LoRA](EX-107-tacit-ruleqa-lora.md) | Completed | 규칙QA 학습·잠긴test·adapter·블라인드검토/보고 완료 |
+| EX-106 | [Strategist 첫 배틀](EX-106-strategist-first-battle.md) | Completed | 정상32/16쌍·1승31패·대체 결합 성적·GPU0 반환 |
+| EX-105 | [Tacit vLLM low 판단 비교](EX-105-tacit-vllm-low.md) | Completed | 정상1/1·67턴패배·감사/뷰어/봉인·외부서버유지 |
+| EX-104 | [Tacit Thinking low 판단 비교](EX-104-tacit-thinking-low.md) | Blocked | 18턴 도중 종료·정상0/1·부분 감사/뷰어/봉인/반환 |
+| EX-103 | [Omni low 동일대진](EX-103-jev-omni-low.md) | Completed | 정상1/1·player_lost·71턴 |
+| EX-102 | [매치업 사건 high](EX-102-matchup-events-high.md) | Completed | 정상1/1·실패0·player_won·39턴 |
+| EX-101 | [매치업 사건 호출](EX-101-matchup-events.md) | Completed | 정상1/1·player_won |
+| EX-100 | [GLM-5.3 low 동일대진](EX-100-glm53-low-sample.md) | Completed | GLM-5.3/low·정상1/1·player_won |
+| EX-099 | [시간 무상한·GLM 최대 출력](EX-099-planner-unlimited-time-max-output.md) | Completed | 시간null·131072·정상1/1·player_won |
+| EX-098 | [GLM high 동일대진 샘플](EX-098-planner-high-effort-sample.md) | Blocked | high·19턴 사용자요청 중단·부분종결 |
+| EX-097 | [GLM 형식 재시도·temperature0](EX-097-planner-format-temperature-zero.md) | Completed | temperature0·형식 재시도·정상1/1·player_lost |
+| EX-096 | [NVFP4 확률 변동 진단 실제1경기](EX-096-nvfp4-battle-probability-diagnostics.md) | Blocked | 7턴 GLM 스키마 오류·정상0/1·부분종결 |
+| EX-095 | [JEV-35B-NVFP4 동일 대진 샘플](EX-095-jev35b-nvfp4-sample.md) | Blocked | 반복성 gate 실패·8사전추론/GLM0/본경기 미실행1·부분종결 |
+| [EX-094](EX-094-planner-json-retry-sample.md) | GLM JSON 구문 재시도 샘플 | Completed | 64턴 패배·정상1/1·실제구문재시도0·감사/통합뷰어/반환 |
+| [EX-093](EX-093-planner-goal-completion-sample.md) | 변경 수행 지시문 샘플 | Blocked | 14턴 GLM JSON 출력 실패·정상0/1·부분 통합뷰어/감사/반환 |
+| [EX-092](EX-092-planner-first-battle-sample.md) | GLM planner–JEV 첫 대진 샘플 | Completed | EX-088 첫 슬롯·현재9B/role guide/표시명·55턴 승리1경기·감사/뷰어/반환 |
+| [EX-091](EX-091-minicpm5-2b-jev.md) | MiniCPM5-2B-Jev 계산기 포함 | Completed | 새32/16쌍·EX-089 비교·감사/Damage-calc/봉인·GPU0/알람 반환 완료 |
+| [EX-090](EX-090-jev9b-no-damage.md) | JEV-9B 피해 예측 제거 | Completed | 새32/16쌍·EX-089 비교·스피드 유지·감사/뷰어/봉인·반환 완료 |
+| [EX-089](EX-089-jev9b-v6-corrected.md) | 교정v6 JEV-9B 새32 | Completed | 새32/16쌍·EX-085/모델간 비교·감사/뷰어/봉인·반환 완료 |
+| [EX-088](EX-088-jev27b-v6-corrected.md) | 교정v6 JEV-27B 새32 | Completed | 새32/16쌍·EX-083 비교·감사/뷰어/봉인·반환 완료 |
+| [EX-087](EX-087-jev9b-public-memory-v6.md) | JEV-9B 공개 정보 v6 | Blocked | CPU준비 후 공유 결함 중단·GPU/경기0·미실행32 보존 |
+| [EX-086](EX-086-jev27b-public-memory-v6.md) | JEV-27B 공개 정보 v6 | Blocked | 입력 결함·실패1/미실행31·CPU교정/부분 뷰어/봉인·반환 |
+| [EX-085](EX-085-jev9b-single-choice.md) | JEV-9B 단일 Choice 동일32 평가 | Completed | 새32경기·공식 패키지 탐색 비교·감사/뷰어/봉인 완료 |
+| [EX-084](EX-084-quyet-medium-two-stage.md) | Quyet-Medium 2단계 동일32 평가 | Completed | 새32경기·유형/세부 선택·긴 입력 확장의 탐색 비교 |
 | EX-083 | [JEV-27B 4GPU 계승](EX-083-jev27b-four-gpu-continuation.md) | Completed | 정상23+신규9·고유32/16쌍·원실패 포함33시도·감사/뷰어/봉인 완료 |
 | EX-082 | [JEV-27B 개선 입력 동일32](EX-082-jev27b-ex058-reproduction.md) | Blocked | GPU 자원 한도 중단·부분 종결 · [메모리 후속 교훈](../exec-plans/evidence/ep134-lessons/report.md) |
 | EX-081 | [공동 q 모델 배틀20](EX-081-joint-q-battle.md) | Completed | GPU0 재현·유효20경기·정정/뷰어/봉인 완료,0승20패 |

@@ -21,7 +21,15 @@ verification에 대한 source of truth는 각 개별 plan이다. `active/` 안�
 
 ### 실행 중
 
-현재 실행 중인 plan은 없다.
+| ID | Plan | Status | 최종 갱신일 |
+|---|---|---|---|
+| [EP-184](active/EP-184-jevk5-ruleqa-lora.md) | JevK5 규칙 선택형 LoRA | Active | 2026-10-20 |
+| [EP-163](active/EP-163-tacit-thinking-low.md) | Tacit Thinking low 판단 비교 | Blocked | 2026-10-16 |
+
+
+
+
+
 
 <a id="blocked-plans"></a>
 
@@ -29,10 +37,18 @@ verification에 대한 source of truth는 각 개별 plan이다. `active/` 안�
 
 실험 재개 지시가 아니다. 보고·보존·정리 완료를 실험 목표 달성으로 바꾸지 않는다.
 파일은 기존 `active/` 위치에 유지하며 개별 상태·조건을 그대로 따른다.
-`active/EP-111`·`EP-112`·`EP-113`의 호환 링크는 completed 본문을 가리킨다.
+`active/EP-111`·`EP-112`·`EP-113`·`EP-141`·`EP-143`·`EP-144`의 호환 링크는 completed 본문을 가리키며
+실행 중/중단 보존 plan을 새로 등록하지 않는다.
 
 | ID | Plan | Status | 현재 objective | 최종 갱신일 |
 |---|---|---|---|---|
+| [EP-183](active/EP-183-openai-candidate-matchup-battle.md) | 후보별 요약 OpenAI 32경기 | Blocked | 정상31·거부실패1·15쌍·분모미달 종결 | 2026-10-20 |
+| [EP-179](active/EP-179-openai-decisions-v6-battle32.md) | OpenAI Decisions v6 상세32경기 | Blocked | 정상10·통신실패1·미실행21·부분종결 | 2026-10-20 |
+| [EP-157](active/EP-157-planner-high-effort-sample.md) | GLM high 동일대진 샘플 | Blocked | 19턴 사용자요청 중단·부분종결 | 2026-10-15 |
+| [EP-155](active/EP-155-nvfp4-battle-probability-diagnostics.md) | NVFP4 확률 진단 샘플 | Blocked | 7턴 스키마 오류·정상0/1·부분종결 | 2026-10-15 |
+| [EP-154](active/EP-154-jev35b-nvfp4-sample.md) | JEV-35B-NVFP4 동일 대진 샘플 | Blocked | 반복성 gate 실패·미실행1·부분감사/뷰어/반환 종결 | 2026-10-15 |
+| [EP-151](active/EP-151-planner-goal-completion-sample.md) | 변경 수행 지시문 샘플1경기 | Blocked | 14턴 GLM JSON 오류·정상0/1·부분뷰어/감사/반환 완료 | 2026-10-15 |
+| [EP-140](active/EP-140-jev-public-memory-v6.md) | 공개 정보 v6·턴 로그·27B/9B | Blocked | 공유 입력 결함 중단·CPU교정·부분 뷰어/봉인·반환 완료 | 2026-10-13 |
 | [EP-134](active/EP-134-jev27b-ex058-reproduction.md) | JEV-27B 동일32 재현 | Blocked | GPU 한도 중단·목표 미달 · [후속 교훈](evidence/ep134-lessons/report.md) | 2026-10-08 |
 | [EP-127](active/EP-127-fixed-matchup-first-round.md) | 첫1라운드 학습 | Blocked | 원실행 시간초과·학습0·후속 시간상한 해제 | 2026-10-07 |
 | [EP-126](active/EP-126-fixed-matchup-day.md) | 하루 내 고정 대진 실행 | Paused | 사용자 중지·학습/test0·자료 보존/정리 완료 | 2026-10-07 |
@@ -70,6 +86,44 @@ verification에 대한 source of truth는 각 개별 plan이다. `active/` 안�
 
 | ID / 개별 검증 근거 | 완료일 | Outcome |
 |---|---|---|
+| [EP-182](completed/EP-182-candidate-matchup-summary.md) | 2026-10-20 | 후보별 현재 대면 요약·v6 보존·규칙/전수 오프라인 검증 |
+| [EP-181](completed/EP-181-jevk5-v6-battle32.md) | 2026-10-20 | JevK5-9B 새32/16쌍·감사/뷰어/봉인·사용자서버 유지 |
+| [EP-180](completed/EP-180-openai-decisions-retry32.md) | 2026-10-20 | OpenAI 통신 지속 재시도·새32/16쌍·감사/뷰어/봉인/반환 완료 |
+| [EP-178](completed/EP-178-openai-decisions-environment.md) | 2026-10-20 | 독립 Decisions API 환경·예제·모의 검증 완료·실 API 미호출 |
+| [EP-177](completed/EP-177-ex108-viewer-layout.md) | 2026-10-19 | EX108 결정/턴·탭·병렬 리플레이 구성 교정·이전 봉인 보존 |
+| [EP-176](completed/EP-176-tacit-ruleqa-battle32.md) | 2026-10-20 | 학습Tacit 정상32·감사/오프라인뷰어·봉인·GPU1/예약자원 반환 |
+| [EP-173](completed/EP-173-tacit-ruleqa-lora.md) | 2026-10-19 | Tacit 규칙QA 3epoch·잠긴test·adapter/재로딩·블라인드검토·보고/봉인 |
+| [EP-175](completed/EP-175-smogon-ou-strategy-data.md) | 2026-10-19 | Smogon110링크·OU215세트·원문/브라우저/Parquet 전수 검증 |
+| [EP-174](completed/EP-174-smogon-ou-strategy-links.md) | 2026-10-19 | OU 포켓몬·전략 링크110항목 JSON/CSV·원 DOM 대조 |
+| [EP-172](completed/EP-172-strategist-first-battle.md) | 2026-10-19 | Strategist32/16쌍·감사/뷰어/봉인·GPU0 반환 |
+| [EP-171](completed/EP-171-strategist-model-archive.md) | 2026-10-19 | Strategist 어댑터 보관·해시/구조 검증·모델/학습 설정 조사 |
+| [EP-170](completed/EP-170-pokemon-training-data-archive.md) | 2026-10-19 | pokemon-training-data 원본 보관·해시/행 수 검증·원본 NaN 제한/매뉴얼 연결 |
+| [EP-169](completed/EP-169-showdown-ruleqa.md) | 2026-10-19 | 규칙 Q&A 생성기·전수/의미 검증·학습용 내보내기 |
+| [EP-168](completed/EP-168-pretrain-data-archive.md) | 2026-10-19 | pokechamp-pretrain-data 원본 보관·해시/행 수/JSON 표본 검증·매뉴얼 연결 |
+| [EP-167](completed/EP-167-dataset-manual.md) | 2026-10-19 | 매뉴얼에 두 데이터셋의 특징·구조·보관 위치와 검증 근거 연결 |
+| [EP-166](completed/EP-166-pokechamp-dataset-archive.md) | 2026-10-18 | milkkarten/pokechamp 고정 revision 원본·보관 위치/manifest 연결·파일 및 Parquet 검증 |
+| [EP-165](completed/EP-165-showdown-sft-archive.md) | 2026-10-16 | Pokémon Showdown SFT 고정 revision 원본·외부 보관 위치/manifest 연결·전수 구조 검증 |
+| [EP-164](completed/EP-164-tacit-vllm-low.md) | 2026-10-16 | EX-105 외부 Tacit vLLM·정상1/1·67턴패배·감사/뷰어/봉인/소유반환 |
+| [EP-162](completed/EP-162-jev-omni-low.md) | 2026-10-16 | EX-103 Omni low·정상1/1·player_lost·71턴·감사/뷰어/반환 |
+| [EP-161](completed/EP-161-matchup-events-high.md) | 2026-10-15 | EX-102 high·정상1/1·실패0·player_won·39턴·감사/뷰어/반환 |
+| [EP-160](completed/EP-160-matchup-events.md) | 2026-10-15 | EX-101 사건호출·정상1경기/감사/뷰어/반환 |
+| [EP-159](completed/EP-159-glm53-low-sample.md) | 2026-10-15 | GLM-5.3 low·EX-100 정상1경기/감사/뷰어/반환 |
+| [EP-158](completed/EP-158-planner-unlimited-time-max-output.md) | 2026-10-15 | 시간null·최대출력131072·EX-099 정상1경기/감사/뷰어/반환 |
+| [EP-156](completed/EP-156-planner-format-temperature-zero.md) | 2026-10-15 | GLM temperature0·형식 재시도·EX-097 정상1경기/감사/뷰어/반환 |
+| [EP-153](completed/EP-153-planner-unlimited-disk.md) | 2026-10-15 | 새 GLM·JEV 디스크 상한null·기록/메모리/배치 유지·CPU 검증 |
+| [EP-152](completed/EP-152-planner-json-retry-sample.md) | 2026-10-15 | GLM JSON 구문 재시도5·EX-094 정상1경기/64턴 패배·감사/뷰어/반환 |
+| [EP-150](completed/EP-150-planner-replay-viewer.md) | 2026-10-15 | GLM·JEV7탭·리플레이·저장 피해·이동후 오프라인 검증 완료 |
+| [EP-149](completed/EP-149-executor-goal-completion.md) | 2026-10-15 | JEV 목표 충족 확인·반복 회피 지시·CPU 연결 검증 |
+| [EP-148](completed/EP-148-planner-first-battle-sample.md) | 2026-10-15 | EX-092 GLM planner/JEV-9B 샘플1경기·감사/뷰어/봉인/반환 완료 |
+| [EP-147](completed/EP-147-candidate-display-names.md) | 2026-10-15 | 후보 표시명·동일 ID/명령·planner/JEV/뷰어 연결·CPU 검증 |
+| [EP-146](completed/EP-146-planner-role-resource-guide.md) | 2026-10-15 | Planner 역할·승리경로·자원 guide·선택/동결·비교/CPU 검증 |
+| [EP-145](completed/EP-145-jev-planner-environment.md) | 2026-10-15 | GLM planner–JEV 호출/프롬프트 설정·모의 배틀/뷰어·CPU 검증; 실제 API/GPU0 |
+| [EP-144](completed/EP-144-minicpm5-2b-jev.md) | 2026-10-14 | MiniCPM5-2B-Jev32/16쌍·EX-089 비교·감사/뷰어/봉인·GPU0/알람 반환 완료 |
+| [EP-143](completed/EP-143-jev9b-no-damage.md) | 2026-10-14 | 피해 예측 제거32/16쌍·EX-089 비교·감사/뷰어/봉인·반환 완료 |
+| [EP-142](completed/EP-142-jev-damage-viewer.md) | 2026-10-14 | EX-088·089 Damage-calc 별도 판본·전수 대조·오프라인 검증·봉인 완료 |
+| [EP-141](completed/EP-141-jev-v6-corrected-evaluation.md) | 2026-10-14 | 교정v6 각32경기/16쌍·3비교·감사/뷰어/봉인·자원/알람 종료 완료 |
+| [EP-139](completed/EP-139-jev9b-single-choice.md) | 2026-10-13 | JEV-9B 새32경기·단일 Choice 감사/비교·뷰어·봉인/자원 반환 완료 |
+| [EP-138](completed/EP-138-quyet-medium-two-stage.md) | 2026-10-13 | Quyet-Medium 새32경기·2단계 감사/비교·뷰어·봉인/자원 반환 완료 |
 | [EP-137](completed/EP-137-jev27b-four-gpu-continuation.md) | 2026-10-13 | JEV-27B 정상23 계승·4GPU 신규9·전수 감사/비교/뷰어·봉인/자원 반환 완료 |
 | [EP-136](completed/EP-136-branch-research-manuals.md) | 2026-10-13 | 연구선별 매뉴얼·환경/출력 안내·등록 템플릿·정적 검증·학습 원격 반영 완료 |
 | [EP-135](completed/EP-135-research-branch-preservation.md) | 2026-10-12 | 동일 코드 두 연구선·고정 태그·외부 자산 복사/검증·기존 환경 유지 |

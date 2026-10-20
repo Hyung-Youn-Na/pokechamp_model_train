@@ -1,0 +1,21 @@
+{
+  "model": "gpt-6-luna",
+  "input": "결제가 두 번 청구되었습니다. 중복 결제 금액을 환불해 주세요.",
+  "questions": [
+    {
+      "type": "choice",
+      "name": "department",
+      "instructions": "이 요청을 처리할 부서를 선택하세요.",
+      "choices": [
+        {
+          "value": "billing",
+          "description": "결제 및 환불"
+        },
+        {
+          "value": "technical",
+          "description": "제품 기술 문제"
+        }
+      ]
+    }
+  ]
+}

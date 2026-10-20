@@ -9,6 +9,19 @@ from ..improved_io.calculator import CalculationError
 from ..improved_io.calculations import own_spec
 
 
+class SpeedOnlyEngine:
+    """EX-090 permits the existing effective-Speed calculation and no damage scenarios."""
+    def __init__(self, engine):
+        self.engine = engine
+        self.calls = 0
+
+    def calculate(self, scenario):
+        if not scenario['scenario_id'].startswith('speed/') or scenario['move'] != 'splash':
+            raise ValueError('damage prediction disabled: non-speed calculator call')
+        self.calls += 1
+        return self.engine.calculate(scenario)
+
+
 def compare(audit, dex, engine):
     result = dict(status='unavailable', speed_certainty='unknown',
                   meaning='effective Speed comparison before actions, not action-order probability')
