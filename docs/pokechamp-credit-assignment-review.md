@@ -4,7 +4,7 @@
 - 상태: **검토 메모 — 승인된 연구 설계·실험이 아니다.** 아래 제안을 실행하려면 별도 EX 승인과
   등록이 필요하다. 연구 방법의 원문은 [RESEARCH_DESIGN](../project_context/RESEARCH_DESIGN.md)이며,
   이 문서는 그것을 대체하거나 변경하지 않는다.
-- 범위: 작성 시점에 실행 중이던 [EX-075](../project_context/experiments/EX-075-abyssal-rl-next.md)에는
+- 범위: 작성 시점에 실행 중이던 [EX-075](../project_context/research/policy-learning/experiments/EX-075-abyssal-rl-next.md)에는
   영향이 없다.
 
 ## 검토 대상 아이디어
@@ -27,12 +27,12 @@ Gen9 OU 배틀 에이전트를 학습할 때 "승리한 경기의 모든 결정�
   rule로 확률을 보정하는 방법이며, Yang et al. 2023의 contrastive distillation과는 무관하다
   ([rlcd-lite README](../.tools/rlcd-lite/upstream/README.md)). EVE는 bandit 형태
   (`r = c − p_a`, [EVE README](../.tools/eve-rlcd/upstream/README.md))이고, EX-072 이후 학습은 선택
-  행동의 W/D/L half-Brier를 PPO에 결합한 변형이다([D-114](../project_context/decisions/D-114-selfplay-rlcd.md)).
+  행동의 W/D/L half-Brier를 PPO에 결합한 변형이다([D-114](../project_context/research/policy-learning/decisions/D-114-selfplay-rlcd.md)).
 - **JEV**: TypeSafe의 typed-decision API다. 후보 중 하나를 고르고 choice 확률과 confidence를
   돌려준다. 후보별 value를 내지 않는다. 이 프로젝트에서 "JEV 계열"은 세 오픈소스 RLCD 환경을
-  가리킨다([D-096](../project_context/decisions/D-096-pokemon-training-objective.md)).
+  가리킨다([D-096](../project_context/research/policy-learning/decisions/D-096-pokemon-training-objective.md)).
 - **후보별 Q 모델**: `(state, candidate) → Q`를 실제로 학습한 것은 Kev
-  ([EX-066](../project_context/experiments/EX-066-joint-q-training.md))다.
+  ([EX-066](../project_context/research/action-value/experiments/EX-066-joint-q-training.md))다.
 
 ### 수치 출처 표기
 
@@ -57,11 +57,11 @@ Gen9 OU 배틀 에이전트를 학습할 때 "승리한 경기의 모든 결정�
    - 상대 정책
    - 정보 조건(실제 상태인가, belief인가)
 
-   실제 사례: [EX-065](../project_context/experiments/EX-065-joint-q-data.md)에서는 후속 정책인
+   실제 사례: [EX-065](../project_context/research/action-value/experiments/EX-065-joint-q-data.md)에서는 후속 정책인
    Abyssal이 Tera를 쓰지 않아 Tera 후보의 가치가 왜곡됐고,
-   [EX-067](../project_context/experiments/EX-067-abyssal-tera-joint-q.md)로 다시 수집했다.
+   [EX-067](../project_context/research/action-value/experiments/EX-067-abyssal-tera-joint-q.md)로 다시 수집했다.
 3. **rollout 한 번으로 인과를 판정하는 것은 통계적으로 무효다.**
-   - [EX-060](../project_context/experiments/EX-060-single-battle-branch-rollouts.md)에서 CRN 분기
+   - [EX-060](../project_context/research/action-value/experiments/EX-060-single-battle-branch-rollouts.md)에서 CRN 분기
      5,344개 중 79%(4,239개)가 원래 선택과 같은 결과였다.
    - EX-065에서는 후보당 32회 rollout을 해도 최선 후보가 동률인 상태가 52%(1,399/2,668)였다.
    - **[계산]** 같은 데이터에서 최선이 차선보다 유의하게 나은 상태는 약 14%뿐이다(EX-067 약 16%).
@@ -286,7 +286,7 @@ def branch_q(d, follow_up=ABYSSAL, n0=8, nmax=32, hyps=("truth",)):
 ### D4. 비용
 
 근거는 EX-065 실측값이다. rollout 하나에 0.19 CPU초, 16 worker로 초당 72.9개, 후보 평균 9.2개,
-경기당 결정 약 30개([EX-073](../project_context/experiments/EX-073-abyssal-rl.md))다.
+경기당 결정 약 30개([EX-073](../project_context/research/policy-learning/experiments/EX-073-abyssal-rl.md))다.
 
 | 방식 | 라운드당 rollout 수 | CPU시간 | 16 worker 벽시계 |
 |---|---:|---:|---:|
@@ -487,7 +487,7 @@ def gae_targets(ds, G, lam):
 
 - **지표 순서:** probe regret → dev → 마지막에 기존 프로토콜의 test512 대응 비교
 - **검정력 주의:** 승률이 약 20%일 때 256 대 256 대응 비교의 95% 구간 폭은 약 ±5–7%p다.
-  [EX-074](../project_context/experiments/EX-074-abyssal-rl-continue.md)의 결과(+8.6%p, 구간
+  [EX-074](../project_context/research/policy-learning/experiments/EX-074-abyssal-rl-continue.md)의 결과(+8.6%p, 구간
   +3.9–+13.7)를 보면 작은 효과는 test로 잡을 수 없다. 그래서 반복 판단에는 probe regret을 쓴다.
 
 ---
@@ -568,20 +568,20 @@ def gae_targets(ds, G, lam):
 
 **저장소 기록**
 
-- 분기 rollout·Q 학습: [EX-060](../project_context/experiments/EX-060-single-battle-branch-rollouts.md),
-  [EX-061](../project_context/experiments/EX-061-qwen-action-value.md),
-  [EX-065](../project_context/experiments/EX-065-joint-q-data.md),
-  [EX-066](../project_context/experiments/EX-066-joint-q-training.md),
-  [EX-067](../project_context/experiments/EX-067-abyssal-tera-joint-q.md)
-- 자기대국·Abyssal RL: [EX-072](../project_context/experiments/EX-072-selfplay-rlcd.md),
-  [EX-073](../project_context/experiments/EX-073-abyssal-rl.md),
-  [EX-074](../project_context/experiments/EX-074-abyssal-rl-continue.md),
-  [EX-075](../project_context/experiments/EX-075-abyssal-rl-next.md)
-- 결정 기록: [D-096](../project_context/decisions/D-096-pokemon-training-objective.md),
-  [D-098](../project_context/decisions/D-098-qwen-action-value.md),
-  [D-104](../project_context/decisions/D-104-joint-q-training.md),
-  [D-114](../project_context/decisions/D-114-selfplay-rlcd.md),
-  [D-115](../project_context/decisions/D-115-abyssal-first-objective.md)
+- 분기 rollout·Q 학습: [EX-060](../project_context/research/action-value/experiments/EX-060-single-battle-branch-rollouts.md),
+  [EX-061](../project_context/research/action-value/experiments/EX-061-qwen-action-value.md),
+  [EX-065](../project_context/research/action-value/experiments/EX-065-joint-q-data.md),
+  [EX-066](../project_context/research/action-value/experiments/EX-066-joint-q-training.md),
+  [EX-067](../project_context/research/action-value/experiments/EX-067-abyssal-tera-joint-q.md)
+- 자기대국·Abyssal RL: [EX-072](../project_context/research/policy-learning/experiments/EX-072-selfplay-rlcd.md),
+  [EX-073](../project_context/research/policy-learning/experiments/EX-073-abyssal-rl.md),
+  [EX-074](../project_context/research/policy-learning/experiments/EX-074-abyssal-rl-continue.md),
+  [EX-075](../project_context/research/policy-learning/experiments/EX-075-abyssal-rl-next.md)
+- 결정 기록: [D-096](../project_context/research/policy-learning/decisions/D-096-pokemon-training-objective.md),
+  [D-098](../project_context/research/action-value/decisions/D-098-qwen-action-value.md),
+  [D-104](../project_context/research/action-value/decisions/D-104-joint-q-training.md),
+  [D-114](../project_context/research/policy-learning/decisions/D-114-selfplay-rlcd.md),
+  [D-115](../project_context/research/policy-learning/decisions/D-115-abyssal-first-objective.md)
 - RLCD 환경: [rlcd-lite README](../.tools/rlcd-lite/upstream/README.md),
   [EVE README](../.tools/eve-rlcd/upstream/README.md)
 - 코드: [selfplay/objectives.py](../integration/pokechamp/selfplay/objectives.py)(PPO·half-Brier·baseline),

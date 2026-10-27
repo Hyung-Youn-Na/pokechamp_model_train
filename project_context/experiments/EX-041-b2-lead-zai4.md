@@ -1,86 +1,24 @@
-# EX-041 — Z.ai B2 seeded_random 대 llm_lead32
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Incomplete / 수집·보고·보존·정리 완료, 비교 미완료
-- 생성일: 2026-09-15
-- 승인: [D-056](../decisions/D-056-zai-concurrency4.md), [EP-045](../exec-plans/active/EP-045-zai-concurrency4.md)
+원문: [EX-041](../research/lead-policy/experiments/EX-041-b2-lead-zai4.md)
 
-## 목적·조건·봉인
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-Z.ai 환경에서 동일 B2의 seeded_random과 llm_lead 선봉 정책을 탐색 비교한다.
-EX-039 봉인 팀·32행 일정·16대응쌍·조건 교환·게임/actor seed·제출 순서를 그대로 재사용한다.
-Gen9 OU singles6마리, B2 입력·계산·battle-v1.2.0·출력복구와 선봉 정책은 유지한다.
-요약·외부 메모리·설명 오류 사후 annotation0. 설명 정확성·전략 최적성은 미평가다.
-현재 입력 Z.ai 주소·키, glm-5.3-flash, temperature0, thinking enabled, reasoning effort low,
-출력131072, stream=false, provider 기본 context, 모델 seed 미전송·seed_applied=false다.
-수집 위치 `.pokechamp-data/b2-lead/ex041-zai`, actor identity `ex041-zai`.
-EX-039/EX-040 원자료·source·원장·시계·중단 상태와 결과를 보존하고 합산하지 않는다.
+<a id="ex-041--zai-b2-seeded_random-대-llm_lead32"></a>
+[ex-041--zai-b2-seeded_random-대-llm_lead32](../research/lead-policy/experiments/EX-041-b2-lead-zai4.md#ex-041--zai-b2-seeded_random-대-llm_lead32)
 
-## 한도·진입·중단
+<a id="목적조건봉인"></a>
+[목적조건봉인](../research/lead-policy/experiments/EX-041-b2-lead-zai4.md#목적조건봉인)
 
-배틀/계정/모델 각각 동시성4 고정. 양쪽 actor 합계8000요청(실패·미확정 포함),
-최초 요청부터 수집20700초·정리21600초. watchdog3600초, HTTP min(300초,잔여 수집시간).
-금액 상한 없음. 재시도·보충 경기·유료 재수집·별도 유료 smoke0, 성공한 probe 반복0.
-EX별 전역 영속 binding에 준비·승인·공급자·source·원장·최초 시계를 결합하고 폴더 이동/중복 등록을 거부한다.
-로컬 회귀·모의 Z.ai HTTP·fake32·모의 공급자 실제 로컬 대응2경기와 최종 봉인 후 진입한다.
-첫 b03-r3-s0/s1 두 경기 모두 유효 종료하고 선봉 입력/출력·/team·최초 출전·B2 입력/행동·
-원장/trace/viewer·permit 반환을 통과하면 나머지30을 원래 상대 순서대로 제출한다.
-첫2도 같은 원장·최초 시계·한도·본32 분모에 포함하며 승패/설명 내용은 gate 기준이 아니다.
+<a id="지표완료해석"></a>
+[지표완료해석](../research/lead-policy/experiments/EX-041-b2-lead-zai4.md#지표완료해석)
 
-첫 HTTP429 즉시 신규 경기와 신규 LLM 요청을 영속 중단한다. 인증·모델·설정·원장·permit 등
-공유 결함도 신규 수집 중단, 이미 전송한 응답/미확정은 보존·정리한다. 자동 재개0.
-첫 gate 실패 시 나머지30 미실행. gate 이후 개별 timeout·전송·일반 provider 실패는 해당 경기만
-실패로 남기고 예정 잔여 경기만 진행한다. 실패를 상대 승리로 계산하지 않는다.
-RD11.1/C-018 보존·영향조사 적용. 수집중 source·프롬프트·평가기준 교체0, 유료 복구0.
-온전한 자료의 평가 구현 교정은 양쪽 조건에 사전 기준대로 적용하고 원본/정정을 연결한다.
-영향 비교는 무효/미완료로 보존하며 향후 복구 단위는 최소 영향 대응쌍 양쪽이다.
+<a id="진행"></a>
+[진행](../research/lead-policy/experiments/EX-041-b2-lead-zai4.md#진행)
 
-## 지표·완료·해석
+<a id="최종-결과"></a>
+[최종-결과](../research/lead-policy/experiments/EX-041-b2-lead-zai4.md#최종-결과)
 
-조건별 승률=승/유효 종료, 무승부 반영 점수=(승+0.5무)/유효 종료. 팀 block·진영별로도 보고한다.
-양 경기 유효 종료한 완료쌍만 LLM 점수 평균을 계산하고 완료쌍에 동일 가중한다.
-예정/시도/유효/실패/무효/미실행, 미확정 및 누락쌍의 상태·이유를 보존한다.
-예정=시도+미실행, 종료 시 시도=유효+실패+무효를 대조한다.
-선봉 요청예정/예약/HTTP시도/응답/출력유효/전송/실패/미실행 및 중복을 구분한다.
-선봉·전투별 호출/token/지연 중앙값·p95·최대와 미확정 사용량·확정/추정 비용을 보고한다.
-Z.ai에 Ollama 단가를 적용하지 않는다. 양쪽 viewer·최종 manifest를 제공한다.
-유효32경기·완료16대응쌍·기술 검증·보고·보존·정리 모두 충족해야 비교 완료다.
-미달 시 부분 결과와 원인을 보고하고 비교 미완료로 남긴다.
-개발 팀 탐색 결과이고 b02/b03은 방향 반전이다. Z.ai 환경의 선봉 정책 비교에 한정하며
-과거 Ollama와의 차이를 Z.ai 자체 효과·L1–L5 효능으로 주장하지 않는다.
-
-
-## 진행
-
-첫 b03-r3 두 경기 유효 종료·기술 gate 통과.152예약/152응답, errors=[]이며 본32분모에 포함한다.
-동일 source·원장·최초 시계로 잔여30경기를 동시성4로 수집 중이다.
-
-수집 중 b01-r1-s0 요청412의 ReadTimeout으로1경기 실패가 발생했다. 재시도 없이 잔여 예정 경기를 계속한다.
-유효32 기준 미충족이 확정됐으며, 실패를 상대 승리나0점으로 대입하지 않고 최종 비교 미완료로 보고한다.
-
-b03-r1-s0 요청974의 ConnectError로1경기가 추가 실패했다. 개별 timeout/transport 실패2경기를 보존하며 재시도 없이 예정 잔여 경기를 계속한다.
-
-b01-r3-s1 요청1603·b02-r3-s1 요청1604의 ConnectError로2경기가 추가 실패했다. 현재 실패4(timeout1·transport3), 공유 halt/429 없이 재시도0·예정 잔여 수집을 유지한다. [추가 전송 오류](../exec-plans/evidence/ep045/transport-errors-2-3.json).
-
-예정32 수집 종료: 정상 종료28·개별 실패4(timeout1·transport3)·완료 대응쌍12. 예약2315·보존 응답2311, 429/공유 halt0. 최종 기술 검증·보고·정리 감사를 진행한다.
-
-## 최종 결과
-
-예정32·시도32·유효28·실패4·무효0·미실행0, 완료 대응쌍12/16이다.
-실패는 ReadTimeout1·ConnectError3이며 재시도/보충0, HTTP429·공유 halt0이다.
-유효32/완료16쌍 기준 미달로 비교 미완료이며 EP-045는 `Blocked`로 보존한다.
-
-| 조건 | 승/무/패 | 유효 분모 | 승률·무승부 반영 점수 |
-|---|---|---:|---:|
-| llm_lead | 16/0/12 | 28 | 57.14% |
-| seeded_random | 12/0/16 | 28 | 42.86% |
-
-완료12쌍 동일가중 LLM 점수는0.5833333333이다. 실패는 상대 승리나0점으로 대입하지 않았다.
-기술 검증 오류0·미연결 요청0, 실제 최대 배틀/계정HTTP/모델HTTP는 모두4다.
-2315예약·2311응답·미수신4, 확인된 입력207213997·출력906960 token이며 실제 청구액은 미확정이다.
-수집 source219개 및 EX-039/040 자료8024개 파일을 보존하고32경기 소유 자원·permit·잠금 정리를 확인했다.
-
-[최종 보고서](../exec-plans/evidence/ep045/final-report.md) →
-[전체 경기·양쪽 viewer](../../.pokechamp-data/b2-lead/ex041-zai/reports/report-1789455624436404099/matches.html) ·
-[분모·팀 block/진영·누락쌍·지연/사용량](../../.pokechamp-data/b2-lead/ex041-zai/reports/report-1789455624436404099/summary.json) ·
-[독립 감사](../exec-plans/evidence/ep045/final-audit.json) ·
-[manifest](../exec-plans/evidence/ep045/final-manifest.json).
+<a id="한도진입중단"></a>
+[한도진입중단](../research/lead-policy/experiments/EX-041-b2-lead-zai4.md#한도진입중단)

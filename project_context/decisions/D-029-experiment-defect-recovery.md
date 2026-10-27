@@ -1,51 +1,24 @@
-# D-029 — 새 실험의 테스트·평가 결함 복구 절차
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태 (Status): 채택 (Accepted)
-- 날짜: 2026-09-09
-- 승인 근거: 현재 사용자가 제공한 「테스트·평가 결함의 수정 및 복구 절차 문서화」 계획의 구현·검증 지시.
+원문: [D-029](../shared/governance/decisions/D-029-experiment-defect-recovery.md)
 
-## 맥락
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-EX-021/022/025는 입력·평가 결함 발견 후 당시 전체 중단 규칙에 따라 무효·미완료가 됐다.
-그 기록을 보존하면서, 새 실험에서는 테스트 자체의 오류, 평가 구현 오류, 정답·rubric 오류,
-실제 입력·처치·수집 오류를 구별하고 증거로 입증한 영향 범위에 맞춰 복구할 절차가 필요하다.
+<a id="d-029--새-실험의-테스트평가-결함-복구-절차"></a>
+[d-029--새-실험의-테스트평가-결함-복구-절차](../shared/governance/decisions/D-029-experiment-defect-recovery.md#d-029--새-실험의-테스트평가-결함-복구-절차)
 
-## 결정
+<a id="거절한-대안"></a>
+[거절한-대안](../shared/governance/decisions/D-029-experiment-defect-recovery.md#거절한-대안)
 
-2026-09-09 이 Decision 채택 후 **새로 승인·등록하는 실험부터** 발견 → 영향받는 작업 일시 중지 →
-원인·영향 확인 → 수정·독립 검증 → 필요한 범위 재평가·재실행을 기본으로 적용한다.
-규범 절차·판단표는 [RESEARCH_DESIGN §11.1](../RESEARCH_DESIGN.md#defect-recovery),
-실행·보존 경계는 [C-018](../CONTRACTS.md#c-018-recovery),
-운영 안내는 [매뉴얼](../../integration/pokechamp/README.md#defect-recovery)을 따른다.
+<a id="결정"></a>
+[결정](../shared/governance/decisions/D-029-experiment-defect-recovery.md#결정)
 
-새 실험은 전체 중단 예외가 필요하면 사유와 범위를 명시하고, 재수집 허용 여부·단위·한도와
-복구의 승인·예산·시간·호출 상한을 실행 전에 등록한다. 같은 승인과 상한 안의 허용된 복구는
-재승인하지 않는다. 수정·검증·재실행이나 새 identity로 이미 사용한 상한을 초기화하지 않는다.
-Provider 재시도와 모델 오답의 측정·gate 규칙은 별개이며 이번 결정으로 확대·완화하지 않는다.
+<a id="근거"></a>
+[근거](../shared/governance/decisions/D-029-experiment-defect-recovery.md#근거)
 
-기존 실험의 전체 중단 규칙, evidence, 무효 판정, halt/clock 및 EP-011/012/013/015 Blocked는
-유지한다. D-022~D-028의 실험별 규칙을 소급 대체하지 않는다. RESEARCH_DESIGN의 기존 D-XXX 설계 절과
-C-014~C-017은 해당 실험에 계속 적용된다. 기존 plan의 후속 작업도 새 실험 등록 없이 이
-절차로 전환할 수 없다. [D-025](D-025-agent-instruction-boundaries.md)의 승인·중단 범위 원칙을
-구체화하며 Charter를 변경하지 않는다.
+<a id="맥락"></a>
+[맥락](../shared/governance/decisions/D-029-experiment-defect-recovery.md#맥락)
 
-## 근거
-
-실제 수집에 영향이 없는 테스트 오류는 근거를 남겨 결과를 유지할 수 있다. 평가 구현 교정은
-모든 영향 응답에 대칭 적용하고, 결과 확인 후 정답·rubric 교정은 별도 수정 분석으로 공개한다.
-입력 오염은 의존 결과까지 무효화하고 비교 구조를 보존하여 재수집한다. 영향 범위를 입증하지
-못하면 해당 비교 전체를 중단·무효 처리한다. 좋은 결과 선택 보존이나 실패 분모 삭제는 금지한다.
-
-## 거절한 대안
-
-- 기존 중단 실험에 소급 적용: 승인된 계획이 기존 증거·무효·Blocked 보존을 명시한다.
-- 규정 변경과 함께 halt 해제·실행기 수정: 이번 요청은 문서와 상위 규정 변경에 한정한다.
-
-## 영향과 증거
-
-[EP-017](../exec-plans/completed/EP-017-experiment-defect-recovery.md)에서 문서·8사례·보존 검증을 기록한다.
-API·CLI·파일 schema와 실행기 코드는 변경하지 않는다. 현재 실행기에 없는 선택적 재수집·
-halt 후 재개·수정 분석 경로가 이 결정으로 구현되거나 승인된 것으로 해석하지 않는다.
-기존 [EX-021](../experiments/EX-021-summary-harness-diagnostics.md),
-[EX-022](../experiments/EX-022-state-summary-thinking.md),
-[EX-025](../experiments/EX-025-summary-max-diagnostic.md)는 역사적 근거이며 재평가 대상이 아니다.
+<a id="영향과-증거"></a>
+[영향과-증거](../shared/governance/decisions/D-029-experiment-defect-recovery.md#영향과-증거)

@@ -1,56 +1,21 @@
-# EP-163 — Tacit Thinking low 판단 비교
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Blocked
-- 생성일: 2026-10-16
-- 책임자: Codex
-- 승인: 사용자 EX-104 계획 구현 지시 / D-157
-- 조건 원문: [EX-104](../../experiments/EX-104-tacit-thinking-low.md)
-- branch/checkout: research/model-training /workspace a4659bf·기존 미커밋 변경 보존
-- actor: pokechamp/.venv/bin/python; model: .pokechamp-data/tacit9b-runtime/.venv/bin/python
-- 새 출력: EX-104 run·evidence/ep163·exports/battle_viewers/ex104
-- 읽기전용 기준: EX-103/EP-162 원자료·보고·봉인
+원문: [EP-163](../../research/planner-executor/plans/EP-163-tacit-thinking-low.md)
 
-## 범위·완료 기준
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-INDEX/CHARTER·매뉴얼·STATUS/색인·RD11.1/11.2·C-018/046/047/070/073과 중첩
-EP-134/140/151/154/155/157의 보존 경계를 확인했다. 새 모델 연결·별도환경·검증·
-단일서버 사전11회/실제1경기·전후판단 비교·감사/뷰어/봉인/반환. 조건·한도·중단·해석은 EX-104를 따른다.
+<a id="ep-163--tacit-thinking-low-판단-비교"></a>
+[ep-163--tacit-thinking-low-판단-비교](../../research/planner-executor/plans/EP-163-tacit-thinking-low.md#ep-163--tacit-thinking-low-판단-비교)
 
-- [x] 등록·공식자산/환경·adapter·CPU 회귀·길이검사
-- [ ] 소스/조건동결·사전8+고정3·같은 서버 정상1경기
-- [ ] 전수 감사·판단전후/EX-103 비교·뷰어/오프라인/복사/다운로드
-- [ ] 봉인·자원반환·최종보고·상태/색인
+<a id="검증진행"></a>
+[검증진행](../../research/planner-executor/plans/EP-163-tacit-thinking-low.md#검증진행)
 
-## 검증·진행
+<a id="범위완료-기준"></a>
+[범위완료-기준](../../research/planner-executor/plans/EP-163-tacit-thinking-low.md#범위완료-기준)
 
-- 2026-10-16 — 승인 범위 등록. 원자료·기존 중단실험 보존; 새 모델/GPU/API/배틀 호출0.
-- 어댑터/단계계측·뷰어/분석을 독립 파일 범위로 위임하고 공유 wiring·통합·실행은 주 에이전트가 담당한다.
+<a id="부분-종결"></a>
+[부분-종결](../../research/planner-executor/plans/EP-163-tacit-thinking-low.md#부분-종결)
 
-## 차단·중단
-
-INDEX 공통 기준과 EX-104의 gate/복구/재수집0/최초시계·누적한도를 따른다.
-판단 오류와 기술 오류를 구분하고 부분 정리 완료를 정상1경기 목표 달성으로 바꾸지 않는다.
-
-- 공식18파일 Hub 검증 완료. 기존 사전8과 고정3입력 확정. CPU90입력(다후보89)의 공식 프롬프트/토큰ID/역매핑·760 BF16 tensor헤더를 대조했고 최대 S1 19149/Thinking19145토큰·초과0이다.
-- 설정 모의wire에서 EX-103 대비 수행모델 패키지 외 GLM/대진/입력/한도 동일을 확인했다. 공유회귀280통과/브라우저별도5skip. 모델/실제API/GPU호출0.
-
-- 새 전용환경 pip check/전체 lock 일치·CPU90입력·Tacit5/브라우저5 검사 통과. 공식18파일·외부587자료·EX-103/뷰어/EP-162 봉인·GPU0유휴/세포트·자격증명 무호출 구성을 확인했다.
-- 기존 runtime 대비 공유8파일과 새Tacit6파일의 변경으로 제한했다. 최종 source/조건을 준비본에 동결하고 최초 단일적재·8gate/고정3/같은서버1경기에 진입한다. 수집중 source/조건 변경·재적재·재경기0.
-
-- 동일 서버의 사전8회와 고정3회를 완료했다. 반복 선봉 입력3회의 선택·분포가 일치해 gate를 통과했다. 고정3회는 모두8192토큰 강제마감이며 선택 변경2/3이다. 같은 서버로 실제1경기를 진행 중이며 경기·최종감사·봉인 완료 판정은 아직 하지 않았다.
-
-- 사용자 요청으로 진행 조회를 단계 알람으로 전환했다. 기존 수집 프로세스와 동결 조건은 유지한다.
-  `evidence/ep163/stage_alarm.py`가 수집 프로세스 identity·종료 receipt·최종 봉인 단계만 감지하고
-  현재 대화에 각 단계1회 알린다. 전송 원장과 감지기 로그는 봉인 대상 밖의
-  `/workspace/.pokechamp-data/ex104-stage-alarms`에 둔다. CPU 중복방지 검사와 실제 연결 시험1회 통과.
-  수집 종료 알림 후 승인된 감사·비교·뷰어·봉인을 이어서 완료하며 추가 모델 호출/재경기0이다.
-
-- 2026-10-16 16:03 KST — 18턴 미완료 요청 도중 수집 프로세스 종료·root result 누락. 서버 SystemExit143(SIGTERM), 발신원/원인 미확정. 정상1경기 미달로 Blocked이며 부분 감사·뷰어·봉인·소유 자원 정리 중이다. 재실행0.
-
-## 부분 종결
-
-- [x] 부분 원문528대조·완결20쌍/고정3 비교·미완결 요청 보존
-- [x] 부분 뷰어21결정·원파일2501개·이동후 오프라인/복사/다운로드
-- [x] 소유 잔여PID·GPU0·잠금·포트·알람 반환 및 부분 봉인
-
-정상1경기와 전체 감시/정상 감사 기준은 미달이므로 Blocked를 유지한다. [최종 부분 보고](../evidence/ep163/report.md). 추가 실행0.
+<a id="차단중단"></a>
+[차단중단](../../research/planner-executor/plans/EP-163-tacit-thinking-low.md#차단중단)

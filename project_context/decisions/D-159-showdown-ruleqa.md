@@ -1,22 +1,18 @@
-# D-159 — Showdown 규칙 Q&A 데이터셋 v1
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-19
+원문: [D-159](../research/rule-learning/decisions/D-159-showdown-ruleqa.md)
 
-## 맥락과 승인
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-현재 사용자가 제공한 「Showdown 기반 규칙 Q&A·State 적용 데이터셋 v1」의 구현·생성·검증·내보내기를 명시적으로 지시했다.
-기존 평가의 실패 사례는 규칙 선정 근거이며 학습 입력으로 재사용하지 않는다.
+<a id="d-159--showdown-규칙-qa-데이터셋-v1"></a>
+[d-159--showdown-규칙-qa-데이터셋-v1](../research/rule-learning/decisions/D-159-showdown-ruleqa.md#d-159--showdown-규칙-qa-데이터셋-v1)
 
-## 결정
+<a id="결정"></a>
+[결정](../research/rule-learning/decisions/D-159-showdown-ruleqa.md#결정)
 
-[연구 설계](../RESEARCH_DESIGN.md#showdown-ruleqa)의 CPU 생성 데이터 설계와
-[계약](../CONTRACTS.md#c-074-ruleqa)의 데이터 전용 State 경계를 채택한다.
-실행 단위는 [EP-169](../exec-plans/completed/EP-169-showdown-ruleqa.md)다.
-기존 v6·실험·봉인은 보존하고 새 판본에서만 혼란 설명을 교정한다.
+<a id="근거영향"></a>
+[근거영향](../research/rule-learning/decisions/D-159-showdown-ruleqa.md#근거영향)
 
-## 근거·영향
-
-새 상황과 공개 관측에 근거한 정답은 규칙 학습을 위한 자료이며 배틀 성능 개선의 증거가 아니다.
-GPU·학습·추론·외부 API·다운로드는 범위 밖이다. 불일치는 해당 규칙군의 export를 차단한다.
-거절한 대안: 수량을 맞추기 위한 이름만 바꾼 중복, 기존 실패 State의 학습 편입.
+<a id="맥락과-승인"></a>
+[맥락과-승인](../research/rule-learning/decisions/D-159-showdown-ruleqa.md#맥락과-승인)

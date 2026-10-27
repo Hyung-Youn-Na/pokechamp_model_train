@@ -1,36 +1,18 @@
-# D-015 — 반복 연구용 8판·32판 benchmark 설정
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태 (Status): Accepted
-- 날짜: 2026-09-06
-- 근거: 사용자가 제시된 4시간 예산·32판 계획의 구현과 검증을 지시했다.
+원문: [D-015](../shared/execution/decisions/D-015-repeat-benchmark-profiles.md)
 
-## 결정
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-D-012의 40판 설정과 일정 재현을 보존한다. 새 core-smoke 설정은 IO/minimax 각각
-Abyssal/OneStep과 공통 1개 team/seed block × 팀·진영 교환 2판으로 총 8판이다.
-core-repeat는 같은 4대진에 공통 4개 block을 사용해 32판이다. Seed 20260906과 개발 팀
-[1,2,5,6,9,11,12,13], 확증 팀 [3,4,7,8,10]의 분리는 보존한다. 실행 순서는 사전에
-무작위로 고정한다. Random 및 IO–minimax 대진은 기존 40판 전체 점검에 남긴다.
+<a id="d-015--반복-연구용-8판32판-benchmark-설정"></a>
+[d-015--반복-연구용-8판32판-benchmark-설정](../shared/execution/decisions/D-015-repeat-benchmark-profiles.md#d-015--반복-연구용-8판32판-benchmark-설정)
 
-새 실행은 개별 ID/조건/source seal을 사용한다. 현재 131072 output, provider 기본 context,
-요청 300초, 경기 watchdog 1200초 조건으로 먼저 EX-003 8판을 실행한다. 32판 지원은
-탐색적 반복 규모이며 이번 작업에서 32판 batch까지 자동 실행하지 않는다.
+<a id="결정"></a>
+[결정](../shared/execution/decisions/D-015-repeat-benchmark-profiles.md#결정)
 
-분모, transient 동일 slot 1회 재시도와 hard stop은 D-012/C-010을 따른다. 실패를 패배로
-세거나 완료 수를 채우지 않는다. 완료 조건부 성적, 유효 완료율, 출력 오류, timeout,
-fallback(유효 완료의 실제 choose 분모), 시간·호출량을 보고한다.
+<a id="시간-추정과-해석"></a>
+[시간-추정과-해석](../shared/execution/decisions/D-015-repeat-benchmark-profiles.md#시간-추정과-해석)
 
-## 시간 추정과 해석
-
-EX-002에 근거한 8판 약 35분/32판 약 139분은 과거 조건의 선형 추정이다.
-50% 여유는 운영 가정이며 통계적 상한이 아니다. 새 8판의 대진별 처리 slot당 전체 attempt
-시간을 8배씩 확장해 32판을 추정한다. 4대진 모두 예정 slot 처리가 끝났을 때만 예산 적합
-판정을 제공하고, 1.5배 추정이 4시간 이하인지 표시한다. 요청 정리·retry로 초과할 수 있다.
-Minimax depth 오류를 포함한 운영 결과이며 정상 minimax 기준선이나 효능/작은 승률 차이의
-확증으로 해석하지 않는다. 수정 조건에서는 별도로 다시 측정해야 한다.
-
-## 영향
-
-[EP-006](../exec-plans/completed/EP-006-repeat-benchmark-profiles.md),
-[EX-003](../experiments/EX-003-core-smoke-timing.md)가 구현과 새 시간 측정을 관리한다.
-D-012의 기존 40판 protocol과 EX-001/EX-002 원자료는 변경하지 않는다.
+<a id="영향"></a>
+[영향](../shared/execution/decisions/D-015-repeat-benchmark-profiles.md#영향)

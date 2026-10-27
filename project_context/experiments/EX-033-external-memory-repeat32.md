@@ -1,67 +1,15 @@
-# EX-033 — 외부 메모리 장애 후 동일 조건32판
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 날짜: 2026-09-11
-- 관련: D-039, EP-027
+원문: [EX-033](../research/input-and-memory/experiments/EX-033-external-memory-repeat32.md)
 
-## 승인·사전 등록
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-2026-09-11 사용자는 외부 프로세스가 RAM을 급증시킨 것이 EX-032 중단 원인으로
-판단되며 현재 문제가 해소됐다고 보고했다. 이를 실험 이력에 외부 환경 요인으로 명시하고 동일 조건의
-새 유료32판 재실험을 명시적으로 승인했다. 귀속은 사용자 보고에 따른 운영상 분류이며 해당
-컨테이너/호스트 OOM 로그·정확한 시각·프로세스를 독립 검증한 사실로 표시하지 않는다.
-관측된 직접 중단 증상은 공유 permit 반환 실패다.2초 ACK 지연의 실패 가능성과305초 release
-제한은 코드에 남아 있으며 이번 작업에서 변경하지 않는다.
+<a id="ex-033--외부-메모리-장애-후-동일-조건32판"></a>
+[ex-033--외부-메모리-장애-후-동일-조건32판](../research/input-and-memory/experiments/EX-033-external-memory-repeat32.md#ex-033--외부-메모리-장애-후-동일-조건32판)
 
-EX-033은 A16/B16 전체를 새로 실행한다. EX-032의 완료6판·실패10판·미실행16판과32 actor
-원자료/검토/보고/원장/최초시계/halt/qualification은 보존한다. 기존6개 Blocked는 재개하지 않는다.
-외부 요인 표시는 기존 실패·분모·미완료를 지우거나 과거 설명 오류를 면제하지 않는다.
+<a id="결과"></a>
+[결과](../research/input-and-memory/experiments/EX-033-external-memory-repeat32.md#결과)
 
-A upstream IO/fallback, B Weather Ball 수정 계산기+calculator-input-v2+battle-v1.2.0+mechanics-v2,
-Abyssal/OneStep×b01–b04×양쪽×A/B32 slot, EX-028 봉인 팀·진영·게임/actor seed·순서를 유지한다.
-glm-5.3-flash/low/temperature0/seed100, 출력131072/provider 기본 context,
-배틀/계정/모델 최대동시성10, HTTP 설정300초/watchdog1200초, 요약/통합/메모리주입/provider retry0이다.
-전체 비용·시간·행동 요청 수 상한은 없고 이번 새32 slot을 각1회만 시도한다. 추가 보충·재수집0이다.
-별도 fake32/Cloud90/smoke8을 생략하고 필수 무결성·실행 연결 검사 뒤 직접compare32에 진입한다.
-
-D-039/EP-027/EX-033을 새 등록하고 정책 battle-guide-external-repeat32-v1을 추가한다.
-변경은 실행 identity·원본 EX-032 연결·누적 보고 및 관련 검사에 한정한다. 이전 정책 정의/hash를 보존한다.
-계산기·입력 생성·프롬프트·prior·permit·HTTP·실행 알고리즘·설치/submodule은 유지한다.
-기준은 EP-026 source173개와 qualification이며 EP-025593회귀·독립28조건×16roll·81입력 검증을
-재사용한다. 새 연결 변경분·최종 source/config/manifest 검사를 추가하며 전체 회귀 재실행으로 표시하지 않는다.
-경로는 .pokechamp-data/battle-guide-external-repeat32/ex033, 형제 ex033-prepared,
-benchmark ex033-c0-compare32, cohort c0다. 새 준비 manifest가 EX-032의 보고/원장/시계/halt와
-외부 요인 보고·이번 승인을 봉인해 연결한다. 기존 halt나 같은 준비 cohort의 새 시계를 만들지 않는다.
-
-출력 형식/설명 오류는 기록하고 계속한다. Provider/timeout/watchdog/경기별 환경 실패는 해당 경기만
-종료하고 남은 slot을 진행한다. 공유 입력/계산/설정/무결성 결함은 영향 범위, 불명확하면 잠재 영향 전체를
-중지한다. permit 반환 실패 재발도 같은 중단 규칙이다. C-018/RESEARCH_DESIGN §11.1의 증거 보존·
-영향 조사·수집 결함과 의존 대응 무효화를 적용하며 자동 수정 후 재수집하지 않는다.
-이번 실행은 외부 환경이 해소됐다는 사용자 보고를 근거로 명시적으로 승인한 동일 조건 반복이다.
-과거 source 결함을 수정한 것으로 표시하거나 EX-032 중단을 해제하는 복구로 처리하지 않는다.
-
-B의 모든 수집 설명을 실제 전달 입력·계산·공개 로그와 직접 대조해 사실/진영/시점/계산 및 입력 유발
-오류를 분리한다. 추가 모델 심사0. 원출력/유일 합법 JSON 추출/첫 합법 후보/실제 전송을 구분한다.
-32경기 목록·actor viewer·문제 턴·검토 근거, 상대별(승+0.5무)/유효완료와 동일가중 평균,
-완료대응 B−A 및 예정/시도/유효완료/실패/무효/미실행/미확정/누락을 보고한다.
-EX-028/029/031/032의 각 자체 사용량에 EX-033을 한 번만 더하고 기존 미확정1건/최초 Cloud 시계를
-연결한다. 기존 누적 값을 다시 합산하거나 과거 성능·새 반복을 독립 표본으로 합치지 않는다.
-HTTP 경과 계측에는 응답 저장 구간이 포함되는 현재 한계를 명시하고 필요하면 received_at과 분리 집계한다.
-비교 완료는 유효32판/16대응에만 표시한다. 중단 시 수집분 전수검토·실제분모 보고·자원정리까지 완료한다.
-계산기 단독 효과나 L1–L5 효능으로 해석하지 않는다.
-
-## 결과
-
-새32판이 모두 유효하게 자연 종료했고 완료대응16/16·누락0이다.
-A14승2패(상대별7/8·7/8), B14승2패(6/8·8/8), 동일가중 점수는 모두87.5%이며 대응 B−A 평균0이다.
-B484설명 전수 검토 중 오류272(56.2%), 차원별 사실113·진영9·시점78·계산181(중복 포함),
-확인된 입력 유발0이다. 합법 선택/전송484(원출력406/추출76/첫후보2), A fallback0이다.
-941요청/941응답·새 미확정0, 입력64,759,882/출력236,199token·수집1934.370초,
-공유 permit 실패/timeout/orphan0·broker active_at_close0·재수집/추가심사0이다.
-source173·64 actor bundle·62,692기존파일·6개 Blocked 보존과 자원 정리를 확인했다.
-기준593회귀 봉인을 재사용했고 변경분88/최종61검사를 통과했다. 최종 전체 회귀 재실행은 아니다.
-누적 사용량은 EX-028/029/031/032/033 각 자체분을 한 번만 합산해 요청2,611/응답2,610/미확정1,
-입력140,179,593/출력639,834token·수집4834.877초다.
-이번 고정 개발 대진에서 B 향상은 관측되지 않았으며 동등성·계산기 단독 효과·L1–L5 효능을 주장하지 않는다.
-
-[최종 보고서](../exec-plans/evidence/ep027/report.md), [32경기 목록](../../.pokechamp-data/battle-guide-external-repeat32/ex033/report-final/matches.html), [최종 검증](../exec-plans/evidence/ep027/final-verification.json).
+<a id="승인사전-등록"></a>
+[승인사전-등록](../research/input-and-memory/experiments/EX-033-external-memory-repeat32.md#승인사전-등록)

@@ -1,36 +1,24 @@
-# EP-130 — 첫라운드 전후 동일 관측 비교
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-10-07
-- 승인: 사용자 “기존 모델로 경기한거랑 업데이트한 모델과 차이가 있는지 확인”
-- 관련 원문: EX-078·C-060·RD 고정 대진 목표, EP-129
+원문: [EP-130](../../research/fixed-matchup-learning/plans/EP-130-first-round-model-comparison.md)
 
-## 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-EX-078의 초기 P0와 round1을 저장된 정상32경기 동일5436관측에서 CPU로 비교한다.
-모델·경기·학습 자료는 읽기 전용으로 보존하고 분석은 evidence/ep130에 기록한다.
-새 학습·경기·GPU·외부 호출은 없다. 선택적 실제 대결 질문에 대한 답변 없이
-추가64경기를 시작하지 않는다. EP129 완료 기록 정리도 기존 승인 범위에서 수행한다.
-겹치는 EP127/126/125의 중단·과거 판정을 유지한다.
+<a id="ep-130--첫라운드-전후-동일-관측-비교"></a>
+[ep-130--첫라운드-전후-동일-관측-비교](../../research/fixed-matchup-learning/plans/EP-130-first-round-model-comparison.md#ep-130--첫라운드-전후-동일-관측-비교)
 
-## 분석 기준
+<a id="범위"></a>
+[범위](../../research/fixed-matchup-learning/plans/EP-130-first-round-model-comparison.md#범위)
 
-전체/선택지2개 이상 관측의 행동분포 TV·최대확률 행동 변경률, 가치예측 변화,
-동일 MCTS 표적 교차엔트로피와 실제 결과 ±1/0 가치 MSE를 전후 비교한다.
-동률 최댓값은 후보 순서상 첫 항목으로 처리하고 근소한 순위변동과 확률 변동을 구분한다.
-이는 학습 자료 내 기술통계이며 일반화·독립 승률 개선으로 해석하지 않는다.
+<a id="분석-기준"></a>
+[분석-기준](../../research/fixed-matchup-learning/plans/EP-130-first-round-model-comparison.md#분석-기준)
 
-## 완료 기준
+<a id="완료-결과"></a>
+[완료-결과](../../research/fixed-matchup-learning/plans/EP-130-first-round-model-comparison.md#완료-결과)
 
-- [x] 입력/모델 해시와5436행 ID 일치·유한값·분모 검증
-- [x] 전후 지표·해석 한계·재현 스크립트 보고
-- [x] EP129 완료 증거/상태 정리 및 새 plan 종결
+<a id="완료-기준"></a>
+[완료-기준](../../research/fixed-matchup-learning/plans/EP-130-first-round-model-comparison.md#완료-기준)
 
-## 중단·복구
-
-비배틀 사후 분석이므로 새 실험 시계·재수집·C047 새 뷰어는 해당 없다.
-원자료 불일치 시 의존 분석을 중단하며 임의 수정하지 않는다.
-
-## 완료 결과
-
-승인 범위의 검증·보고·상태 정리를 완료했다. [최종 보고](../evidence/ep130/report.md).
+<a id="중단복구"></a>
+[중단복구](../../research/fixed-matchup-learning/plans/EP-130-first-round-model-comparison.md#중단복구)

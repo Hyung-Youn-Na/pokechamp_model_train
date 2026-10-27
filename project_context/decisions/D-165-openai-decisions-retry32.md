@@ -1,25 +1,15 @@
-# D-165 — OpenAI 통신 재시도와 새32경기
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-20
-- 승인: 사용자 “연결 실패 및 시간초과에 제한하지 말고 실험을 완수하도록 설정해서 다시 실험해주세요.”
+원문: [D-165](../research/model-evaluation/decisions/D-165-openai-decisions-retry32.md)
 
-## 결정
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-EX-109의10완료·1통신실패·21미실행은 원형 보존하고 EX-110의 새32경기 전체를 실행한다.
-v6 상세 입력·모델·후보·대진·seed·순서는 유지한다. 외부 연결/요청 시간초과와 HTTP408/429/5xx는
-같은 논리 요청/본문으로 성공까지 재시도한다. 횟수·총요청수·전체/경기 경과시간의 상한을 두지 않는다.
-개별 HTTP60초는 걸린 요청을 다시 시도하는 통신 경계이며 전체 실험 중단 조건이 아니다.
-2/5/10/20/30/60초(이후60초)의 backoff와 공급자 Retry-After를 존중한다.
-기존300턴/600결정 인위적 상한도 새 프로필에서 제거하고 Showdown 정상종료를 기다린다.
+<a id="d-165--openai-통신-재시도와-새32경기"></a>
+[d-165--openai-통신-재시도와-새32경기](../research/model-evaluation/decisions/D-165-openai-decisions-retry32.md#d-165--openai-통신-재시도와-새32경기)
 
-사용자 취소·원자료/입력/소스 무결성 위반·명백한 인증/권한/잘못된 요청은 계속 별도 기술 오류다.
-잘못된 합법 모델판단을 재질의하지 않고 C-046을 유지한다. 재시도의 미응답은 공급자 내부 실행과
-청구를 알 수 없으므로 원HTTP시도/확인usage/미확정비용을 구분하며 중복실행0을 주장하지 않는다.
+<a id="결정"></a>
+[결정](../research/model-evaluation/decisions/D-165-openai-decisions-retry32.md#결정)
 
-## 영향·증거
-
-D-164/EX109의 재시도0·시간/요청/턴 상한은 원실험에 유지한다. 새 정책은 C-080/EX110에만 적용한다.
-원결과를 수정하거나 실패를 지우는 재개가 아니다. 새실험 source/전송정책·원장/뷰어를 별도 동결한다.
-[EX-110](../experiments/EX-110-openai-decisions-retry32.md),
-[EP-180](../exec-plans/completed/EP-180-openai-decisions-retry32.md).
+<a id="영향증거"></a>
+[영향증거](../research/model-evaluation/decisions/D-165-openai-decisions-retry32.md#영향증거)

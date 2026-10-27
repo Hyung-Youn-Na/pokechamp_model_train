@@ -31,7 +31,7 @@ EX-025는 입력·평가 불일치로 전체 무효이며 이 부록은 지시�
 
 원본 fixed 자산은 [원본 provenance](../integration/pokechamp/improved_io/prompts/provenance.json)의
 EX-016 `analysis/prompts_pvp`에서 유래한다. v1.1.2는
-[D-027](../project_context/decisions/D-027-low-summary-prompt-reexperiment.md)과
+[D-027](../project_context/research/input-and-memory/decisions/D-027-low-summary-prompt-reexperiment.md)과
 [v1.1.2 provenance](../integration/pokechamp/improved_io/prompts/v1.1.2/provenance.json)에
 부모 버전 v1.1.1, 관측 실패 근거와 파일 해시를 기록한다. 전문은 번역하거나 교정하지 않았다.
 

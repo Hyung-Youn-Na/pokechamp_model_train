@@ -1,66 +1,24 @@
-# EP-106 — EX-063 후보 상태 입력·결정별 지침·진단
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-29
-- 책임자: Codex
-- 승인: 현재 사용자의 개선 계획 구현 지시 / D-102
-- 관련: C-049, D-093, EX-064, EX-063
+원문: [EP-106](../../research/action-value/plans/EP-106-qwen-candidate-state.md)
 
-## 목표와 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-EX-063 피드백을 후보 실행 이후 상태 평가로 연결하는 별도 입력 프로필, 공통 규칙과
-결정별 instructions, 동일 모델의 별도 진단 경로와 저장 입력 3조건 비교를 구현·검증한다.
-첫 범위는 기존 계산기 재사용이며 미지원 전이는 unknown과 사유를 제공한다.
-INDEX/CHARTER·STATUS/색인·RD/CONTRACTS·ARCHITECTURE와 겹치는 active
-EP-030/032/035/041/044/045/048/053/054/057/062/064/075/077/080/103을
-계획 조사에서 확인했다. 이들의 중단·동결 조건을 재개하거나 소급 변경하지 않는다.
+<a id="ep-106--ex-063-후보-상태-입력결정별-지침진단"></a>
+[ep-106--ex-063-후보-상태-입력결정별-지침진단](../../research/action-value/plans/EP-106-qwen-candidate-state.md#ep-106--ex-063-후보-상태-입력결정별-지침진단)
 
-parent integration, 새 검증·비교 산출물, 관련 current-state 문서만 변경한다.
-canonical submodule·학습 renderer·원자료·가중치·기존 입력 버전·과거 뷰어는 보존한다.
-외부 API·추가 학습·새 배틀·독립 승률 평가는 제외한다. 로컬 GPU 개발 비교의 실행 조건·
-분모·상한·중단·해석 원문은 [EX-064](../../experiments/EX-064-qwen-candidate-state.md)이다.
+<a id="검증"></a>
+[검증](../../research/action-value/plans/EP-106-qwen-candidate-state.md#검증)
 
-## 완료 기준
+<a id="목표와-범위"></a>
+[목표와-범위](../../research/action-value/plans/EP-106-qwen-candidate-state.md#목표와-범위)
 
-- [x] 별도 입력 프로필과 시간순 계산·교체 맥락·세트 연결·불확실성 표시
-- [x] 공통 규칙＋lead/turn_action/forced_switch 평가 절차와 한국어 검토 문서
-- [x] q 계약 유지·명시 버전 선택·별도 /diagnose·비용 계측
-- [x] 독립 mechanics fixture·관련 회귀·18결정 오프라인 재생·원자료 보존
-- [x] EX-064 저장 장면 q/진단 비교·실제 분모·토큰/지연·한계 보고
-- [x] 소유 서버/GPU 정리·새 산출물 봉인·문서/색인/STATUS 갱신
+<a id="완료-기준"></a>
+[완료-기준](../../research/action-value/plans/EP-106-qwen-candidate-state.md#완료-기준)
 
-새 배틀이 없어 C-047 새 배틀 뷰어는 해당 없음. 기존 EX-063 뷰어는 보존하고
-입력 전후·상태 예측·후보 순위의 별도 오프라인 비교 산출물을 제공한다.
+<a id="중단복구"></a>
+[중단복구](../../research/action-value/plans/EP-106-qwen-candidate-state.md#중단복구)
 
-## 검증
-
-| 변경 영향 | 방법 | evidence |
-|---|---|---|
-| 상태 전이·대상·세트·교체 시점 | pinned 계산기 독립 사례와 공개 cutoff fixture | evidence/ep106 |
-| 기존 q/전송·새 진단 격리 | 모의 HTTP·단일후보/동률/stale·진단 전후 q 대조 | evidence/ep106 |
-| 비용·모델 판단 | EX-064 C1/C2/C3와 별도 진단 | EX-064 원문 |
-
-## 진행
-
-- 2026-09-29 — 사용자 구현 지시로 등록. 구현·새 모델 호출 전.
-
-## 중단·복구
-
-INDEX 공통 기준, RD11.1/C-018와 RD11.2/C-046을 적용한다. 구현·평가 도구 결함은
-의존 범위를 중지하고 실패 증거·별도 정정을 보존한다. 상태 예측 오답·JSON 실패는
-측정 결과이며 q 선택을 수정하거나 전체 판단 비교를 차단하지 않는다.
-상한·재수집·실행기 지원은 EX-064를 따른다.
-
-- 2026-09-29 — 관련 CPU 검사126개·원18관측 재생·원자료 감사 완료.
-  q363·진단90 입력 예약 길이 전량 통과, 원C1 prompt/token hash 동일.
-  준비 중4회 입력/사전검사와 모델0 기록을 evidence/ep106/preparation-attempts에 보존.
-  최종 소스/입력 동결 뒤 EX-064 로컬 저장 입력 수집 시작.
-- 2026-09-29 — 주 q363·별도 진단90 전량 수집, C1 재현 및 진단 전후 q 차이0,
-  가중치·설정 불변/소유 종료·GPU1 반환 완료. 원자료473파일과 동결989파일 일치,
-  source-v1·외부 서버 증거 보존. 종료 후 계산 경계 두 곳과 CPU18입력 재생·예약 길이
-  검증 완료. 오프라인 비교 화면의 실제 다운로드 문제를 보완 중이다.
-- 2026-09-29 — 최종 관련 CPU132검사·18입력 재생·q/진단 예약 길이·실제 오프라인
-  이동/탐색/다운로드 검증 완료. 빈 테라/미지원 후공의 종료 후 보정과 동결 모델 결과를
-  분리했다. 계획 완료는 구현·측정·보존 기준의 충족이며 모델 판단 개선 입증은 아니다.
-  [최종 보고](../evidence/ep106/report.md) ·
-  [비교 화면](../../../exports/qwen_candidate_state/ex064/index.html).
+<a id="진행"></a>
+[진행](../../research/action-value/plans/EP-106-qwen-candidate-state.md#진행)

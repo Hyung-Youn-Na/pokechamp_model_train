@@ -1,30 +1,18 @@
-# EP-086 — 역할 DB 열람본 필드 설명서
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-22
-- 승인: 사용자의 현재 JSON 필드 값·용도 문서화 및 같은 폴더 저장 지시.
-- 원문: [INDEX](../../INDEX.md#workflow), [CHARTER](../../CHARTER.md).
+원문: [EP-086](../../shared/datasets/plans/EP-086-role-export-field-guide.md)
 
-## 범위와 완료 기준
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-`export/docs/gen9ou-team-pool-role-db-field-guide.md`를 한국어 표 중심으로 작성한다.
-현재 JSON 전수 필드, 역할/기능 사전, 통계·반올림/정렬 의미, 노력치 제거에 따른
-빈/생략 필드를 설명한다. 기존 JEV 안내서의 형식을 참고하며 현재 열람본을 원본 계약과 구분한다.
-JSON·원본 DB·runtime 변경 없음. 중첩 active 작업 없음.
+<a id="ep-086--역할-db-열람본-필드-설명서"></a>
+[ep-086--역할-db-열람본-필드-설명서](../../shared/datasets/plans/EP-086-role-export-field-guide.md#ep-086--역할-db-열람본-필드-설명서)
 
-- [x] 현재 실제 필드와 값 예시 및 설명의 일치, 주요 모든 객체 필드 포함.
-- [x] Markdown 링크/예시 및 JSON 불변 확인.
+<a id="결과-및-증거"></a>
+[결과-및-증거](../../shared/datasets/plans/EP-086-role-export-field-guide.md#결과-및-증거)
 
-## 진행·중단
+<a id="범위와-완료-기준"></a>
+[범위와-완료-기준](../../shared/datasets/plans/EP-086-role-export-field-guide.md#범위와-완료-기준)
 
-등록 후 문서 작성·검증. 비실험 문서 작업으로 외부 호출·복구·재수집·시계·뷰어 해당 없음.
-[INDEX 공통 기준](../../INDEX.md#workflow)을 따른다.
-
-## 결과 및 증거
-
-[필드 설명서](../../../export/docs/gen9ou-team-pool-role-db-field-guide.md) 작성 완료.
-현재 구조의 모든 필드 이름 포함, 역할23종 정의, 44종·기능54개 수록 현황,
-실제 발췌 JSON과 Great Tusk 레코드 값 일치, 문서 링크 유효성을 검사했다.
-원 통계 정규화 코드로 비율의 분모와 기술 채용률 합의 의미를 대조했다.
-빈 반대 근거 배열과 설명이 생략된 제약3개도 현재 데이터에서 확인하여 반영했다.
-JSON은 편집하지 않았으며 크기539,176 bytes 유지. 운영 상태 변화 없어 STATUS 갱신 없음.
+<a id="진행중단"></a>
+[진행중단](../../shared/datasets/plans/EP-086-role-export-field-guide.md#진행중단)

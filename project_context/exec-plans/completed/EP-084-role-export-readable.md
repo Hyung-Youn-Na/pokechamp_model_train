@@ -1,32 +1,21 @@
-# EP-084 — 역할 DB 열람본 정리
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-22
-- 승인 근거: 사용자의 출처·notes·status 제거와 비율 소수 둘째 자리·내림차순 정리 요청.
-- 원문: [INDEX](../../INDEX.md#workflow), [CHARTER](../../CHARTER.md).
+원문: [EP-084](../../shared/datasets/plans/EP-084-role-export-readable.md)
 
-## 목표와 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-`export/docs/gen9ou_team_pool_role_db.json`만 열람용으로 정리한다.
-출처 metadata와 중첩 source/notes/status 필드, 계산용 분모·합계를 제거한다.
-역할·세트·판단 조건과 44종은 유지한다. 비율은 0~1 단위에서 두 자리로 반올림하고
-분포 및 종별 사용률은 반올림 전 값을 기준으로 내림차순 정렬한다. 0으로 표시되는 항목도 유지한다.
-원본 DB·팀·runtime은 변경하지 않는다. 기존 active plan과 범위 중첩 없음.
+<a id="ep-084--역할-db-열람본-정리"></a>
+[ep-084--역할-db-열람본-정리](../../shared/datasets/plans/EP-084-role-export-readable.md#ep-084--역할-db-열람본-정리)
 
-## 완료 기준·검증
+<a id="결과-및-증거"></a>
+[결과-및-증거](../../shared/datasets/plans/EP-084-role-export-readable.md#결과-및-증거)
 
-- [x] JSON 재파싱, 44종·ID 집합 보존, 금지 필드 재귀 검사.
-- [x] 분포 값 반올림·정렬과 비율 외 역할 정보 보존 확인.
+<a id="목표와-범위"></a>
+[목표와-범위](../../shared/datasets/plans/EP-084-role-export-readable.md#목표와-범위)
 
-## 진행·차단
+<a id="완료-기준검증"></a>
+[완료-기준검증](../../shared/datasets/plans/EP-084-role-export-readable.md#완료-기준검증)
 
-- 승인 범위 내 등록. 비실험 작업으로 외부 호출·복구·재수집·시계·뷰어는 해당 없음.
-- [INDEX 공통 기준](../../INDEX.md#workflow)을 따른다.
-
-## 결과 및 증거
-
-[열람본](../../../export/docs/gen9ou_team_pool_role_db.json) 갱신 완료.
-저장 후 JSON 재파싱, 44종 ID 보존, 금지 필드 재귀 부재, 전체 분포 항목의
-반올림 및 내림차순, 비율 외 역할 정보 보존, 원본 DB SHA-256 불변을 확인했다.
-비율은 숫자형을 유지하고 파일에서 소수 두 자리로 표시한다. 크기는 2,595,685 bytes.
-운영 상태 변경이 없어 STATUS는 갱신하지 않는다.
+<a id="진행차단"></a>
+[진행차단](../../shared/datasets/plans/EP-084-role-export-readable.md#진행차단)

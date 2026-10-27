@@ -1,69 +1,30 @@
-# EP-023 — 계산기 입력 전체 조사와 결함 수정
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-10
-- 책임자: Codex
-- 관련: D-035, EX-030, C-014·C-018·C-023
-- 승인 근거: 현재 대화에서 사용자가 제공한 전체 조사·수정·독립 검증 계획의 구현 지시.
+원문: [EP-023](../../research/input-and-memory/plans/EP-023-calculator-input-audit.md)
 
-## 목표·범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-Gen9 싱글의 request·공개 로그 → 정규화 → 상대 가설 → 계산 시나리오 → worker → LLM 입력을
-조사하고 확정된 지원 범위 버그를 수정한다. 식별/정보 격리, HP·능력치·랭크·폼·테라·아이템·상태,
-특성 생명주기, 필드/진영/교대, prior, 피해 구조·속도·지연 효과·직렬화·설명서를 다룬다.
-parent integration·프로젝트 소유 테스트와 문서를 수정한다. canonical submodule/설치 라이브러리는 보존한다.
-유료 호출·32판 재실행·기존 실험 재수집0, 전략/prior 통계 조정과 전체 전투 시뮬레이터는 비목표다.
+<a id="ep-023--계산기-입력-전체-조사와-결함-수정"></a>
+[ep-023--계산기-입력-전체-조사와-결함-수정](../../research/input-and-memory/plans/EP-023-calculator-input-audit.md#ep-023--계산기-입력-전체-조사와-결함-수정)
 
-## 불변 조건
+<a id="목표범위"></a>
+[목표범위](../../research/input-and-memory/plans/EP-023-calculator-input-audit.md#목표범위)
 
-기존 EX-028/029 원자료·주석·봉인 보고서·halt·원장 및6개 Blocked는 변경하지 않는다.
-현재 피해는 명중 조건부이며 행동 실행을 예측하지 않는다. 과거 결과를 새 입력으로 복원하지 않는다.
-비공개 상대/미래 정보는 테스트 정답에만 허용한다. 과거 필드 의미와 봉인은 보존한다.
+<a id="복구중단"></a>
+[복구중단](../../research/input-and-memory/plans/EP-023-calculator-input-audit.md#복구중단)
 
-## 완료 기준
+<a id="불변-조건"></a>
+[불변-조건](../../research/input-and-memory/plans/EP-023-calculator-input-audit.md#불변-조건)
 
-- [x] 입력 필드별 원천·변환·시점·가정·검증 표와 source/설정/라이브러리/prior/prompt/원자료 hash.
-- [x] 세 경계 독립 검증, pinned Showdown 실제 상태 진행과 일반16roll·연속타·고정 피해 대조.
-- [x] 재등장·억제/복원·강제교대·기절·동시기절·랭크·필드·아이템·테라·HP·지연 효과 회귀.
-- [x] 재등장 결함 및 확정된 지원 범위 결함 수정, 수정 전 실패/원인/독립 수정 후 검증 연결.
-- [x] 636개 전수 재생(무응답 포함), 변경/불변/재구성 실패와 경기별 최초 오염·의존 비교 분석.
-- [x] 진영 교환·반복·순서·actor 병렬 격리, 최종 전달과 변조/identity/필수 상태 누락 사전 차단.
-- [x] pokechamp cwd 전체 integration 회귀·정적검사·Node·봉인·보존·자원 정리.
-- [x] 한국어 보고서·기계 판독 결함/검증 목록·계약/설계·plan/index/STATUS 갱신.
+<a id="산출물과-완료-근거"></a>
+[산출물과-완료-근거](../../research/input-and-memory/plans/EP-023-calculator-input-audit.md#산출물과-완료-근거)
 
-## 절차·검증
+<a id="완료-결과--2026-09-10"></a>
+[완료-결과--2026-09-10](../../research/input-and-memory/plans/EP-023-calculator-input-audit.md#완료-결과--2026-09-10)
 
-먼저 evidence/ep023에 변경 전 source와 보호파일 해시를 보존한다. 원시→관측, 관측→worker,
-worker→LLM을 별도로 검사하며 production 함수/동일 계산기로 기대값을 만들지 않는다.
-15장면과 과거 상태 결함 회귀도 실행한다. 수정은 재현·독립 기준·전후 결과·영향을 연결한다.
-검증 명령/결과는 같은 evidence 디렉터리와 EX-030에 기록한다. 실제 LLM은 로컬 fake로 대체한다.
+<a id="완료-기준"></a>
+[완료-기준](../../research/input-and-memory/plans/EP-023-calculator-input-audit.md#완료-기준)
 
-## 복구·중단
-
-C-018 및 RESEARCH_DESIGN §11.1 공통 복구를 적용한다. 로컬 진단/테스트 재실행은 허용하며
-유료 재수집은0이다. Cloud 시계/예산은 만들거나 초기화하지 않는다. 과거 원장/중단을 복구하지 않는다.
-도구 결함은 원본 보존 후 별도 로컬 수정·재검증한다. 무결성 오류는 영향 분석을 중지하고 비의존 작업을 계속한다.
-해결하지 못한 정확성 결함/필수 검증 미완료를 Completed로 표시하지 않는다.
-
-## 완료 결과 — 2026-09-10
-
-- 12개 결함 분류와19개 필드 조사 항목을 작성하고 확정된 지원 범위 결함을 수정했다.
-  재등장/소비·억제 이력, 교대 HP/필드·QP/아이템, 반복 trigger, 피해 분기/고정 피해,
-  현재 HP/피격 전 속도, Supreme Overlord, Ogerpon/테라 방어 coverage, 변조 gate·설명서를 포함한다.
-- 입력 의미 `calculator-input-v2`, 설명서 `battle-v1.2.0`, mechanics-v2 메모리 overlay로 봉인했다.
-  prior/기존 prompt/설치 라이브러리·canonical submodule은 보존했다.
-- 636/636 재구성·세 경계 검증 성공, 실패/설명되지 않은 차이0. 응답632/무응답4를 포함했다.
-  기존 시나리오 수치·구조 변경 EX-028202건/EX-02979건과 테라 coverage 추가261/118건을
-  분리했고26개 B경기의 최초 시점·의존 대응·기존 수기 판정 적용 범위를 별도 정정했다.
-- 독립62회귀, 최종519 integration 회귀, 기존15장면/사후3, 최종31결정 fake 전달,
-  최종 worker636재계산·직렬화/필드설명/provider 전 gate 통과. Python E/F/I/W·compileall·Node6검사 통과.
-- source168파일 archive·원자료/설치파일 등55,063파일 불변·기존6개 Blocked 불변·자원 정리 확인.
-  Cloud 호출/32판 재실행/과거 재수집0. 미해결 확정 정확성 결함은 없으며 전체 Gen9 simulator와
-  명중/실행·미래 전개·가설 밖 세트 확률은 명시된 경계다. 과거 행동·승패 복원을 주장하지 않는다.
-
-## 산출물과 완료 근거
-
-[한국어 보고서](../evidence/ep023/report.md), [결함 목록](../evidence/ep023/defects.json),
-[필드 조사 표](../evidence/ep023/verification-matrix.json), [전수 영향 정정](../evidence/ep023/impact.md),
-[구현 검증](../evidence/ep023/verification-core.json), [최종 봉인 검증](../evidence/ep023/final-verification.json).
-중간 실패/진단기 교정과 수정 전 source·결과도 같은 evidence 디렉터리에 보존했다.
+<a id="절차검증"></a>
+[절차검증](../../research/input-and-memory/plans/EP-023-calculator-input-audit.md#절차검증)

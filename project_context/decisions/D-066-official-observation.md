@@ -1,19 +1,15 @@
-# D-066 — 공식 클라이언트 관측 소스 채택
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-17
-- 승인: 현재 사용자의 공식 관측 통합 구현 계획
+원문: [D-066](../research/input-and-memory/decisions/D-066-official-observation.md)
 
-## 결정
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-새 B/B2의 관측 소스를 공식 클라이언트로 전환하며 검증 완료 후 새 준비 기본값으로 봉인한다.
-상세 runtime 계약은 [C-043](../CONTRACTS.md#c-043-official-observation), 구현·검증 범위는
-[EP-056](../exec-plans/completed/EP-056-official-observation.md)이다. 계산 의미 버전은 독립 유지한다.
-기존 필드 부재는 legacy 의미이며 upstream/Abyssal/C·선봉 정책·과거 봉인/중단은 보존한다.
+<a id="d-066--공식-클라이언트-관측-소스-채택"></a>
+[d-066--공식-클라이언트-관측-소스-채택](../research/input-and-memory/decisions/D-066-official-observation.md#d-066--공식-클라이언트-관측-소스-채택)
 
-## 근거와 대안
+<a id="결정"></a>
+[결정](../research/input-and-memory/decisions/D-066-official-observation.md#결정)
 
-EP-055가 반사 Toxic 오등록·Magic Bounce 누락 및 미확인 특성의 출처 혼합을 확인했다.
-공식 상태와 같은 수신 원문의 명시적 보완 이력으로 단일 관측을 만든다. 공식 오류 시 기존
-파서로 자동 대체하면 모델과 계산의 관측 출처가 바뀌므로 허용하지 않는다.
-검증은 오프라인·무유료 로컬에 한정하고 승률 개선은 주장하지 않는다.
+<a id="근거와-대안"></a>
+[근거와-대안](../research/input-and-memory/decisions/D-066-official-observation.md#근거와-대안)

@@ -1,24 +1,18 @@
-# EP-069 — 실험자용 JEV 뷰어 가독성
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-21
-- 승인: 사용자 실험자가 확인할 수 있는 가독성 중심 뷰어 구성 요청
-- 관련: C-047, D-078, EX-050, EP-068
+원문: [EP-069](../../shared/viewers/plans/EP-069-researcher-viewer.md)
 
-## 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-현재 EX-050 내보내기의 결정 화면을 요청/응답·요약·기술 기록으로 정리한다.
-기록된 model+state+questions를 단일 요청 JSON으로 복원해 표시하고 출처를 명시한다.
-자동선택은 미호출로 구분하며 모델/요청을 만들지 않는다. 리플레이·원본·봉인을 보존한다.
-INDEX/CHARTER·계약/architecture·색인·겹치는 EP-062/064 확인. 비실험 뷰어 작업으로 API/재수집0.
+<a id="ep-069--실험자용-jev-뷰어-가독성"></a>
+[ep-069--실험자용-jev-뷰어-가독성](../../shared/viewers/plans/EP-069-researcher-viewer.md#ep-069--실험자용-jev-뷰어-가독성)
 
-## 완료 기준
+<a id="결과검증"></a>
+[결과검증](../../shared/viewers/plans/EP-069-researcher-viewer.md#결과검증)
 
-- [x] 요청/응답 JSON·구문 강조·복사/다운로드·결정 탐색·요약·리플레이
-- [x] 전수 요청/응답/자동선택 대응 및 브라우저/모바일/오프라인 검증
-- [x] 매뉴얼·현재 상태·검증 근거 갱신
+<a id="범위"></a>
+[범위](../../shared/viewers/plans/EP-069-researcher-viewer.md#범위)
 
-## 결과·검증
-
-175결정 표시 JSON·169실제 요청/응답·자동6 미호출 전수 대조, 복사/다운로드·탭·URL 복원·오프라인/모바일·온라인 리플레이 통과.
-[보고](../evidence/ep069/report.md), [검증](../evidence/ep069/verification.json). 원본 봉인 보존·추가 API0.
+<a id="완료-기준"></a>
+[완료-기준](../../shared/viewers/plans/EP-069-researcher-viewer.md#완료-기준)

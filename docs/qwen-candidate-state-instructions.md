@@ -2,9 +2,9 @@
 
 EX-063의 피드백을 **결정 종류에 맞는 행동 순서와 상태 변화의 연결**로 구현한다.
 속도나 타입 설명이 없었다고 해석하지 않으며, q만으로 모델이 정보를 무시했는지 판단하지 않는다.
-승인·방법·실행 조건 원문은 [D-102](../project_context/decisions/D-102-qwen-candidate-state.md),
+승인·방법·실행 조건 원문은 [D-102](../project_context/research/action-value/decisions/D-102-qwen-candidate-state.md),
 [연구 설계](../project_context/RESEARCH_DESIGN.md),
-[EX-064](../project_context/experiments/EX-064-qwen-candidate-state.md)다.
+[EX-064](../project_context/research/action-value/experiments/EX-064-qwen-candidate-state.md)다.
 
 ## 지침 구성
 

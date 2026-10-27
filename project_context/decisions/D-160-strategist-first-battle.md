@@ -1,21 +1,18 @@
-# D-160 — Strategist 첫 배틀 탐색 평가
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-19
+원문: [D-160](../research/model-evaluation/decisions/D-160-strategist-first-battle.md)
 
-## 맥락·승인
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-사용자가 제공한 계획을 구현·검증하고 실제32경기까지 수행하도록 명시 지시했다.
-EP-171 보관 어댑터는 Qwen3-0.6B용이며 기존 JEV Choice head와 다른 텍스트 생성 모델이다.
+<a id="d-160--strategist-첫-배틀-탐색-평가"></a>
+[d-160--strategist-첫-배틀-탐색-평가](../research/model-evaluation/decisions/D-160-strategist-first-battle.md#d-160--strategist-첫-배틀-탐색-평가)
 
-## 결정·근거
+<a id="결정근거"></a>
+[결정근거](../research/model-evaluation/decisions/D-160-strategist-first-battle.md#결정근거)
 
-[EX-106](../experiments/EX-106-strategist-first-battle.md)의 별도 SFT형 짧은 입력,
-비병합 FP32 PEFT·결정당1생성·출력 오류의 seeded 균등 합법 대체를 채택한다.
-공식 관측/전송 경계를 유지하고 기존 JEV 확률·계산기 규격을 적용하지 않는다.
-선봉/테라/입력의 차이와 대체 결합 성적을 명시해 일반 모델 우열 주장과 구분한다.
+<a id="대안영향"></a>
+[대안영향](../research/model-evaluation/decisions/D-160-strategist-first-battle.md#대안영향)
 
-## 대안·영향
-
-기반 모델 비교·재학습·프롬프트 비교는 승인 범위 밖이다. 기술 오류는 대체하지 않는다.
-조건·예산·해석의 원문은 EX-106, 구현/진행은 [EP-172](../exec-plans/completed/EP-172-strategist-first-battle.md).
+<a id="맥락승인"></a>
+[맥락승인](../research/model-evaluation/decisions/D-160-strategist-first-battle.md#맥락승인)

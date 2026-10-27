@@ -1,38 +1,21 @@
-# EP-066 — 판단 오류 격리 적용·JEV 2경기 재실행
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-21
-- 승인: 사용자 “중단된 실험을 다시 실험을 진행해주세요.” / D-075
-- 관련: D-074, C-045/046, EX-049, EP-062/064/065
+원문: [EP-066](../../research/model-evaluation/plans/EP-066-jev-judgment-repeat.md)
 
-## 범위·불변 조건
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-choice-action-v3에서 합법 choice를 실행하고 보조 확률/confidence는 진단으로 보존한다.
-실행 불가능한 응답은 경기 실패로 격리한다. 기존 감사 버전·EX-047/048·봉인을 보존한다.
-실제 재실행 조건·상한·중단 원문은 [EX-049](../../experiments/EX-049-jev-judgment-repeat.md)다.
-INDEX/CHARTER·RD11.1/11.2·C-045/046 및 겹치는 active EP-062/064를 확인했다.
+<a id="ep-066--판단-오류-격리-적용jev-2경기-재실행"></a>
+[ep-066--판단-오류-격리-적용jev-2경기-재실행](../../research/model-evaluation/plans/EP-066-jev-judgment-repeat.md#ep-066--판단-오류-격리-적용jev-2경기-재실행)
 
-## 완료 기준
+<a id="검증진행"></a>
+[검증진행](../../research/model-evaluation/plans/EP-066-jev-judgment-repeat.md#검증진행)
 
-- [x] 버전별 응답 처리·진단·경기 격리·감사 구현
-- [x] 과거 응답 재생·관련 회귀·무유료2경기 및 실패 격리 검증
-- [x] 실제2경기 정상 종료·전수 입력/전송 감사
-- [x] 한국어 보고/viewer·봉인·자원 정리·상태 동기화
+<a id="결과종료"></a>
+[결과종료](../../research/model-evaluation/plans/EP-066-jev-judgment-repeat.md#결과종료)
 
-## 검증·진행
+<a id="범위불변-조건"></a>
+[범위불변-조건](../../research/model-evaluation/plans/EP-066-jev-judgment-repeat.md#범위불변-조건)
 
-- 구현 전 등록. 새 승인 범위의2경기를 새 identity로 실행한다. 과거 중단은 변경하지 않는다.
-- RD11.1/C-018 기술 복구, RD11.2/C-046 판단 오류 격리를 적용한다. 유료 재수집0.
-
-- 관련73검사 통과. 무유료2경기/94전송·공식 cutoff 감사와 출력 실패 격리(첫 경기 실패·다음 정상완료)를 검증했다. 과거155응답 v3 수락·원문 불변 및 기존 감사/봉인 보존 확인. [receipt](../evidence/ep066/verification.json). 실제 실행 전 source295파일 고정.
-
-- EX-049 실행 cwd 결함으로 Abyssal 생성 실패·API0/첫 요청 시계 미시작. 원본 보존 후 [EX-050](../../experiments/EX-050-jev-judgment-recovery.md)에 동일 승인·상한을 연결했다. 이전 로컬 검증의 cwd로 교정하며 상한 확대·유료 재수집0.
-
-## 결과·종료
-
-EX-050 실제2경기 정상 종료·JEV1승1패(60/99턴),169요청/응답·175전송.
-공식 cutoff 입력175·전송175 전수 감사 통과, source295파일·과거 봉인 보존·자원 정리 완료.
-실제 판단 진단/출력 실패0이며 격리 동작은 별도 모의 대전에서 확인했다.
-현재 실행/감시 및 중단 후 추가 호출 없음. 완료 기준 충족.
-[한국어 최종 보고](../evidence/ep066/report.md), [실행 receipt](../evidence/ep066/verification-live.json),
-[실제 감사](../evidence/ep066/live-audit.json), [종료](../evidence/ep066/closure.json).
+<a id="완료-기준"></a>
+[완료-기준](../../research/model-evaluation/plans/EP-066-jev-judgment-repeat.md#완료-기준)

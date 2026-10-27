@@ -1,19 +1,15 @@
-# EP-063 — JEV 확률 합계 검사 제거
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-21
-- 승인: 사용자가 합계1.0 검사는 과하며 근사 오류라고 명시했다.
-- 관련: D-072 / C-045 / EP-062 / EX-047
+원문: [EP-063](../../research/model-evaluation/plans/EP-063-jev-probability-validation.md)
 
-## 범위·완료 기준
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-- [x] 새 응답의 확률 합계 검사를 제거하고 개별 값·후보·최상위 선택 검사는 유지한다.
-- [x] 회귀 및 저장17응답 오프라인 검증, 기존 봉인과 당시 감사 판정 보존.
-- [x] 계약·문서·상태 동기화.
+<a id="ep-063--jev-확률-합계-검사-제거"></a>
+[ep-063--jev-확률-합계-검사-제거](../../research/model-evaluation/plans/EP-063-jev-probability-validation.md#ep-063--jev-확률-합계-검사-제거)
 
-실제 API·배틀 재개는 이번 교정 범위에 포함하지 않는다. 새 실험이 아니므로 재수집/실험 시계는 해당 없다.
-기존 EP-062와 EX-047의 미완료·원자료·동결 기준은 보존한다.
+<a id="결과"></a>
+[결과](../../research/model-evaluation/plans/EP-063-jev-probability-validation.md#결과)
 
-## 결과
-
-관련62검사·저장17/17응답 통과, 과거 감사16통과/1차단·봉인 보존 확인. 외부 호출0. [보고](../evidence/ep063/report.md).
+<a id="범위완료-기준"></a>
+[범위완료-기준](../../research/model-evaluation/plans/EP-063-jev-probability-validation.md#범위완료-기준)

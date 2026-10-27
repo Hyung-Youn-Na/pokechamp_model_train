@@ -2,8 +2,8 @@
 
 - 날짜: 2026-09-08
 - 범위: protocol/request → pinned parser → 정규화 관측 → 계산/요약 입력.
-- 관련: [D-024](../decisions/D-024-state-summary-thinking.md),
-  [EX-022](EX-022-state-summary-thinking.md), C-016.
+- 관련: [D-024](../research/input-and-memory/decisions/D-024-state-summary-thinking.md),
+  [EX-022](../research/input-and-memory/experiments/EX-022-state-summary-thinking.md), C-016.
 - 원본: EX-016 io actor 12개 첫 요약 경계, 기존15장면, 독립 메모리 내 Showdown fixture.
   fixture의 simulator 내부 HP/slot truth는 검증에서만 사용하며 모델 입력에 포함하지 않는다.
 

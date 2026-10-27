@@ -1,0 +1,534 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-20",
+  "policy": "D-171",
+  "records": {
+    "EP-011": {
+      "category": "review",
+      "reason": "요약 사실 gate와 A/B/C 전체 비교가 미완료다. 관련 교정 이력만으로 원래 세 조건 비교의 종결이나 현재 재개 필요를 확정하지 않는다.",
+      "experiments": [
+        "EX-017",
+        "EX-018",
+        "EX-019",
+        "EX-020",
+        "EX-023",
+        "EX-024"
+      ],
+      "evidence": [
+        "EP-011"
+      ],
+      "followups": []
+    },
+    "EP-012": {
+      "category": "review",
+      "reason": "harness 비교가 입력 변환 오류로 무효화됐다. 사후 코드 교정은 있으나 유효 대응 비교를 다시 완료한 근거는 확인되지 않았다.",
+      "experiments": [
+        "EX-021"
+      ],
+      "evidence": [
+        "EP-012",
+        "EP-013",
+        "EP-015"
+      ],
+      "followups": [
+        "EP-013",
+        "EP-015"
+      ]
+    },
+    "EP-013": {
+      "category": "review",
+      "reason": "공개 특성 정보 모순으로 비교 전체가 무효화됐다. 로컬 교정은 완료됐지만 원 비교의 유효 검토·대응 분모를 복구한 것은 아니다.",
+      "experiments": [
+        "EX-022"
+      ],
+      "evidence": [
+        "EP-013",
+        "EP-015"
+      ],
+      "followups": [
+        "EP-015"
+      ]
+    },
+    "EP-015": {
+      "category": "review",
+      "reason": "low/max 요약 진단의 유효 검토·재발·대응 비교가 미완료다. 후속 대체 완료나 해당 진단의 진행 종료 근거가 불명확하다.",
+      "experiments": [
+        "EX-025"
+      ],
+      "evidence": [
+        "EP-015"
+      ],
+      "followups": []
+    },
+    "EP-018": {
+      "category": "review",
+      "reason": "90 gate·smoke8·본32 비교 기준이 미충족이다. 원래 검증 범위의 대체 종결과 현재 재개 필요가 확인되지 않았다.",
+      "experiments": [
+        "EX-026"
+      ],
+      "evidence": [
+        "EP-018"
+      ],
+      "followups": []
+    },
+    "EP-020": {
+      "category": "review",
+      "reason": "90 기술 gate·smoke8·본32/16쌍이 남았다. 별도 후속 배틀의 존재만으로 이 gate 포함 계획을 종결하지 않는다.",
+      "experiments": [
+        "EX-027"
+      ],
+      "evidence": [
+        "EP-020"
+      ],
+      "followups": []
+    },
+    "EP-030": {
+      "category": "review",
+      "reason": "Protect 교정 후 EP-032로 이어졌으나 그 후속도 29유효/13쌍으로 미완료다. 기술 교정과 직접대결 비교 목표의 완료를 구분한다.",
+      "experiments": [
+        "EX-036"
+      ],
+      "evidence": [
+        "EP-030",
+        "EP-031",
+        "EP-032"
+      ],
+      "followups": [
+        "EP-031",
+        "EP-032"
+      ]
+    },
+    "EP-032": {
+      "category": "review",
+      "reason": "32슬롯은 처리했지만 timeout3건으로 29유효/13쌍이다. 수집·보고 종료 외에 목표 대체 완료나 명시적 진행 종료 근거가 부족하다.",
+      "experiments": [
+        "EX-037"
+      ],
+      "evidence": [
+        "EP-032"
+      ],
+      "followups": []
+    },
+    "EP-035": {
+      "category": "ended",
+      "reason": "사용자가 입력 오류 중단 후 설명 기입 조기 중단과 신속한 마무리를 지시했다. 해당 실행·추가 검토는 종료했으며 비교 미완료와 미검토803응답은 보존한다.",
+      "experiments": [
+        "EX-038"
+      ],
+      "evidence": [
+        "EP-035"
+      ],
+      "followups": []
+    },
+    "EP-041": {
+      "category": "ended",
+      "reason": "사용자가 감시와 보류 coordinator까지 전체 종료하도록 지시했다. 미실행12경기를 시작하지 않고 종료·감사를 마쳤다. 연구 주제 전체의 폐기를 뜻하지 않는다.",
+      "experiments": [
+        "EX-039"
+      ],
+      "evidence": [
+        "EP-041"
+      ],
+      "followups": []
+    },
+    "EP-044": {
+      "category": "review",
+      "reason": "HTTP429 중단 뒤 EP-045 등 후속은 있으나 단일 Z.ai 원조건의 완료를 확인하지 못했다. 후속 실험의 완료만으로 원범위 전체 해결을 가정하지 않는다.",
+      "experiments": [
+        "EX-040"
+      ],
+      "evidence": [
+        "EP-044",
+        "EP-045",
+        "EP-059"
+      ],
+      "followups": [
+        "EP-045",
+        "EP-059"
+      ]
+    },
+    "EP-045": {
+      "category": "review",
+      "reason": "HTTP429는 발생하지 않았지만 비교 완료 분모가 미달했다. 공식 관측을 사용한 후속 EP-059와 원조건의 대체 범위는 별도 확인이 필요하다.",
+      "experiments": [
+        "EX-041"
+      ],
+      "evidence": [
+        "EP-045",
+        "EP-059"
+      ],
+      "followups": [
+        "EP-059"
+      ]
+    },
+    "EP-048": {
+      "category": "review",
+      "reason": "HTTP500과 Court Change 결함으로 26유효/12쌍이다. 교정·공식 관측 후속 평가와 원래 관측/처치 범위의 종결 여부를 구분해야 한다.",
+      "experiments": [
+        "EX-042"
+      ],
+      "evidence": [
+        "EP-048",
+        "EP-053",
+        "EP-059"
+      ],
+      "followups": [
+        "EP-053",
+        "EP-059"
+      ]
+    },
+    "EP-053": {
+      "category": "review",
+      "reason": "cwd 교정 후 EP-054에서 재발하지 않았지만 그 실행도 입력 결함으로 중단했다. 이후 공식 관측 평가의 완료가 원래 입력 조건의 대체 종결인지 확인이 필요하다.",
+      "experiments": [
+        "EX-043"
+      ],
+      "evidence": [
+        "EP-053",
+        "EP-054",
+        "EP-059"
+      ],
+      "followups": [
+        "EP-054",
+        "EP-059"
+      ]
+    },
+    "EP-054": {
+      "category": "review",
+      "reason": "Magic Bounce 입력 결함으로 원 비교가 중단됐다. 공식 관측 후속 평가가 있으나 원입력 조건의 정리 범위까지 자동 종결하지 않는다.",
+      "experiments": [
+        "EX-044"
+      ],
+      "evidence": [
+        "EP-054",
+        "EP-057",
+        "EP-059"
+      ],
+      "followups": [
+        "EP-057",
+        "EP-059"
+      ]
+    },
+    "EP-057": {
+      "category": "resolved",
+      "reason": "공식 queue 처리 결함을 EP-058에서 교정한 뒤 EP-059/EX-046의 새32경기·16쌍·감사·보고를 완료했다. 원 EX-045의 미완료 분모는 보존한다.",
+      "experiments": [
+        "EX-045"
+      ],
+      "evidence": [
+        "EP-057",
+        "EP-058",
+        "EP-059"
+      ],
+      "followups": [
+        "EP-058",
+        "EP-059"
+      ],
+      "resolved_by": "EP-059"
+    },
+    "EP-062": {
+      "category": "resolved",
+      "reason": "확률 합계 검사 제거(EP-063)와 판단 오류 정책 변경(EP-066) 후 EX-050의 실제2경기를 완료했다. 원 실행의 실패를 성공으로 바꾸지 않는 후속 대체 종결이다.",
+      "experiments": [
+        "EX-047"
+      ],
+      "evidence": [
+        "EP-062",
+        "EP-063",
+        "EP-066"
+      ],
+      "followups": [
+        "EP-063",
+        "EP-066"
+      ],
+      "resolved_by": "EP-066"
+    },
+    "EP-064": {
+      "category": "resolved",
+      "reason": "선택과 최대 확률의 불일치를 판단 진단으로 처리하는 후속 EP-066에서 EX-050 실제2경기를 완료했다. 모델 판단 자체가 교정됐다는 의미는 아니다.",
+      "experiments": [
+        "EX-048"
+      ],
+      "evidence": [
+        "EP-064",
+        "EP-066"
+      ],
+      "followups": [
+        "EP-066"
+      ],
+      "resolved_by": "EP-066"
+    },
+    "EP-075": {
+      "category": "resolved",
+      "reason": "503 중단 이후 재시도·새 실행을 거쳐 EP-081/EX-057에서 고정 모델의32경기·16쌍 평가를 완료했다. 조건 변경을 동반한 대체이며 503의 영구 해소를 주장하지 않는다.",
+      "experiments": [
+        "EX-053"
+      ],
+      "evidence": [
+        "EP-075",
+        "EP-077",
+        "EP-080",
+        "EP-081"
+      ],
+      "followups": [
+        "EP-077",
+        "EP-080",
+        "EP-081"
+      ],
+      "resolved_by": "EP-081"
+    },
+    "EP-077": {
+      "category": "resolved",
+      "reason": "재시도 적용 실행도 503으로 중단됐으나 후속 EP-081/EX-057의 고정 모델32경기 평가가 완료됐다. 원실험과 원503 실패는 별도 보존한다.",
+      "experiments": [
+        "EX-054"
+      ],
+      "evidence": [
+        "EP-077",
+        "EP-080",
+        "EP-081"
+      ],
+      "followups": [
+        "EP-080",
+        "EP-081"
+      ],
+      "resolved_by": "EP-081"
+    },
+    "EP-080": {
+      "category": "resolved",
+      "reason": "jev-latest 미지원400 이후 EP-081에서 jev-1.13.0을 명시 고정해 새32경기·16쌍을 완료했다. 원 EX-056을 재개하거나 분모를 합산한 것은 아니다.",
+      "experiments": [
+        "EX-056"
+      ],
+      "evidence": [
+        "EP-080",
+        "EP-081"
+      ],
+      "followups": [
+        "EP-081"
+      ],
+      "resolved_by": "EP-081"
+    },
+    "EP-103": {
+      "category": "review",
+      "reason": "cwd는 교정됐고 EP-104의 학습 원대진1경기는 완료됐다. 그러나 EX-062의 원래2경기 연결 평가와 다른 과제이므로 전체 종결은 확정하지 않는다.",
+      "experiments": [
+        "EX-062"
+      ],
+      "evidence": [
+        "EP-103",
+        "EP-104"
+      ],
+      "followups": [
+        "EP-104"
+      ]
+    },
+    "EP-108": {
+      "category": "review",
+      "reason": "EP-133에서 EX066 checkpoint 재현성을 복구해 배틀 test20을 완료했다. 원 EX-066 오프라인 test·최종 보고·봉인은 수행하지 않았으므로 전체 해결로 분류하지 않는다.",
+      "experiments": [
+        "EX-066"
+      ],
+      "evidence": [
+        "EP-108",
+        "EP-133"
+      ],
+      "followups": [
+        "EP-133"
+      ]
+    },
+    "EP-119": {
+      "category": "review",
+      "reason": "EP-121이57라운드 checkpoint를 계승해 후속 학습을 완료했다. 원 EX-073의 viewer 전수 검증 timeout은 별도 미완료이며 후속 표본 검증으로 대체 충족하지 않는다.",
+      "experiments": [
+        "EX-073"
+      ],
+      "evidence": [
+        "EP-119",
+        "EP-121"
+      ],
+      "followups": [
+        "EP-121"
+      ]
+    },
+    "EP-125": {
+      "category": "review",
+      "reason": "예산 gate로 원 학습/test가 미실행이다. 후속 첫라운드·종료조건 학습은 있지만 원12시간 전체 평가를 동일 범위로 대체한 것인지는 확인이 필요하다.",
+      "experiments": [
+        "EX-076"
+      ],
+      "evidence": [
+        "EP-125",
+        "EP-127",
+        "EP-129",
+        "EP-131"
+      ],
+      "followups": [
+        "EP-127",
+        "EP-129",
+        "EP-131"
+      ]
+    },
+    "EP-127": {
+      "category": "resolved",
+      "reason": "EP-129가 정상31경기를 계승하고 승인된 실패1경기 재수집과 첫라운드 checkpoint 검증을 완료했다. 원시도 timeout·학습0 판정은 보존한다.",
+      "experiments": [
+        "EX-078"
+      ],
+      "evidence": [
+        "EP-127",
+        "EP-129"
+      ],
+      "followups": [
+        "EP-129"
+      ],
+      "resolved_by": "EP-129"
+    },
+    "EP-134": {
+      "category": "resolved",
+      "reason": "EP-137/EX-083에서 정상23경기를 계승하고4GPU로 신규9경기를 수행해32슬롯 평가를 완료했다. 원 자원 초과 시도와 실패 분모는 보존한다.",
+      "experiments": [
+        "EX-082"
+      ],
+      "evidence": [
+        "EP-134",
+        "EP-137"
+      ],
+      "followups": [
+        "EP-137"
+      ],
+      "resolved_by": "EP-137"
+    },
+    "EP-140": {
+      "category": "resolved",
+      "reason": "입력 결함 교정 후 EP-141/EX-088·089에서 별도 신규64경기 평가·감사·봉인을 완료했다. 원 EX-086·087의 실패/미실행 판정은 유지한다.",
+      "experiments": [
+        "EX-086",
+        "EX-087"
+      ],
+      "evidence": [
+        "EP-140",
+        "EP-141"
+      ],
+      "followups": [
+        "EP-141"
+      ],
+      "resolved_by": "EP-141"
+    },
+    "EP-151": {
+      "category": "resolved",
+      "reason": "EP-152가 JSON 구문 복구 정책을 추가·검증하고 EX-094의 정상1경기를 완료했다. 실제 구문 재시도는0이므로 같은 오류의 실경기 복구 관찰로 확대하지 않는다.",
+      "experiments": [
+        "EX-093"
+      ],
+      "evidence": [
+        "EP-151",
+        "EP-152"
+      ],
+      "followups": [
+        "EP-152"
+      ],
+      "resolved_by": "EP-152"
+    },
+    "EP-154": {
+      "category": "resolved",
+      "reason": "사용자 재승인으로 확률 변동을 진단으로 전환한 EP-155와 형식 복구를 추가한 EP-156을 거쳐 정상1경기를 완료했다. 원 strict 반복성 기준을 통과한 것은 아니다.",
+      "experiments": [
+        "EX-095"
+      ],
+      "evidence": [
+        "EP-154",
+        "EP-155",
+        "EP-156"
+      ],
+      "followups": [
+        "EP-155",
+        "EP-156"
+      ],
+      "resolved_by": "EP-156"
+    },
+    "EP-155": {
+      "category": "resolved",
+      "reason": "EP-156에서 원 실패 응답의 형식 복구를 재생 검증하고 변경 온도/복구 정책의 EX-097 정상1경기를 완료했다. 원 자원감시 실패 기록은 유지한다.",
+      "experiments": [
+        "EX-096"
+      ],
+      "evidence": [
+        "EP-155",
+        "EP-156"
+      ],
+      "followups": [
+        "EP-156"
+      ],
+      "resolved_by": "EP-156"
+    },
+    "EP-157": {
+      "category": "resolved",
+      "reason": "사용자 중단 실행 이후 EP-158이 시간 상한·최대 출력 변경을 등록하고 EX-099 정상1경기를 완료했다. 원 경기 재개나 동일 조건 high 효과의 입증은 아니다.",
+      "experiments": [
+        "EX-098"
+      ],
+      "evidence": [
+        "EP-157",
+        "EP-158"
+      ],
+      "followups": [
+        "EP-158"
+      ],
+      "resolved_by": "EP-158"
+    },
+    "EP-163": {
+      "category": "resolved",
+      "reason": "사용자 지시로 backend를 바꾼 EP-164/EX-105의 사전 진단·정상1경기·비교·봉인을 완료했다. 원 SIGTERM 발신원은 미확정이며 원인 수리 완료를 뜻하지 않는다.",
+      "experiments": [
+        "EX-104"
+      ],
+      "evidence": [
+        "EP-163",
+        "EP-164"
+      ],
+      "followups": [
+        "EP-164"
+      ],
+      "resolved_by": "EP-164"
+    },
+    "EP-179": {
+      "category": "resolved",
+      "reason": "EP-180이 통신 재시도·시간 정책을 변경한 EX-110 새32경기·16쌍 평가를 완료했다. 원 EX-109 분모는 계승하지 않았고 통신 장애의 영구 해소를 주장하지 않는다.",
+      "experiments": [
+        "EX-109"
+      ],
+      "evidence": [
+        "EP-179",
+        "EP-180"
+      ],
+      "followups": [
+        "EP-180"
+      ],
+      "resolved_by": "EP-180"
+    },
+    "EP-183": {
+      "category": "review",
+      "reason": "31유효/15쌍으로 기준 미달이고 보고·봉인은 완료됐다. 독립 규칙 학습 EP-184는 후보별 요약32경기 부족분의 후속 해결이 아니며 재개/진행 종료 방향은 미정이다.",
+      "experiments": [
+        "EX-112"
+      ],
+      "evidence": [
+        "EP-183"
+      ],
+      "followups": []
+    },
+    "EP-206": {
+      "category": "review",
+      "reason": "32시도 중 응답거부 소진2로 유효30/14쌍이며 유효32/16쌍 기준 미달이다. 보고·감사·뷰어·봉인·자원반환을 종결했으나 후속 실행 또는 진행 종료의 별도 지시는 없다.",
+      "experiments": [
+        "EX-117"
+      ],
+      "evidence": [
+        "EP-206",
+        "EX-117"
+      ],
+      "followups": []
+    }
+  }
+}

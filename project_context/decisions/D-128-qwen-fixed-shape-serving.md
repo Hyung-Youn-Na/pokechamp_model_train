@@ -1,60 +1,30 @@
-# D-128 — EX-080 고정 shape 서빙과 G3·G4 게이트 재정의
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-07
-- 근거: EX-080 개발 리허설5에서 GPU 게이트 G3·G4가 실패했다. 계획의 "기준 완화 없이 중단·보고" 규칙에 따라 실제 prepare·학습 전에 멈추고 선택지를 실측해 제시했고, 사용자가 "고정 shape 서빙"을 선택했다.
-  [증거](../exec-plans/evidence/ep132/rehearsal/)
+원문: [D-128](../research/fixed-matchup-learning/decisions/D-128-qwen-fixed-shape-serving.md)
 
-## 맥락
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-### 실패 내용
+<a id="d-128--ex-080-고정-shape-서빙과-g3g4-게이트-재정의"></a>
+[d-128--ex-080-고정-shape-서빙과-g3g4-게이트-재정의](../research/fixed-matchup-learning/decisions/D-128-qwen-fixed-shape-serving.md#d-128--ex-080-고정-shape-서빙과-g3g4-게이트-재정의)
 
-bf16 추론은 같은 입력이라도 배치 행 수·패딩 길이·계산 경로에 따라 반올림이 달라진다.
-- 마지막 hidden이 약 2%(상대 L2 0.020) 다르다.
-- 무작위 probe head가 이를 증폭해 가치 차이가 G3에서 0.085, G4(캐시 없는 참조 경로)에서 0.045까지 났다.
-- 사전 허용오차는 5e-3·1e-2였다.
+<a id="같은-리허설에서-통과한-항목"></a>
+[같은-리허설에서-통과한-항목](../research/fixed-matchup-learning/decisions/D-128-qwen-fixed-shape-serving.md#같은-리허설에서-통과한-항목)
 
-### 같은 리허설에서 통과한 항목
+<a id="결정"></a>
+[결정](../research/fixed-matchup-learning/decisions/D-128-qwen-fixed-shape-serving.md#결정)
 
-- 같은 배치에서 서빙 캐시 경로와 학습 경로(branch_hidden)가 비트 동일
-- GPU2·3 비트 동일(fla autotune 결정적 선택 이후)
-- 학습 반복·재개 비트 동일
-- 캐시 무결성, 메모리
+<a id="대안과-이유"></a>
+[대안과-이유](../research/fixed-matchup-learning/decisions/D-128-qwen-fixed-shape-serving.md#대안과-이유)
 
-### 실측한 선택지
+<a id="맥락"></a>
+[맥락](../research/fixed-matchup-learning/decisions/D-128-qwen-fixed-shape-serving.md#맥락)
 
-| 방식 | 측정 결과 |
-|---|---|
-| fp32 | 같은 비교에서 8.1e-4·1.2e-3으로 기존 허용오차를 통과. 그러나 161 ms/행으로 bf16(15 ms/행)의 10.6배 |
-| 고정 shape bf16 패스(길이 버킷 × 고정 행 수) | 한 행을 홀로 둘 때와 다른 행과 섞을 때 hidden이 비트 동일, 32행·320토큰에서 13.6 ms/행 |
+<a id="실측한-선택지"></a>
+[실측한-선택지](../research/fixed-matchup-learning/decisions/D-128-qwen-fixed-shape-serving.md#실측한-선택지)
 
-## 결정
+<a id="실패-내용"></a>
+[실패-내용](../research/fixed-matchup-learning/decisions/D-128-qwen-fixed-shape-serving.md#실패-내용)
 
-EX-080의 추론을 **고정 shape 서빙**으로 바꾸고 게이트를 다음과 같이 재정의한다. 실제 실행 전의 변경이며 수집 자료는 없다.
-
-- **서빙 패스:** 모든 패스는 정확히 **32행**이다. 부족한 행은 그 패스 첫 행의 복사본으로 채우고 결과는 버린다.
-  - 행은 자기 길이로 정해지는 길이 버킷까지 오른쪽 패딩한다. 버킷은 128·192·256·320·384·448·512·640·768·896토큰이다.
-  - 896토큰을 넘는 행은 fail-closed로 처리한다.
-  - 가치 head도 항상 32행 행렬로 계산한다.
-  - 결과적으로 한 행의 출력은 그 행과 static prefix·snapshot만의 함수가 된다. 배치 구성과 무관하게 비트 동일하다.
-- **처리량 측정:** 패스당 행 수는 32로 고정한다. worker {16, 32} × 경기당 search Node {1, 2}만 측정해 선택한다.
-- **G3(강화):** 각 행을 홀로(복사본으로 채운 32행) 평가한 결과와 다른 행들과 섞어 평가한 결과가 hidden·가치·정책 모두 **비트 동일**해야 한다.
-- **G4(재정의):** 경로 동등성(캐시 경로·캐시 없는 참조 행·branch_hidden, 그리고 루트 VALUE 대 같은 상태의 가치 전용 행)을 같은 GPU에서 **fp32 모델 사본**으로 비교한다.
-  - 기준은 기존 허용오차(가치·정책 5e-3, hidden 상대 L2 1e-2)이며 완화하지 않는다.
-  - bf16 서빙 경로와 학습 경로의 반올림 차이는 기록하되 판정하지 않는다. 학습은 서빙과 다른 배치 shape를 쓰므로 비트 동일을 요구하지 않는다.
-- **나머지:** G0·G1·G2·G5·G6·G7·G8과 그 기준은 그대로 둔다(G8은 고정 32행·최장 버킷).
-- **함께 기록하는 구현 확정 사항(리허설에서 실측):**
-  - fla Triton autotune을 시간 측정 대신 설정 순서로 선택한다(교차 GPU 비트 동일의 조건).
-  - 서빙 태그의 LoRA를 bf16으로 보관한다. autocast가 같은 bf16 값으로 반올림하므로 출력이 비트 동일하다.
-  - PP 렌더링을 슬롯 순서 위치 표기(`pp 31/7/-/-`)로 바꾼다. 정보는 같고 자식 행이 약 22% 짧아진다.
-
-## 대안과 이유
-
-- **허용오차만 재보정:** 가장 빠르다. 그러나 배치 구성에 따른 비결정성이 남고, 검증력이 약해진다.
-- **fp32 전환:** 기존 허용오차를 그대로 통과한다. 그러나 10.6배 느려 100라운드에 수 주가 걸린다.
-
-## 영향
-
-- EX-080 조건에 이 변경 절을 추가한다. 기존 조건과 실패 원자료(리허설 디렉터리)는 보존한다.
-- 새 identity로 prepare하기 전에 CPU 테스트와 새 리허설로 모든 게이트 통과를 다시 확인한다.
-- RD·CONTRACTS 편입은 D-127의 유예 절차를 그대로 따른다.
+<a id="영향"></a>
+[영향](../research/fixed-matchup-learning/decisions/D-128-qwen-fixed-shape-serving.md#영향)

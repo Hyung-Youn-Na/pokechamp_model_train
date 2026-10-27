@@ -1,15 +1,9 @@
-# D-149 — 확률 변동을 기록하며 NVFP4 실제1경기 진행
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-15
-- 승인: 사용자 “그정도라면 별 차이 없을것이라 생각되어 그대로 배틀 실험을 진행해주세요”
+원문: [D-149](../research/planner-executor/decisions/D-149-nvfp4-battle-with-probability-diagnostics.md)
 
-EX-095의 동일 입력 확률 변동을 확인한 뒤 사용자가 실제 배틀 진행을 명시적으로 재승인했다.
-새 EX-096에서 반복 확률1e-4 초과를 진입 차단 조건에서 제외하고 진단값으로 보존한다.
-반복 선택 일치·합법 후보/원ID 연결·유효분포·무손실/토큰·Marlin/rank320/자원 조건은 유지한다.
-선택 일치가 경기 성능 동등성을 입증한다거나 기존 EX-095가 통과했다고 소급하지 않는다.
-기존 캐시·chunked prefill·양자화·모델/환경·GPU0 배치를 그대로 유지한다.
-새 단일 적재·최대8사전추론·같은 서버 실제1경기와 새 실행의 기존 호출/시간 한도를 승인한다.
-조건·실패 분모·중단/복구·완료 원문은 [EX-096](../experiments/EX-096-nvfp4-battle-probability-diagnostics.md),
-진행은 [EP-155](../exec-plans/active/EP-155-nvfp4-battle-probability-diagnostics.md)다.
-EX-095/EP-154의 Blocked·원자료·봉인과 EX-093/094도 보존한다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-149--확률-변동을-기록하며-nvfp4-실제1경기-진행"></a>
+[d-149--확률-변동을-기록하며-nvfp4-실제1경기-진행](../research/planner-executor/decisions/D-149-nvfp4-battle-with-probability-diagnostics.md#d-149--확률-변동을-기록하며-nvfp4-실제1경기-진행)

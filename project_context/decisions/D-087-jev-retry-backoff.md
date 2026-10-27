@@ -1,11 +1,9 @@
-# D-087 — JEV 재시도 대기 확대
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-21
-- 승인: 사용자 “10 30 60 으로 가자”
+원문: [D-087](../shared/execution/decisions/D-087-jev-retry-backoff.md)
 
-새 JEV 요청의 재시도3회는 유지하며 대기를10·30·60초로 확대한다.
-새 jev-provider-retry-v2로 구분하고 v1의1·2·4초와 과거 재시도0을 보존한다.
-동일 입력/모델·대상 오류·원장·기한/취소 우선·중첩 방지 규칙은 D-084를 유지한다.
-EX-055 동일 입력 성공은 일시 가용성 문제에 부합하나 과부하 원인 확정은 아니다.
-과거 실험/receipt/원자료 불변, 유료 호출·재개0. [EP-079](../exec-plans/completed/EP-079-jev-retry-backoff.md).
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-087--jev-재시도-대기-확대"></a>
+[d-087--jev-재시도-대기-확대](../shared/execution/decisions/D-087-jev-retry-backoff.md#d-087--jev-재시도-대기-확대)

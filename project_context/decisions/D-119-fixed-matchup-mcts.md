@@ -1,23 +1,18 @@
-# D-119 — 고정 대진 공개 상태 MCTS 정책 학습
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-07
-- 근거: 사용자 고정 대진 설계 요청, 공개 상태·작은 모델·1GPU/12시간·Tera 포함·두 팀·정책 개선 필수 선택 및 `Implement the plan.` 지시.
+원문: [D-119](../research/fixed-matchup-learning/decisions/D-119-fixed-matchup-mcts.md)
 
-## 결정
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-D-115의 당면 순서를 부분 대체하여 고정 A/B 공개 상태에서 자기대국·동시행동 탐색·정책 개선을 먼저 검증한다.
-L1-L5 장기 목표와 과거 실험 판정은 유지한다. 조건 원문은 [EX-076](../experiments/EX-076-fixed-matchup-mcts.md),
-실행 경계는 C-060이다. 이번 작업은 구현·개발 검증이며 12시간 실험 실행 지시로 확대하지 않는다.
+<a id="d-119--고정-대진-공개-상태-mcts-정책-학습"></a>
+[d-119--고정-대진-공개-상태-mcts-정책-학습](../research/fixed-matchup-learning/decisions/D-119-fixed-matchup-mcts.md#d-119--고정-대진-공개-상태-mcts-정책-학습)
 
-## 대안과 이유
+<a id="결정"></a>
+[결정](../research/fixed-matchup-learning/decisions/D-119-fixed-matchup-mcts.md#결정)
 
-비공개 세트/belief부터 시작하는 안과 Qwen 계승을 검토했으나, 사용자가 공개 상태·작은 전용 모델을 선택했다.
-Tera 제외 권장안 대신 사용자 선택에 따라 처음부터 Tera를 포함한다.
-동시행동 Exp3와 확률 표본화를 사용하며 AlphaZero의 교대행동 가정을 상속하지 않는다.
-현재 상태 공개의 성공을 일반 비공개 Gen9 OU 효능으로 해석하지 않는다.
+<a id="대안과-이유"></a>
+[대안과-이유](../research/fixed-matchup-learning/decisions/D-119-fixed-matchup-mcts.md#대안과-이유)
 
-## 보존
-
-EX-073~075·EX-066 및 모든 과거 원자료/모델/동결 소스/Blocked plan을 재개하거나 수정하지 않는다.
-Life Orb 교정은 새 관측과 회귀 검증에 반영한다. 새 목적·절차 완료와 실제 실험 성공은 구분한다.
+<a id="보존"></a>
+[보존](../research/fixed-matchup-learning/decisions/D-119-fixed-matchup-mcts.md#보존)

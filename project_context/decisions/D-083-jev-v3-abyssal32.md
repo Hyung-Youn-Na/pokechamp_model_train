@@ -1,11 +1,9 @@
-# D-083 — JEV v3 동일32경기와 v2 전후 비교
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-21
-- 승인: 현재 사용자가 제공한 계획의 구현·검증·실험 수행 지시
+원문: [D-083](../research/input-and-memory/decisions/D-083-jev-v3-abyssal32.md)
 
-EX-052와 동일 대진·모델 요청 설정·운영 상한으로 EP-074 v3 전체 처치32경기를 수행한다.
-EX-052 v2를 재실행하지 않고 공통 완료쌍의 탐색적 전후 차이를 보고한다.
-조건·예산·중단·분모 원문은 [EX-053](../experiments/EX-053-jev-v3-abyssal32.md),
-실행은 [EP-075](../exec-plans/active/EP-075-jev-v3-abyssal32.md)다.
-과거 원자료·봉인·판정·뷰어와 중단된 EP-062/064는 보존한다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-083--jev-v3-동일32경기와-v2-전후-비교"></a>
+[d-083--jev-v3-동일32경기와-v2-전후-비교](../research/input-and-memory/decisions/D-083-jev-v3-abyssal32.md#d-083--jev-v3-동일32경기와-v2-전후-비교)

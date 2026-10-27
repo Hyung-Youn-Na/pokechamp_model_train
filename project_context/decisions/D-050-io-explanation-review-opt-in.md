@@ -1,36 +1,21 @@
-# D-050 — 기본 IO 테스트 설명 오류 기입은 명시 요청 시 수행
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-14
+원문: [D-050](../shared/governance/decisions/D-050-io-explanation-review-opt-in.md)
 
-## 맥락
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-사용자가 기본 IO 알고리즘 테스트에서 별도 지시 없는 설명 오류 추가를 제외하도록 요청했다.
-기존 실험의 설명 전수 검토 요구가 새 일반 테스트에 자동 상속되는 것을 막는다.
-설명 annotation은 사후 검토 산출물이며 기존 viewer는 이를 읽어 표시한다.
+<a id="d-050--기본-io-테스트-설명-오류-기입은-명시-요청-시-수행"></a>
+[d-050--기본-io-테스트-설명-오류-기입은-명시-요청-시-수행](../shared/governance/decisions/D-050-io-explanation-review-opt-in.md#d-050--기본-io-테스트-설명-오류-기입은-명시-요청-시-수행)
 
-## 결정
+<a id="결정"></a>
+[결정](../shared/governance/decisions/D-050-io-explanation-review-opt-in.md#결정)
 
-앞으로 기본 IO 테스트에서는 LLM 설명/reasoning의 사실·진영·시점·계산 주장에 대한
-사후 오류 탐색·전수 검토·annotation 기입·오류율 집계를 기본 작업과 완료 조건에서 제외한다.
-설명 오류 검토/기입 또는 설명 정확성 평가를 사용자가 명시적으로 요청한 범위에서만 수행한다.
-단순히 IO 테스트·배틀 실행·비교·viewer 생성을 요청한 것은 설명 오류 기입 요청이 아니다.
+<a id="대안근거영향"></a>
+[대안근거영향](../shared/governance/decisions/D-050-io-explanation-review-opt-in.md#대안근거영향)
 
-기술적 IO 검증 및 원문/reasoning 기록·표시는 유지한다. 미평가는 오류0·정상·의미 검증 통과로 해석하지 않는다.
-기존 annotation·실험 결과·미검토·Blocked를 보존하고 기존 고정 정책/실행기의 gate를 소급 변경하지 않는다.
-이미 기록된 설명 오류를 삭제·숨기거나 이번 기본값으로 과거 실험을 완료 처리하지 않는다.
+<a id="맥락"></a>
+[맥락](../shared/governance/decisions/D-050-io-explanation-review-opt-in.md#맥락)
 
-## 대안·근거·영향
-
-- 기존 전수 검토를 모든 IO 테스트에 자동 상속: 사용자 지시와 맞지 않아 제외한다.
-- viewer의 설명 표시·기존 annotation 제거: 오류 신규 기입 제외와 다르므로 제외한다.
-- runtime 변경: 일반 보고 경로는 검토 파일 없이 동작하고 새 오류를 자동 작성하지 않으므로 필요하지 않다.
-
-에이전트 계획/사후 보고 지침을 변경한다. 앞으로 별도 요청 없는 기본 IO 테스트는 설명 검토를
-추가하지 않고 승인된 기술·성능 검사 및 보고까지 완료한다.
-
-## 증거
-
-- 현재 사용자의 기본 IO 테스트 설명 오류 기입 제외 지시.
-- [EP-038](../exec-plans/completed/EP-038-io-explanation-review-opt-in.md).
-- [연구 설계 기본값](../RESEARCH_DESIGN.md#io-explanation-review), [C-032](../CONTRACTS.md#c-032-io-explanation-review).
+<a id="증거"></a>
+[증거](../shared/governance/decisions/D-050-io-explanation-review-opt-in.md#증거)

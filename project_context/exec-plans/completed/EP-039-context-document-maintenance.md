@@ -1,47 +1,27 @@
-# EP-039 — 현재 컨텍스트 문서 정리
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-14
-- 승인 근거: 현재 사용자가 검토 보고서의 개선 방향을 채택하고 현 저장소 기준 문서 정리를 명시적으로 요청했다.
-- 관련 결정: [D-051](../../decisions/D-051-context-document-maintenance.md)
+원문: [EP-039](../../shared/governance/plans/EP-039-context-document-maintenance.md)
 
-## 목표와 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-STATUS 축약, 색인 실행 중/중단 보존 구분, 현재/과거 규칙 적용 범위 명확화,
-중복 참조화, 확인 가능한 증거 링크, AGENTS·INDEX·템플릿 읽기 경로를 정리한다.
-두 서브에이전트는 서로 다른 파일을 수정하고 수정 후 독립 검토한다.
+<a id="ep-039--현재-컨텍스트-문서-정리"></a>
+[ep-039--현재-컨텍스트-문서-정리](../../shared/governance/plans/EP-039-context-document-maintenance.md#ep-039--현재-컨텍스트-문서-정리)
 
-## 불변 조건
+<a id="결과-및-증거"></a>
+[결과-및-증거](../../shared/governance/plans/EP-039-context-document-maintenance.md#결과-및-증거)
 
-연구 목표·조건·예산·승인·gate·재시도·완료 기준·실패/무효 판정은 바꾸지 않는다.
-기존 개별 ADR·EP·EX 및 동결 protocol·원자료·기존 evidence는 수정·삭제·이동하지 않는다.
-Blocked는 보존하며 재개·Completed 전환은 없다. runtime 테스트·실험은 실행하지 않는다.
-권한 재배치나 실제 정책 변경, 근거 충돌은 정리에서 제외하고 기록한다.
+<a id="목표와-범위"></a>
+[목표와-범위](../../shared/governance/plans/EP-039-context-document-maintenance.md#목표와-범위)
 
-## 완료 기준과 검증
+<a id="불변-조건"></a>
+[불변-조건](../../shared/governance/plans/EP-039-context-document-maintenance.md#불변-조건)
 
-- [x] 검토 당시 인용 근거와 현재 상태를 대조하고 작업 시작본을 보존한다.
-- [x] 승인된 문서 정리 및 두 서브에이전트의 독립 검토를 완료한다.
-- [x] 변경 diff·링크·상태/규칙/판정/증거 연결을 전후 대조한다.
-- [x] 분량 변화·보존 범위·제외 쟁점을 보고하고 index/STATUS를 갱신한다.
+<a id="완료-기준과-검증"></a>
+[완료-기준과-검증](../../shared/governance/plans/EP-039-context-document-maintenance.md#완료-기준과-검증)
 
-## 진행
+<a id="진행"></a>
+[진행](../../shared/governance/plans/EP-039-context-document-maintenance.md#진행)
 
-- 2026-09-14: 현재 INDEX/CHARTER/exec-plan index와 기존 Blocked 목록을 확인했다.
-  검토 때 기록한 주요 문서 분량과 인용된 최신 상태는 현재와 일치한다. 검토 전체의
-  byte snapshot은 없으므로 전 파일 동일성으로 확대하지 않는다. 현 작업 시작본을 기준으로 수정한다.
-  project_context는 Git 미추적 상태이므로 작업 시작본 대비 diff를 별도로 보존한다.
-
-- 2026-09-14: 두 담당자의 분리 수정·상호 독립 검토 완료. 현재 source로 설명서 버전의
-  적용 범위를 확인했고, EP-037 기준 manifest를 기존 기록 hash와 대조해 별도 사본으로 연결했다.
-  원문 참조 8범위·기존 ID/status·권한/승인/lifecycle·문서 링크를 대조했다.
-
-## 차단 및 중단
-
-비실험 문서 작업으로 복구·재수집·시계는 해당 없다. 공통 승인·중단 기준은
-[INDEX](../../INDEX.md#workflow)를 따른다.
-
-## 결과 및 증거
-
-[정리·검증 보고서](../evidence/ep039/report.md)에 시작본 대조·분량 변화·의미 보존·증거 링크와
-제외 쟁점을 기록했다. 기존 실험·protocol·원자료는 유지했고 runtime 테스트·실험은 실행하지 않았다.
+<a id="차단-및-중단"></a>
+[차단-및-중단](../../shared/governance/plans/EP-039-context-document-maintenance.md#차단-및-중단)

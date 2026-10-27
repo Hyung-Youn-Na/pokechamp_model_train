@@ -1,33 +1,24 @@
-# EP-076 — provider 오류 재시도3회 고정
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-21
-- 승인: 현재 사용자 재시도3회 적용 지시 / D-084
+원문: [EP-076](../../shared/execution/plans/EP-076-provider-retry-three.md)
 
-## 목표·범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-새 JEV provider 오류 재시도를3회 고정하고 시도별 원장·기한·감사를 검증한다.
-INDEX/CHARTER·STATUS/색인·겹치는 active EP-062/064/075와 C-044/045·RD11.2를 확인했다.
-Ollama/Z.ai의 기존3회는 유지한다. parent integration·현재 계약·문서만 변경한다.
-과거 실험/봉인/receipt/뷰어를 보존하고 실제 API·실험 재개·새 배틀 수집은 하지 않는다.
+<a id="ep-076--provider-오류-재시도3회-고정"></a>
+[ep-076--provider-오류-재시도3회-고정](../../shared/execution/plans/EP-076-provider-retry-three.md#ep-076--provider-오류-재시도3회-고정)
 
-## 완료 기준
+<a id="검증복구"></a>
+[검증복구](../../shared/execution/plans/EP-076-provider-retry-three.md#검증복구)
 
-- [x] 새 기본3회·총4시도·성공 조기종료·오류 분류·중첩 재시도 방지
-- [x] 시도별 원장/원문·기한/상한/취소·과거 감사 호환 검증
-- [x] 모의 HTTP·관련 회귀·과거 자료 보존·한국어 보고·상태 갱신
+<a id="결과증거"></a>
+[결과증거](../../shared/execution/plans/EP-076-provider-retry-three.md#결과증거)
 
-## 검증·복구
+<a id="목표범위"></a>
+[목표범위](../../shared/execution/plans/EP-076-provider-retry-three.md#목표범위)
 
-실제503 유형의 모의 응답·연결/timeout/429·최종실패·비대상 오류를 독립 검증한다.
-새 실험은 없으므로 실험 복구/재수집은 해당 없음. 모의 HTTP만 사용한다.
+<a id="완료-기준"></a>
+[완료-기준](../../shared/execution/plans/EP-076-provider-retry-three.md#완료-기준)
 
-## 진행
-
-- 구현 전 승인 범위를 등록했다.
-
-## 결과·증거
-
-새 provider 오류 재시도3회·누적 원장/기한/취소·감사 구현과 관련233검사 통과.
-과거4실행 전수 감사·2,428파일 보존 확인. 실제 API/새 배틀/실험 재개0.
-[보고](../evidence/ep076/report.md) · [최종 검증](../evidence/ep076/verification.json). 현재 실행·감시 없음.
+<a id="진행"></a>
+[진행](../../shared/execution/plans/EP-076-provider-retry-three.md#진행)

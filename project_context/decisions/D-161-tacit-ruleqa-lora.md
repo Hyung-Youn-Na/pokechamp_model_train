@@ -1,20 +1,18 @@
-# D-161 — Tacit 규칙 Q&A LoRA 1회
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-19
+원문: [D-161](../research/rule-learning/decisions/D-161-tacit-ruleqa-lora.md)
 
-## 맥락·승인
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-현재 사용자가 제시한 GPU1·2·3 학습 계획의 구현·검증·실행을 명시적으로 요청했다.
-D-159의 데이터 전용 작업과 별도 실험이며 EX-104 중단이나 GPU0 EX-106을 재개/변경하지 않는다.
+<a id="d-161--tacit-규칙-qa-lora-1회"></a>
+[d-161--tacit-규칙-qa-lora-1회](../research/rule-learning/decisions/D-161-tacit-ruleqa-lora.md#d-161--tacit-규칙-qa-lora-1회)
 
-## 결정·근거
+<a id="결정근거"></a>
+[결정근거](../research/rule-learning/decisions/D-161-tacit-ruleqa-lora.md#결정근거)
 
-[EX-107](../experiments/EX-107-tacit-ruleqa-lora.md)의 고정 조건으로 규칙 Q&A LoRA1회를 수행한다.
-기반 고정·assistant-only loss·기존 split·validation 선택·test 잠금으로 동일 템플릿 내 개선을 평가한다.
-배틀/긴 Thinking 개선으로 해석하지 않는다. 원응답과 실패·효과 없음도 보존한다.
+<a id="대안영향"></a>
+[대안영향](../research/rule-learning/decisions/D-161-tacit-ruleqa-lora.md#대안영향)
 
-## 대안·영향
-
-다른 방법/초모수 탐색은 승인 범위가 아니다. 환경/모델 다운로드 없이 기존 자산을 사용한다.
-구현·진행은 [EP-173](../exec-plans/completed/EP-173-tacit-ruleqa-lora.md), 실험 조건 원문은 EX-107이다.
+<a id="맥락승인"></a>
+[맥락승인](../research/rule-learning/decisions/D-161-tacit-ruleqa-lora.md#맥락승인)

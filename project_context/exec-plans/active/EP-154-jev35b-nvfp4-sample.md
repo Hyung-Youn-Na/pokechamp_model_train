@@ -1,62 +1,24 @@
-# EP-154 — JEV-35B-NVFP4 동일 대진 샘플
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Blocked
-- 생성일: 2026-10-15
-- 책임자: Codex
-- 승인: 현재 사용자 제공 계획 구현·검증·실행 / D-148
-- 조건 원문: [EX-095](../../experiments/EX-095-jev35b-nvfp4-sample.md)
-- branch/checkout: research/model-training, /workspace, 시작a4659bf·기존 변경 보존
-- actor: pokechamp/.venv/bin/python; 새 모델: .pokechamp-data/jev35b-nvfp4-runtime/.venv/bin/python
-- 출력/검증: EX-095 run·evidence/ep154·exports/battle_viewers/ex095
+원문: [EP-154](../../research/planner-executor/plans/EP-154-jev35b-nvfp4-sample.md)
 
-## 목표·범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-공식 모델/환경 identity·새 모델 선택/전용 interpreter·장부 앞단/공식 엔진 연결과 진입검증,
-통과 시 실제1경기·감사·뷰어·봉인·자원 반환까지 수행한다. 기존 실행은 재개하지 않는다.
-INDEX/CHARTER·매뉴얼·STATUS·RD11.1/11.2·C-070/073 및 겹치는 중단EP-134/140/151을 확인했다.
-모델 변경의 authority는 D-148/EX-095에 등록하며 기존 source·기록·중단 판정을 보존한다.
+<a id="ep-154--jev-35b-nvfp4-동일-대진-샘플"></a>
+[ep-154--jev-35b-nvfp4-동일-대진-샘플](../../research/planner-executor/plans/EP-154-jev35b-nvfp4-sample.md#ep-154--jev-35b-nvfp4-동일-대진-샘플)
 
-## 완료 기준
+<a id="검증중단"></a>
+[검증중단](../../research/planner-executor/plans/EP-154-jev35b-nvfp4-sample.md#검증중단)
 
-- [x] 새 모델/전용환경·공식파일 identity·CPU검증
-- [ ] 단일적재/최대8사전추론·같은 서버 정상1경기
-- [x] 수집된8사전추론 전수감사·EX-094 기술비교·부분뷰어/오프라인 검사 (본경기 자료0)
-- [x] 실패 증거/부분뷰어 봉인·소유자원반환·상태/색인 갱신
+<a id="목표범위"></a>
+[목표범위](../../research/planner-executor/plans/EP-154-jev35b-nvfp4-sample.md#목표범위)
 
-## 검증·중단
+<a id="실패-종결미충족-기준"></a>
+[실패-종결미충족-기준](../../research/planner-executor/plans/EP-154-jev35b-nvfp4-sample.md#실패-종결미충족-기준)
 
-EX-095 고정 protocol·상한·gate와 RD11.1/C-018을 따른다. source변경·추가GPU·대체모델·
-재경기0. 실제 실행 전 준비/CPU검증을 수행하고 GPU/driver gate 실패면 미실행 분모를 보존한다.
-보고/정리 완료는 정상1경기 목표 달성이 아니다.
+<a id="완료-기준"></a>
+[완료-기준](../../research/planner-executor/plans/EP-154-jev35b-nvfp4-sample.md#완료-기준)
 
-## 진행
-
-- 2026-10-15 — 등록, 구현/모델적재 전. GPU0 유휴·드라이버535.183.01 확인.
-- 첫 준비본 뒤 실제 적재/호출 전 검토에서 엔진 오류 원문 보존 누락을 확인했다. 공식 응답을
-  매핑/검증 전에 전용 원장에 저장하도록 CPU 교정하고 오류 응답 독립 검사를 추가했다.
-  실행하지 않은 준비본은 evidence/ep154/unexecuted-preparation에 보존하며 최종 source로
-  새 준비한다. 모델적재/사전추론/GLM/배틀0·예산/조건 불변이다.
-- 드라이버 호환성 검사에는 BF16 실제 연산과 엔진에서 필요한 Triton CUDA JIT의128원소 커널을
-  포함한다. 모델 추론은 아니며 GPU0 소유권/메모리 감시 아래 한 번 수행한다. 이 진입검사 구현을
-  반영한 최종 source로 다시 준비하고 두 번째 미실행 준비본도 별도 보존한다. 적재/추론0이다.
-- CUDA12.9 torch2.13.0+cu129/vLLM0.31.0+cu129/Transformers5.17.0 환경 설치·pip check와
-  GPU0 BF16/Triton 실제 호환성을 통과했다. GPU0 반환0MiB를 확인했다. 모델 적재/추론/GLM0이다.
-- 공식 서버 CPU import에서 기본 TorchCodec0.17의 CUDA13 libnvrtc 의존성이 드러났다.
-  공식 호환표(0.16은torch>=2.11)와 CUDA12.9 wheel의 공급자SHA256에 따라0.16+cu129로
-  준비 환경의 미디어 의존성만 교정하고 import/pip check/최종 lock을 다시 확인한다.
-- 최종 CPU206검사(205+앞단 소유권/무CUDA1)와 새 전용환경의 저장74결정/다후보69입력 전수
-  대조를 통과했다. 이전 환경 결과·8사전요청과 완전히 일치한다. 공식 264-slot head bias와
-  rank320 변환 head shape를 확인했고, 미디어 wheel 교정 후 서버 CLI/worker import도 통과했다.
-  실제 모델의 Marlin 적재·사전추론·본경기는 아직0이며 남은 가중치를 공식 해시로 검증 중이다.
-
-- 2026-10-15 14:53:40 KST — 공식37파일·v6외부587파일·GPU0/3포트/자격증명 구성 검사를 통과하고
-  최초 단일서버 적재를 시작한다. 이 시점부터 전체4200초·8사전추론 포함JEV256예산이며
-  실제 source/조건은 변경하지 않는다.
-
-## 실패 종결·미충족 기준
-
-반복성 gate 최대 확률 차이0.0042099333>0.0001로 본경기 미실행1이다. 전체 동일입력3회
-최대 차이는0.0071398573이다. 정상1경기 완료 기준을 만족하지 못해 Blocked를 active/에 보존한다.
-단일 적재·8사전추론/장부·GLM0/배틀0/명령0의 전수감사와 부분뷰어·대표 오프라인 검증,
-봉인·GPU0/PID/잠금/8109·18845·18846 반환을 완료했다. 이후 추가 GPU/모델/API 호출0이며
-재경기·재적재·기준변경·자동재개하지 않는다. [실패 종결 보고](../evidence/ep154/report.md).
+<a id="진행"></a>
+[진행](../../research/planner-executor/plans/EP-154-jev35b-nvfp4-sample.md#진행)

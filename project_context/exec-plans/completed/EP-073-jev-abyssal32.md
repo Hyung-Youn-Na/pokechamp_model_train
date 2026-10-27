@@ -1,40 +1,24 @@
-# EP-073 — JEV 대 Abyssal 32경기 본실험
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-21
-- 책임자: Codex
-- 승인: 사용자가 EX-046 매치업·Abyssal 고정·순차·호출 무제한·6시간을 선택하고 계획 구현을 지시했다.
-- 관련: D-081, EX-052, C-018/045/046/047
+원문: [EP-073](../../research/model-evaluation/plans/EP-073-jev-abyssal32.md)
 
-## 목표·범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-EX-051의 JEV 입력으로 EX-046 매치업32경기를 Abyssal과 수행하고 감사·보고·뷰어·봉인·정리한다.
-조건·예산·복구·분모 원문은 [EX-052](../../experiments/EX-052-jev-abyssal32.md)이다.
-INDEX/CHARTER·RD8/11/12·계약·STATUS/색인과 겹치는 active EP-062/064를 확인했다.
-parent integration의 별도 일정 실행 경로·감사/보고·검증과 project_context가 변경 범위다.
-EX-046은 읽기 전용 대진 근거이며 GLM 실행기를 변경하지 않는다. 과거 Blocked·원자료·봉인은 보존한다.
+<a id="ep-073--jev-대-abyssal-32경기-본실험"></a>
+[ep-073--jev-대-abyssal-32경기-본실험](../../research/model-evaluation/plans/EP-073-jev-abyssal32.md#ep-073--jev-대-abyssal-32경기-본실험)
 
-## 완료 기준
+<a id="결과"></a>
+[결과](../../research/model-evaluation/plans/EP-073-jev-abyssal32.md#결과)
 
-- [x] 일정/누적 예산/actor RNG 격리·실패 격리·감사 확장 구현과 관련 회귀
-- [x] 무유료8경기·전수 감사·새 source/config/receipt 봉인
-- [x] 실제 유효32경기·완료16쌍·전수 감사
-- [x] 한국어 보고·C-047 뷰어/오프라인 검증·봉인·자원 정리·상태 동기화
+<a id="목표범위"></a>
+[목표범위](../../research/model-evaluation/plans/EP-073-jev-abyssal32.md#목표범위)
 
-## 진행·검증
+<a id="완료-기준"></a>
+[완료-기준](../../research/model-evaluation/plans/EP-073-jev-abyssal32.md#완료-기준)
 
-- 2026-09-21 — 승인된 계획을 등록했다. 실제 API0. 과거 JEV 상한/감사를 기본값으로 보존하고 새 일정 프로필을 추가한다.
+<a id="중단복구"></a>
+[중단복구](../../research/model-evaluation/plans/EP-073-jev-abyssal32.md#중단복구)
 
-## 중단·복구
-
-RD11.1/C-018 및 RD11.2/C-046 적용. EX-052의 기술 공유 중단·경기 판단 실패 격리·유료 재수집0을 따른다.
-설명 정확성 검토는 RD8.1 기본 제외다. 새 실행기의 지원은 무유료 독립 사례로 확인한다.
-
-## 결과
-
-유효32/32경기·완료16/16쌍, JEV 7승0무25패. [최종 보고](../evidence/ep073/report.md) · [정리](../evidence/ep073/closure.json).
-현재 실행·감시 없음.
-
-- 최종 관련151검사·무유료8경기/226모의요청/234전송·공식 cutoff/선봉 검사·모델 출력 실패 격리·과거 감사·오프라인 뷰어 검증 통과. 새 실제 소스·일정·모델·검증 receipt 봉인 후 본수집 진입.
-
-- 첫4 본경기 정상완료·기술 gate 통과 후 잔여28 수집 진입. 최초 HTTP 예약 2026-09-21T05:23:19.469928+00:00; 수집차단 2026-09-21T10:58:19.469928+00:00. 원장/시계/소스 고정.
+<a id="진행검증"></a>
+[진행검증](../../research/model-evaluation/plans/EP-073-jev-abyssal32.md#진행검증)

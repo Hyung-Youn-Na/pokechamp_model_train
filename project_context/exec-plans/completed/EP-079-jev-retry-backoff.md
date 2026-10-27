@@ -1,24 +1,18 @@
-# EP-079 — JEV 재시도 대기10·30·60초
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-21
-- 승인: 사용자 대기10·30·60초 명시 / D-087
+원문: [EP-079](../../shared/execution/plans/EP-079-jev-retry-backoff.md)
 
-## 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-INDEX/CHARTER·STATUS/색인·겹치는 EP-062/064/075/077·C-044/D-084를 확인했다.
-새 기본 v2 대기만 확대하고 기존 v1/재시도0의 실행 identity·감사 호환을 유지한다.
-integration/pokechamp의 retry/client/session/study/audit·관련 검사·현재 계약/매뉴얼을 변경한다.
-과거 봉인 원자료는 불변. 배틀·유료 호출·실험 재개0이며 연구 처치/평가 변경은 없다.
+<a id="ep-079--jev-재시도-대기103060초"></a>
+[ep-079--jev-재시도-대기103060초](../../shared/execution/plans/EP-079-jev-retry-backoff.md#ep-079--jev-재시도-대기103060초)
 
-## 완료 기준
+<a id="결과"></a>
+[결과](../../shared/execution/plans/EP-079-jev-retry-backoff.md#결과)
 
-- [x] 신규10/30/60초·최대3회·동일 요청·성공 조기 종료·영구 오류 제외 검증
-- [x] 원장/기한/취소·v1/0회·EX-054 고정 identity·과거 감사/보존 확인
-- [x] 한국어 보고·상태/색인 동기화
+<a id="범위"></a>
+[범위](../../shared/execution/plans/EP-079-jev-retry-backoff.md#범위)
 
-비실험 구현이며 실제 수집/복구/실험 시계·배틀 viewer는 해당 없음.
-
-## 결과
-
-새 기본10·30·60초·과거 정책 호환·관련146검사·EX-053/054 감사·659파일 보존을 확인했다. 실제 API0. [보고](../evidence/ep079/report.md).
+<a id="완료-기준"></a>
+[완료-기준](../../shared/execution/plans/EP-079-jev-retry-backoff.md#완료-기준)

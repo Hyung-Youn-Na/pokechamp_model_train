@@ -1,48 +1,21 @@
-# EX-051 — JEV 교정 입력 v2 동일 조건2경기
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 날짜: 2026-09-21
-- 승인: 사용자 EX-050과 동일한 변경 입력 테스트 지시 / D-080 / EP-071
+원문: [EX-051](../research/input-and-memory/experiments/EX-051-jev-v2-battle.md)
 
-## 목적·조건
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-EP-070의 선봉 자기 상태·PP·테라 의미 교정 입력이 실제 native Choice 및 배틀 전송에
-정상 반영되는지 확인하는 기술 진단이다. 성능 개선 가설 검증/효능 비교가 아니다.
-[EX-050](EX-050-jev-judgment-recovery.md) 및 [EX-049](EX-049-jev-judgment-repeat.md)의
-대진·seed·모델 선택·순차 실행·상한·실패 처리·분모·해석을 사용한다.
-차이는 D-079/C-045의 jev-choice-v2 입력/prompt와 showdown-gen9-max-pp-v1 초기 PP 정책이다.
+<a id="ex-051--jev-교정-입력-v2-동일-조건2경기"></a>
+[ex-051--jev-교정-입력-v2-동일-조건2경기](../research/input-and-memory/experiments/EX-051-jev-v2-battle.md#ex-051--jev-교정-입력-v2-동일-조건2경기)
 
-- Gen9 OU, 첫 경기 JEV p1/team1 대 Abyssal p2/team2; 둘째 JEV p2/team2 대 Abyssal p1/team1.
-- 게임 seed18280,52471,51036,2470; Python/NumPy100. 팀 제출문을 EX-050 manifest와 대조한다.
-- 환경 TYPESAFE_MODEL(기본 jev-latest) 및 endpoint를 EX-050과 대조하여 봉인하고 실제 반환 모델을 기록한다.
-- cwd=/workspace/pokechamp, 출력 .pokechamp-data/jev/ex051-live. 과거 경로를 재사용하지 않는다.
-- choice-action-v3, 동시성1, 단일 합법 후보 무호출, 상세 피해 계산·효과 사전·요약 없음.
-- 사전 관련 회귀·모의2경기·공식 cutoff/입력/전송 감사 후 새 source와 verification receipt 동결.
-  기존 실패 격리 동작은 변경하지 않으며 EP-066의 검증을 재사용한다.
+<a id="결과종료"></a>
+[결과종료](../research/input-and-memory/experiments/EX-051-jev-v2-battle.md#결과종료)
 
-## 상한·중단·복구
+<a id="목적조건"></a>
+[목적조건](../research/input-and-memory/experiments/EX-051-jev-v2-battle.md#목적조건)
 
-이번 승인에 따른 실제2경기·누적300요청·첫 실제 요청부터1800초 중 먼저 도달한 상한을 적용한다.
-HTTP min(60초,잔여시간), 실패·미확정 요청 포함. 모의 준비는 실제 API0으로 별도 기록한다.
-출력복구·재시도·대체행동·보충·유료 복구·재수집은0이다. 폴더/시계/상한 초기화 금지.
-RD11.2/C-046에 따라 합법 선택의 보조 확률/confidence 문제는 진단만 기록하고 계속한다.
-실행 불가능 출력은 해당 경기만 실패로 격리하며 다음 독립 경기를 계속한다.
-입력/관측/후보/전송/수집/무결성 및 인증·통신 오류는 첫 발견 시 남은 신규 수집을 중단한다.
-같은 입력·실행기·공급자를 공유하는 소규모 기술 진단으로 비영향 입증 전 남은 수집은 금지한다.
-RD11.1/C-018에 따라 원인 조사·원자료 보존·정리한다. 실행기는 경기 출력 실패 격리를 지원하며
-유료 재수집을 지원/허용하지 않는다. 과거 실험의 최초 시계/누적 사용량/판정은 보존한다.
+<a id="상한중단복구"></a>
+[상한중단복구](../research/input-and-memory/experiments/EX-051-jev-v2-battle.md#상한중단복구)
 
-## 완료·평가·해석
-
-예정2·시도/정상완료/실패/미실행/미확정, 판단 진단·승패·턴·호출/token/지연·자동선택을 보고한다.
-수정 선봉 상태·테라·PP를 자기 요청/검증된 초기 규칙과 대조하고 전수 공식 cutoff/입력/슬롯 전송을 감사한다.
-정상완료2/2·감사·한국어 보고·C-047의 exports/battle_viewers/ex051·봉인·정리가 완료 기준이다.
-설명 정확성·전략 최적성은 미평가(기본 제외). 응답 확률은 배틀 승률이 아니다.
-두 경기 승패를 과거와 비교해 입력 교정의 인과적 효능이나 L1-L5 성능 향상을 주장하지 않는다.
-
-## 결과·종료
-
-정상완료2/2·JEV1승1패, 150요청/응답·152전송(자동2).
-선봉 상태/48PP 및 공식 cutoff 입력·전송 전수 감사, 보고·뷰어·봉인·정리 완료.
-현재 실행/감시 없음. [최종 보고](../exec-plans/evidence/ep071/report.md),
-[경기별 뷰어](../../exports/battle_viewers/ex051/index.html). 효능/승패 인과는 미평가다.
+<a id="완료평가해석"></a>
+[완료평가해석](../research/input-and-memory/experiments/EX-051-jev-v2-battle.md#완료평가해석)

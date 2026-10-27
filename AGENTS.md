@@ -6,14 +6,14 @@
 분리된 checkout·환경·출력·자료 열람 순서는
 [현재 연구선 매뉴얼](project_context/RESEARCH_MANUAL.md)을 따른다.
 
-- 구현·실험 전 [exec-plan 색인](project_context/exec-plans/INDEX.md)과 범위가 겹치는 모든
-  `active/` plan을 확인한다. 실행 중/중단 보존 표시는 읽기·승인 요건을 면제하지 않는다.
+- 구현·실험 전 [계획 색인](project_context/catalog/plans.md)과 범위가 겹치는 모든
+  등록 plan(Active·Blocked·Paused 포함)을 확인한다. 실행 중/중단 보존 표시는 읽기·승인 요건을 면제하지 않는다.
 - 승인·질문·중단·완료는 [INDEX 공통 기준](project_context/INDEX.md#workflow)을 따른다.
-  active 밖의 TODO·roadmap·plan은 legacy evidence이며 현재 작업으로 상속하지 않는다.
+  등록·승인 밖의 TODO·roadmap·plan은 legacy evidence이며 현재 작업으로 상속하지 않는다.
 - 연구 방법·hypothesis·평가 기준·treatment·해석 규칙 변경 전
-  [RESEARCH_DESIGN.md](project_context/RESEARCH_DESIGN.md)를 읽는다.
-- 문서의 원문 소유·갱신 범위·한국어 규범은 INDEX를 따른다. 현재 상태가 바뀌면 관련
-  개별 plan·색인·STATUS를 필요한 범위에서 갱신한다. 이 라우터에 이력·정책값을 복제하지 않는다.
+  [RESEARCH_DESIGN.md](project_context/RESEARCH_DESIGN.md)와 해당 주제의 `DESIGN.md`를 읽는다.
+- 문서의 원문 소유·갱신 범위·한국어 규범은 INDEX를 따른다. 원문은 목적별 폴더에 두고 상태 변경으로 이동하지 않는다.
+  현재 상태가 바뀌면 개별 plan과 필요한 STATUS를 갱신하고 `scripts/context-catalog build`·`check`로 색인을 동기화한다. 이 라우터에 이력·정책값을 복제하지 않는다.
 
 하위 디렉터리의 구체적 지시도 적용한다. Python agent subtree는
 [AgenticSTS/AGENTS.md](AgenticSTS/AGENTS.md)의 coding·testing·safety 및 `Agent Usage`를 따르되,

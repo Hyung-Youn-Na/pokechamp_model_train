@@ -1,6 +1,9 @@
-# D-064 — 교정 B2 개선 선봉 비교
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-16
+원문: [D-064](../research/lead-policy/decisions/D-064-corrected-lead.md)
 
-현재 사용자가 제공한 계획을 EX-043의 구현·검증·수집·감사·보고 승인으로 채택한다. 조건·한도·판정 원문은 [EX-043](../experiments/EX-043-corrected-lead.md)다. C-033/034/037/038/040과 EP-051 입력 교정을 적용하고, EX-042 전용 경계를 별도 EX-043 실행 identity로 확장한다. 과거 봉인·판정은 바꾸지 않는다. 배틀 schema/계산 의미 변경은 없다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-064--교정-b2-개선-선봉-비교"></a>
+[d-064--교정-b2-개선-선봉-비교](../research/lead-policy/decisions/D-064-corrected-lead.md#d-064--교정-b2-개선-선봉-비교)

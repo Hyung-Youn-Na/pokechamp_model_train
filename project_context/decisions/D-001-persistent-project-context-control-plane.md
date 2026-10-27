@@ -1,35 +1,27 @@
-# D-001 — Persistent project-context control plane 수립
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태 (Status): 채택 (Accepted)
-- 날짜 (Date): 2026-09-04
+원문: [D-001](../shared/governance/decisions/D-001-persistent-project-context-control-plane.md)
 
-## 맥락 (Context)
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-사용자가 사람과 coding agent가 공유하는 장기 design, implementation, experiment 작업용
-persistent context를 repository에 추가하라고 명시적으로 지시했다.
+<a id="d-001--persistent-project-context-control-plane-수립"></a>
+[d-001--persistent-project-context-control-plane-수립](../shared/governance/decisions/D-001-persistent-project-context-control-plane.md#d-001--persistent-project-context-control-plane-수립)
 
-## 결정 (Decision)
+<a id="거절한-대안-rejected-alternatives"></a>
+[거절한-대안-rejected-alternatives](../shared/governance/decisions/D-001-persistent-project-context-control-plane.md#거절한-대안-rejected-alternatives)
 
-[`../INDEX.md`](../INDEX.md)가 안내하는 authority hierarchy와 work/experiment lifecycle을 갖춘
-`project_context/`를 사용한다. Root [`AGENTS.md`](../../AGENTS.md)는 간결하게 유지하고
-substantive work를 이곳으로 routing한다.
+<a id="결정-decision"></a>
+[결정-decision](../shared/governance/decisions/D-001-persistent-project-context-control-plane.md#결정-decision)
 
-## 거절한 대안 (Rejected Alternatives)
+<a id="근거-rationale"></a>
+[근거-rationale](../shared/governance/decisions/D-001-persistent-project-context-control-plane.md#근거-rationale)
 
-기록 없음. Directory 구조와 hierarchy는 사용자가 명시적으로 지시했다.
+<a id="맥락-context"></a>
+[맥락-context](../shared/governance/decisions/D-001-persistent-project-context-control-plane.md#맥락-context)
 
-## 근거 (Rationale)
+<a id="영향-consequences"></a>
+[영향-consequences](../shared/governance/decisions/D-001-persistent-project-context-control-plane.md#영향-consequences)
 
-현재 context는 README, 날짜가 있는 reference document, archived plan, source, experiment
-artifact에 분산되어 있다. 작은 authority-aware layer를 두면 그 evidence를 재작성하지 않고도
-충돌과 active work를 드러낼 수 있다.
-
-## 영향 (Consequences)
-
-미래의 substantive work는 이 directory를 먼저 확인하고, lower-level work에 맞추려고
-higher-authority context를 변경하지 않으며, bounded exec plan과 evidence가 연결된 experiment
-record를 사용한다.
-
-## 증거 (Evidence)
-
-2026-09-04 초기화 task의 명시적 사용자 지시와 그 task에서 추가한 파일.
+<a id="증거-evidence"></a>
+[증거-evidence](../shared/governance/decisions/D-001-persistent-project-context-control-plane.md#증거-evidence)

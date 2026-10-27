@@ -1,15 +1,15 @@
 # 프로젝트 헌장 — 모델 학습 연구선 (Project Charter)
 
 이 브랜치 `research/model-training`의 최상위 목표는 **포켓몬 배틀 전용 모델의 학습·정책 개선과
-독립 평가**다. [D-131](decisions/D-131-research-branch-preservation.md)의 사용자 지시에 따라 `/workspace`를 주 개발 checkout과 기존 실행
+독립 평가**다. [D-131](shared/governance/decisions/D-131-research-branch-preservation.md)의 사용자 지시에 따라 `/workspace`를 주 개발 checkout과 기존 실행
 환경으로 유지한다. L1–L5 구조 이식 연구는 별도 `research/l1-l5-port`에서 보존·후속 설계한다.
 공통 기준선·외부 자산·출력·복원 절차는 [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)를 따른다.
 
 **Authority:** 이 브랜치의 프로젝트 목적과 기본 invariant에 대한 최상위 원문이다.
 연구선 분리는 기존 ADR·EX·동결 protocol·봉인·Blocked/Paused 판정을 바꾸지 않는다.
-분리 기반 구성의 범위·검증은 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)에서 관리한다.
-[D-132](decisions/D-132-jev27b-four-gpu-continuation.md)로 승인한 독립 평가 계승의 완료 근거는
-[EP-137](exec-plans/completed/EP-137-jev27b-four-gpu-continuation.md)에서 관리한다.
+분리 기반 구성의 범위·검증은 [EP-135](shared/governance/plans/EP-135-research-branch-preservation.md)에서 관리한다.
+[D-132](research/model-evaluation/decisions/D-132-jev27b-four-gpu-continuation.md)로 승인한 독립 평가 계승의 완료 근거는
+[EP-137](research/model-evaluation/plans/EP-137-jev27b-four-gpu-continuation.md)에서 관리한다.
 
 ## 프로젝트 목표 (Project Goal)
 
@@ -28,34 +28,9 @@ LAYA-RLCD·EVE-RLCD·RLCD-Lite의 기존 환경과 Qwen·Kev·고정 대진 탐�
 
 ### 당면 목표
 
-공통 Git 기준선·보존 태그·목적 문서·worktree·외부 자산 복사와 검증은
-[EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)에서 완료했다.
-후속 학습·정책 개선의 조건은 새 범위에서 정한다. EX-082의 정상 결과를 보존한
-EX-083 독립 평가 계승과 [D-133](decisions/D-133-quyet-medium-two-stage.md)의
-[EX-084](experiments/EX-084-quyet-medium-two-stage.md) Quyet 2단계 고정 대진 평가를 완료했으며
-[D-134](decisions/D-134-jev9b-single-choice.md)의
-[EX-085](experiments/EX-085-jev9b-single-choice.md) JEV-9B 단일 Choice 동일32 평가도 완료했다.
-[D-135](decisions/D-135-jev-public-memory-v6.md)의
-[EP-140](exec-plans/active/EP-140-jev-public-memory-v6.md)의 상대 공개 정보 v6·턴 로그와
-JEV-27B/9B 평가는 공유 입력 결함으로 중단했다. CPU교정·부분 기록/뷰어·봉인/자원 반환은
-완료했으나64경기 목표는 미달이며 자동재개하지 않는다. 기존 입력·평가 자료·봉인은 보존한다.
-[D-136](decisions/D-136-jev-v6-corrected-evaluation.md)의 명시적 사용자 재승인에 따라
-[EP-141](exec-plans/completed/EP-141-jev-v6-corrected-evaluation.md)에서 교정본을 별도EX-088/089로
-새64경기 평가하고 감사·비교·뷰어·봉인·반환까지 완료했다. 과거 실행의 상태·성적·봉인은
-새 평가와 구분하며 후속 실행은 승인 범위에 포함하지 않는다.
-[D-137](decisions/D-137-jev9b-no-damage.md)의 별도 사용자 지시에 따라
-[EP-143](exec-plans/completed/EP-143-jev9b-no-damage.md)에서 피해 예측 제거·스피드 유지
-[EX-090](experiments/EX-090-jev9b-no-damage.md)와 EX-089 비교를 완료했다.
-기존 결과·범위는 보존하며 추가 실험은 별도 승인과 등록을 따른다.
-[D-138](decisions/D-138-minicpm5-2b-jev.md)의 현재 사용자 지시에 따라
-[EP-144](exec-plans/completed/EP-144-minicpm5-2b-jev.md)에서 MiniCPM5-2B-Jev의
-계산기 포함 새32경기와 EX-089 비교·감사·뷰어·봉인·GPU0/알람 반환을 완료했다.
-조건·결과·해석은 EX-091에 두며 추가 실행은 별도 승인과 등록을 따른다.
-기존 [D-096](decisions/D-096-pokemon-training-objective.md)의 학습 목표와
-[D-112](decisions/D-112-imitation-self-play-objectives.md)의 모방 학습·정책 개선 방향,
-[D-119](decisions/D-119-fixed-matchup-mcts.md) 이후 고정 공개 상태 연구는 후속 설계의 근거다.
-EX-079·EX-080의 완료 결과와 기존 중단 결과를 각각의 조건·해석 범위에서 유지하며
-어떤 과거 실행도 이 분리 작업으로 재개하지 않는다.
+현재 진행·중단·완료는 [STATUS](STATUS.md)와 [계획 상태 색인](catalog/plans.md)에서 확인한다.
+연구 질문별 이력과 적용 범위는 [연구 목록](research/INDEX.md)을 따른다.
+후속 학습·평가 조건은 명시적으로 등록한 D·EP·EX에서 정하며 과거 실험을 자동 재개하지 않는다.
 
 ## 범위 (Scope)
 

@@ -1,29 +1,18 @@
-# EP-074 — JEV v3 기본 지식·효과 사전
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-21
-- 승인: 현재 사용자 계획 구현 지시 및 추가 제공한 GENERATION 9 SINGLES MECHANICS 원문
-- 관련: [D-082](../../decisions/D-082-jev-v3-effects.md), C-045, EX-052
+원문: [EP-074](../../research/input-and-memory/plans/EP-074-jev-v3-effects.md)
 
-## 범위·불변 조건
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-새 기본 jev-choice-v3에 사용자 지식 원문·요청별 gen9-effects-v1 사전을 추가하고 모델 입력의
-current_pp_source만 재귀 제거한다. PP 값·이유·검증, 관측·후보·명령·choice-action-v3를 유지한다.
-v1/v2와 EX-051/052 원자료·봉인·뷰어를 보존한다. EP-062/064의 Blocked 범위를 확인했으며 재개하지 않는다.
-외부 API·새 배틀·성능 평가0인 구현·오프라인 작업으로 실험 복구 규칙은 해당 없음.
+<a id="ep-074--jev-v3-기본-지식효과-사전"></a>
+[ep-074--jev-v3-기본-지식효과-사전](../../research/input-and-memory/plans/EP-074-jev-v3-effects.md#ep-074--jev-v3-기본-지식효과-사전)
 
-## 완료 기준
+<a id="검증진행"></a>
+[검증진행](../../research/input-and-memory/plans/EP-074-jev-v3-effects.md#검증진행)
 
-- [x] 버전 분리·원문 추가·JEV 전용 수집기·실패 폐쇄·외부 감사 provenance
-- [x] EX-052 저장 1,085입력 재생성·허용 차이만 존재·PP/상대 정보/명령 보존
-- [x] 선봉/일반/강제 교체·과거 재현·미해석/손상 회귀 검증
-- [x] 전후 예시·문자/byte 증가량 보고·관련 현재 문서 동기화
+<a id="범위불변-조건"></a>
+[범위불변-조건](../../research/input-and-memory/plans/EP-074-jev-v3-effects.md#범위불변-조건)
 
-## 검증·진행
-
-구현 전 등록. 원문은 후속 사용자 메시지로 확보했다.
-
-최종 관련172검사 통과. EX-052 1,085입력 v2 정확 재현·v3 허용 차이 전수 대조,
-v1 공식 재생175입력 감사와 EX-051/052 보존1,092파일 검증을 완료했다.
-[보고·전후 예시·증가량](../evidence/ep074/report.md), [검사](../evidence/ep074/tests.log).
-API·새 배틀0. 현재 실행·감시 없음.
+<a id="완료-기준"></a>
+[완료-기준](../../research/input-and-memory/plans/EP-074-jev-v3-effects.md#완료-기준)

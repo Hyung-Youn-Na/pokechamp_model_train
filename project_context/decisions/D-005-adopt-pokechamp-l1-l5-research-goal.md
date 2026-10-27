@@ -1,44 +1,27 @@
-# D-005 — `pokechamp` 대상 L1-L5 적용 연구 목표 채택
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태 (Status): 채택 (Accepted)
-- 날짜 (Date): 2026-09-04
+원문: [D-005](../research/l1-l5-port/decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md)
 
-## 맥락 (Context)
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-[`D-002`](D-002-reset-research-direction.md)는 상속된 연구 방향을 reset하고, 사용자가 새 목표를
-명시할 때까지 project goal을 `TBD`로 두었다. 사용자는 현재 프로젝트의 최상위 연구 목표를
-AgenticSTS의 L1-L5 메모리 구조를 `pokechamp`에 적용하여 성능 개선을 시도하는 것으로
-명시했다.
+<a id="d-005--pokechamp-대상-l1-l5-적용-연구-목표-채택"></a>
+[d-005--pokechamp-대상-l1-l5-적용-연구-목표-채택](../research/l1-l5-port/decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md#d-005--pokechamp-대상-l1-l5-적용-연구-목표-채택)
 
-## 결정 (Decision)
+<a id="거절한-대안-rejected-alternatives"></a>
+[거절한-대안-rejected-alternatives](../research/l1-l5-port/decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md#거절한-대안-rejected-alternatives)
 
-AgenticSTS의 L1-L5 계층형 메모리/컨텍스트 구조를 `pokechamp`에 적용하고 그 적용을 통한 성능
-개선을 시도하는 것을 최상위 연구 목표로 채택한다. AgenticSTS는 이전할 구조의 reference이며,
-`pokechamp`는 적용 및 성능 평가 대상이다.
+<a id="결정-decision"></a>
+[결정-decision](../research/l1-l5-port/decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md#결정-decision)
 
-이 결정은 layer별 대응, code 재사용 범위, baseline, performance metric, hypothesis, 성공 기준
-또는 evaluation protocol을 확정하지 않는다. 이 항목들은 구현이나 실험 전에
-[`../RESEARCH_DESIGN.md`](../RESEARCH_DESIGN.md)와 bounded exec plan에서 별도로 정의한다.
+<a id="근거-rationale"></a>
+[근거-rationale](../research/l1-l5-port/decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md#근거-rationale)
 
-## 거절한 대안 (Rejected Alternatives)
+<a id="맥락-context"></a>
+[맥락-context](../research/l1-l5-port/decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md#맥락-context)
 
-기록 없음 (None recorded). 목표는 사용자가 명시적으로 지정했다.
+<a id="영향-consequences"></a>
+[영향-consequences](../research/l1-l5-port/decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md#영향-consequences)
 
-## 근거 (Rationale)
-
-상위 목표를 target system, 적용할 구조와 의도한 outcome 방향으로 명확히 구분하면 이후 설계와
-구현이 legacy AgenticSTS roadmap을 자동 승계하지 않으면서도 동일한 연구 목적을 따를 수 있다.
-성능 개선을 검증된 사실이 아닌 평가할 목표로 기록하면 evidence 없이 efficacy를 주장하는 것도
-방지한다.
-
-## 영향 (Consequences)
-
-[`D-002`](D-002-reset-research-direction.md)의 legacy plan 제외 결정은 계속 유효하지만, 새 연구
-목표가 `TBD`였던 조건은 해소된다. [`../CHARTER.md`](../CHARTER.md),
-[`../RESEARCH_DESIGN.md`](../RESEARCH_DESIGN.md), [`../STATUS.md`](../STATUS.md)는 이 목표와
-정합해야 한다. 구체적인 구현 또는 실험은 아직 승인된 active work가 아니며 별도 설계와 exec
-plan이 필요하다.
-
-## 증거 (Evidence)
-
-2026-09-04의 명시적 사용자 지시.
+<a id="증거-evidence"></a>
+[증거-evidence](../research/l1-l5-port/decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md#증거-evidence)

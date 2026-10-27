@@ -1,11 +1,9 @@
-# D-072 — JEV 확률 합계 검사 제거
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-21
-- 승인: 현재 사용자의 합계 검사 과잉 및 근사 오류 지적.
+원문: [D-072](../research/model-evaluation/decisions/D-072-jev-probability-validation.md)
 
-JEV 응답의 개별 확률·confidence 범위, 후보 키 일치와 최상위 선택을 검증하고 합계는
-수락 조건으로 삼지 않는다. 원래 확률 값을 보존하며 재정규화하지 않는다.
-새 검증 identity는 choice-values-v2다. 합계1±1e-4를 요구했던 EX-047은
-choice-sum-v1로 당시 판정·봉인을 보존한다. 구현 원문은 C-045, 검증은 EP-063이다.
-실제 배틀 재개·추가 API 호출은 포함하지 않는다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-072--jev-확률-합계-검사-제거"></a>
+[d-072--jev-확률-합계-검사-제거](../research/model-evaluation/decisions/D-072-jev-probability-validation.md#d-072--jev-확률-합계-검사-제거)

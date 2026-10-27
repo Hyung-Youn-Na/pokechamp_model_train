@@ -1,19 +1,9 @@
-# D-102 — EX-063 후보 실행 후 상태 평가 개선
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-29
-- 승인: 사용자 EX-063 개선 요청, 첫 구현 기존 계산기 활용 선택, 계획 구현 지시
+원문: [D-102](../research/action-value/decisions/D-102-qwen-candidate-state.md)
 
-기존 정보의 누락이나 모델 내부 고려 부재를 원인으로 확정하지 않고, 결정별 행동 순서와
-상태 변화 연결을 개선 가설로 채택한다. 별도 입력 버전, 공통 해석＋결정별 지침,
-동일 고정 모델의 별도 중간 상태 진단, 저장 관측 3조건 개발 비교를 구현한다.
-지원 가능한 계산은 코드가 처리하고 미지원은 unknown과 사유로 제공한다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-기존 q 타깃·A/B readout·최댓값 선택·합법 명령 계약은 유지한다. 진단 결과는 q 입력과
-전송 경로에 되먹이지 않으며 진단 정확성과 후보 순위 변화를 분리한다.
-원자료·당시 실패/정정·가중치·학습 renderer·기존 프로필을 보존한다.
-새 배틀·재학습·독립 승률 평가는 이번 범위 밖이다.
-
-방법·해석은 RESEARCH_DESIGN, runtime은 CONTRACTS, 실행 조건은
-[EX-064](../experiments/EX-064-qwen-candidate-state.md), 진행은
-[EP-106](../exec-plans/completed/EP-106-qwen-candidate-state.md)이 소유한다.
+<a id="d-102--ex-063-후보-실행-후-상태-평가-개선"></a>
+[d-102--ex-063-후보-실행-후-상태-평가-개선](../research/action-value/decisions/D-102-qwen-candidate-state.md#d-102--ex-063-후보-실행-후-상태-평가-개선)

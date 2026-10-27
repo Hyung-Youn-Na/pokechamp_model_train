@@ -1,25 +1,21 @@
-# D-168 — 후보별 상성 요약 OpenAI 동일32경기
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-20
+원문: [D-168](../research/input-and-memory/decisions/D-168-openai-candidate-matchup-battle.md)
 
-## 맥락·승인
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-사용자가 제공한 「후보별 상성 요약을 적용한 gpt-6-luna 32경기 실험」 계획의 구현·검증·실행을 명시 요청했다.
-EX110의 16승16패와 EP182의 오프라인 검증을 근거로 새 처치를 탐색한다.
+<a id="d-168--후보별-상성-요약-openai-동일32경기"></a>
+[d-168--후보별-상성-요약-openai-동일32경기](../research/input-and-memory/decisions/D-168-openai-candidate-matchup-battle.md#d-168--후보별-상성-요약-openai-동일32경기)
 
-## 결정
+<a id="거절한-대안"></a>
+[거절한-대안](../research/input-and-memory/decisions/D-168-openai-candidate-matchup-battle.md#거절한-대안)
 
-[EX-112](../experiments/EX-112-openai-candidate-matchup-battle.md)의 사전 protocol을 채택한다.
-기반 v6와 candidate-matchup-v1을 분리해 동결하고 같은 대진32경기를 새 출력에서 실행한다.
-EX110의 지속 재시도를 재사용하며 추가 기준선/유료 장면 비교·자동 보충·오염 재수집은 없다.
+<a id="결정"></a>
+[결정](../research/input-and-memory/decisions/D-168-openai-candidate-matchup-battle.md#결정)
 
-## 근거·영향
+<a id="근거영향"></a>
+[근거영향](../research/input-and-memory/decisions/D-168-openai-candidate-matchup-battle.md#근거영향)
 
-사용자가 승인한 처치만 추가하며 모델의 합법 원선택을 바꾸지 않는다. 과거 실행을 재개하지 않는다.
-실행시점/모델변동/경기전개/개발대진의 한계를 둔 탐색 비교이며 인과효과를 주장하지 않는다.
-구현·검증·종결은 [EP-183](../exec-plans/active/EP-183-openai-candidate-matchup-battle.md)에서 관리한다.
-
-## 거절한 대안
-
-새 기준선 경기·유료 장면 비교는 승인 범위 밖이다.
+<a id="맥락승인"></a>
+[맥락승인](../research/input-and-memory/decisions/D-168-openai-candidate-matchup-battle.md#맥락승인)

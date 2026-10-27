@@ -1,71 +1,24 @@
-# EX-060 — EX-058 battle-19 분기 데이터 추출
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 등록일: 2026-09-28
-- 승인: 사용자 계획 구현 지시 / D-097 / EP-101
+원문: [EX-060](../research/action-value/experiments/EX-060-single-battle-branch-rollouts.md)
 
-## 대상·질문
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-원자료 `.pokechamp-data/jev/ex058-live`, battle-19 / b02-r3-s0,
-우리 p2 팀2, 상대 p1 팀6. 원경기12턴·JEV 패배·22결정(선봉1/일반12/교체9), 후보167개.
-봉인 source·팀·simulator와 game seed `64650,46273,35382,36029`,
-actor seeds p1 `964798779`, p2 `2142274391`로 JEV 저장 명령22개와 Abyssal을 재생한다.
-새 JEV 호출0. 원 관측·request·후보·terminal과 대조 후에만 snapshot을 수집한다.
-재현 실패를 같은 팀 새 경기로 대체하지 않는다.
+<a id="ex-060--ex-058-battle-19-분기-데이터-추출"></a>
+[ex-060--ex-058-battle-19-분기-데이터-추출](../research/action-value/experiments/EX-060-single-battle-branch-rollouts.md#ex-060--ex-058-battle-19-분기-데이터-추출)
 
-RQ: 원경기 각 결정에서 행동을 바꾸고 이후 양측이 동일 Abyssal로 플레이할 때,
-후보별 승무패·평균점수와 원선택 대비 차이가 어떻게 관측되는가?
-첫 데이터 생성기 검증이며 확증 가설·성능 향상 claim은 없다.
+<a id="결과"></a>
+[결과](../research/action-value/experiments/EX-060-single-battle-branch-rollouts.md#결과)
 
-## 동결 수집 조건
+<a id="결함복구"></a>
+[결함복구](../research/action-value/experiments/EX-060-single-battle-branch-rollouts.md#결함복구)
 
-- 원경기22개 결정만 root로 사용. 모든 후보167개×32회=5,344개 예정 후속 경기.
-- 자기 선봉6개, 나머지 벤치 원순서. 상대 전체 preview 순서는 반복별 actor RNG로 생성.
-- 정상 턴은 양측 제출 전 barrier; 중간 교체는 이미 확정된 choice/queue를 보존.
-- 후속 양측 Abyssal을 독립 actor 상태로 실행. 과거 JEV 행동열은 분기 후 재사용하지 않음.
-- 실전 관측 입력에 자기 정보·상대 공개 정보만 제공. private snapshot/상대세트/미래 seed는 모델 입력에서 제외.
-- master seed20260928; root·반복·simulator/actor namespace에서 seed 파생, 후보 ID 제외.
-  원재현 seed는 유지하며 분기 이후 난수만 새로 배정. 같은 반복의 후보에 공통 seed를 사용한다.
-- 수집 worker4, 분기당 추가300턴 또는120초. 검열·오류는 패배/무승부로 대체하지 않음.
-- 최초 실제 재현/시뮬레이션 시작부터 누적4시간, 마지막15분은 정리·보고.
-  검증·복구 포함 분기 시도6,000개 상한. 코드 작성/순수 fixture 단위검사는 이 수집 시계 밖이다.
-- 첫 선봉/일반/교체 검증과 처리량 확인 후 본수집. 반복 수·후반 root를 조용히 줄이지 않음.
-- API0·학습0·재귀 분기0·새 팀0. canonical submodule·원자료·과거 source 불변.
+<a id="대상질문"></a>
+[대상질문](../research/action-value/experiments/EX-060-single-battle-branch-rollouts.md#대상질문)
 
-## 분석·완료
+<a id="동결-수집-조건"></a>
+[동결-수집-조건](../research/action-value/experiments/EX-060-single-battle-branch-rollouts.md#동결-수집-조건)
 
-각(state, action, replicate)의 win/draw/loss/censored/error를 보존한다.
-32회가 모두 정상 종료한 후보의 p_win 및 Wilson95%구간, q=(W+0.5D)/32와
-원선택 대비 대응 평균점수 차이를 산출한다. 미완료 후보가 있는 root는 순위 미확정이다.
-최고 표본평균과 확정 최선을 구분하고 확정 최선 판정은 하지 않는다. 후보 값의 합은1이 아니다.
-한 경기의 root/반복을 독립 일반화 표본으로 집계하지 않는다.
-
-완료: 원경기 재현·22root/167후보 coverage·예정5,344분기 분모/결과 원장·입력 격리 감사·
-원자료 보존·학습용 통계 내보내기·C-047 오프라인 뷰어/리플레이·봉인/자원 정리.
-검열/실패/미실행을 분리하고 완료되지 않은 수집을 목표 달성으로 표시하지 않는다.
-고정 숨은 상태·후속 Abyssal 조건의 privileged teacher 값이며 기존 Abyssal의
-일반 경로 테라 미사용 한계를 기록한다. 원대진은 개발용이며 독립 평가에서 제외한다.
-
-## 결함·복구
-
-RD11.1/C-018 적용. 원재현·격리·공유 runner 결함은 의존 수집을 중지한다.
-원자료를 보존하고 새 source version에서 교정·독립 회귀 후 영향 root 전체 후보×32 단위로
-1회만 재수집할 수 있다. 최초 시계/6,000상한은 재설정하지 않는다. 자동 branch 재시도0.
-상한 부족·원재현 불가·입력 무결성 미해결이면 미완료 보고하며 조건을 완화하지 않는다.
-
-## 결과
-
-예정5,344/5,344분기 정상 종료, 승1,024·무0·패4,320, 오류/검열/미실행/누락0.
-22개 결정·167개 행동 모두32회 통계가 완성됐다. 재현3회·검증22회를 포함한 누적 시도는
-5,369/6,000회이며 최초 재현부터 봉인·정리 확인까지45.9분으로4시간 한도를 지켰다.
-원경기·253개 suffix 결정 경계·원자료345파일·trace5,344개·학습 입력·뷰어 감사 통과.
-API/실제 모델 학습0. 현재 실행·감시 프로세스0.
-
-학습 파일은 고유 관측22행이며 후보 간 q 차이가 있는 상태11개, 단일 후보2개,
-모든 후보32회 패배 상태9개다. 이 기술 요약으로 확정 최선이나 학습 효과를 주장하지 않는다.
-초기 성별/room leave 도구 결함의 교정과 원자료 보존 근거는
-[최종 보고](../exec-plans/evidence/ep101/report.md)를 따른다.
-
-[뷰어](../../exports/battle_viewers/ex060/index.html) ·
-[학습용 통계](../../exports/battle_viewers/ex060/training.jsonl) ·
-[원자료 manifest](../../.pokechamp-data/rollouts/ex058-b19-rollout-v1/manifest.json).
+<a id="분석완료"></a>
+[분석완료](../research/action-value/experiments/EX-060-single-battle-branch-rollouts.md#분석완료)

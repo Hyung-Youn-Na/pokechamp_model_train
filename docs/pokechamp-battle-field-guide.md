@@ -9,12 +9,12 @@
 ## 보존된 v1.3.0 설명·사전
 
 명시적 legacy 새 B 준비는 v1.3.0을 선택한다. B2와 선봉에도 실제 전송 구조 설명과 요청별 상세 효과 사전을 추가했다. 아래 v1.1/v1.2 기록과 자산은 보존한다.
-선봉의 추가 타입/기술/가능성 필드는 [D-061 규칙 안내](../integration/pokechamp/lead_rules/rules-guide.txt), 적용/보존 경계는 [C-040](../project_context/CONTRACTS.md#c-040-lead-components)을 따른다.
+선봉의 추가 타입/기술/가능성 필드는 [D-061 규칙 안내](../integration/pokechamp/lead_rules/rules-guide.txt), 적용/보존 경계는 [C-040](../project_context/research/lead-policy/CONTRACTS.md#c-040-lead-components)을 따른다.
 
 [상세 계약·생성법](../integration/pokechamp/effects/README.md) · [검증 보고](../project_context/exec-plans/evidence/ep046/report.md)
 
 
-보존된 계산 의미 설명서의 근거는 [D-035](../project_context/decisions/D-035-calculator-input-audit.md)의 v1.2.0이다.
+보존된 계산 의미 설명서의 근거는 [D-035](../project_context/research/input-and-memory/decisions/D-035-calculator-input-audit.md)의 v1.2.0이다.
 [새 fields.json](../integration/pokechamp/improved_io/prompts/battle-v1.2.0/fields.json)과
 [provenance](../integration/pokechamp/improved_io/prompts/battle-v1.2.0/provenance.json)는
 calculator-input-v2의 Pokémon 소비 이력·타입/테라·phase·진입 HP/아이템·damage_variants·해시를
@@ -22,7 +22,7 @@ calculator-input-v2의 Pokémon 소비 이력·타입/테라·phase·진입 HP/�
 아래 D-031의 설명서 구성 원리는 새 버전에도 적용된다.
 [검증·지원 경계](../project_context/exec-plans/evidence/ep023/report.md)를 함께 따른다.
 
-[D-031](../project_context/decisions/D-031-battle-field-guide.md)의 행동 v1.1.0은 요약 없는
+[D-031](../project_context/research/input-and-memory/decisions/D-031-battle-field-guide.md)의 행동 v1.1.0은 요약 없는
 `io-battle-only-v1` B에서 입력 필드의 의미를 설명한다. 기술·특성·아이템의 효과 사전이나
 장면 정답·추천 행동은 추가하지 않는다. 기존 policy 및 출력 계약은 그대로 결합한다.
 
@@ -83,7 +83,7 @@ Pinned PokéChamp `0f84c460319ebe733f8c3028e58a2a5452c60d85`, Showdown
 [test_battle_field_guide.py](../integration/pokechamp/tests/test_battle_field_guide.py)는
 15장면 사용자 입력 불변·선택적 분기·누락/추가 필드 음성 검사·pinned 수치 의미·실제
 worker/actor 무네트워크 요청·버전/해시 거부·과거 receipt를 검증한다. 전체 회귀와
-새 fake32 결과·보존·정리 증거는 [EP-019](../project_context/exec-plans/completed/EP-019-battle-field-guide.md)에 연결한다.
+새 fake32 결과·보존·정리 증거는 [EP-019](../project_context/research/input-and-memory/plans/EP-019-battle-field-guide.md)에 연결한다.
 
 현재 시스템 입력은 72,980자/72,992 UTF-8 bytes이며 기존 대비 매 행동 요청당
 64,751자/64,759 bytes 증가한다. 사용자 JSON 크기는 그대로이며 입력별 총량은 준비의

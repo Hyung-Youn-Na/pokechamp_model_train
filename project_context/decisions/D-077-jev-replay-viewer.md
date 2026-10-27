@@ -1,10 +1,9 @@
-# D-077 — 내보내기 뷰어에 배틀 리플레이 포함
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-21
-- 승인: 사용자 EX-046처럼 배틀 리플레이도 함께 열람 요청
+원문: [D-077](../shared/viewers/decisions/D-077-jev-replay-viewer.md)
 
-C-047의 내보내기에 경기별 리플레이·입력/응답 동시 열람을 포함한다.
-공식 Showdown 외부 애니메이션 자산을 사용하고 오프라인 protocol fallback을 제공한다.
-EX-050은 봉인 원자료에서 별도 생성하며 실험 재실행·판정 변경은 없다.
-[EP-068](../exec-plans/completed/EP-068-jev-replay-viewer.md)에서 구현·검증한다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-077--내보내기-뷰어에-배틀-리플레이-포함"></a>
+[d-077--내보내기-뷰어에-배틀-리플레이-포함](../shared/viewers/decisions/D-077-jev-replay-viewer.md#d-077--내보내기-뷰어에-배틀-리플레이-포함)

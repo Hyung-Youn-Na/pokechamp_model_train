@@ -1,22 +1,15 @@
-# D-045 — 전체 Cloud 기본 동시성 8
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-13
-- 승인: 현재 사용자가 전체 Cloud 경로 및 기본값만8(명시9·10 허용)을 선택하고 계획 구현을 지시했다.
+원문: [D-045](../shared/execution/decisions/D-045-cloud-concurrency-default8.md)
 
-## 결정
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-새 병렬 실행의 배틀·계정·모델 요청 기본값은 각각8이다. 순차 조건은1이며 명시적인1–10 설정을 우선한다.
-기존 execution schema/range와 기존 실험 정책 identity/hash는 유지한다.
-새 기본설정은 `execution.evidence.concurrency_policy=cloud-default8-v1`을 봉인한다.
-이 표식은 기존 실험 정책 중 동시성의 고정10을 새로 봉인한 execution 값으로 대체하는 근거이며,
-나머지 처치·예산·시계·gate 표본·실패·복구 규칙을 바꾸지 않는다. 표식 없는 과거 설정은 원래 계약으로 검증한다.
-Cloud gate/요청 검증은 새 선언의1/8을 기본 비교로 사용하고, 보고는 해당 선언에서 동시성을 읽는다.
-별도 동시성 측정 실험의 명시적인1–10 조건과 provider 한도에 관한 과거 관측값은 변경하지 않는다.
+<a id="d-045--전체-cloud-기본-동시성-8"></a>
+[d-045--전체-cloud-기본-동시성-8](../shared/execution/decisions/D-045-cloud-concurrency-default8.md#d-045--전체-cloud-기본-동시성-8)
 
-## 이유와 한계
+<a id="결정"></a>
+[결정](../shared/execution/decisions/D-045-cloud-concurrency-default8.md#결정)
 
-EX-037의 B ReadTimeout3건 후 사용자가 기본 병렬 부하를 낮추기로 결정했다.
-병렬도가 timeout 원인이라는 인과 결론이나8에서 해결됐다는 주장은 없다.
-EP-033은 코드·문서·무네트워크 검증만 수행한다. 기존 EX-037과 모든 Blocked·원자료·봉인을 보존하고,
-새 유료 실험이나 과거 실험 재개를 승인하지 않는다.
+<a id="이유와-한계"></a>
+[이유와-한계](../shared/execution/decisions/D-045-cloud-concurrency-default8.md#이유와-한계)

@@ -1,9 +1,9 @@
-# D-073 — JEV 수정본2경기 재실행
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-21
-- 승인: 현재 사용자의 실패했던2경기 재진행 지시.
+원문: [D-073](../research/model-evaluation/decisions/D-073-jev-repeat.md)
 
-D-072의 확률 합계 검사를 제거한 choice-values-v2로 EX-048을 새로 실행한다.
-기존 팀·대진·선봉·prompt·상한을 유지하고 새 실행 identity/출력/원장/시계를 사용한다.
-EX-047의 실패·원자료·봉인은 보존한다. 조건 원문은 EX-048이다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-073--jev-수정본2경기-재실행"></a>
+[d-073--jev-수정본2경기-재실행](../research/model-evaluation/decisions/D-073-jev-repeat.md#d-073--jev-수정본2경기-재실행)

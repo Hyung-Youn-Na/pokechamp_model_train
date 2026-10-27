@@ -1,13 +1,9 @@
-# D-162 — 학습 Tacit의 실전32 예약
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-19
+원문: [D-162](../research/rule-learning/decisions/D-162-tacit-ruleqa-battle32.md)
 
-현재 사용자가 취침 중 시간 활용을 위해 학습 모델32경기 실전 테스트 예약을 요청했다.
-[EX-108](../experiments/EX-108-tacit-ruleqa-battle32.md)을 EX-107과 별도 신규 실험으로 등록한다.
-선택·test·어댑터 재로딩 성공 후 기존 Abyssal32대진에서 평가하고 원응답·대체·승패·뷰어를 보존한다.
-외부LLM·추가학습·미학습 기반32경기는 포함하지 않는다. 규칙학습의 실전 개선을 단독승률로 입증하지 않는다.
-사용자 응답 전 기본 판단방식은 비Thinking·짧은근거이며 선택 선호가 오면 동결 전에 반영한다.
-구현·예약은 [EP-176](../exec-plans/completed/EP-176-tacit-ruleqa-battle32.md), 실행조건은 EX-108을 따른다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-- 사용자 후속 지시: 취침 전 필요한 모든 조건을 권장값으로 설정하도록 명시했다. 비Thinking·학습모델단독·Abyssal32·GPU1·외부API0의 권장값을 확정한다. 추가 확인을 기다리지 않는다.
+<a id="d-162--학습-tacit의-실전32-예약"></a>
+[d-162--학습-tacit의-실전32-예약](../research/rule-learning/decisions/D-162-tacit-ruleqa-battle32.md#d-162--학습-tacit의-실전32-예약)

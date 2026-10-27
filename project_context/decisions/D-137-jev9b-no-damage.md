@@ -1,18 +1,9 @@
-# D-137 — JEV-9B 피해 예측 제거 평가
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- Status: Accepted
-- Date: 2026-10-14
-- 승인: 현재 사용자가 제공한 계획의 구현·검증·새32경기 실행 지시
+원문: [D-137](../research/input-and-memory/decisions/D-137-jev9b-no-damage.md)
 
-완료된 EX-089를 기준선으로 보존하고 피해 예측 정보와 해당 필드 설명만 제거한
-`jev-choice-v6-no-damage`를 별도 처치로 추가한다. 관측 정규화·추천 세트 필터와
-스피드 비교를 유지하고 양방향 피해 시나리오 생성·실행을 건너뛴다. 계산 후 숨기기는 채택하지 않는다.
-기본 능력치·기술 위력·타입표·공개 정보·역할·턴 로그·일반 피해/배틀 규칙은 유지한다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-모델·정책·대진·seed·환경·자원 한도는 EX-089와 같다. 단독 새32경기/16쌍이며
-기존 결과는 비교에만 쓴다. 입력 길이·경기 진행의 변화도 기록하고 고정 대진 탐색으로 해석한다.
-추가 모델·후속 코호트·재경기·자동 재개는 승인하지 않는다.
-
-조건·검증·분모·해석 원문은 [EX-090](../experiments/EX-090-jev9b-no-damage.md),
-runtime은 [C-068](../CONTRACTS.md#c-068-jev-no-damage), 진행은
-[EP-143](../exec-plans/active/EP-143-jev9b-no-damage.md)이다. 기존 버전·봉인·중단 상태는 보존한다.
+<a id="d-137--jev-9b-피해-예측-제거-평가"></a>
+[d-137--jev-9b-피해-예측-제거-평가](../research/input-and-memory/decisions/D-137-jev9b-no-damage.md#d-137--jev-9b-피해-예측-제거-평가)

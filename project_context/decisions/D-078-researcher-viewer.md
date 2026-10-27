@@ -1,9 +1,9 @@
-# D-078 — 실험자 중심 입력·응답 뷰어
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-21
-- 승인: 실험자가 확인할 수 있도록 가독성을 고려한 뷰어 구성 요청
+원문: [D-078](../shared/viewers/decisions/D-078-researcher-viewer.md)
 
-C-047 내보내기는 입력 요청·응답·실제 선택을 우선 표시하고 기술 기록은 별도 영역에 둔다.
-실제 전송 객체를 기록으로 복원하면 출처를 명시하며 미호출을 요청처럼 표시하지 않는다.
-현재 EX-050 적용과 검증은 [EP-069](../exec-plans/completed/EP-069-researcher-viewer.md)을 따른다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-078--실험자-중심-입력응답-뷰어"></a>
+[d-078--실험자-중심-입력응답-뷰어](../shared/viewers/decisions/D-078-researcher-viewer.md#d-078--실험자-중심-입력응답-뷰어)

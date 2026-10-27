@@ -4,9 +4,10 @@
 이 문서는 두 연구선의 공통 경로·Git 연결·보존 시점·복원 방법을 안내하며, 실험 규범은
 [INDEX](INDEX.md#workflow)와 해당 RD/CONTRACTS/EP/EX에 유지한다.
 
-[D-131](decisions/D-131-research-branch-preservation.md)에 따라 연구 목적과 실행 위치를
-분리한다. 원본 소스·실험·환경은 삭제하거나 이동하지 않는다. 분리 검증의 원문은
-[EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)다.
+[D-131](shared/governance/decisions/D-131-research-branch-preservation.md)에 따라 연구 목적과 실행 위치를
+분리한다. D-131 당시 원본 소스·실험·환경의 보존 경계는 유지한다.
+D-170으로 현재 문서의 목적별 재배치만 허용하며 외부 snapshot·run·환경은 이동하지 않는다. 분리 검증의 원문은
+[EP-135](shared/governance/plans/EP-135-research-branch-preservation.md)다.
 
 <a id="checkouts"></a>
 
@@ -22,7 +23,7 @@
 브랜치들은 같은 실행 코드·submodule pin에서 출발한다. 프롬프트·JEV·학습·AgenticSTS
 구성은 유지한다. 별도 L1–L5 worktree는 실제 Git checkout이며 `/workspace` 코드로 향하는
 symlink가 아니다. 이 worktree에 실행용 가상환경·자격증명·GPU lock을 구성하지 않는다.
-현재 실행 여부는 각 checkout의 [STATUS](STATUS.md#active-work)와 [plan 색인](exec-plans/INDEX.md)을
+현재 실행 여부는 각 checkout의 [STATUS](STATUS.md#active-work)와 [계획 색인](catalog/plans.md)을
 확인한다. 기존 Blocked/Paused plan과 EX의 당시 판정·동결 protocol은 유지하며, 연구선 분리는
 재개 또는 실험 완료를 뜻하지 않는다.
 
@@ -42,7 +43,7 @@ symlink가 아니다. 이 worktree에 실행용 가상환경·자격증명·GPU 
 worktree들이 공유하지만 현재 L1–L5 브랜치는 별도 원격을 추적하지 않는다. 다른 branch·tag의
 게시 범위는 원격 이름만으로 확대하지 않고 사용자 지시를 따른다.
 
-새 [EP](exec-plans/TEMPLATE.md)·[EX](experiments/TEMPLATE.md)는 기준 연구선과 실제 branch,
+새 [EP](templates/plan.md)·[EX](templates/experiment.md)는 기준 연구선과 실제 branch,
 commit/미커밋 변경, checkout·interpreter, 새 출력 위치, 원자료·보존 manifest를 구분해 기록한다.
 기존 ID와 기록은 유지하고 새로운 번호 체계를 만들지 않는다. 같은 ID가 다른 연구선에 보일 때는
 출처 branch·commit을 함께 확인하여 동일 실행이나 별도 실험이라고 임의로 판단하지 않는다.
@@ -170,6 +171,5 @@ PYTHONDONTWRITEBYTECODE=1 scripts/pokechamp-fixed-matchup status --directory "$P
 
 ## 알려진 후속 항목
 
-`integration/qwen_mcts/prepare.py`는 EP-132 문서를 `exec-plans/active/`에서 찾지만 실제
-문서는 `completed/`에 있다. 이번에는 원 코드와 알려진 불일치를 보존한다. 코드 삭제·공통화,
-이 경로 수정, 환경 재설치, 과거 실험 재개는 별도 후속 범위다.
+EP-132의 active/completed 문서 경로 불일치는 D-170에서 등록 ID 조회로 교정했다.
+기존 동결 소스·protocol과 과거 봉인은 유지한다. 환경 재설치·과거 실험 재개는 별도 범위다.

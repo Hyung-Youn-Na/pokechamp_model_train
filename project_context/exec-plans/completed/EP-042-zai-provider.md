@@ -1,33 +1,21 @@
-# EP-042 — Z.ai 배틀 공급자 연결 및 환경 구성
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-14
-- 책임자: Codex
-- 승인 근거: 현재 사용자가 제공한 Z.ai 구현 계획 전체. 실제 API 호출은 제외한다.
-- 관련: [D-054](../../decisions/D-054-zai-provider.md), [C-034](../../CONTRACTS.md#c-034-provider)
+원문: [EP-042](../../shared/execution/plans/EP-042-zai-provider.md)
 
-## 목표·범위·불변 조건
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-Parent integration의 공통 배틀 backend, CLI, 일반/B2 준비·실행, 비밀 마스킹 및 로컬 환경을 변경한다.
-모델 glm-5.3-flash, 게임/대진 seed와 기존 출력 검증·복구 정책은 유지한다.
-기존 active EP-011/012/013/015/018/020/030/032/035/041의 중단·봉인·예산은 보존하고 재개하지 않는다.
-canonical submodule과 과거 source/artifact는 변경하지 않는다. 새 연구 방법·처치·평가 변경은 없다.
-비실험 구현 작업이므로 복구·재수집·실험 시계는 해당 없다. 외부 API 요청·유료 호출0이다.
+<a id="ep-042--zai-배틀-공급자-연결-및-환경-구성"></a>
+[ep-042--zai-배틀-공급자-연결-및-환경-구성](../../shared/execution/plans/EP-042-zai-provider.md#ep-042--zai-배틀-공급자-연결-및-환경-구성)
 
-## 완료 기준
+<a id="결과최종-검증"></a>
+[결과최종-검증](../../shared/execution/plans/EP-042-zai-provider.md#결과최종-검증)
 
-- [x] Z.ai 설정·전송 및 일반/B2 경로 연결, 누락/불일치 사전 차단
-- [x] 공급자·endpoint·전송 옵션·응답/reasoning/미확정 사용량 기록, 양쪽 키 비노출
-- [x] 모의 HTTP·실패/무재시도·Ollama/봉인 호환 회귀와 변경 범위 정적 검사
-- [x] .env 0600·기존값 보존, 사용법·계약·구조·상태 갱신 및 한계 안내
+<a id="목표범위불변-조건"></a>
+[목표범위불변-조건](../../shared/execution/plans/EP-042-zai-provider.md#목표범위불변-조건)
 
-## 진행·검증
+<a id="완료-기준"></a>
+[완료-기준](../../shared/execution/plans/EP-042-zai-provider.md#완료-기준)
 
-2026-09-14: 상위 계약·겹치는 active plan과 공식 Z.ai API 원문 확인, 구현 전 등록.
-검증 결과와 완료 판정은 이 문서에 기록한다. 중단·완료는 [INDEX](../../INDEX.md#workflow)를 따른다.
-
-## 결과·최종 검증
-
-2026-09-14 구현·무API 검증 완료. [최종 보고서](../evidence/ep042/report.md)와
-[검증·보존 감사](../evidence/ep042/verification.json)에 범위·명령·개발 중 교정·한계를 기록했다.
-실제 API 호출0, 계정 모델 지원·연결 성공·효능은 미검증이다. 기존 중단 실험과 봉인 자료는 보존했다.
+<a id="진행검증"></a>
+[진행검증](../../shared/execution/plans/EP-042-zai-provider.md#진행검증)

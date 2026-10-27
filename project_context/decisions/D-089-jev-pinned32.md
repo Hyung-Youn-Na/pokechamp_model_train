@@ -1,11 +1,9 @@
-# D-089 — jev-1.13.0 고정 새 본실험
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-21
-- 승인: 현재 사용자의 모델 설정 변경·새 실험 ID·즉시 본실험 지시
+원문: [D-089](../research/input-and-memory/decisions/D-089-jev-pinned32.md)
 
-EX-056 HTTP400 이후 사용자가 명시 모델 jev-1.13.0으로 변경한 새 EX-057 본실험을 승인했다.
-나머지 조건은 EX-056와 같으며 사전 테스트/모의/probe/첫4 특별점검을 생략한다.
-새32경기·새6시간·10/30/60초 재시도·요청/금액 별도 상한 없음·복구/재수집0이다.
-조건은 [EX-057](../experiments/EX-057-jev-pinned32.md), 진행은 [EP-081](../exec-plans/completed/EP-081-jev-pinned32.md)을 따른다.
-모델명 고정이 공급자 오류를 해결한다고 가정하지 않는다. EX-056 및 과거 중단/봉인은 보존한다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-089--jev-1130-고정-새-본실험"></a>
+[d-089--jev-1130-고정-새-본실험](../research/input-and-memory/decisions/D-089-jev-pinned32.md#d-089--jev-1130-고정-새-본실험)

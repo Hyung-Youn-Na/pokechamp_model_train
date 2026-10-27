@@ -1,27 +1,18 @@
-# EP-072 — 뷰어 단축키·상대 HP 비율 표시
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-21
-- 승인: 사용자 뷰어 다음 턴 단축키와 상대 HP 백분율 반영 요청
-- 관련: C-047, D-078, EX-051; active EP-062/064 확인(중단 보존)
+원문: [EP-072](../../shared/viewers/plans/EP-072-viewer-navigation-hp.md)
 
-## 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-JEV 뷰어 템플릿·생성기와 현재 EX-051 내보내기의 탐색/요약 표시를 개선한다.
-좌우 방향키로 이전/다음 결정을 탐색하며 폼·탭 키 조작과 충돌하지 않게 한다.
-상대 HP는 공개 비율로 표시하고 미공개는 미확인으로 유지한다. 자기 HP·원본 JSON은 보존한다.
-이전 EX-051 내보내기는 별도 보존하고 새 내보내기 provenance/checksum을 갱신한다.
-EX-050 내보내기·모든 실험 원자료/source/manifest/판정/봉인은 변경하지 않는다.
-API·배틀·실험 재개0; RD8.1의 설명 평가 기본 제외. 비실험이므로 재수집/시계 해당 없음.
+<a id="ep-072--뷰어-단축키상대-hp-비율-표시"></a>
+[ep-072--뷰어-단축키상대-hp-비율-표시](../../shared/viewers/plans/EP-072-viewer-navigation-hp.md#ep-072--뷰어-단축키상대-hp-비율-표시)
 
-## 완료 기준
+<a id="범위"></a>
+[범위](../../shared/viewers/plans/EP-072-viewer-navigation-hp.md#범위)
 
-- [x] 단축키·경계·폼/탭 충돌 방지, 공개 HP 비율/미확인 구분 구현
-- [x] EX-051 두 경기 오프라인 브라우저 검증·원본 JSON/봉인 보존 확인
-- [x] 한국어 안내·보고·상태 갱신
+<a id="완료-기준"></a>
+[완료-기준](../../shared/viewers/plans/EP-072-viewer-navigation-hp.md#완료-기준)
 
-## 진행·증거
-
-- 2026-09-21 — 읽기 경로·계약·active plan 확인 후 등록.
-- 2026-09-21 — 구현·EX-051 재생성·152결정 오프라인 브라우저 대조·637파일 보존 확인 완료.
-- [최종 보고](../evidence/ep072/report.md), [검증](../evidence/ep072/viewer-verification.json).
+<a id="진행증거"></a>
+[진행증거](../../shared/viewers/plans/EP-072-viewer-navigation-hp.md#진행증거)

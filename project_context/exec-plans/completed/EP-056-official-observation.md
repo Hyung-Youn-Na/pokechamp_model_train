@@ -1,42 +1,21 @@
-# EP-056 — 공식 클라이언트 관측의 B/B2 운영 통합
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-17
-- 책임자: Codex
-- 승인 근거: 현재 사용자가 제공한 구현 계획 전체. 유료 호출·과거 실험 재개 제외.
-- 관련: [D-066](../../decisions/D-066-official-observation.md), [C-043](../../CONTRACTS.md#c-043-official-observation)
+원문: [EP-056](../../research/input-and-memory/plans/EP-056-official-observation.md)
 
-## 목표와 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-Gen9 OU singles B/B2 모델 입력과 피해 계산이 같은 공식 관측을 사용하도록 구현한다.
-EP-055의 고정 클라이언트·현재 서버를 유지하고 actor별 Node/battle별 상태, 행 경계,
-request 슬롯 기반 후보와 실제 제출, provenance를 연결한다. upstream/Abyssal/C와 과거 봉인은 보존한다.
-겹치는 모든 active plan은 중단 보존 자료로 확인했으며 재개하지 않는다.
+<a id="ep-056--공식-클라이언트-관측의-bb2-운영-통합"></a>
+[ep-056--공식-클라이언트-관측의-bb2-운영-통합](../../research/input-and-memory/plans/EP-056-official-observation.md#ep-056--공식-클라이언트-관측의-bb2-운영-통합)
 
-## 완료 기준
+<a id="검증중단"></a>
+[검증중단](../../research/input-and-memory/plans/EP-056-official-observation.md#검증중단)
 
-- [x] 운영 증분 추적·전체 재생 일치·공식 빌드/의존성/Dex 해시 검증
-- [x] 자기 request/세트·공식 공개 상태·동일 원문의 보완 이력을 단일 정규화→prior→계산→B/B2 전달로 연결
-- [x] EP-055 양측100결정(선봉 별도)의 전수 재생 및 실제 문자열 연결
-- [x] Magic Bounce, 미공개 특성, HP, 아이템, Protect, Court Change, hazard, terrain, Future Sight, 테라/기절·미지원 변신 독립 회귀
-- [x] 외국 요청·미래 행·동일 턴 교체·actor 격리·프로세스/timeout/정리·빌드 불일치 회귀
-- [x] 팀6/12 진영 교환 무유료2경기, 결정적 모의 응답으로 선봉/계산/전송/제출 확인
-- [x] Python/Node 및 B/B2·계산·전달·봉인 회귀, 한국어 보고/viewer·지연/메모리 보고
-- [x] 검증 완료 후 새 준비 기본값·실행 검증 연결과 운영 문서/STATUS 갱신
+<a id="목표와-범위"></a>
+[목표와-범위](../../research/input-and-memory/plans/EP-056-official-observation.md#목표와-범위)
 
-## 검증·중단
+<a id="완료-기준"></a>
+[완료-기준](../../research/input-and-memory/plans/EP-056-official-observation.md#완료-기준)
 
-오프라인 도구 수정/반복 재생은 허용한다. 로컬 경기당 최초 시작부터600초, 각 경기1시도,
-자동 재경기0, 실패 원자료 보존·소유 자원 정리. 기술 IO 검증이며 전략 설명 평가/효능 평가는 아니다.
-공식 오류·경계 불일치·필수 상태 누락은 입력 중단이며 legacy 자동 fallback은 없다.
-필수 빌드 검사를 생략하거나 완료 기준 미달이면 Completed/default 전환을 하지 않는다.
-INDEX 공통 기준·RD11.1/C-018을 따른다. 과거 원자료/봉인/중단 판정은 수정하지 않는다.
-
-## 진행
-
-- 2026-09-17 — 원문·관련 active plan 확인, 구현 전 등록. 상세 검증은 새 evidence/ep056에 보존한다.
-
-- 공식 운영 모듈·행 경계·숫자 슬롯·v1.4/B2 전달을 구현했다. 오프라인100 경계 및 실제 로컬2경기(25.33/26.79초·재경기0) 전송/행동 감사를 통과했다. 전체 회귀·최종 기본값 전환·새 준비/과거 호환 검증을 완료했으며 [보고서](../evidence/ep056/report.md)에 근거를 연결한다.
-
-- 최종 고정 source로100경계(일반96·선봉4) 재생·원본/구현 해시 보존 확인. 전체1318개 검사와 중복 포함 관련139개·기본값298개 통과, 공식 실제 빌드 검사 생략0. 최종 최근 창 행 좌표·조합 오류 거부·기본값 변경은 독립 회귀·31회 연속 모의 입력으로 확인했다. 로컬 실행 소스와 후속 변경은 보고서에서 구분한다.
-- 새 B/B2 기본값 official-client-v1·v1.4.0/B2 b2-official-v1 적용, 명시적 legacy/과거 EX 버전 보존. 운영/ARCHITECTURE/STATUS/계약 및 viewer 갱신. 유료 호출·과거 실행 재개·재경기0. 효능 미평가.
+<a id="진행"></a>
+[진행](../../research/input-and-memory/plans/EP-056-official-observation.md#진행)

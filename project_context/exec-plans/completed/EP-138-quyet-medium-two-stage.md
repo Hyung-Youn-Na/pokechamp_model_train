@@ -1,63 +1,24 @@
-# EP-138 — Quyet-Medium 2단계 정책 동일32 평가
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-10-13
-- 책임자: Codex
-- 승인: 현재 사용자 제공 계획의 구현·검증·실행 지시 / D-133
-- 원문: [EX-084](../../experiments/EX-084-quyet-medium-two-stage.md), C-065, RD11.1/C-018·RD11.2/C-046·C-047
-- 기준/실제 branch: `research/model-training`; 시작 `a4659bf298c7935714f9fbd25246db2d831c5926`, 미커밋 변경 없음
-- checkout `/workspace`; 환경/출력/참조 구분은 EX-084 참조
+원문: [EP-138](../../research/model-evaluation/plans/EP-138-quyet-medium-two-stage.md)
 
-## 목표·범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-새 integration/quyet·scripts/quyet·관련 검사/문서에서2단계 정책·전용 서빙·새32경기·
-EX-083 대응 비교·감사/뷰어를 완성한다. 기존 관측·Abyssal·일정·리플레이 자산을 재사용한다.
-INDEX/CHARTER·매뉴얼·RD/C·EP-134 및 겹치는 보존 EP-127/126/125/119/108/103/
-080/077/075/064/062의 범위와 중단 경계를 확인했다. 과거 실행 재개·기존 환경 변경0이다.
-세부 조건·한도·검증/분모·복구·해석은 EX-084 원문을 따른다.
+<a id="ep-138--quyet-medium-2단계-정책-동일32-평가"></a>
+[ep-138--quyet-medium-2단계-정책-동일32-평가](../../research/model-evaluation/plans/EP-138-quyet-medium-two-stage.md#ep-138--quyet-medium-2단계-정책-동일32-평가)
 
-## 완료 기준
+<a id="결과-및-증거"></a>
+[결과-및-증거](../../research/model-evaluation/plans/EP-138-quyet-medium-two-stage.md#결과-및-증거)
 
-- [x] D-133/C-065/EP-138/EX-084 등록
-- [x] 공식 모델 manifest 대조·코드/환경 pin
-- [x] 2단계 정책·전송/취소·집계·감사·뷰어 구현 및 CPU 검사
-- [x] 본 서버1회 적재·최대9회 사전 추론
-- [x] 새 유효32경기·16쌍·경기별 감사·EX-083 비교
-- [x] 원문 전수 내보내기·표본 오프라인 검사·봉인·자원 반환·보고
+<a id="목표범위"></a>
+[목표범위](../../research/model-evaluation/plans/EP-138-quyet-medium-two-stage.md#목표범위)
 
-## 진행·검증
+<a id="완료-기준"></a>
+[완료-기준](../../research/model-evaluation/plans/EP-138-quyet-medium-two-stage.md#완료-기준)
 
-- 2026-10-13 — 승인 범위를 등록했다. 시작 checkout/submodule clean, GPU0–3 유휴 확인.
-  Quyet 코드 pin과 기존 JEV 환경 경로를 확인했다. 새 GPU 추론/배틀0이다.
+<a id="진행검증"></a>
+[진행검증](../../research/model-evaluation/plans/EP-138-quyet-medium-two-stage.md#진행검증)
 
-- 공식16파일9,342,833,441바이트를 지정 revision으로 받았고 Hub LFS/Git identity와 공식
-  MANIFEST15항목을 한 번 대조했다. CPU76검사 통과, 대표9요청 무절단 길이14,660–21,276토큰이다.
-  새 GPU 추론/배틀0이며 최종 실행기·감사/뷰어 연결 검증을 진행한다.
-
-- 모델/출력/기존 참조를 함께 센 디스크 사용량은67.706GiB로 한도 내다. 추가된 산출물/자원
-  및 정책31검사와 뷰어 JavaScript 구문 검사를 통과했다. 전체 소스를 고정하고 실행기에서
-  CPU 전체 검사→본 서버 단일 적재→최대9회 검증→조건부32경기를 진행한다.
-
-- 고정 source CPU81검사와 본 서버1회 적재·GPU9요청을 통과했다. 텍스트32층의 실제
-  8/8/8/8배치·공유 embedding/head GPU0·BF16을 확인했고21,276토큰 반복 후 allocated 동일·
-  reserved 비증가다. 같은 서버에서 새32슬롯 수집을 시작했다. 원문은 EX-084 출력
-  `evidence/entry-gates.json`·`gates/`·`serving/loaded.json`이다.
-
-- 새32경기·16쌍의 수집과 경기별1회 감사를 완료했다. 감사 기록의 완전성·독립 산술·서버
-  원장 집계를 확인했고 모든 경기/단계 원문 내보내기·이동 후 대표3화면의 오프라인 검증을 통과했다.
-  원자료·수집 source·GPU검증9회는 그대로다. 결과·사용량·비교 원문은 EX-084/최종 보고를 따른다.
-- 종료 후 로그 한 줄이 최초 봉인 뒤 기록되는 순서 결함을 확인했다. 원 봉인2,952항목을
-  대조해 로그 prefix까지 일치하고 다른2,951파일이 불변임을 확인했다. 원 봉인과 수집 소스를
-  보존하고 쓰기 종료 뒤 최종2,963파일 봉인을 교정했다. 현재 코드의 순서·라이선스 사본 연결을
-  교정해 관련CPU6검사를 통과했고 추가GPU추론·재경기0이다. GPU0–3·잠금·포트 반환을 완료했다.
-
-## 차단·중단
-
-[INDEX](../../INDEX.md#workflow)와 EX-084를 따른다. 필요한 검증만 수행하며 CPU/도구
-국소 교정과 본수집/모델 gate 실패를 구분한다. 중단 시 미충족 기준과 실제 분모를 보존한다.
-
-## 결과 및 증거
-
-승인된 구현·검증·새32경기·감사/비교·뷰어·봉인/자원 반환을 완료했다.
-[최종 보고](../evidence/ep138/report.md) · [완료/봉인 연결](../evidence/ep138/completion.json) ·
-[뷰어](../../../exports/battle_viewers/ex084/index.html).
+<a id="차단중단"></a>
+[차단중단](../../research/model-evaluation/plans/EP-138-quyet-medium-two-stage.md#차단중단)

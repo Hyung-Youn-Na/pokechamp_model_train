@@ -1,49 +1,27 @@
-# EX-047 — JEV Choice 소규모 배틀 진단
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Incomplete
-- 날짜: 2026-09-21
-- 승인: 현재 사용자 계획 구현 지시 / D-071 / EP-062
+원문: [EX-047](../research/model-evaluation/experiments/EX-047-jev-battle.md)
 
-## 질문·조건
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-간결한 공식 관측과 합법 후보를 받은 JEV가 선봉부터 정상 종료까지 행동을 선택하는가?
-Gen9 OU singles, jev-choice-v1, TYPESAFE_MODEL 설정(기본 jev-latest), Abyssal 규칙 봇.
-팀 ID1/2, 첫 경기 JEV p1/team1·Abyssal p2/team2, 둘째 JEV p2/team2·Abyssal p1/team1.
-게임 seed 18280,52471,51036,2470, Python/NumPy seed100. 동일 순차 실행에서 RNG 경과를 기록한다.
-최근 완료3턴 공개 이벤트, 상세 계산/효과 사전/상대 세트 prior/요약/외부 메모리0.
-선봉6후보, 기술·테라기술·교체 전체 합법 후보 choice, 단일 후보는 무호출 실행.
+<a id="ex-047--jev-choice-소규모-배틀-진단"></a>
+[ex-047--jev-choice-소규모-배틀-진단](../research/model-evaluation/experiments/EX-047-jev-battle.md#ex-047--jev-choice-소규모-배틀-진단)
 
-## 검증·실행·상한
+<a id="검증실행상한"></a>
+[검증실행상한](../research/model-evaluation/experiments/EX-047-jev-battle.md#검증실행상한)
 
-오프라인/모의 HTTP/로컬2경기·관련 회귀를 통과한 소스와 prompt를 동결한다.
-실제2경기·총300요청·최초 API 요청부터1800초 중 먼저 도달한 상한에서 중단한다.
-선봉·실패·미확정 요청도 합산한다. HTTP min(60초,잔여시간), 동시성1,
-별도 유료 probe/재시도/대체 행동/재경기0. 별도 monetary cap은 지정하지 않았다.
-로컬 검증은 별도 출력 경로, 외부 호출0이며 실제 경기 분모에 넣지 않는다.
+<a id="결과종료"></a>
+[결과종료](../research/model-evaluation/experiments/EX-047-jev-battle.md#결과종료)
 
-## 오류·복구
+<a id="실행-진입"></a>
+[실행-진입](../research/model-evaluation/experiments/EX-047-jev-battle.md#실행-진입)
 
-공급자/입력/출력/실행/무결성 첫 오류에 전체 수집 중단. RD11.1/C-018의 원자료 보존·영향
-조사는 적용하되 이번 진단의 유료 복구·재수집은0이다. 재시작으로 상한을 초기화하지 않는다.
-상한/오류 종료는 승패로 간주하지 않고 미완료로 보고한다. 정리는 수집 시계 밖에서 수행한다.
+<a id="오류복구"></a>
+[오류복구](../research/model-evaluation/experiments/EX-047-jev-battle.md#오류복구)
 
-## 측정·완료
+<a id="질문조건"></a>
+[질문조건](../research/model-evaluation/experiments/EX-047-jev-battle.md#질문조건)
 
-예정2·시도·완료·실패·미실행, 승패, 요청별 입력/원응답/확률/선택/실제 전송 일치,
-호출/token/지연·자동 선택 수를 보고한다. 응답 확률은 배틀 승률이 아니다.
-두 경기 정상 종료·전수 행동 감사·한국어 보고/viewer·봉인·정리까지 완료 기준이다.
-설명 정확성·전략 최적성은 미평가(기본 제외). 성능 우위·L1-L5 효능 claim은 없다.
-
-## 실행 진입
-
-EP-062 verification.json으로 최종 소스·프롬프트·오프라인/로컬 검증을 동결했다. 유료 추가 probe0, 실제 선봉 요청부터 최초 시계와300요청 상한을 시작한다.
-
-## 결과·종료
-
-jev-1.13.0의 실제17요청/17응답·16전송 후 첫 경기14턴에서 확률합0.99가 동결된
-합1 허용오차1e-4에 미달해 중단했다. 선택 자체는 합법 최상위후보였고 미전송으로 보존했다.
-예정2/시도1/정상완료0/실패1/미실행1. 재시도/보충/재경기0, 입력103018/출력2232 tokens,
-평균 응답0.963초. 실제 입력17개 재생·16전송 일치·거부 무전송·봉인·정리 완료.
-확률 반환 정밀도와 검증 허용오차의 호환성은 후속 확인 사항이며 전략 오류로 해석하지 않는다.
-[최종 보고](../exec-plans/evidence/ep062/report.md), [정리 및 감사](../exec-plans/evidence/ep062/closure.json).
-실행 source·입력·응답·기준·중단은 보존하고 실제 실험을 재개하지 않았다.
+<a id="측정완료"></a>
+[측정완료](../research/model-evaluation/experiments/EX-047-jev-battle.md#측정완료)

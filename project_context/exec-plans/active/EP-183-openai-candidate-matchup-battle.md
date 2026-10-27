@@ -1,48 +1,21 @@
-# EP-183 — 후보별 상성 요약 OpenAI 32경기
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Blocked
-- 생성일: 2026-10-20
-- 승인: 현재 사용자 제공 실험 계획의 구현·검증·실행 요청
-- 원문: D-168 / EX-112 / C-081 및 C-079·통신 C-080 / RD11.1·11.2
-- 연구선/checkout: research/model-training /workspace; 시작 commit a4659bf298c7935714f9fbd25246db2d831c5926
-- 기존 미커밋 변경을 보존하고 새 integration/openai_decisions_matchup_battle 및 공유 실행기의 명시 프로필 연결만 수정한다.
-- 환경/출력/예산/복구/분모: [EX112](../../experiments/EX-112-openai-candidate-matchup-battle.md)
+원문: [EP-183](../../research/input-and-memory/plans/EP-183-openai-candidate-matchup-battle.md)
 
-## 범위·확인
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-INDEX/CHARTER/매뉴얼/STATUS·plan색인·관련 EP140/179의 중단보존을 확인했다.
-기존 중단실험을 재개하지 않으며 EP182 요약/규칙 원본을 수정하지 않는다.
-주 에이전트는 실행/감사/등록/통합을 담당하고 독립 분석기 구현·검토는 별도 파일에 위임한다.
+<a id="ep-183--후보별-상성-요약-openai-32경기"></a>
+[ep-183--후보별-상성-요약-openai-32경기](../../research/input-and-memory/plans/EP-183-openai-candidate-matchup-battle.md#ep-183--후보별-상성-요약-openai-32경기)
 
-## 완료 기준
+<a id="결과보존"></a>
+[결과보존](../../research/input-and-memory/plans/EP-183-openai-candidate-matchup-battle.md#결과보존)
 
-- [x] 실행기/프로필·출처/감사/HTTP·동결 판정기 연결 및 추가검사
-- [x] 실제API0 모의2경기 수집/감사/내보내기
-- [ ] 새 유효32경기·16쌍 전수감사
-- [x] 비교·차단선택 전사례 검토·오프라인뷰어·봉인·소유자원반환
+<a id="범위확인"></a>
+[범위확인](../../research/input-and-memory/plans/EP-183-openai-candidate-matchup-battle.md#범위확인)
 
-## 진행·검증
+<a id="완료-기준"></a>
+[완료-기준](../../research/input-and-memory/plans/EP-183-openai-candidate-matchup-battle.md#완료-기준)
 
-2026-10-20 사용자 승인 등록, 구현 전. EP182의19검사/43엔진장면/976입력 보존은 변경 없는 범위에 재사용한다.
-실행조건·재수집0·시간/요청상한 없음·미완료 보고는 EX112 원문을 따른다.
-
-- 관련 EP062/064/075/077/080/134의 중단·보존 경계도 확인했다.
-- 새연결과 기존 통신/격리 22검사 통과. EP182 rules/adapter/source identity 일치 확인으로 기존 검증 재사용.
-- 추가 분석기와 수집전 동결 준비 중. 실제 API0·본경기0.
-
-- 분석기8검사와 기준선15/71·16승16패 재현 완료. 새연결22검사와 합계30검사 통과.
-- 모의2경기·175결정·실제API0의 경기별/최종감사 및 내보내기 통과. 오프라인 브라우저검증 진행.
-
-- 이동후 오프라인4대표·원본복원/요약탭·JSON 다운로드 검사 통과. 본수집 전 최종동결.
-
-## 결과·보존
-
-- 본수집32시도·유효31경기·15쌍으로32/16 완료 기준 미달. 슬롯22의 HTTP200 refusal 응답은
-  C046에 따라 해당 경기 출력실패이며 전송/재질의/보충0. 이후독립경기를 모두 시도했다.
-- 32시도 경기별/최종 감사, 913결정 뷰어·이동후 오프라인4대표·실제거부/재시도2사례를 검증했다.
-- 동일 동결 판정기 비교 및 차단선택 전사례 검토, 원자료/뷰어 봉인·소유 PID/8109 반환을 완료했다.
-- 유효 분모 부족으로 Blocked를 active/에 보존한다. 중단 종결을 목표달성으로 바꾸지 않는다.
-- 관련 병행 EP184는 독립 JevK5 학습 package/GPU 작업이며 본실험 소스·소유자원과 분리됨을 확인했다.
-
-[최종보고](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/report.md) · [종결](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/completion.json) ·
-[뷰어](../../../exports/battle_viewers/ex112/index.html). 실험별 상세 성적/사용량/한계는 EX112와 보고서가 소유한다.
+<a id="진행검증"></a>
+[진행검증](../../research/input-and-memory/plans/EP-183-openai-candidate-matchup-battle.md#진행검증)

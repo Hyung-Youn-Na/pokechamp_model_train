@@ -1,5 +1,9 @@
 # PokéChamp의 현재 행동 입력·요약 구조
 
+EX-112의 `jev-choice-v6 + candidate-matchup-v1` 전체 필드와 API 포장 형식은
+[별도 입력 구조 참조](../project_context/research/input-and-memory/EX112_INPUT_STRUCTURE.md)에 정리했다.
+아래 B/B2·JEV 설명은 각 절의 적용 버전을 기준으로 읽는다.
+
 현재 새 B/B2는 [공식 관측 경로](../integration/pokechamp/observation/README.md)를 사용한다.
 모델과 계산은 같은 행 경계의 정규화 관측을 공유하며 v1.4.0/B2 b2-official-v1을 봉인한다.
 이 문서의 기존 parser·요약·과거 실행 설명은 해당 legacy/C 버전의 경계로 읽는다.
@@ -12,11 +16,11 @@
 등장한 항목의 고정 영어 name/desc를 ID별 한 번 제공한다. 사전은 상대 보유·발동의 증거가 아니다.
 모델 payload에는 `current_pp_source`가 없으며 PP 값·이유·검증은 유지한다. 원래 관측/request,
 초기 PP 정책과 사전 identity는 모델 밖 감사 기록이다. v1/v2는 당시 버전으로 재현한다.
-[계약](../project_context/CONTRACTS.md#c-045-jev-battle) · [전후 예시·검증](../project_context/exec-plans/evidence/ep074/report.md)
+[계약](../project_context/research/model-evaluation/CONTRACTS.md#c-045-jev-battle) · [전후 예시·검증](../project_context/exec-plans/evidence/ep074/report.md)
 
 ## 현재 새 준비의 효과 사전
 
-D-061의 새 선봉은 [C-040](../project_context/CONTRACTS.md#c-040-lead-components)에 따라 독립 전략·Dex 규칙을 적용한다. 완성된 기존 입력의 공개 cutoff 뒤에서만 규칙을 보강하며 실제 자기 기술과 종의 가능 목록을 분리한다. [구현/예시](../project_context/exec-plans/evidence/ep050/report.md).
+D-061의 새 선봉은 [C-040](../project_context/research/lead-policy/CONTRACTS.md#c-040-lead-components)에 따라 독립 전략·Dex 규칙을 적용한다. 완성된 기존 입력의 공개 cutoff 뒤에서만 규칙을 보강하며 실제 자기 기술과 종의 가능 목록을 분리한다. [구현/예시](../project_context/exec-plans/evidence/ep050/report.md).
 
 D-057의 B/B2·선봉 요청은 원본을 보존한 모델용 JSON에 effect_reference를 추가한다. 상태/합법 행동/가설/계산 수치와 선봉 공개 cutoff는 유지한다. 아래의 기존 입력·요약 lifecycle 설명에 대한 추가 경계다.
 
@@ -28,8 +32,8 @@ D-057의 B/B2·선봉 요청은 원본을 보존한 모델용 JSON에 effect_ref
 세 prompt의 전체 영어 원문과 파일 해시는 [prompt 원문 부록](pokechamp-prompt-originals.md)에 있다.
 
 여기에 설명하는 B/C 경로는 구현되어 있지만 Cloud 배틀 자격과 48판 비교를 완료하지 못했다.
-[EP-011](../project_context/exec-plans/active/EP-011-improved-io.md)은 요약 gate 실패로,
-[EP-015 / EX-025](../project_context/experiments/EX-025-summary-max-diagnostic.md)는 입력·평가 불일치로
+[EP-011](../project_context/research/input-and-memory/plans/EP-011-improved-io.md)은 요약 gate 실패로,
+[EP-015 / EX-025](../project_context/research/input-and-memory/experiments/EX-025-summary-max-diagnostic.md)는 입력·평가 불일치로
 `Blocked`다. EX-025의 132응답은 전체 무효이고 유효 비교는 0이다. 아래 EX-025 자료는
 **입력 구조와 검증 한계를 설명하는 사례**이며 low/max 효과나 L1-L5 전체의 효능 근거가 아니다.
 현재 상태의 authority는 [STATUS](../project_context/STATUS.md), 입력·출력 경계는
@@ -85,7 +89,7 @@ flowchart TD
 | C | B의 동일 행동 경로 | 10회 행동 선택마다 요약, 요약 3개마다 통합 | 최근 10결정 구간과 최신 요약을 함께 제공; 요약 오류도 중단 |
 
 조건 정의는 [conditions.py](../integration/pokechamp/improved_io/conditions.py)와
-[D-019](../project_context/decisions/D-019-improved-io.md)에 있다. 같은 정책을 쓴다는 뜻과 실험 gate를
+[D-019](../project_context/research/input-and-memory/decisions/D-019-improved-io.md)에 있다. 같은 정책을 쓴다는 뜻과 실험 gate를
 통과했다는 뜻은 다르다. 배틀 간 학습이나 완성된 L1-L5 전체 메모리 계층은 이 경로에 없다.
 
 ## 2. 행동 입력은 어디서 오는가
@@ -151,7 +155,7 @@ Future Sight는 현재 가정 target/field에 대한 지연 피해로 표시하�
 이 절의 두 사례는 **EX-025 사전검증 offline-final-v2의 봉인된 재생 입력**이다. 값·키와 배열
 원소는 실제 입력에서 골랐으며 설명용 새 값을 넣지 않았다. 생략된 필드를 복원하지 않은 JSON은
 실제 전송 가능한 전체 요청이 아니다. 전체 파일 및 옆의 `.sha256`, 같은 디렉터리의
-[source archive](../.pokechamp-data/summary-diagnostics/ex025-preparation/offline-final-v2/source/)로
+[source archive](../.pokechamp-data/summary-diagnostics/ex025-preparation/offline-final-v2/source)로
 당시 입력과 코드를 추적할 수 있다.
 
 [IO-C01 전체](../.pokechamp-data/summary-diagnostics/ex025-preparation/offline-final-v2/IO-C01.json):
@@ -737,11 +741,11 @@ EX-025에는 첫 요약 8입력·후속 10입력·통합 4입력, 합계 22입�
 | 자료 | 위치와 관계 | 모델이 직접 받는가 |
 |---|---|---|
 | 입력·일정·해시 | [manifest.json](../.pokechamp-data/summary-diagnostics/ex025/manifest.json)의 scenes/schedule/files | 이 manifest 전체는 받지 않음 |
-| 입력 wrapper | [inputs/](../.pokechamp-data/summary-diagnostics/ex025/inputs/)의 `context`, `system_prompt`, `user_prompt`, 각 SHA-256 | `system_prompt`와 `user_prompt`의 두 문자열만 받음 |
-| 고정 기억·주장 근거 | [memories/](../.pokechamp-data/summary-diagnostics/ex025/memories/)의 `text`, claims/evidence/review/source hash | 필요한 `text`만 `previous_summary`/`summaries`에 삽입 |
-| 원문 reference·필수 사실 | [references/](../.pokechamp-data/summary-diagnostics/ex025/references/)의 전체 prefix 및 입력별 facts | 평가 기준과 reference 전체를 별도 전달하지 않음 |
-| 전송·응답 evidence | [responses/](../.pokechamp-data/summary-diagnostics/ex025/responses/)의 trace·serialized_request·content·reasoning·usage | 해당 입력으로 생성한 결과; 다음 호출의 입력에 재사용하지 않음 |
-| 가림 검토 | [blinded-reviews/](../.pokechamp-data/summary-diagnostics/ex025/blinded-reviews/)와 [무효화 발견 기록](../.pokechamp-data/summary-diagnostics/ex025/input-evaluation-discovery.json) | 평가용이며 모델 입력이 아님. 초안 126건·960사실판정은 무효, 6응답 미검토 |
+| 입력 wrapper | [inputs/](../.pokechamp-data/summary-diagnostics/ex025/inputs)의 `context`, `system_prompt`, `user_prompt`, 각 SHA-256 | `system_prompt`와 `user_prompt`의 두 문자열만 받음 |
+| 고정 기억·주장 근거 | [memories/](../.pokechamp-data/summary-diagnostics/ex025/memories)의 `text`, claims/evidence/review/source hash | 필요한 `text`만 `previous_summary`/`summaries`에 삽입 |
+| 원문 reference·필수 사실 | [references/](../.pokechamp-data/summary-diagnostics/ex025/references)의 전체 prefix 및 입력별 facts | 평가 기준과 reference 전체를 별도 전달하지 않음 |
+| 전송·응답 evidence | [responses/](../.pokechamp-data/summary-diagnostics/ex025/responses)의 trace·serialized_request·content·reasoning·usage | 해당 입력으로 생성한 결과; 다음 호출의 입력에 재사용하지 않음 |
+| 가림 검토 | [blinded-reviews/](../.pokechamp-data/summary-diagnostics/ex025/blinded-reviews)와 [무효화 발견 기록](../.pokechamp-data/summary-diagnostics/ex025/input-evaluation-discovery.json) | 평가용이며 모델 입력이 아님. 초안 126건·960사실판정은 무효, 6응답 미검토 |
 
 사전에는 기존 125필수 사실을 재대조하고 통합용 46사실을 추가해 총 171개의 입력별 요구를
 봉인했다. 이 준비와 개별 메모리 주장 근거 검사가 “모든 요구 사실이 실제 모델 입력에 도달했다”는
@@ -802,7 +806,7 @@ id/expected만 발췌했다. 나머지 facts·evidence·원문은 생략했다. 
 
 ## 7. 문서의 검증·보존 범위
 
-이번 [EP-016](../project_context/exec-plans/completed/EP-016-input-summary-documentation.md)은
+이번 [EP-016](../project_context/research/input-and-memory/plans/EP-016-input-summary-documentation.md)은
 위 builder/player/backend/전송 코드와 오프라인 입력을 읽어 문서만 작성했다. prompt 세 전문은
 원본 파일 바이트·provenance SHA-256에, JSON은 지정 봉인 입력의 실제 부분값에 대조했다.
 링크·Mermaid 구문과 이전 source/자료의 불변 확인은

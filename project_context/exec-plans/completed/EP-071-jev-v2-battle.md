@@ -1,37 +1,24 @@
-# EP-071 — 교정 JEV 입력 v2 동일 조건2경기
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-21
-- 책임자: Codex
-- 승인: 사용자 “변경된 입력을 테스트 하기 위해 ex050과 동일하게 테스트 해주세요.”
-- 관련: D-080, C-045/046/047, EX-051, EP-070
+원문: [EP-071](../../research/input-and-memory/plans/EP-071-jev-v2-battle.md)
 
-## 목표·범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-EP-070 교정 입력을 EX-050과 같은 대진·seed·공급자 조건에서 실제2경기 시험한다.
-이번 명시적 지시는 EP-070의 오프라인 한정 이후 새 실배틀 승인이며 과거 실행 재개는 아니다.
-EX-050 및 과거 source·manifest·판정·봉인·exports/battle_viewers/ex050을 보존한다.
-INDEX/CHARTER·STATUS/plan 색인·겹치는 active EP-062/064·RD8.1/11/12·C-045~047을 확인했다.
-실행 조건·상한·복구·분모 원문은 [EX-051](../../experiments/EX-051-jev-v2-battle.md)이다.
+<a id="ep-071--교정-jev-입력-v2-동일-조건2경기"></a>
+[ep-071--교정-jev-입력-v2-동일-조건2경기](../../research/input-and-memory/plans/EP-071-jev-v2-battle.md#ep-071--교정-jev-입력-v2-동일-조건2경기)
 
-## 완료 기준
+<a id="검증진행"></a>
+[검증진행](../../research/input-and-memory/plans/EP-071-jev-v2-battle.md#검증진행)
 
-- [x] 새 실행 identity·receipt 연결 및 관련 회귀/모의2경기·cutoff 감사
-- [x] 실제2경기 정상 종료 및 수정 선봉 포함 전수 입력/전송 감사
-- [x] 한국어 결과·exports/battle_viewers/ex051·봉인·자원 정리·상태 갱신
+<a id="결과"></a>
+[결과](../../research/input-and-memory/plans/EP-071-jev-v2-battle.md#결과)
 
-## 검증·진행
+<a id="목표범위"></a>
+[목표범위](../../research/input-and-memory/plans/EP-071-jev-v2-battle.md#목표범위)
 
-- 2026-09-21 — 실행 전 등록. EP-070 오프라인 근거를 재사용하되 새 소스 receipt를 동결한다.
+<a id="완료-기준"></a>
+[완료-기준](../../research/input-and-memory/plans/EP-071-jev-v2-battle.md#완료-기준)
 
-## 중단·복구
-
-RD11.1/C-018 및 RD11.2/C-046을 적용한다. 실제 호출/시간·기술 중단과 재수집0은 EX-051을 따른다.
-설명 오류 검토는 RD8.1 기본 제외다. 현재 기능/코드가 실패 격리를 지원하는 근거는 EP-066이다.
-
-## 결과
-
-[최종 보고](../evidence/ep071/report.md)와 [정리/보존](../evidence/ep071/closure.json).
-실제2경기 정상 종료·전수 감사·뷰어·보존·정리 완료. 현재 실행·감시 없음.
-
-- 사전137검사·모의2경기/94전송·공식 cutoff 감사·선봉12마리/48PP 검증 통과. 모델/팀 동일 확인·새 source receipt 동결 후 실제 수집 진입.
+<a id="중단복구"></a>
+[중단복구](../../research/input-and-memory/plans/EP-071-jev-v2-battle.md#중단복구)

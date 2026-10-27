@@ -1,43 +1,18 @@
-# D-040 — Smogon 기반 원본 A 진단 평가 준비
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted — 평가 준비 범위
-- 날짜: 2026-09-11
-- 승인 근거: 사용자가 제시한 Smogon 팀 선별·실험 명세 계획의 구현 및 검증 지시.
-- 관련: [EP-028](../exec-plans/completed/EP-028-smogon-diagnostic-design.md), [EX-034](../experiments/EX-034-smogon-diagnostic-design.md), EX-033, C-018/C-021.
+원문: [D-040](../research/input-and-memory/decisions/D-040-smogon-diagnostic-design.md)
 
-## 맥락
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-EX-033은 고정 개발 대진에서 A/B 각14/16승이었고 성능 차이를 관측하지 못했다.
-이것만으로 원본 A가 다른 운용 상황에서도 충분하다거나, 새 팀에서는 실패할 것이라고
-가정할 수 없다. 사용자는 원본 A의 판단을 조사할 팀·대진·검토·자원 명세를 요청했다.
-상위 L1–L5 연구를 위한 진단 준비이며 새로운 처치의 효능 평가가 아니다.
+<a id="d-040--smogon-기반-원본-a-진단-평가-준비"></a>
+[d-040--smogon-기반-원본-a-진단-평가-준비](../research/input-and-memory/decisions/D-040-smogon-diagnostic-design.md#d-040--smogon-기반-원본-a-진단-평가-준비)
 
-## 결정
+<a id="결과와-한계"></a>
+[결과와-한계](../research/input-and-memory/decisions/D-040-smogon-diagnostic-design.md#결과와-한계)
 
-Smogon Sample Teams와 Tournament Team’s Bazaar에서 셋업·공격 순서, 교체·설치기 누적,
-회복·핵심 보존, 날씨 등 제한된 턴 활용의 네 과제별 후보3개를 조사하고 각각2개를 선정한다.
-합법성은 고정 Showdown의 `gen9ou` 기준으로 검증하며 원본 구성을 수정하지 않는다.
-출처·작성자/업로더·수집일·원본/hash·운용 근거·불확실성을 분리 기록한다.
+<a id="결정"></a>
+[결정](../research/input-and-memory/decisions/D-040-smogon-diagnostic-design.md#결정)
 
-선정8 중 과제별1팀은 탐색,1팀은 후속확인으로 고정하고 같은 팀의 사소한 변형을
-양쪽에 나누지 않는다. 탐색4×기존 팀2/6×Abyssal/OneStep×양쪽 팀 배정×반복2의64경기
-명세를 작성한다. 반복마다 다른 게임 seed와 A의 양 진영을 배정하고 전체 제출 순서·seed를 고정한다.
-
-A의 prompt·입력 생성·모델·upstream fallback은 EX-033 기준으로 유지한다.
-행동에 실제 전달된 정보와 원자료를 연결하여 판단 오류·입력 정보 문제·출력/실행 실패를
-구별한다. 전략 우위가 충분히 입증되지 않으면 미확정으로 둔다. 승패와 무관하게 전수검토하고
-반복되는 후보를 후속 가설로 기록한다. 실패 발견이나 성적 하락을 준비 완료의 요건으로 삼지 않는다.
-
-이번 범위는 문서·data·로컬 검증이다. 유료 대전/실행기/API 변경은 제외한다.
-EX-033 A만의 실측 요청/token/시간을 사용하고 장기전 감도를 별도 표시한다.
-후속 기본안은 slot1회/provider retry0/보충·재수집0 및 C-018 영향 범위 중단이다.
-원본 A 내부 파싱 재질의는 provider 재시도와 구분해 그대로 계측한다.
-기존 Blocked/원자료/halt/시계는 보존한다. 무상한 유료 승인·gate 생략을 승계하지 않는다.
-
-## 결과와 한계
-
-등록된 명세는 [EX-034](../experiments/EX-034-smogon-diagnostic-design.md)에 연결했다.
-현재 실행기는 외부 팀과 A-only64표를 직접 수용하지 못한다. 필요한 변경을 명시하는 것이
-이번 준비의 산출물이며, 이 Decision으로 그 구현·실행을 승인하지 않는다.
-외부 해설의 오기·원본 버전 차이와 replay 접근 실패는 보존한다. 구체적인 후보 선택은
-연구자의 목적 표집이며 커뮤니티의 상대적 강함 평가나 확률 표본으로 해석하지 않는다.
+<a id="맥락"></a>
+[맥락](../research/input-and-memory/decisions/D-040-smogon-diagnostic-design.md#맥락)

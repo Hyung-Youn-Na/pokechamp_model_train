@@ -1,13 +1,9 @@
-# D-125 — 실패1경기 재수집·첫라운드 재개
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-07
-- 근거: 사용자 “그러면 실패한 경기만 재수집하고 이어서 진행해주세요.”
+원문: [D-125](../research/fixed-matchup-learning/decisions/D-125-first-round-single-retry.md)
 
-EX-078 원identity의 정상31경기를 검증해 그대로 계승하고 `train-1-selfplay-001-B-p2`
-시간초과1경기만 동일seed/조건으로1회 처음부터 다시 수집한다. 기존 실패 기록은 부모에 보존한다.
-D-124의 경기/단계/전체 시간상한 없음, 원1라운드/32경기 및 모델/탐색/학습 조건을 유지한다.
-P0와 업데이트0 checkpoint의 optimizer/RNG를 계승하고 source/identity 변경과 시간상한 해제만
-명시적으로 연결한다. 기존 첫 시각을 유지하여 대기/복구 비용도 기록한다.
-정상32를 감사한 뒤1라운드 학습·checkpoint/reload·뷰어·봉인·GPU 반환까지 수행한다.
-추가 라운드/dev/test/해당1회 외 추가 재수집은0이다. 단계별 알람을 사용하고 반복 대화형 감시는 하지 않는다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-125--실패1경기-재수집첫라운드-재개"></a>
+[d-125--실패1경기-재수집첫라운드-재개](../research/fixed-matchup-learning/decisions/D-125-first-round-single-retry.md#d-125--실패1경기-재수집첫라운드-재개)

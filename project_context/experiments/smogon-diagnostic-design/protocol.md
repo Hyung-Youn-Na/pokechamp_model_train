@@ -1,7 +1,7 @@
 # EX-034 — 대진·행동 검토·해석 protocol v1
 
 사전 설계일은 2026-09-11이며 대전 결과를 보지 않고 고정했다. 이 문서는 연구 명세이며
-실행기 API 또는 실행 승인이 아니다. [EX-034](../EX-034-smogon-diagnostic-design.md)의 범위를 따른다.
+실행기 API 또는 실행 승인이 아니다. [EX-034](../../research/input-and-memory/experiments/EX-034-smogon-diagnostic-design.md)의 범위를 따른다.
 
 ## 대진과 무작위성
 

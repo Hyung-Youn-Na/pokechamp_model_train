@@ -1,39 +1,27 @@
-# D-063 — 입력 정보·이력·요약의 중간 연구 목표 채택
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-16
+원문: [D-063](../research/input-and-memory/decisions/D-063-intermediate-research-objectives.md)
 
-## 맥락
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-사용자는 L1-L5를 포켓몬 배틀에 이식하는 최종 목표를 유지하면서, 그 전에 프롬프트 입력
-정보에 따른 변화를 알아보는 실험을 중간 목표로 명시하고자 했다. 기존 운영 비교·요약 진단은
-채택되어 있지만 최종 구조 설계로 이어지는 중간 목표와 연구 질문은 명시되지 않았다.
+<a id="d-063--입력-정보이력요약의-중간-연구-목표-채택"></a>
+[d-063--입력-정보이력요약의-중간-연구-목표-채택](../research/input-and-memory/decisions/D-063-intermediate-research-objectives.md#d-063--입력-정보이력요약의-중간-연구-목표-채택)
 
-## 결정
+<a id="거절한-대안"></a>
+[거절한-대안](../research/input-and-memory/decisions/D-063-intermediate-research-objectives.md#거절한-대안)
 
-입력 정보·이력·요약의 영향을 평가하여 L1-L5의 메모리 내용과 관리 방식을 설계하는 중간
-목표와 RQ2·RQ3을 채택한다. 목표·단계별 산출물·완료 기준의 규범 원문은
-[연구 설계 §2](../RESEARCH_DESIGN.md#intermediate-objectives), 해석 규칙은 같은 문서 §12다.
-최상위 목표와 Charter는 유지한다. 현재 단계는 입력 정보 탐색·메모리 설계 근거 마련으로 표시한다.
+<a id="결정"></a>
+[결정](../research/input-and-memory/decisions/D-063-intermediate-research-objectives.md#결정)
 
-## 거절한 대안
+<a id="근거"></a>
+[근거](../research/input-and-memory/decisions/D-063-intermediate-research-objectives.md#근거)
 
-기록 없음. 최종 목표 변경이나 새 실험 실행은 이번 문서 반영 범위에 포함하지 않는다.
+<a id="맥락"></a>
+[맥락](../research/input-and-memory/decisions/D-063-intermediate-research-objectives.md#맥락)
 
-## 근거
+<a id="영향"></a>
+[영향](../research/input-and-memory/decisions/D-063-intermediate-research-objectives.md#영향)
 
-각 실험이 밝히는 내용과 그 결과로 내릴 메모리 설계 결정을 연결한다. 성능 향상을 중간
-단계의 필수 완료 조건으로 두지 않아 불확실한 결과도 근거와 한계에 맞게 활용할 수 있다.
-정보 제공의 효과와 구조의 효과를 구분하여 최종 연구 질문의 해석을 보존한다.
-
-## 영향
-
-연구 설계·STATUS와 색인을 갱신한다. 구체적인 새 실험 처치·평가·표본·예산·중단 규칙은
-개별 실행 전에 정하며, 새 호출·과거 재개를 승인한 것으로 해석하지 않는다.
-기존 실험의 동결 protocol·결과·무효·미완료·Blocked는 보존한다.
-
-## 증거
-
-- 현재 대화의 사용자 지시: 중간 목표 제안에 대해 “좋아 해당 내용을 문서에 반영해줘.”
-- [CHARTER](../CHARTER.md), [연구 설계](../RESEARCH_DESIGN.md), [STATUS](../STATUS.md).
-- 문서 반영·검증: [EP-052](../exec-plans/completed/EP-052-intermediate-research-objectives.md).
+<a id="증거"></a>
+[증거](../research/input-and-memory/decisions/D-063-intermediate-research-objectives.md#증거)

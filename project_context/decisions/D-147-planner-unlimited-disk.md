@@ -1,13 +1,9 @@
-# D-147 — GLM·JEV 향후 실행의 디스크 용량 상한 해제
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-15
-- 승인: 사용자 “디스크 관련 제한을 안하도록 다시 재설정 해줘. 디스크 정리를 최근에 해서 용량에는 여유가 있어”
+원문: [D-147](../research/planner-executor/decisions/D-147-planner-unlimited-disk.md)
 
-새 jev-planner 실행의 모든 선택 모델에서 disk_bytes=null로 동결하여 용량 기준의 준비/실행
-거부·중단을 해제한다. 용량 측정/기록과 실제 공간/I/O 오류 처리는 유지한다.
-GPU/allocator/host·장치 잠금·UUID·모델 배치·시간/호출 한도는 바꾸지 않는다.
-모델을 적재하는 기존 profile과 별도로 디스크 상한 없는 planner 자원 profile을 사용한다.
-과거 EX-092/093/094 원자료·100GiB 동결조건/봉인·기존 실험 전용 profile은 역사로 보존한다.
-과거 준비본의 자동재개·새 배틀·모델 호출은 이번 요청에 포함하지 않는다.
-구현/검증은 [EP-153](../exec-plans/completed/EP-153-planner-unlimited-disk.md)에서 관리한다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-147--glmjev-향후-실행의-디스크-용량-상한-해제"></a>
+[d-147--glmjev-향후-실행의-디스크-용량-상한-해제](../research/planner-executor/decisions/D-147-planner-unlimited-disk.md#d-147--glmjev-향후-실행의-디스크-용량-상한-해제)

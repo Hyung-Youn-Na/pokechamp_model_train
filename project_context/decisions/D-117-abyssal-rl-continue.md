@@ -1,24 +1,15 @@
-# D-117 — 57라운드 계승·동일 설정 추가12시간 승인
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-05
+원문: [D-117](../research/policy-learning/decisions/D-117-abyssal-rl-continue.md)
 
-## 승인 근거·결정
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-현재 사용자가 제공한 EX-074 계획의 구현·검증·실행 지시로
-[EX-074](../experiments/EX-074-abyssal-rl-continue.md)와
-[EP-121](../exec-plans/completed/EP-121-abyssal-rl-continue.md)을 등록한다.
-EX-073 마지막57라운드의 가중치·optimizer·rank별 RNG를 계승하되 새 실험/시계로 시작한다.
-동일 학습 설정·GPU4개·추가12시간·새 test128팀·출발57라운드 대비 평가를 채택한다.
-브라우저 전수 검증은 생략하고 모든 정상 경기 내보내기와 단계별 최대12경기 표본 확인을
-수행한다. 모델 비호출 감지기의 영속 중복 방지 단계 알람을 사용하며 대화형 실시간 감시는 없다.
-조건 전문은 EX-074, runtime은 [C-058](../CONTRACTS.md#c-058-abyssal-rl-continue)이 소유한다.
-동일 승인 범위의 준비·구현·검증·실행에 추가 재승인을 요구하지 않는다.
+<a id="d-117--57라운드-계승동일-설정-추가12시간-승인"></a>
+[d-117--57라운드-계승동일-설정-추가12시간-승인](../research/policy-learning/decisions/D-117-abyssal-rl-continue.md#d-117--57라운드-계승동일-설정-추가12시간-승인)
 
-## 영향·제한
+<a id="승인-근거결정"></a>
+[승인-근거결정](../research/policy-learning/decisions/D-117-abyssal-rl-continue.md#승인-근거결정)
 
-연구 질문은 추가 학습의 효과이며 기존 최고24라운드 우월성 비교가 아니다.
-EX-073 동결 source·artifact·시간 초과 실패/미완료 판정과 EX-066/103 중단 상태는 보존한다.
-새 뷰어 표본 검증 예외를 과거 전수 검증 성공으로 소급하지 않는다. 부모 checkpoint 계승은
-EX-073 재개가 아니며 `run --resume`는 EX-074 내부에 한정한다. 실험 완료·통계적 개선·
-성능 목표를 분리하고 추가 범위·예산 연장·설정 완화는 승인하지 않는다.
+<a id="영향제한"></a>
+[영향제한](../research/policy-learning/decisions/D-117-abyssal-rl-continue.md#영향제한)

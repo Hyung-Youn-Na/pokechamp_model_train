@@ -1,23 +1,9 @@
-# D-138 — MiniCPM5-2B-Jev 계산기 포함 평가
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-14
-- 승인: 현재 사용자 제공 EX-091 계획의 구현·검증·새32경기 실행 지시
+원문: [D-138](../research/model-evaluation/decisions/D-138-minicpm5-2b-jev.md)
 
-완료된 EX-089의 `jev-choice-v6`·피해 계산·스피드·공개 정보·역할·턴 로그·프롬프트와
-동일 대진/seed/제출순서를 유지하고 `ytbai/MiniCPM5-2B-Jev` 패키지를 평가한다.
-사용자가 선택한 GPU0 한 장을 사용하며 기존 GPU/호스트 메모리 한도는 유지한다.
-새 EX-091에만 논리적 디스크 상한을 없애고 사용량 계측과 실제 공간/I/O 오류 중단을 유지한다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-공식 revision·기반 모델을 고정하고 BF16 backbone·병합하지 않은 LoRA·FP32 선택 헤드를
-사용한다. JSON 평탄화/절단을 우회하는 손실 없는 전용 MiniCPM 형식을 등록한다.
-공식 기본 서버의 완전 재현으로 표기하지 않는다. 저장 온도와 K별 prior 보정을 사용하고
-후보 순환 PriDe·날짜 사실 보강·환경변수 보정 덮어쓰기는 금지한다.
-
-독립 새32경기/16쌍이며 EX-089는 기준선으로만 쓴다. 모델·토크나이저·입력 포맷·GPU 배치가
-함께 달라진 고정 대진 패키지 탐색으로 해석한다. 단일 적재/최대8추론 뒤 같은 서버로 수집하고
-재경기·보충·자동 재개는 없다. 현재 대화에 검증된 단계 알람만 연결하며 다른 모델 자동 실행은 없다.
-
-조건·검증·분모·해석 원문은 [EX-091](../experiments/EX-091-minicpm5-2b-jev.md),
-runtime은 [C-069](../CONTRACTS.md#c-069-minicpm5-2b-jev), 진행은
-[EP-144](../exec-plans/active/EP-144-minicpm5-2b-jev.md)이다. 기존 실험의 조건·봉인·판정은 보존한다.
+<a id="d-138--minicpm5-2b-jev-계산기-포함-평가"></a>
+[d-138--minicpm5-2b-jev-계산기-포함-평가](../research/model-evaluation/decisions/D-138-minicpm5-2b-jev.md#d-138--minicpm5-2b-jev-계산기-포함-평가)

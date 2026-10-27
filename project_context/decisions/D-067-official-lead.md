@@ -1,11 +1,9 @@
-# D-067 — 공식 관측 B2 선봉 정책 본실험
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-17
-- 승인: 현재 사용자가 제공한 「공식 관측 B2 기반 LLM 선봉 정책 본실험」 계획의 구현·검증·유료 실행 지시.
+원문: [D-067](../research/lead-policy/decisions/D-067-official-lead.md)
 
-공식 관측을 공통 입력으로 LLM 선봉과 무작위 선봉을 비교하는 새 EX-045를 승인한다.
-조건·표본·예산·gate·지표·중단·완료 기준 원문은 [EX-045](../experiments/EX-045-official-lead.md),
-작업 범위는 [EP-057](../exec-plans/active/EP-057-official-lead.md)이다.
-EX-043/044 일정만 고정 표본으로 재사용하며 중단 실행의 원장·시계·봉인·결과는 보존한다.
-공식 관측 자체 또는 전략/Dex 각각의 효과는 분리하지 않는다. 본실험 전 별도 유료 probe는 없다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-067--공식-관측-b2-선봉-정책-본실험"></a>
+[d-067--공식-관측-b2-선봉-정책-본실험](../research/lead-policy/decisions/D-067-official-lead.md#d-067--공식-관측-b2-선봉-정책-본실험)

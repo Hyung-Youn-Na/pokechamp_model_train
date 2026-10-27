@@ -1,14 +1,9 @@
-# D-094 — 개선 JEV 입력 동일32경기
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- Status: Accepted
-- Date: 2026-09-23
-- 승인: 현재 사용자 제공 계획의 구현·검증·실행 지시
+원문: [D-094](../research/input-and-memory/decisions/D-094-jev-improved32.md)
 
-EP-093 전체 개선 입력을 실험 전용 jev-choice-v4로 연결한다. 생성 로직·지시문을 재사용하며
-오프라인 상세 출력과 버전 표기만 다르다. 자기 벤치는 상세, 상대 벤치는 기존 요약이다.
-일반 기본 v3와 과거 재현 경로는 유지한다. Knock Off 제거 결과·대타 지원은 확장하지 않는다.
-D-091의 새 후보 선정과 구분하여 이번 EX-058에 한해 EX-057 봉인 팀·일정·seed·진영을
-그대로 재현한다. 신규 팀 후보 선정은 없다. D-092의 오프라인 한정을 이번 명시적 실험에 확장한다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-실험 조건·예산·gate·중단·비교 원문은 [EX-058](../experiments/EX-058-jev-improved32.md),
-진행은 [EP-094](../exec-plans/completed/EP-094-jev-improved32.md)다.
+<a id="d-094--개선-jev-입력-동일32경기"></a>
+[d-094--개선-jev-입력-동일32경기](../research/input-and-memory/decisions/D-094-jev-improved32.md#d-094--개선-jev-입력-동일32경기)

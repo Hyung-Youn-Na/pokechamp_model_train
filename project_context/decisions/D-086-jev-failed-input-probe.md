@@ -1,9 +1,9 @@
-# D-086 — 실패 입력의 현재 응답 확인
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-21
-- 승인: 사용자 “같은 입력으로 현재 요청 넣으면 응답이 오나요?”
+원문: [D-086](../research/input-and-memory/decisions/D-086-jev-failed-input-probe.md)
 
-직전 대화의 EX-054 마지막 실패 입력을 그대로 재전송하는 독립 확인 요청1개를 실행한다.
-기존 D-084 재시도3회를 유지한다. 배틀 재개·성적 보충은 없으며 원 실험은 보존한다.
-[EX-055](../experiments/EX-055-jev-failed-input-probe.md) · [EP-078](../exec-plans/completed/EP-078-jev-failed-input-probe.md).
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-086--실패-입력의-현재-응답-확인"></a>
+[d-086--실패-입력의-현재-응답-확인](../research/input-and-memory/decisions/D-086-jev-failed-input-probe.md#d-086--실패-입력의-현재-응답-확인)

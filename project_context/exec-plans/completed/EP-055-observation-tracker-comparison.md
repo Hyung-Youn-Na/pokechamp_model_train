@@ -1,51 +1,24 @@
-# EP-055 — Abyssal 플레이어별 관측 추적 비교
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-17
-- 책임자: Codex
-- 승인 근거: 현재 사용자가 제공한 계획의 구현·실행·검증 지시
-- 관련: C-009/014/018/030/031, EP-054/EX-044. 겹치는 중단 EP-030/032/035/041/044/045/048/053/054를 확인했으며 재개하지 않는다.
+원문: [EP-055](../../research/input-and-memory/plans/EP-055-observation-tracker-comparison.md)
 
-## 목표와 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-각 플레이어가 실제로 받은 메시지의 결정 직전 경계에서 현재 poke_env, 현재 B2 관측 투영,
-공식 클라이언트를 비교한다. 진단 도구와 별도 headless 어댑터만 추가하고 운영 입력은 수정하지 않는다.
-공식 클라이언트 f2faebd6892b314d785a0038f77309afed36970c를 사용하며 서버 자동 갱신 빌드는 금지한다.
-서버·팀은 기존 고정 버전, Gen9 OU 팀6/12, EX-044 b04-r3-s0-a1의 서버/actor seed를 재사용한다.
-양쪽 Abyssal·기존 seeded 기본 선봉의 새1경기이며 과거 정책 경기의 재현이 아니다. LLM/API0.
+<a id="ep-055--abyssal-플레이어별-관측-추적-비교"></a>
+[ep-055--abyssal-플레이어별-관측-추적-비교](../../research/input-and-memory/plans/EP-055-observation-tracker-comparison.md#ep-055--abyssal-플레이어별-관측-추적-비교)
 
-## 사전 진단 protocol
+<a id="결과와-한계"></a>
+[결과와-한계](../../research/input-and-memory/plans/EP-055-observation-tracker-comparison.md#결과와-한계)
 
-신규 경기 시도1·재시도/재수집0, 실행 시작부터600초. 오류/기한 시 원자료 보존·소유 자원 정리.
-RD11.1/C-018 복구 원칙 중 수집 재시작은 허용하지 않는다. 오프라인 진단 도구 결함 수정·반복 재생은 허용한다.
-분모는 양측 모든 행동 결정(선봉/강제 교체 포함)과 EX-044 보존 문제 경기의 결정이다.
-player/decision_seq/rqid/protocol event_seq/행 경계를 연결하고 상대 request·서버 전체 상태는 입력으로 사용하지 않는다.
-필드별 원문 근거·현재 parser·B2 전달 투영·공식 상태를 JSONL로 보존한다.
-분류는 일치/표현 차이/의미 불일치/지원되지 않음. 미공개/추론/확인을 구별하고 공식 일치만으로 정확성을 확정하지 않는다.
-자연 경기 coverage와 미발생 사건을 분리한다. 교체 가능성 진단이며 효능/정확성 전반의 검증은 아니다.
+<a id="목표와-범위"></a>
+[목표와-범위](../../research/input-and-memory/plans/EP-055-observation-tracker-comparison.md#목표와-범위)
 
-## 완료 기준·검증
+<a id="사전-진단-protocol"></a>
+[사전-진단-protocol](../../research/input-and-memory/plans/EP-055-observation-tracker-comparison.md#사전-진단-protocol)
 
-- [x] 고정 공식 클라이언트의 실제 실행·빌드/데이터 provenance
-- [x] 새1경기 기록과 양측 모든 결정 시점 비교·viewer
-- [x] EX-044 Magic Bounce 재생 및 원사용/반사 구분
-- [x] 정보 격리·동일 턴 교체 정렬·HP 표현·미공개 유지·반복 일관성 검사
-- [x] 한국어 보고·원자료/중단 상태 보존·정리
+<a id="완료-기준검증"></a>
+[완료-기준검증](../../research/input-and-memory/plans/EP-055-observation-tracker-comparison.md#완료-기준검증)
 
-공식 클라이언트 실행 또는 경계 정렬 실패는 비교 미완료로 보고한다. 발견된 입력 불일치는 진단 결과이며 parser 수정은 별도 범위다.
-
-## 진행
-
-- 2026-09-17: 관련 원문 확인·구현 전 등록. 기존 EX-043/044는 읽기 전용으로 사용한다.
-- 기존 worker/recorder 재사용·진단용 cursor·공식 headless build/재생·JSONL/viewer를 구현했다.
-- 신규1경기 정상 종료·소유 자원 정리. 이후 추가 경기0이며 오프라인 비교기만 보완했다.
-- 자연43·과거57 결정 전체 연결, 실제 과거 B2 전송 관측55개 대조. 반복100개 JSONL byte 일치,
-  전용·관련79검사 및 기존8,025파일 보존 확인. 상세 분모와 중간 도구 수정은 최종 보고서에 둔다.
-
-## 결과와 한계
-
-[한국어 보고서](../evidence/ep055/report.md)·[검증](../evidence/ep055/verification.json)·
-[최종 manifest](../evidence/ep055/final-manifest.json).
-관측 경로 진단의 완료이며 parser 정확성 전반이나 교체의 완료가 아니다. 반사 Toxic과 Magic Bounce
-특성 누락, 추론 특성의 출처 구분을 진단 결과로 남겼다. 선봉 B2 battle 표현과 기간 동등성은
-지원되지 않음으로 표시했다. 운영 parser/B2·과거 중단 판정·원자료는 유지했고 유료/API 호출0이다.
+<a id="진행"></a>
+[진행](../../research/input-and-memory/plans/EP-055-observation-tracker-comparison.md#진행)

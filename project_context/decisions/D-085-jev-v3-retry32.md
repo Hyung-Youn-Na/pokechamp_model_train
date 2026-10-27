@@ -1,12 +1,9 @@
-# D-085 — EX-054 동일 조건 재실험
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-21
-- 승인: 사용자 “같은 조건으로 ex-054로 재실험” 지시
+원문: [D-085](../research/input-and-memory/decisions/D-085-jev-v3-retry32.md)
 
-EX-053의32행 팀/seed/진영/순서·v3 처치·모델 요청 설정·순차·6시간·호출/금액 무상한을 유지하고
-직전 D-084에서 승인한 provider 재시도3회를 적용한다. 새 EX-054 전체32경기의 실행을 승인한
-지시로 해석하며 EX-053의 봉인·중단·시계·원장은 유지한다. 새 슬롯별 경기시도1회,
-provider HTTP 재시도3회 외의 경기 보충·출력복구·유료 재수집·자동 재개0이다.
-조건·중단·분모·전후 비교 원문은 [EX-054](../experiments/EX-054-jev-v3-retry32.md),
-실행은 [EP-077](../exec-plans/active/EP-077-jev-v3-retry32.md)이다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
+
+<a id="d-085--ex-054-동일-조건-재실험"></a>
+[d-085--ex-054-동일-조건-재실험](../research/input-and-memory/decisions/D-085-jev-v3-retry32.md#d-085--ex-054-동일-조건-재실험)

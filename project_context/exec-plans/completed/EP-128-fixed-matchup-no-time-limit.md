@@ -1,29 +1,21 @@
-# EP-128 — EX-078 경과시간 상한 해제
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-10-07
-- 승인: 사용자 시간 제약 해제 지침 변경 요청 / D-124
-- 원문: EX-078 변경 규범·C-060
+원문: [EP-128](../../research/fixed-matchup-learning/plans/EP-128-fixed-matchup-no-time-limit.md)
 
-## 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-INDEX/CHARTER/RD·EP127/126/125의 보존 경계를 확인하고 현1라운드 규범과 실행기에
-경기/단계/전체 시간 제한 없는 명시적 null 설정을 추가한다. 기존 유한시간 실행의 동작·
-원자료는 보존한다. 감독자 취소·자원/기술 중단 및 단계별 알람은 유지한다.
-EX078 중단 상태·봉인 연결을 정리한다. 새 실제경기/학습/GPU·자동 재수집은 실행하지 않는다.
+<a id="ep-128--ex-078-경과시간-상한-해제"></a>
+[ep-128--ex-078-경과시간-상한-해제](../../research/fixed-matchup-learning/plans/EP-128-fixed-matchup-no-time-limit.md#ep-128--ex-078-경과시간-상한-해제)
 
-## 완료 기준
+<a id="결과"></a>
+[결과](../../research/fixed-matchup-learning/plans/EP-128-fixed-matchup-no-time-limit.md#결과)
 
-- [x] 규범·예산 null·runtime/worker 전달·알람 상한 없음 지원
-- [x] 무제한 경과·유한 상한·취소·호환성 CPU 검사
-- [x] 기존 실패/봉인 보존·현재 상태 정합화·변경 보고
+<a id="범위"></a>
+[범위](../../research/fixed-matchup-learning/plans/EP-128-fixed-matchup-no-time-limit.md#범위)
 
-## 복구
+<a id="복구"></a>
+[복구](../../research/fixed-matchup-learning/plans/EP-128-fixed-matchup-no-time-limit.md#복구)
 
-새 실험 실행은 없으므로 재수집0. 원 EX078의 미완료·학습0과 정상31은 보존한다.
-
-## 결과
-
-경기/단계/전체 null 예산과 worker 전달·알람 동작을 반영했다. 기존78·추가16검사 통과.
-원실행 결과/봉인·문서 상태를 정리했고 실제 새 수집/학습0이다.
-[변경 보고](../evidence/ep128/report.md).
+<a id="완료-기준"></a>
+[완료-기준](../../research/fixed-matchup-learning/plans/EP-128-fixed-matchup-no-time-limit.md#완료-기준)

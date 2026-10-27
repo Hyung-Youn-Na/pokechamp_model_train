@@ -1,43 +1,21 @@
-# EP-157 — GLM high 추론 강도 실제1경기
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Blocked
-- 생성일: 2026-10-15
-- 승인: 현재 사용자 지시 / D-151
-- 조건 원문: [EX-098](../../experiments/EX-098-planner-high-effort-sample.md)
-- branch/checkout: research/model-training /workspace a4659bf·기존 미커밋 변경 보존
-- actor: pokechamp/.venv/bin/python; model: .pokechamp-data/jev35b-nvfp4-runtime/.venv/bin/python
+원문: [EP-157](../../research/planner-executor/plans/EP-157-planner-high-effort-sample.md)
 
-## 범위·완료 기준
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-EX-097과 같은 구현/모델/대진에서 GLM reasoning_effort만high로 동결한 새1경기를 수행한다.
-INDEX/CHARTER·매뉴얼·RD/C-070/073과 중첩 EP-155/154/151/140/134의 보존/중단 경계를 확인했다.
-동일 source의 CPU/환경/무손실검증을 재사용하고 새 설정·실제 wire high·상한/자원을 검증한다.
-실제 수집 source/조건은 불변이며 실패 보존·재경기0이다. 세부 원문은 EX-098을 따른다.
+<a id="ep-157--glm-high-추론-강도-실제1경기"></a>
+[ep-157--glm-high-추론-강도-실제1경기](../../research/planner-executor/plans/EP-157-planner-high-effort-sample.md#ep-157--glm-high-추론-강도-실제1경기)
 
-- [x] 등록·기존 봉인·source/단일 처치/모델자산·환경·포트·자격증명 무호출 확인
-- [ ] 단일 적재·8사전추론·같은 서버 정상1경기
-- [x] 실제 high/temperature0 전수대조·usage/재시도/선택→명령 감사·low 비교
-- [x] 통합뷰어/대표 이동후 오프라인/복사/다운로드·봉인·자원반환·문서/색인 갱신
+<a id="범위완료-기준"></a>
+[범위완료-기준](../../research/planner-executor/plans/EP-157-planner-high-effort-sample.md#범위완료-기준)
 
-## 진행
+<a id="진행"></a>
+[진행](../../research/planner-executor/plans/EP-157-planner-high-effort-sample.md#진행)
 
-단일 처치 설정·무과금 wire high/temperature0/8192와 동일 source를 확인했다.
-공식37파일·v6 외부587파일·GPU0/세포트·자격증명 무호출 구성을 확인했다.
-모델환경 pip freeze --all은 EX-097과 동일하다. CPU/브라우저/무손실 검증은 EP-156/154를 재사용한다.
-새 source/설정을 동결하고 최초 단일 적재·8사전추론/같은 서버1경기를 시작했다.
+<a id="최종-판정"></a>
+[최종-판정](../../research/planner-executor/plans/EP-157-planner-high-effort-sample.md#최종-판정)
 
-## 후속 시간 연장 요청·적용 제약
-
-사용자가 진행 중인 경기의 시간 상한 해제를 요청한 뒤 “안되면 억지로 하지마”라고 지시했다.
-현재 실행기는 양쪽 actor/전체 예산의 메모리 고정 시계를 변경하는 제어 경로가 없고
-프로세스 메모리 접근도 허용되지 않아 연장은 적용하지 못했다. 강제 수정/보안 변경/재시작/
-새 경기는 수행하지 않는다. 원3600/4200초 한도를 유지한 실행의 실제 종료를 보존한다.
-
-## 최종 판정
-
-Blocked: 정상0/1·중단1·사용자요청·마지막관측19턴.
-감사/비교/통합뷰어/오프라인/봉인/반환을 완료했다. [보고](../evidence/ep157/report.md).
-
-사용자의 현재 경기 마무리 지시로19턴·양측5마리 상태에서 SIGINT로 정상 정리 경로를 실행했다.
-시간초과/패배가 아니라 사용자 요청 중단이다. 정상1경기 목표 미달로 Blocked는 보존하되,
-부분 기록의 감사/뷰어/봉인/자원반환을 종결하며 재시작/추가경기/자동재개하지 않는다.
+<a id="후속-시간-연장-요청적용-제약"></a>
+[후속-시간-연장-요청적용-제약](../../research/planner-executor/plans/EP-157-planner-high-effort-sample.md#후속-시간-연장-요청적용-제약)

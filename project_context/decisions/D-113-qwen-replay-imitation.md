@@ -1,26 +1,15 @@
-# D-113 — Qwen 4B 리플레이 모방 학습과 첫 배틀 평가
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-01
+원문: [D-113](../research/policy-learning/decisions/D-113-qwen-replay-imitation.md)
 
-## 승인 근거와 결정
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-사용자가 제공한 「Qwen 4B 리플레이 모방 학습과 첫 배틀 평가」 계획을 새 context에서
-구현하고 첫 학습·평가·보고까지 수행하라고 명시했다. D-112의 목표 문서화 범위를
-이번 별도 실행으로 구체화한다. 새 Qwen Base·Kev Choice readout, 통계적 아군 세트 보완,
-단일 GPU 최대24시간 학습과 고정40경기·최대6시간 평가를 채택한다.
+<a id="d-113--qwen-4b-리플레이-모방-학습과-첫-배틀-평가"></a>
+[d-113--qwen-4b-리플레이-모방-학습과-첫-배틀-평가](../research/policy-learning/decisions/D-113-qwen-replay-imitation.md#d-113--qwen-4b-리플레이-모방-학습과-첫-배틀-평가)
 
-실행 조건·분할·예산·평가·복구 원문은 [EX-071](../experiments/EX-071-qwen-replay-imitation.md),
-입력/출력·서빙 경계는 [C-055](../CONTRACTS.md#c-055-imitation), 작업 범위는
-[EP-115](../exec-plans/completed/EP-115-qwen-replay-imitation.md)가 소유한다.
-현재 대화가 해당 범위의 실행 승인 근거이며 같은 행동의 재승인은 요구하지 않는다.
+<a id="근거와-보존-경계"></a>
+[근거와-보존-경계](../research/policy-learning/decisions/D-113-qwen-replay-imitation.md#근거와-보존-경계)
 
-## 근거와 보존 경계
-
-관측된 선택의 교차엔트로피로 행동 정책을 학습하고 실제 배틀 개선 여부를 별도로 평가한다.
-행동 선택 확률은 승률 또는 기존 Abyssal 후속 조건부 q가 아니다. 추정된 아군 정보와
-불확실한 라벨은 감사 자료로 구분하며, 미래 상대 정보와 결과를 모델 입력에 넣지 않는다.
-
-EX-066/GPU1 학습·환경·가중치·봉인과 모든 과거 중단 실험을 보존한다. 자기대국,
-추가 설정 탐색·학습·평가 경기·재경기·모델 재질의·fallback은 이번 범위 밖이다.
-부정적·불확실한 결과도 같은 완료 기준으로 보고한다.
+<a id="승인-근거와-결정"></a>
+[승인-근거와-결정](../research/policy-learning/decisions/D-113-qwen-replay-imitation.md#승인-근거와-결정)

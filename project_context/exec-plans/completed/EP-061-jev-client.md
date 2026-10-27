@@ -1,38 +1,27 @@
-# EP-061 — JEV 환경 설정과 독립 호출 기반
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-09-21
-- 승인: 현재 사용자의 환경 설정·독립 호출 기반 선택 및 계획 구현 지시
-- 관련: [D-070](../../decisions/D-070-jev-client.md), [C-044](../../CONTRACTS.md#c-044-jev)
+원문: [EP-061](../../shared/execution/plans/EP-061-jev-client.md)
 
-## 목표·범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-루트 .env의 TypeSafe 키·주소·모델 설정과 독립 Python JEV 클라이언트를 제공한다.
-기존 httpx를 사용하고 배틀 공급자·모델·연구 방법은 유지한다. 실제 외부 API 호출·배틀 통합·
-과거 실험 재개는 제외한다. INDEX/CHARTER/STATUS·C-008/034와 D-007/054,
-공급자 관련 active EP-041/044/045/048의 중단·봉인 보존을 확인했다.
+<a id="ep-061--jev-환경-설정과-독립-호출-기반"></a>
+[ep-061--jev-환경-설정과-독립-호출-기반](../../shared/execution/plans/EP-061-jev-client.md#ep-061--jev-환경-설정과-독립-호출-기반)
 
-## 완료 기준
+<a id="검증"></a>
+[검증](../../shared/execution/plans/EP-061-jev-client.md#검증)
 
-- [x] .env 설정·우선순위·비밀 제거·자식 환경 제거
-- [x] 독립 클라이언트·오류 처리·연결 정리·모의 HTTP 검사
-- [x] 기존 dotenv/ZAI 회귀·정적 검사
-- [x] 사용 예제·계약·상태·색인 갱신
+<a id="결과증거"></a>
+[결과증거](../../shared/execution/plans/EP-061-jev-client.md#결과증거)
 
-## 검증
+<a id="목표범위"></a>
+[목표범위](../../shared/execution/plans/EP-061-jev-client.md#목표범위)
 
-JEV 모의 HTTP, dotenv/ZAI 관련 회귀, 변경 Python 정적 검사로 검증한다.
-실제 키·주소는 출력하거나 evidence에 보존하지 않는다. 실제 계정 연결은 미검증이다.
+<a id="완료-기준"></a>
+[완료-기준](../../shared/execution/plans/EP-061-jev-client.md#완료-기준)
 
-## 진행
+<a id="중단복구"></a>
+[중단복구](../../shared/execution/plans/EP-061-jev-client.md#중단복구)
 
-- 2026-09-21: 구현 전 등록. 공식 API https://docs.typesafe.ai/api 확인.
-
-## 중단·복구
-
-비실험 작업으로 복구·재수집·실험 시계는 해당 없다. INDEX 공통 기준을 따른다.
-
-## 결과·증거
-
-2026-09-21 완료. [검증 보고](../evidence/ep061/report.md)에 검사·범위·한계를 기록했다.
-.env에는 없는 항목만 추가했고 기존 값은 보존했다. 실제 API 요청0, 배틀 통합0이다.
+<a id="진행"></a>
+[진행](../../shared/execution/plans/EP-061-jev-client.md#진행)

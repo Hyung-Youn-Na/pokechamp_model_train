@@ -1,16 +1,15 @@
-# D-071 — JEV Choice 배틀 연결
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-21
-- 승인: 현재 사용자 계획 구현 지시
+원문: [D-071](../research/model-evaluation/decisions/D-071-jev-battle.md)
 
-## 결정
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-C-044 독립 클라이언트를 유지하며 별도 JEV 배틀 프로필을 추가한다. 공식 관측을
-간결한 state로 투영하고 choice에 합법 슬롯 후보를 제공한다. 상세 계산·효과 사전·요약은
-사용하지 않는다. 선봉도 JEV가 선택한다. 기존 B/B2의 계산 필수 계약을 JEV에 적용하지
-않으며 이를 기존 B/B2 처치로 표시하지 않는다. 계약 원문은 C-045, 실행은 EX-047이다.
+<a id="d-071--jev-choice-배틀-연결"></a>
+[d-071--jev-choice-배틀-연결](../research/model-evaluation/decisions/D-071-jev-battle.md#d-071--jev-choice-배틀-연결)
 
-## 해석
+<a id="결정"></a>
+[결정](../research/model-evaluation/decisions/D-071-jev-battle.md#결정)
 
-기술적 완주와 선택·지연 진단이며 기존 LLM/B2와의 인과 비교나 L1-L5 효능 평가가 아니다.
+<a id="해석"></a>
+[해석](../research/model-evaluation/decisions/D-071-jev-battle.md#해석)

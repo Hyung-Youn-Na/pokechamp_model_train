@@ -1,21 +1,15 @@
-# D-057 — 구조 설명과 요청별 상세 효과 사전
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-15
-- 승인: 사용자의 계획 구현 지시; 상세 설명을 항목당 한 번 포함하고 검증 후 새 준비 기본값 적용
+원문: [D-057](../research/input-and-memory/decisions/D-057-effect-reference.md)
 
-## 결정·근거
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-기존 필드 설명만으로 item/ability/move의 조건·예외를 알기 어려우므로 저장소 고정 Showdown
-Gen9 Dex desc 원문을 별도 자산으로 추출한다. 모델 전송용 JSON의 effect_reference에
-정규화 ID별 이름·상세 설명을 한 번씩 제공한다. 이는 일반 게임 지식의 명시적 추가다.
-기존 관측·상대 가설·계산 입력은 유지하며 사전이 상대 보유·발동 사실을 뜻하지 않도록 설명한다.
-선봉은 자기 알려진 정보와 결정시점 공개 preview만 사용하고 종족 기반 비공개 세트를 조회하지 않는다.
-원문에 언급된 효과의 재귀 확장은 하지 않는다. 이미 계산된 효과의 중복 적용을 금지한다.
+<a id="d-057--구조-설명과-요청별-상세-효과-사전"></a>
+[d-057--구조-설명과-요청별-상세-효과-사전](../research/input-and-memory/decisions/D-057-effect-reference.md#d-057--구조-설명과-요청별-상세-효과-사전)
 
-## 범위·호환
+<a id="결정근거"></a>
+[결정근거](../research/input-and-memory/decisions/D-057-effect-reference.md#결정근거)
 
-C-030/031/033의 동결 자산은 보존하고 새 버전 경계를 추가한다. EX 미지정 새 준비에 적용하며
-과거 EX 지정·봉인은 기존 버전을 유지한다. 신규 준비는 과거 승인·예산·binding을 상속하지 않는다.
-유료 호출·성능 비교·과거 실험 재개0. 로컬/오프라인 검증으로 효과성을 주장하지 않는다.
-구현·검증은 [EP-046](../exec-plans/completed/EP-046-effect-reference.md)에 기록한다.
+<a id="범위호환"></a>
+[범위호환](../research/input-and-memory/decisions/D-057-effect-reference.md#범위호환)

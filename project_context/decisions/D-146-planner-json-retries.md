@@ -1,19 +1,9 @@
-# D-146 — GLM JSON 구문 오류 최대5회 재시도·새 샘플
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-15
-- 승인: 사용자 “glm json 구문 오류는 5회까지 재시도를 하도록 설정해서 다시 진행해줘.”
+원문: [D-146](../research/planner-executor/decisions/D-146-planner-json-retries.md)
 
-새 설정의 planner.json_retries 기본값을5로 하고 최초+추가5회까지 같은 관측·메시지/옵션으로
-GLM 계획을 다시 생성한다. JSONDecodeError인 content 구문 오류만 대상이다. 정상JSON의
-계획필드/형식 위반·중복키·빈 정상 envelope 밖 응답은 기존 실패 경계를 유지한다.
-HTTP 재시도는 기존 정책 그대로이며 JSON 생성차수와 물리HTTP 시도를 각각 기록한다.
-모든 원문/usage를 남기고 전체 HTTP128·경기3600초/실행4200초·자원 한도 안에서만 재시도한다.
-계획/후보·JEV 전송은 검증된 최종 응답에서만 수행하며 원문 임의 교정·이전계획 fallback0이다.
-과거 동결 설정의 필드 부재는0으로 읽어 EX-092/093의 당시 정책과 결과·봉인을 보존한다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-변경 수행 지시문·EX-093 동일 대진·모델·호출정책으로 새 EX-094/EP-152의1경기를 실행한다.
-EX-093 중단 상태를 덮어쓰지 않으며 추가 재경기0이다. CPU/합성 전송 검증 뒤 실제1경기·감사·
-통합뷰어·봉인·자원 반환까지 수행한다. 출력 복구 처치 변경이며 일반 성능 향상은 주장하지 않는다.
-조건은 [EX-094](../experiments/EX-094-planner-json-retry-sample.md), 진행은
-[EP-152](../exec-plans/completed/EP-152-planner-json-retry-sample.md)에서 관리한다.
+<a id="d-146--glm-json-구문-오류-최대5회-재시도새-샘플"></a>
+[d-146--glm-json-구문-오류-최대5회-재시도새-샘플](../research/planner-executor/decisions/D-146-planner-json-retries.md#d-146--glm-json-구문-오류-최대5회-재시도새-샘플)

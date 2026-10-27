@@ -1,15 +1,9 @@
-# D-130 — JEV-27B 공개 가중치로 개선 입력 동일32 평가
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- Status: Accepted
-- Date: 2026-10-08
-- 승인: 현재 사용자 제공 계획의 구현·다운로드·검증·실행 지시
+원문: [D-130](../research/model-evaluation/decisions/D-130-jev27b-ex058-reproduction.md)
 
-`autotrust/JEV-27B`의 지정 revision을 추가 학습 없이 로컬에서 실행하고 EX-058의
-개선 입력·봉인된32대진을 재현한다. 이번 범위에서 모델·토크나이저·서빙을 변경하며
-과거 클라우드 JEV와 고정 대진의 탐색적 비교로 해석한다. 기존 실험의 중단을 해제하거나
-진행 중인 EX-080을 변경하지 않는다.
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-GPU0·1 BF16 분산 적재와 격리 환경을 사용한다. 전체·단계·경기의 경과시간 상한은 없으며
-통신 장애 감지·자원 상한·무결성 gate는 유지한다. 자원·조건·분모·진입/중단·해석 원문은
-[EX-082](../experiments/EX-082-jev27b-ex058-reproduction.md), 진행은
-[EP-134](../exec-plans/active/EP-134-jev27b-ex058-reproduction.md)다.
+<a id="d-130--jev-27b-공개-가중치로-개선-입력-동일32-평가"></a>
+[d-130--jev-27b-공개-가중치로-개선-입력-동일32-평가](../research/model-evaluation/decisions/D-130-jev27b-ex058-reproduction.md#d-130--jev-27b-공개-가중치로-개선-입력-동일32-평가)

@@ -1,66 +1,21 @@
-# EP-137 — JEV-27B 4GPU 잔여9경기 계승
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 생성일: 2026-10-13
-- 책임자: Codex
-- 승인: 현재 사용자 제공 계획의 구현·검증·실행 지시 / D-132
-- 원문: [EX-083](../../experiments/EX-083-jev27b-four-gpu-continuation.md), C-064, RD11.1/C-018·RD11.2/C-046·C-047
-- 기준/실제 branch: `research/model-training`; 시작 `2b427bacc8f4c767497fd00ff6f881fe73bf1c8f`, 미커밋 변경 없음
-- checkout: `/workspace`; interpreter/명령·새 출력과 원자료 구분은 EX-083 참조
+원문: [EP-137](../../research/model-evaluation/plans/EP-137-jev27b-four-gpu-continuation.md)
 
-## 목표·범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-EX-082 정상23경기와 원 실패를 보존하고 승인된4GPU 조건에서 잔여9경기를 검증·수집·종결한다.
-`integration/jev27b/`, `scripts/jev27b`, 관련 검사·제어문서·새 출력/뷰어만 변경한다.
-INDEX/CHARTER·매뉴얼·설계/계약 및 겹치는 active EP-134/127/126/125/119/108/103/
-080/077/075/064/062의 과거 중단·원자료·자원 경계를 확인했다. 기존 실행 재개0이다.
-독립적인4GPU 자원/모델 구현과 계승 수집/감사 구현을 파일별로 분리 위임하며 주 에이전트가
-새 gate/명령·문서·통합·검증·실행/보고를 담당한다. 같은 파일 동시 수정은 하지 않는다.
-실험 조건·승인·자원·재시도·분모·중단·해석은 EX-083 원문을 따른다.
+<a id="ep-137--jev-27b-4gpu-잔여9경기-계승"></a>
+[ep-137--jev-27b-4gpu-잔여9경기-계승](../../research/model-evaluation/plans/EP-137-jev27b-four-gpu-continuation.md#ep-137--jev-27b-4gpu-잔여9경기-계승)
 
-## 완료 기준
+<a id="목표범위"></a>
+[목표범위](../../research/model-evaluation/plans/EP-137-jev27b-four-gpu-continuation.md#목표범위)
 
-- [x] D-132/C-064/EP-137/EX-083 등록
-- [x] continue·4GPU 소유/서빙·부모 계승/시도 이력 구현
-- [x] 동결 source 전체 CPU 회귀
-- [x] 독립 재로딩·원591응답·연속 메모리·일반 턴 gate
-- [x] 지정9경기 유효 완료·고유32경기/16쌍·총33시도 전수 감사/비교
-- [x] 보고·C-047 뷰어/이동 후 오프라인 검증·봉인·자원 반환·학습 브랜치 문서 반영
+<a id="완료-기준"></a>
+[완료-기준](../../research/model-evaluation/plans/EP-137-jev27b-four-gpu-continuation.md#완료-기준)
 
-## 진행·검증
+<a id="진행검증"></a>
+[진행검증](../../research/model-evaluation/plans/EP-137-jev27b-four-gpu-continuation.md#진행검증)
 
-- 2026-10-13 — 사용자 승인 범위 등록. checkout/submodule clean·네 GPU 유휴 확인.
-  부모 보고는23정상/1실패/8미실행·591응답이며 새 GPU 추론/배틀0이다.
-  상세 검증·실패·자원 기록은 새 출력 아래 보존한다.
-- 4GPU runtime·부모 계승/수집·게이트/종결 제어를 분리 구현하고 독립 검토했다.
-  자원/통신79검사와 제어/수치35검사, 계승/배틀 및 취소 보존 검사가 통과했다.
-  최종 감사 실패의 완료 거부와 최종화/임시 뷰어의 자원 감시를 보강했다.
-  부모 보존 gate868파일의 봉인·기존 토크나이저/formatter/길이 검사를 확인했다.
-  현재 source를 동결하여 단일 controller에서 통합 CPU→GPU gate→조건부 수집을 수행한다.
-- 첫 통합 CPU186검사 통과 후 CUDA UUID의 bare/GPU-prefix 표현을 직접 비교한 구현 결함으로
-  첫 적재 전 중단했다. 모델 적재·추론·배틀0이며 원 source·시계·실패695파일·자원 반환을 봉인했다.
-  원자료와 별도로 수행한 장치 진단에서 NVML host PID와 container PID의 직접 비교 결함도
-  확인했다. 전체 UUID128bit 대조와 단일 NVML host PID의 지속성 검사로 교정하며 기존
-  잠금·유휴·추가 프로세스/UUID 변경·40/44GiB·수치 기준은 유지한다.
-  CPU37검사와 실제4GPU UUID byte 독립대조·모델0·자원 반환을 통과했다.
-  EX-083의 사전 도구 결함 복구 범위에서 첫 봉인을 `preflight-attempt1/`에 바이트 그대로
-  보존하고 모든 gate를 새 source로 재검증한다. 범용 재개가 아닌 해당 실패 hash1개만 허용한다.
-- 교정 source 전체 CPU229검사를 통과했다. 첫 독립4GPU 프로세스의5입력 추론을 완료하고
-  GPU를 반환했다. 보존2GPU 결과와5선택이 같으며 확률 최대차이는0이다.
-  두 번째 독립 프로세스의 검증을 진행 중이며 본 수집은0이다.
-- 두 독립4GPU 및 보존2GPU 재로딩 결과의30개 비교와 원591응답 전수 재생을 통과했다.
-  선택·후보 연결 동일, 확률 최대차이0이다. 같은 서버의16,604토큰·짧은 입력 반복은
-  allocated 동일·reserved 비증가·네 GPU40/44GiB 기준을 통과했고 일반턴1회도 재시도0으로
-  완료했다. 서버 검증597요청과 직접 재로딩10추론은 성적에서 제외하며, source 변경 없이
-  지정24–32번9경기 수집에 진입했다. 증거는 새 출력 `gates/`와 `evidence/entry-gates.json`이다.
-- 지정9경기 유효 완료·부모/신규 전수 감사·독립 집계·EX-058 비교를 완료했다.
-  정상32경기/16쌍·원실패 포함33시도의 분모를 보존한다. 전체 뷰어의832+608결정 오프라인
-  확인 후 원실패 턴수 미기록 표시만 별도 보정했고 원본·raw JSON·원 봉인은 유지했다.
-  보정11결정의 이동/오프라인 확인·추가 봉인·GPU0–3/잠금/포트 반환을 마쳤다.
-  결과·분모·한계는 [최종 보고](../evidence/ep137/report.md),
-  검증/자원/원본 연결은 [완료 검증](../evidence/ep137/completion.json)을 따른다.
-
-## 차단·중단
-
-[INDEX](../../INDEX.md#workflow)와 EX-083을 따른다. 실제 gate 실패 시 수집을 시작하지
-않고 증거·자원을 정리한다. 중단 처리 완료를 실험 목표 달성으로 표시하지 않는다.
+<a id="차단중단"></a>
+[차단중단](../../research/model-evaluation/plans/EP-137-jev27b-four-gpu-continuation.md#차단중단)

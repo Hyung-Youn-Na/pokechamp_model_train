@@ -1,102 +1,27 @@
-# EX-086 — JEV-27B 공개 정보 v6 신규32경기
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Blocked
-- 등록일: 2026-10-13
-- 승인: 현재 사용자 계획 구현·검증·실행 지시 / D-135 / EP-140
-- 기준 연구선·실제 branch: `research/model-training`, checkout `/workspace`
-- 시작 commit: `a4659bf298c7935714f9fbd25246db2d831c5926`
-- 시작 미커밋 변경: EX-084/085의 integration/jev27b·jev9b·quyet 및 문서·실행기 변경을 보존한다.
+원문: [EX-086](../research/input-and-memory/experiments/EX-086-jev27b-public-memory-v6.md)
 
-## 질문·처치·동결 조건
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-상대 공개 정보의 지속 보존과 현재 상태 교정을 묶은 `jev-choice-v6`가 고정 대진에서
-완료율·선택·성적·비용에 어떤 차이를 보이는지 탐색한다. 방향성 가설·일반화 판정은 없다.
-본 절의 공통 조건은 EX-087에도 적용한다. 각각32경기·16진영교환쌍을 전부 새로 실행하며
-과거 경기 계승0, 총 신규64경기다. EX-083 고유32슬롯의 팀·진영·게임/actor seed·제출순서·
-Abyssal·Gen9 OU·timer off를 유지한다. 전체 후보 단일 Choice, 단일 후보 무호출,
-후보 ID/명령/순서·자기 팀 상세·선택 정책·추천 자료·피해량/스피드 계산식과 현재 대면 범위는 불변이다.
-입력·공개 정보·표시 경계는 [C-067](../CONTRACTS.md#c-067-jev-public-memory-v6)이 소유한다.
+<a id="ex-086--jev-27b-공개-정보-v6-신규32경기"></a>
+[ex-086--jev-27b-공개-정보-v6-신규32경기](../research/input-and-memory/experiments/EX-086-jev27b-public-memory-v6.md#ex-086--jev-27b-공개-정보-v6-신규32경기)
 
-EX-083과 같은 `autotrust/JEV-27B` revision `51740a8891c2a8baefd969237fd44187b3e3a115`,
-공식 LoRA 병합·BF16 backbone·FP32 head·Choice 보정값·bare-v1·고정 환경을 재사용한다.
-학습·양자화·offload·모델 중복복사0. 전체32768토큰 무절단·공식16후보 한도다.
-GPU0 embedding/0–13층, GPU1 14–31층, GPU2 32–49층, GPU3 50–63층/norm/head다.
+<a id="감사비교완료"></a>
+[감사비교완료](../research/input-and-memory/experiments/EX-086-jev27b-public-memory-v6.md#감사비교완료)
 
-## 자원·시간·실패 경계
+<a id="자원시간실패-경계"></a>
+[자원시간실패-경계](../research/input-and-memory/experiments/EX-086-jev27b-public-memory-v6.md#자원시간실패-경계)
 
-27B→9B 순서로 각각GPU0–3 독점, 경기/추론 동시성 각각1이다. 네GPU의 공용 lock·UUID·유휴
-확인 후CUDA 초기화, GPU당 allocator40GiB/전체NVML44GiB·호스트32GiB·합산디스크100GiB다.
-두 모델·공유 모델/actor/브라우저 환경·기존 참조·두 신규 출력/뷰어·임시 복사를 처음부터 함께 센다.
-전체/단계/경기 경과시간 상한은 null. HTTP600초·동일 ID/본문의 최초+최대3회 재전송
-(10/30/60초)과 영속 중복 추론 방지를 유지한다.
+<a id="진입-검증"></a>
+[진입-검증](../research/input-and-memory/experiments/EX-086-jev27b-public-memory-v6.md#진입-검증)
 
-RD11.1/C-018·RD11.2/C-046 적용. 실행 불가능한 선택은 해당 경기 실패로 격리한다.
-공유 입력·감사·무결성 결함은 양쪽 의존 작업을 중단한다. 모델에 한정된 자원/서빙 실패는
-그 실험을 중단하며 공유 영향이 없고 자원이 반환되면 다른 모델은 계속한다.
-재경기·보충·자동 수집 재개0. 사전 도구 결함은 원본·최초 시계·사용량을 보존하고 독립 검증하되
-모델별 단일 서버 적재/최대8추론 한도를 늘리지 않는다. 실제 모델/수치/자원 실패를 완화하지 않는다.
-본수집 source 변경0, 감사기만의 결함은 원자료 보존 후 별도 정정 분석으로 처리한다.
+<a id="질문처치동결-조건"></a>
+[질문처치동결-조건](../research/input-and-memory/experiments/EX-086-jev27b-public-memory-v6.md#질문처치동결-조건)
 
-## 진입 검증
+<a id="현재-결과"></a>
+[현재-결과](../research/input-and-memory/experiments/EX-086-jev27b-public-memory-v6.md#현재-결과)
 
-CPU는 공개 후3턴 초과/벤치/재등장, 소모·Knock Off·Trick, Mimic/Transform 복귀·Sketch 지속,
-호출/반사 기술, Trace/Skill Swap 소유자·복귀, 억제/해제/공개 예외, 미공개 프리뷰,
-HP0/반올림/비공개 회복 미추정, 교체 후 일시효과 제거, 개체 혼동·미래/foreign request 차단을 검사한다.
-표시와 현재 계산/세트 필터의 같은 사실 사용·벤치 계산0, 관련 v4/v5 저장 payload/후보/formatter
-회귀, 뷰어 요약·턴경계/중간cutoff/동일턴 다중결정·종료/실패·원문 보존을 검사한다.
-
-각 모델 본서버1회 적재·최대8추론: 저장 관측/prefix에서 v6로 재생성한 선봉6·일반13·강제교체5·
-공개 벤치 정보 포함 긴 입력4요청 후 같은 서버에서 짧음→김→짧음→김4요청이다.
-실제 배치·후보 연결·반복선택 동일·유한 확률 최대차이≤1e-4·allocated 회수/reserved 비증가·
-자원 한도를 확인하고 같은 서버에서 수집한다.591건 재생·독립2회 재적재·모델간 선택/확률 대조0.
-사전검증 비용은 성적과 별도다. 검증 길이 이상의 모든 입력 안정성을 주장하지 않는다.
-
-## 감사·비교·완료
-
-신규 경기별 관측→공개사실→요청/선택→명령/결과를1회 감사하고 종료 시 기록 완전성/산술을 확인한다.
-모든 경기·결정·턴로그 원문을 내보내 대조한다. 모델별 이동 후 오프라인 브라우저 검사는
-정상·자동·실패·공개벤치/부재·턴로그/cutoff 최대5개 대표 화면이다.
-실제 실패가 없으면 합성 표시fixture로 구분한다. 설명 정확성은 미평가다.
-
-비교는 EX-086−EX-083, EX-087−EX-085, EX-086 대 EX-087 각각 공통 유효 진영교환쌍의
-승1/무0.5/패0 쌍평균 동일가중으로 계산한다. 예정/시도/유효/실패/무효/미실행·공통쌍과
-승무패·완료율·결정·실제추론·HTTP시도·토큰·지연·자원을 구분하며 실패를 패배로 바꾸지 않는다.
-EX-083은2GPU23경기+4GPU9경기 계승 구성임을 명시한다. 결과는 공개정보 보존과 현재 상태
-교정의 결합 처치에 대한 고정 대진 탐색이며 일반 성능이나 모델 크기만의 효과로 해석하지 않는다.
-
-모델별 유효32경기/16쌍·감사·뷰어·모든 쓰기 종료 후 봉인·GPU/잠금/포트 반환·문서 갱신이
-완료 기준이다. 미달이면 실제 실패/미실행 분모와 미완료를 보존한다.
-
-## 환경·출력
-
-모델 `.pokechamp-data/jev27b-runtime/.venv/bin/python`, actor `pokechamp/.venv/bin/python`,
-브라우저 `/tmp/ep037/tools/bin/python`을 재사용한다. 명령은
-`scripts/jev-eval {prepare|execute|status} --experiment EX-086|EX-087`이다.
-실험 ID와 모델·v6·출력·protocol을 고정 연결하며 덮어쓰기/수집 재개를 거부한다.
-EX-086 출력 `/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-086`,
-뷰어 `/workspace/exports/battle_viewers/ex086/index.html`이다.
-새HTML/JS/변환기를 source/provenance에 포함하고 EX-083/085 원본/뷰어/봉인은 읽기 참조로 보존한다.
-
-## 현재 결과
-
-첫 경기14턴/rqid44의 공개 Spikes 진영 행을 포켓몬으로 해석하는 공유 입력 결함으로 중단했다.
-**예정32·시도1·유효0·실패1·무효완료0·미실행31·유효쌍0/16**이다.
-승무패 점수와 EX-083 대비 공통쌍 차이는 산출하지 않는다. 실패를 패배로 바꾸지 않았다.
-
-동결source CPU231통과·브라우저 별도환경1skip, 별도 합성 뷰어18검사를 통과했다.
-본서버1회 적재·8사전추론은17,271토큰까지 통과했고 반복 선택 동일/확률차이0·메모리 회수를
-확인했다. 같은 서버의 본수집은18결정/추론/HTTP/전송·267,473입력토큰이며 재전송/중복/미확정0이다.
-사전8추론·112,916토큰은 별도다.9B는 공유 결함으로 실행하지 않았다.
-
-입력 결함은 진영/필드와 포켓몬 대상 타입 분기로 사후 교정했다. 동일 중단cutoff의 재생성·
-7후보/명령 보존 및 관련123 CPU검사를 통과했다. 종료 집계의 변수 충돌도 별도 교정/4검사로
-확인했다. 실제SQLite 원장은 정상26추론을 보존했고 원 오류 보고/봉인은 덮어쓰지 않았다.
-
-저장18입력의 경기별1회 감사와 최종완전성/산술, 원문26파일·공개192행·전결정/턴cutoff 대조,
-이동 후4대표화면 검증을 완료했다. 모델선택 실패만 합성표시이며 실제 입력생성 중단을
-“진행 중 중단”으로 보인다. 원실행1,540파일/수집747파일·뷰어 봉인과GPU0–3/잠금/포트 반환을 확인했다.
-중단 뒤 모델 적재·추론·신규경기·자동재개0이다.64경기 목표는 미달이며 사후 교정은 재개 승인이 아니다.
-
-[통합 중단 보고](../exec-plans/evidence/ep140/report.md) ·
-[종결·정정 연결](../exec-plans/evidence/ep140/completion.json) ·
-[뷰어](../../exports/battle_viewers/ex086/index.html).
+<a id="환경출력"></a>
+[환경출력](../research/input-and-memory/experiments/EX-086-jev27b-public-memory-v6.md#환경출력)

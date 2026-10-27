@@ -1,553 +1,31 @@
-# 현재 연구 설계 (Research Design)
+# 공통 연구 설계
 
-D-149의 사용자 재승인으로 [EX-096](experiments/EX-096-nvfp4-battle-probability-diagnostics.md)은
-반복 확률 차이를 진단으로 유지하며 새1경기에 진입한다. EX-095의 기준/Blocked는 보존한다.
+현재 연구선의 목적은 포켓몬 모델 학습·정책 개선·독립 평가다. [CHARTER](CHARTER.md)와 [현재 상태](STATUS.md)를 함께 읽는다.
+D-170에 따라 이 파일은 공통 원문과 주제별 원문 연결을 담당한다. 이전 절은 아래 링크의 주제 문서가 편집 원문이며 적용 범위를 자동 확대하지 않는다.
+L1–L5를 명시한 설계·미정 항목은 별도 연구선의 보존 범위다. 과거 실험의 Current·현재·이번 표시는 그 당시 범위이며 실행 지시가 아니다.
 
-D-148의 EX-095를 JEV-35B-NVFP4 단일GPU 동일 대진 샘플 규범으로 편입한다.
-조건·검증·한도·실패 분모·해석 원문은 [EX-095](experiments/EX-095-jev35b-nvfp4-sample.md)다.
-이 문서의 현재 연구선은 `research/model-training`이며 최상위 목적은 **모델 학습·정책 개선·독립 평가**다.
-[D-131](decisions/D-131-research-branch-preservation.md)에 따라 두 목적의 현재 작업을 분리한다. 기존 실험의 조건·평가·해석과
-Blocked/Paused 판정은 보존한다. EX-084의 Quyet-Medium 2단계 동일 대진 평가를 완료했으며
-EX-085의 공식 JEV-9B 단일 Choice 동일32경기와 EX-088/089의 교정v6 신규64경기 평가도
-완료했다. D-137/EX-090의 피해 예측 제거 신규32경기 비교도 승인 범위에서 종결했다.
-D-138/EX-091의 MiniCPM5-2B-Jev 계산기 포함 신규32경기 비교도 승인 범위에서 완료했다.
-EX-095는 반복성 gate 실패로 본경기 미실행1·Blocked를 보존한다. 실행 상태와 후속 범위는 STATUS/EP-154를 따른다.
-분리 기반 구성은 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md), 경로·외부 자산·복원은 [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)를 따른다.
-
-- 상태 (Status): Current — 모델 학습·정책 개선·독립 평가; EX-091 완료
-- 편집 기준일 (As of): 2026-10-14 — D-138 MiniCPM5-2B-Jev 비교 종결
-- Authority domain: research question, hypothesis, treatment definition, comparison methodology,
-  evaluation protocol, interpretation rule
-
-이 문서는 현재 이 프로젝트가 무엇을 어떤 비교와 evidence로 검증하려 하는지에 대한 source of
-truth다. 현재 값이 `TBD`라는 사실도 authoritative state의 일부다. 과거 run의 configuration과
-result는 [`experiments/`](experiments/)에, 설계 변경의 rationale은
-[`decisions/`](decisions/)에 둔다.
-
-이 문서는 [`CHARTER.md`](CHARTER.md)의 project goal과 fundamental invariant를 변경하지 않으며,
-[`CONTRACTS.md`](CONTRACTS.md)의 runtime semantics를 재정의하지 않는다. 상속된 code나 paper
-artifact를 설명할 때는 현재 연구 설계로 채택했다는 의미가 없도록 아래 status를 사용한다.
-현재 system composition과 data/control flow는 [`ARCHITECTURE.md`](ARCHITECTURE.md), 실제 수행
-단위는 [`exec-plans/INDEX.md`](exec-plans/INDEX.md), 현재 진행 상태는 [`STATUS.md`](STATUS.md)가
-각각 담당한다. Implementation에서 관찰한 동작은 이 문서의 methodology를 자동으로 바꾸지 않는다.
-
-일반 절에서 L1-L5를 명시한 미정 항목은 그 연구선의 전체 효능 비교 설계와 확증 evidence에
-한정한다. 개별 학습·pilot·운영 비교·요약 진단의 조건과 평가는 해당 D-XXX 절과 EX를 따른다.
-브랜치의 현재 목적은 [§1](#branch-research-objective), 학습 연구선의 방향·미정 설계는
-[포켓몬 전용 학습 절](#pokemon-training-objective)에 구분한다.
-운영 실험·진단이 등록되지 않았다는 뜻으로 해석하지 않는다. 개별 실행·중단·검증 상태는
-[`STATUS.md`](STATUS.md)와 [`experiments/INDEX.md`](experiments/INDEX.md)가 연결하는 record를
-확인한다. 설계의 채택 자체는 중단된 실행의 재개 승인이 아니다.
-
-| 표시 | 의미 |
-|---|---|
-| **Current** | 이 브랜치에서 채택한 연구 목적·설계. 실행 중이라는 뜻은 아니다. |
-| **Preserved** | 다른 연구선 또는 과거 승인 범위의 설계·근거를 보존한다. 당시 조건·판정을 변경하지 않는다. |
-| **Observed** | Source, test 또는 artifact에서 확인한 구현·기록 사실. 그 자체로 연구 의도는 아니다. |
-| **Excluded legacy** | 원저자 연구의 evidence이지만 Decision D-002에 따라 현재 설계로 승계하지 않은 항목 |
-| **Provisional** | 검토 가능한 후보이나 명시적 승인 전에는 experiment를 구속하지 않는 항목 |
-| **Unresolved / TBD** | 현재 evidence만으로 정할 수 없는 항목 |
-| **Missing** | 요구되는 evidence 또는 record가 현재 존재하지 않는 상태 |
 
 <a id="current-rules"></a>
 
+<a id="적용-범위와-읽기-경로"></a>
 ## 적용 범위와 읽기 경로
 
-<a id="jev-planner-environment"></a>
+[연구 질문별 목록](research/INDEX.md)에서 주제 원문을 찾는다. 새 설계에는 아래 공통 평가·복구·
+해석 규칙과 해당 주제의 명시된 적용 범위를 함께 사용한다.
 
-### GLM planner–JEV 설정 환경
-
-D-158의 [EX-105](experiments/EX-105-tacit-vllm-low.md)는 사용자 소유 Tacit vLLM 서버를 이용하는 별도 재평가다. 기존 조건의 사전11/실제1경기와 판단 비교를 유지하되 backend/cache/sampler/계측 변경과 외부 서버 소유권을 명시하며 조건 원문은 EX-105다.
-
-D-157의 [EX-104](experiments/EX-104-tacit-thinking-low.md)는 EX-103 조건의 Tacit thinking 패키지 새1경기와 동일입력 첫 판단/추론후 판단 비교다. 공식 프롬프트 차이·그림자 판단의 한계와 고정3사례 진단을 포함하며 조건/한도/해석 원문은 EX-104를 따른다.
-
-D-156의 [EX-103](experiments/EX-103-jev-omni-low.md)은 EX-102 대비 Jev-Omni 패키지와 GLM low의 결합 처치다. 조건·gate·중단·비교 원문은 EX-103을 따른다.
-
-D-155/EX-102는 EX-101의 reasoning_effort만 low→high로 바꾼 동일 대진 새1경기다.
-나머지 사건호출/모델/입력/한도를 유지하며 조건·검증·중단 원문은 EX-102를 따른다.
-단일 궤적 비교로 일반 성능이나 인과효과를 주장하지 않는다.
-
-D-154/EX-101은 EX-100 대비 주기호출 제거와 공개 교체/출전 폼 사건 추가만의 처치다.
-상세 조건·한도·검증은 EX-101을 규범 참조한다. 저장궤적28결정 재생은 호출위치 검증이며
-새 경기 호출수 예측이나 성능평가가 아니다. 단일경기로 일반성능·인과효과를 주장하지 않는다.
-
-D-152/EX-099는 EX-098 대비 경기/전체 시간 상한을null로 해제하고 GLM 출력을131072로
-늘린 결합 처치의 새1경기다. 나머지 조건·호출/메모리·통신/출력복구 경계는 유지한다.
-과거 사용자 중단/실패·봉인은 보존하며 일반 성능/인과효과를 주장하지 않는다.
-
-D-151/EX-098은 EX-097 대비 GLM reasoning_effort만low→high로 바꾼 새1경기다.
-원 입력/프롬프트/모델/한도를 유지하며 지연·usage·Ruination 행동 사례와 결과를 기술적으로 비교한다.
-서로 다른 궤적의 단일 표본으로 추론 강도의 일반 성능/인과효과를 주장하지 않는다.
-
-D-150/EX-097부터 새 GLM planner 기본 temperature는0이며 response_format 범위에서
-최초+추가5회까지 형식 오류를 재생성한다. 전략적 의미 판단은 재시도하지 않는다.
-관측/옵션·전체 한도/원문/usage를 보존하고 과거 동결 조건은 그대로 둔다.
-EX-096 대비 온도와 복구범위를 함께 바꾼 단일 사례이며 일반 성능/인과 효과는 미평가다.
-
-D-146/EX-094는 GLM content JSON 구문 오류의 최초+추가5회 재생성을 허용하는 출력복구 처치다.
-같은 메시지/관측/옵션과 전체 호출/시간한도를 유지하고 원문/usage·HTTP시도를 모두 보존한다.
-정상JSON의 계획 스키마/의미 위반은 대상이 아니다. EX-093과의 차이를 복구 정책으로 식별한다.
-
-D-145/EX-093은 D-143의 변경 수행 지시문을 EX-092와 동일 대진·모델·호출정책의 새1경기에서
-관찰한다. 단일 샘플의 기술·행동 사례 비교이며 일반 성능 향상/인과효과를 확정하지 않는다.
-조건·한도·중단/복구·분모는 EX-093을 따른다. 기존 결과·뷰어·봉인은 보존한다.
-
-D-143/EP-149는 JEV의 계획 목표 충족 확인·불필요한 반복 회피·유효한 미완료 목표 진전을
-명시하는 수행 프롬프트 처치다. 현재 조건이 달라지면 목표 충족 여부를 재평가한다.
-Planner 프롬프트/호출·관측·후보는 유지하고 변경은 새 설정에만 적용한다. CPU 연결 검증은
-행동 개선·승률 효과의 증거가 아니며 실제 비교에서 수행 지시문 차이를 별도 조건으로 식별한다.
-
-D-142/EX-092는 EX-088 첫 대진을 현재GLM planner/JEV-9B·역할guide·표시이름으로 새1경기
-수집하는 첫 실제 샘플이다. 조건·한도·검증/중단·분모는 EX-092 원문에 둔다.
-과거27B와의 효능 비교나 일반 승률 추정이 아니며 원 결과·봉인을 보존한다.
-
-D-141/EP-147의 새 후보 표시명(names-v1)은 기존 관측의 이름을 후보 설명에 병기하는
-입력 표현 처치다. ID/순서/명령·모델·계산·호출 정책을 유지하고 planner on/off에 같은 표현을 쓴다.
-표시 추가 전후는 executor 입력 조건 차이로 기록하며 planner만의 효과로 해석하지 않는다.
-가독성 개선과 실제 행동 선택/배틀 성능은 구분한다.
-
-D-140/EP-146의 새 planner 기본 guide는 역할·양측 승리 경로·핵심 자원 보존/소모를 중심으로
-구성한다. 입력 필드 제거가 아닌 system 안내 변경이며 기존 v6 state/후보/계산·수행 지시·
-호출 정책을 유지한다. 상대 역할/승리 경로는 공개 근거에 따라 지지되는 조건부 가설로 다루고
-역할 DB의 종족 가능성을 실제 세트로 확정하지 않는다. 새 지식 안내의 적합성과 성능은 별개이며
-문헌에 근거한 설계나 무호출 검사만으로 GLM의 전략 품질·배틀 성능 향상을 주장하지 않는다.
-실제 비교에서는 planner front prompt와 guide를 함께 프롬프트 조건으로 기록한다.
-
-D-139/EP-145는 정책 개선 연구를 위한 호출·프롬프트 독립 설정 환경의 구현 범위다.
-기본 수행 모델은 JEV-9B와 계산기 포함 교정v6, planner는 glm-5.3-flash의 전략 조언이다.
-호출 정책 비교는 프롬프트/수행 모델/관측/일정을 고정하고, 프롬프트 비교는 호출 정책을 고정한다.
-모델 패키지나 입력을 함께 바꾸면 결합 처치로 표시한다. off의 원래 JEV 입력을 기준 경로로 유지한다.
-승리 조건·보존 대상·위협·Tera 방침·조건부 우선순위를 제공하되 최종 행동은 JEV가 선택한다.
-Planner는 현재 관측·누적 공개 사실에 이전 계획과 이후 공개 사건을 더해 읽는다.
-기본 최초+3턴/기절/Tera/강제교체 이외 정책 선택과 두 prompt는 모두 설정으로 명시한다.
-같은 관측을 저장 재생하여 호출·입력 구성을 검증하는 것은 정책 변경 뒤 배틀 성능의 평가가 아니다.
-실제 배틀 비교는 후속 EX에서 새 일정·예산·분모·실패/복구·해석을 정하며 이번에 실행하지 않는다.
-이번 로컬 검증에 기존 자료를 읽는 것은 학습 편입·holdout 독립성 주장·실제 공급자/GPU 검증이 아니다.
-
-이 브랜치의 현재 목적은 **모델 학습·정책 개선·독립 평가**다. 분리 전에 등록한 D별 절의 `Current`,
-“현재 실행”, “이번 실행”은 각 결정이 채택한 당시 범위에 적용되며 현재 실행 지시가 아니다.
-동결 D별 본문·EX/ADR 원문을 유지하고 현재 실행 여부는 [STATUS](STATUS.md)에서 확인한다.
-
-[D-138](decisions/D-138-minicpm5-2b-jev.md)의 [EX-091](experiments/EX-091-minicpm5-2b-jev.md)을
-교정v6·계산기 포함 MiniCPM5-2B-Jev의 고정 대진 패키지 탐색 규범으로 편입한다.
-EX-089를 기준선으로 GPU0·디스크 상한null의 새32경기/16쌍을 평가한다. 모델/토크나이저/
-전용 포맷/배치 차이를 함께 명시하며 조건·검증·알람·분모·해석은 EX-091 원문을 따른다.
-
-[D-137](decisions/D-137-jev9b-no-damage.md)의 [EX-090](experiments/EX-090-jev9b-no-damage.md)을
-피해 예측 정보·관련 설명 제거의 고정 대진 탐색 규범으로 편입한다. EX-089 결과를 기준선으로
-재사용하며 스피드 비교를 유지한 새32경기/16쌍을 평가한다. 주지표·통제·검증·자원·실패/복구·
-분모·해석은 EX-090 원문을 따른다. 입력 길이와 경기 진행 변화가 포함되며 일반화·동등성을 주장하지 않는다.
-
-[D-136](decisions/D-136-jev-v6-corrected-evaluation.md)의 사용자 재승인으로
-[EX-088](experiments/EX-088-jev27b-v6-corrected.md)/[EX-089](experiments/EX-089-jev9b-v6-corrected.md)를
-교정v6의 새64경기 평가로 편입한다. 원질문/처치·기준/한도/해석은 유지하고 비교는
-EX-088−EX-083, EX-089−EX-085, EX-089−EX-088이다. 기존 중단 결과는 별도 보존한다.
-
-[D-135](decisions/D-135-jev-public-memory-v6.md)의
-[EX-086](experiments/EX-086-jev27b-public-memory-v6.md) 공통 protocol과
-[EX-087](experiments/EX-087-jev9b-public-memory-v6.md)의 모델별 차이를 공개 정보 보존/현재 상태
-교정 결합 처치의 고정 대진 탐색 규범으로 편입한다. 신규64경기이며 비교·한도·검증·실패/복구·
-분모·해석은 해당 원문을 따른다. 기존 EX-083/085 결과·뷰어·봉인은 보존한다.
-
-[D-134](decisions/D-134-jev9b-single-choice.md)의
-[EX-085](experiments/EX-085-jev9b-single-choice.md)를 동일 입력·단일 선택 정책의 공식
-JEV-9B/JEV-27B 패키지 고정 대진 탐색 평가 규범으로 편입한다. 조건·한도·검증·분모·
-복구·해석의 원문은 EX-085다. 기존32경기는 비교에만 사용한다.
-
-[D-133](decisions/D-133-quyet-medium-two-stage.md)의
-[EX-084](experiments/EX-084-quyet-medium-two-stage.md)를 새 Quyet-Medium 2단계/긴 입력
-처치의 고정 대진 탐색 평가 규범으로 편입한다. 신규32경기이며 EX-083 성적은 비교에만 쓴다.
-질문·처치·한도·검증·실패/복구·분모·비교/해석의 원문은 EX-084다.
-
-[D-132](decisions/D-132-jev27b-four-gpu-continuation.md)의 별도
-[EX-083](experiments/EX-083-jev27b-four-gpu-continuation.md)는 정상23경기 계승·4GPU 잔여9경기의
-진입/자원/재시도/분모·혼합구간 해석 원문으로 편입한다. EX-082의 당시 판정·조건은 보존한다.
-
-[D-130](decisions/D-130-jev27b-ex058-reproduction.md)에 따라
-[EX-082](experiments/EX-082-jev27b-ex058-reproduction.md)의 질문·처치·동결 조건·진입 gate·
-자원/시간·분모·실패/복구·비교/해석을 공개 JEV-27B의 EX-058 재현 평가 규범으로 편입한다.
-과거 클라우드 모델과 로컬 공개 모델의 고정 대진 탐색 비교이며 다른 실험의 조건은 불변이다.
-
-공통 연구 목적·미정 설계·평가·해석은 §1–15의 명시된 적용 범위를 따른다.
-브랜치 목적은 [§1](#branch-research-objective)에서 구분한다. 새 기본 IO 테스트는
-[§8.1](#io-explanation-review), 도구 결함 복구는 [§11.1](#defect-recovery), 공급자 판단 오류는
-[§11.2](#provider-judgment-errors)를 먼저 확인한다.
-새 상세 효과 사전의 지식 추가·해석 범위는 [D-057](#d-057-배틀선봉-상세-효과-사전), 선봉의 두 독립 개선은 [D-061](#d-061-선봉-전략규칙-입력-개선)을 따른다.
-이 절의 안내는 각 규칙의 기존 적용 시점·예외를 바꾸지 않는다.
-
-§0 및 D별 실험·진단 절은 당시 채택된 범위에 적용되며 새 작업의 실행·검증 목록으로 자동 상속하지 않는다.
-`Current` 표시는 설계 채택을 뜻하며 실행 중이라는 뜻은 아니다. 현재 실행 상태는
-[실행 계획 색인](exec-plans/INDEX.md), 과거 결과·정정은 [실험 색인](experiments/INDEX.md)에서 찾는다.
-새 호출에 적용되는 D별 공통 기본값은 [D-013/014](#0-d-012-기준선-pilot의-현재-설계),
-[D-045](#d-045-전체-cloud-기본-동시성8) 및 [C-029](CONTRACTS.md#c-029--새-cloud-기본-동시성8)의 기존 범위를 유지한다.
-
-중복을 줄인 절은 EP-039의 2026-09-14 대조 시점에 정확히 지정한 기존 동결 EX/EP 원문 범위를 이 문서의 규범 내용으로
-참조 편입한다. 연구 설계의 domain authority와 원문 소유권은 이전하지 않으며,
-참조 문서의 나머지 본문이나 이후 변경을 자동 채택하지 않는다. 참조 원문에 있는 과거 승인·명령은
-현재 작업 지시나 중단 실험의 재개 권한이 아니다. 고유 규범은 이 문서에 남긴다.
-
-## 0. D-012 기준선 pilot의 현재 설계
-
-2026-09-06 사용자 승인으로 [D-012](decisions/D-012-adopt-pokechamp-baseline-pilot.md)의
-추정 중심 기준선 준비와 [EX-002](experiments/EX-002-pokechamp-baseline-pilot.md)의 40-slot
-pilot을 채택했다. 아래 초기 draft의 미정 항목은 L1-L5 효능 비교에 관한 것으로 유지한다.
-“승인된 empirical scope/experiment가 없다”는 초기 기술은 이 pilot에는 더 이상 적용하지 않는다.
-
-RQ-B0: 고정 환경에서 기존 minimax/IO/규칙 봇의 유효 완료 성적, 신뢰성, 호출량과 시간은 얼마인가?
-방향성 가설 없이 탐색적 추정을 수행한다. Pilot 자체로 RQ1의 개선 여부를 support/reject하지 않는다.
-대상·분할·40 slot·분모·재시도·중단 규칙은 EX-002의 사전 protocol을 따른다.
-주지표 후보는 IO/minimax의 Abyssal·OneStep 상대 draw-adjusted score의 동일 가중 평균이다.
-나머지 대진 승률, 실패율, token/call/decision latency는 진단 지표다. 본 실험 N, CI 및
-효능 claim criterion은 pilot 보고 이후 별도 사전등록하며 현재 자동으로 정하지 않는다.
-
-EX-002는 2026-09-07 (Asia/Seoul)에 40 slot/31 유효 완료로 끝났다. 출력 검증 오류 8건과
-watchdog 1건을 분리 보존했다. Pinned minimax의 outer search 예외 fallback은 유효 완료
-행동의 267/331회였으므로 오류 없는 minimax 성능으로 해석하지 않는다. 완전한 anchor block이
-IO 1개/minimax 0개여서 pilot 분산을 추정할 수 없다. 상세 결과·한계·자원 시나리오는 EX-002에
-보존하며, 본 실험 N과 효능 비교 설계는 여전히 미정이다.
-
-사용자는 이후 [D-013](decisions/D-013-remove-client-output-cap.md)으로 새 호출의 출력 상한을
-모델 공식 최대 128K로 높이고 Cloud 기본 context를 사용하도록 승인했다. EX-002의 512-token
-조건 및 결과는 그대로 보존한다. 출력 예산이 달라진 후속 run은 별도 조건/identity로 기록하며
-기존 성적·비용 추정과 혼합하지 않는다. 이는 새 pilot/main 실행 또는 효능 claim의 승인이 아니다.
-
-[D-014](decisions/D-014-increase-cloud-request-timeout.md)에 따라 새 요청 timeout은 300초다.
-과거 pilot의 120초 설정과 결과는 유지하며 경기 watchdog 1200초는 변경하지 않는다.
-
-[D-015](decisions/D-015-repeat-benchmark-profiles.md)는 사용자 지시에 따라 핵심 4대진의
-8판(공통 1 block)·32판(공통 4 blocks) 탐색적 반복 설정을 추가한다. 기존 40판 재현은 보존한다.
-새 8판 [EX-003](experiments/EX-003-core-smoke-timing.md)으로 현재 출력/timeout 조건의
-시간과 신뢰성을 먼저 재측정한다. 32판 4시간 적합성은 대진별 처리 slot당 시간의 선형 추정과
-운영상 여유 50%로 평가하며 통계적 상한이 아니다. 실패·재시도·확증 팀 제외와 해석 제약은
-D-015를 따른다. 효능 본 실험이나 정상 minimax 성능을 승인한 것이 아니다.
-
-EX-003은 8 slot/6 유효 완료로 종료됐다. 현재 조건 실측은 44.5분이며 32판 선형 추정에
-여유 50%를 더하면 266.9분으로 4시간 예산을 넘었다. 상대 행동 출력 검증 2건과 유효 완료
-minimax fallback 74/88회는 운영 한계로 기록한다. 이 결과는 32판 실행, 오류 수정 조건,
-L1-L5 효능 또는 작은 승률 차이의 확증으로 확대 해석하지 않는다.
-
-## 0.1 D-016 운영 동시성 측정
-
-[D-016](decisions/D-016-model-concurrency.md)의 corpus/순서/30분 calibration/선택 규칙,
-동일 source 8판 순차·병렬 비교와 조건부 32판, 총 4시간 stopping rule을 채택한다.
-실측 운용 상한은 해당 계정·모델·요청 조건 범위다. Batch wall time을 시간 분모로 쓰며
-전송 실패·출력 실패·미실행 slot·fallback을 분리 보존한다. 모든 단계는 별도 실험 ID다.
-소표본 운영 진행 기준이며 효능, 정상 minimax, 서버 내부 병렬 처리의 확증이 아니다.
-
+<a id="1-연구-목적-research-objective"></a>
 ## 1. 연구 목적 (Research Objective)
 
-### Current state
+<a id="current-objective"></a>
 
-<a id="branch-research-objective"></a>
+현재 목표는 포켓몬 모델 학습·정책 개선·독립 평가이며 최상위 원문은 [CHARTER](CHARTER.md)다.
+구체적 질문·처치·평가·자원은 승인된 개별 D·EP·EX에서 정한다.
+현재 실행과 중단 보존은 [STATUS](STATUS.md) 및 [계획 색인](catalog/plans.md)에서 확인한다.
 
-이 브랜치의 최상위 연구 목적은 **포켓몬 전용 모델 학습·정책 개선·독립 평가**다.
-[D-131](decisions/D-131-research-branch-preservation.md)과 [CHARTER](CHARTER.md)에 따라 RQ4를 중심으로 학습 효과와 정책의 성능을
-구분하여 검증한다. 모델 선택에 사용하지 않은 평가 자료와 사전 지표·분모·불확실성 기준으로
-개선 여부를 판단하며, 기존 평가 자료를 학습에 자동 편입하지 않는다.
-
-L1-L5 구조 이식의 broad RQ1과 미정 설계는 `research/l1-l5-port`의 목적·보존 근거다.
-이 문서에도 관련 규범·참조를 유지하지만 학습 연구의 상위 목표나 자동 후속 작업으로 두지 않는다.
-두 연구선의 결합 방식은 미정이다. 기존 입력·JEV·AgenticSTS·학습 구현을 공통 기준선에 유지한다.
-
-개별 EX에 채택된 학습·운영 비교와 아직 미정인 L1-L5 전체 효능 비교를 구분한다.
-새 실험의 objective·질문·처치·평가·예산은 관련 authority와 bounded plan/EX에서 정한다.
-상속 artifact의 hypothesis·benchmark·결과와 과거 미완료 계획을 자동 채택하지 않는다.
-분리 범위는 EP-135의 기반 구성·보존에 한정한다. 현재 새 학습·GPU·외부 API·실제 배틀 실행은 없다.
-
-<a id="pokemon-training-objective"></a>
-
-### 주 연구 목표 — 포켓몬 전용 모델 학습·정책 개선·독립 평가
-
-[D-096](decisions/D-096-pokemon-training-objective.md)의 **LAYA-RLCD·EVE-RLCD·RLCD-Lite를
-활용한 포켓몬 전용 구조화 행동 선택 모델 학습**을 이 연구선의 기반으로 유지한다.
-[D-112](decisions/D-112-imitation-self-play-objectives.md)의 모방 학습·후속 정책 개선과
-[D-119](decisions/D-119-fixed-matchup-mcts.md) 이후 고정 공개 상태 연구는 기존 설계·실행 근거다.
-후속 학습 경로·모델·평가는 새 작업 범위에서 구체화하며 현재 실험을 자동 시작하지 않는다.
-L1-L5 구조 이식은 별도 연구선에서 관리한다.
-여기서 “JEV 계열”은 세 오픈소스의 구조화 결정/RLCD 학습 기반을 뜻하며,
-TypeSafe JEV의 원본 가중치나 공식 학습 구현을 확보했다는 뜻이 아니다.
-
-| 활용 환경 | 독립 가상환경 | 준비·검증 원문 |
-|---|---|---|
-| LAYA-RLCD | `.venv-train` | [EP-096](exec-plans/completed/EP-096-laya-training-environment.md) · [환경 안내](../.tools/laya-rlcd/worktrees/pokemon-training/docs/POKEMON_ENVIRONMENT.md) |
-| EVE-RLCD | `.venv-eve-rlcd` | [EP-097](exec-plans/completed/EP-097-eve-rlcd-environment.md) · [환경 안내](../.tools/eve-rlcd/worktrees/pokemon-training/docs/POKEMON_ENVIRONMENT.md) |
-| RLCD-Lite | `.venv-rlcd-lite` | [EP-098](exec-plans/completed/EP-098-rlcd-lite-environment.md) · [환경 안내](../.tools/rlcd-lite/worktrees/pokemon-training/docs/POKEMON_ENVIRONMENT.md) |
-
-세 환경의 설치·공개 모델 로딩·최소 추론 검증은 완료했다. 첫 포켓몬 전용 학습은
-[D-098/EX-061](#qwen-action-value-first-run)의 고정 개발 실행을 완료했다. 실시간 연결 구현·GPU 대조는 [EX-062](experiments/EX-062-qwen-local-battle.md), 학습 원대진의 실제 배틀 연결 검증은 [EX-063](experiments/EX-063-qwen-training-matchup.md)에서 수행했다. EX-062 중단은 보존하며 독립 배틀 성능은 미평가다.
-환경 검증에 사용한 공개 모델을 학습 초기 모델로 자동 확정하지 않는다.
-
-목표 산출물은 포켓몬 관측·합법 행동 후보에 맞춘 학습 입력/출력 정의와 데이터 명세,
-환경별 학습 설정·체크포인트·재현 증거, 학습 전후 및 환경별 배틀 평가 보고다.
-세 환경을 활용하는 방향을 유지하되, 단기 단계별 활용 환경·초기 모델·비교 조건은 후속 설계에서 정한다.
-모든 환경에서 향상이 나온다고 전제하지 않으며, 효과 없음·불확실성·실행 실패도 기록한다.
-환경 준비 완료나 학습 손실 감소만으로 배틀 최적화 달성을 주장하지 않는다.
-
-아래 단기 목표에서 정한 방향 외에 다음 구체적 실행 조건은 **TBD**이며,
-학습·평가 실행 전에 해당 authority와 bounded plan/실험 기록에서 구체화한다.
-
-- 대상 배틀 format·팀/상대 population, 초기 모델·revision, 관측/이력·합법 후보 및 출력 schema,
-  PokéChamp 연결 방식과 fallback 정책.
-- 데이터 출처·사용 범위·라벨/교사 생성 방식, train/validation/test 분할 및 중복·정보 누출 방지.
-  기존 경기·팀·봉인 평가 자료는 학습 데이터로 자동 편입하지 않으며, 평가용 holdout의
-  분리 기준은 학습과 모델 선택 전에 정한다. 의사결정 입력의 관측 가능 정보 경계도 유지한다.
-- 학습 알고리즘(SFT/RL 등)·보상·hyperparameter·학습량, GPU 배정·시간/비용 예산·중단 기준.
-- 학습 전 기준선·환경 간 통제/차이, 주/보조 지표·분모·불확실성·성공 기준,
-  평가 표본·seed·순서·실패/재시도 처리와 재현 identity.
-
-분리 전 학습 연구는 **고정 A/B 공개 상태에서 작은 전용 모델의 자기대국·MCTS가
-탐색 없는 정책을 개선하는지 검증하는 것**을 추진했다. 당시 D-119가 D-115의 우선순위를
-부분 대체했으며, 후속 결과와 중단·완료 상태는 개별 EX에 보존한다.
-기존 EX-061 개발 학습·EX-065 기반 공동 q 독립 평가의 실행 현황은 STATUS와 해당 EX를 따른다.
-기존 JEV 배틀과 입력·관측 연구는 당시 유효성 범위의 참고 근거다. 학습 효과와
-입력 변경·초기 모델·메모리 구조의 효과를 구분하며, 함께 바뀌면 전체 구성 차이로 해석한다.
-D-096 목표 문서화만으로 실행 protocol을 확정하지 않았으며, 첫 개발 학습은 아래 D-098 절에서 별도로 확정한다.
-
-후속 [D-104/EX-066](experiments/EX-066-joint-q-training.md)은 EX-065 팀 분할과
-Qwen3.5-4B-Base의 새 공동 readout을 사용한 전체 타깃 MSE/soft-target Brier 학습을 채택한다.
-동결 모델/입력/학습 조건부터 지표·test 잠금·중단/복구 절까지 해당 EX를 이번 실행의 규범으로
-참조 편입한다. 독립 오프라인 q 예측 평가이며 배틀 승률·세 환경 비교는 후속으로 유지한다.
-
-2026-10-08 [D-129/EX-081](experiments/EX-081-joint-q-battle.md)은 EX066 선택 epoch3의
-원 재현 기준 복구 후 GPU0에서 EX065 test20 대진의 실제 배틀 평가를 별도 승인했다.
-처치·재현성·예산·실패/복구·지표/해석은 해당 EX의 동결 원문을 규범으로 참조한다.
-EX066 실패·오프라인 test 미완료와 자료를 보존하고 학습 단독 효과를 주장하지 않는다.
-
-[D-105](decisions/D-105-joint-q-gpu2.md)의 사용자 후속 지시에 따라 학습 전에 물리 GPU2로
-실행 자원만 변경한다. 이후 GPU2 사용 중 유휴 GPU 대체를 명시한
-[D-106](decisions/D-106-joint-q-idle-gpu.md)에 따라 GPU1로 고정했다. 변경 전 protocol·준비본·
-사전검사와 최초 시계는 보존하며 나머지 처치·평가는 유지한다.
-
-이하 D별 학습·실험 절은 채택 당시의 규범 원문이다. 절 안의 현재형 표현은 그 실험에
-한정되며 현재 브랜치의 실행 목록은 아니다. 종료·중단 상태는 [STATUS](STATUS.md)를 따른다.
-
-<a id="pokemon-imitation-self-play"></a>
-
-### 단기 목표 — 고정 대진 공개 상태 정책 개선
-
-<a id="fixed-matchup-objective"></a>
-
-2026-10-07 사용자 지시와 [D-119](decisions/D-119-fixed-matchup-mcts.md)에 따라
-[EX-076](experiments/EX-076-fixed-matchup-mcts.md)의 질문·조건·학습/탐색·평가/판정·
-예산/gate·복구/완료 절을 이번 고정 대진 실험의 규범으로 편입한다.
-작은 무작위 초기 Transformer를 사용하며 Qwen 가중치·이전 자료를 계승하지 않는다.
-양측 세트·현재 상태 공개, 실제 상대 선택·미래 RNG 비공개인 진단이다.
-탐색 없는 P1−P0 개선을 필수로 평가하며 탐색 자체의 효과는 별도 비교한다.
-한 학습 seed·고정 두 팀의 결과를 일반 비공개 Gen9 OU나 L1-L5 효능으로 확대하지 않는다.
-EX-076은 예산 gate 중단으로 보존한다. D-122의 후속 지시에 따라
-[EX-077](experiments/EX-077-fixed-matchup-day.md)의 유지 조건·변경 예산/gate·복구/보고 절을
-규범으로 편입한다. 전체 예상이24시간 이하일 때 단일 GPU로1회 실행한다.
-
-D-123에 따라 현재 실행은 [EX-078](experiments/EX-078-fixed-matchup-first-round.md)의
-첫1라운드 체크포인트 진단으로 한정한다. D-124에 따라 EX-078의 현재 시간 규범을
-편입하며 경기·단계·전체 벽시계 상한과 시간예측 gate를 적용하지 않는다.
-D-125의 EX-078 승인된 복구 절에 따라 정상31 계승·실패1 재수집 후 첫라운드를 이어간다. 목적·범위·예산/gate·완료/복구 절을 규범으로 편입한다.
-EX-077은 사용자 중지 상태를 보존하며 전체 평가의 gate 통과나 성능 개선을 주장하지 않는다.
-
-D-126에 따라 현재 추가 학습은 [EX-079](experiments/EX-079-fixed-matchup-stopping.md)의
-계승·정기 평가/종료/선택·잠긴 시험·자원/복구/완료를 규범으로 편입한다.
-최소12/최대32라운드 및 사전 고정 개발 기준은 수렴의 증명이 아니라 운영 종료 규칙이다.
-과거pilot gate 미확정과 EX078의 학습 자료 내 분석을 독립 효능 근거로 간주하지 않는다.
-
-[D-127](decisions/D-127-qwen-matrix-selfplay.md)·[D-128](decisions/D-128-qwen-fixed-shape-serving.md)에 따라 [EX-080](experiments/EX-080-qwen-matrix-selfplay.md)의 질문·조건·모델/입력·행렬 탐색·학습·평가/둔화 종료/선택·잠긴 시험·자원/실패/복구/완료와 D-128 변경 절을 Qwen3.5-0.8B 고정 대진 실험의 규범으로 편입한다. EX-079 실행 중 등록 유예(D-127)를 거쳐 EX-079 종료 후 편입했다. 같은 고정 A/B·공개 상태 진단이지만 탐색(루트 전폭 행렬·MMD 정규화 균형)·모델·P0가 EX-076~079와 달라 결과를 정성 비교만 한다. 둔화 종료·100라운드 상한은 운영 종료 규칙이며 수렴의 증명이 아니다.
-
-### 이전 단기 단계 — Qwen 모방 학습 이후 Abyssal 상대 정책 개선
-
-<a id="abyssal-first-objective"></a>
-
-**D-115 단계의 우선순위(현재 순서는 D-119로 부분 대체):** 2026-10-03 사용자 지시와
-[D-115](decisions/D-115-abyssal-first-objective.md)에 따라 **Abyssal 상대를 효율적으로 이기는
-정책 학습**을 우선한다. 자기대국 확대는 후순위이며 영구 배제를 뜻하지 않는다.
-EX-071 모방 학습과 EX-072 첫 자기대국은 완료했으나 배틀 성능 개선은 입증되지 않았다.
-EX-072의 출발 모델은 이미 모방 학습된 모델이므로 미학습 모델 실험으로 해석하지 않는다.
-
-D-115 단계의 설계는 Abyssal 상대 성능을 직접 평가한다. 학습·모델 선택과 분리한
-팀/대진 평가에서 승·무·패와 표본 불확실성을 보고하고, 다른 상대의 성능은 별도로 구분한다.
-과거 EX-072의 혼합 점수나 test를 새 주지표·모델 선택 자료로 자동 재사용하지 않는다.
-[D-116](decisions/D-116-abyssal-rl.md)의 사용자 실행 지시로
-[EX-073](experiments/EX-073-abyssal-rl.md)의 동결 조건·모집단·평가·판정·예산·복구·완료 기준을
-이번 Abyssal 우선 학습의 규범으로 채택한다. 효율은 실제 GPU시간·시간당 처리량·결정 지연으로
-보고한다. EX-072의 결합 손실을 유지하며 이번 상대/규모/분산 구성 전체 효과로 해석한다.
-
-[D-117](decisions/D-117-abyssal-rl-continue.md)의 명시적 추가 실행 지시로
-[EX-074](experiments/EX-074-abyssal-rl-continue.md)의 질문·계승 출처·동결 학습 조건·자료/
-후보 선택·잠긴 평가/판정·자원/복구·알람·검증/완료 절 전체를 이번 후속 실험의 규범으로 편입한다.
-57라운드 학습 상태 계승과 동일 설정 추가 학습의 효과를 새 test로 평가하며, 비교 기준은
-57라운드 출발 모델이다. EX-073 최고24라운드 우월성 또는 과거 미완료 해소로 해석하지 않는다.
-EX-074만의 브라우저 표본 확인 예외와 새12시간 시계를 명시적으로 채택하며 EX-073의
-동결 protocol·실패·시간 초과 미완료 판단은 유지한다. 통계적 개선·성능 목표·절차 완료를 구분한다.
-
-[D-118](decisions/D-118-abyssal-rl-next.md)의 추가12시간1회 요청·82라운드 명시 선택으로
-[EX-075](experiments/EX-075-abyssal-rl-next.md)의 질문·계승 출처·명시적 protocol 계승·
-자료/선택/평가·실행/완료 절을 이번 실험의 규범으로 편입한다. EX-074 사전 조건을 유지하되
-마지막82라운드 출발·새 test·seed20261006·별도12시간1회로 한정한다. 이전 선택77라운드
-또는 EX-073 최고24라운드 우월성 비교가 아니며 자동 반복은 승인하지 않는다.
-EX-073/074 동결 조건·결과·실패 판정과 test 봉인은 보존한다.
-
-아래 D-112의 두 단계는 채택 당시 방향이며, 추진 순서는 D-115를 거쳐 현재 D-119가 부분 대체한다.
-D-113/114는 완료한 각 실행의 규범으로 유지한다.
-
-[D-114](decisions/D-114-selfplay-rlcd.md)의 후속 실행으로
-[EX-072](experiments/EX-072-selfplay-rlcd.md)의 동결 연구 조건 전체를 이번 자기대국·보정·평가의
-규범으로 편입한다. EX-071과 과거 실행은 유지하며 아래 미정 조건은 EX-072에 한해 구체화한다.
-결합 방식 전체의 성능과 실제 선택 행동 확률을 평가하며 RLCD 손실만의 효과는 분리하지 않는다.
-
-[D-113](decisions/D-113-qwen-replay-imitation.md)의 명시적 실행 지시로 첫 단계를 구체화한다.
-[EX-071](experiments/EX-071-qwen-replay-imitation.md)의 데이터·분할·통계적 보완·정보 경계,
-새 Base/Choice 학습·24시간 상한, validation 선택·잠긴 test와 고정40경기/6시간 평가,
-필수 검증·중단/복구·해석을 이번 실행의 규범으로 채택한다. 아래 D-112의 미정 조건은
-EX-071에 한해 해당 동결값으로 정해진다. 첫 자기대국은 D-114/EX-072에서 별도로
-확정·완료했으며 그 밖의 후속 실행 설계는 미정이다.
-
-[D-112](decisions/D-112-imitation-self-play-objectives.md)에 따라 기존 Qwen 기반 구조화 행동 선택
-모델의 학습 방향을 다음 두 단계로 구체화한다. Kev를 포함하되 특정 초기 체크포인트나
-출력 schema를 이번 목표 채택으로 확정하지 않는다.
-
-| 단계 | 목표 | 목표 산출물과 평가 |
-|---|---|---|
-| 1. 리플레이 모방 학습 | 이미 수집한 Smogon/Showdown 리플레이에서 결정 시점의 관측과 실제 선택 행동을 복원하여 행동 선택 정책을 학습한다. | 출처·정보 경계·누락·분할을 기록한 데이터 명세와 학습 체크포인트, 학습 전후 행동 선택 및 독립 배틀 평가 |
-| 2. 자기대국을 통한 정책 개선 | 모방 학습 모델을 출발점으로 자기대국의 관측·행동·대국 결과를 수집하고 정책을 반복 갱신한다. | 대국·업데이트·추론 비용의 재현 기록과 체크포인트, 자기대국 전 기준선 대비 별도 배틀 평가 |
-
-**행동 선택의 품질과 실제 배틀 성능을 우선**한다. 리플레이 행동 일치도·학습 손실은
-학습 진단이며, 배틀 개선의 대체 지표로 삼지 않는다. 절대 승률의 확률 보정은 별도 평가 문제다.
-자기대국 전후 비교는 평가용 상대·팀·seed와 모델 선택 자료의 분리를 사전에 정하며,
-개선 여부·불확실성·효과 없음도 같은 기준으로 보고한다.
-
-기존 리플레이의 위치와 규칙 분류 근거는 [EP-100](exec-plans/completed/EP-100-replay-rule-eligibility.md)을
-따른다. 규칙상 후보 판정만으로 전문가 품질·관측/합법 행동 복원·학습용 채택이 보장되지는 않는다.
-데이터 설계에서는 다음을 구분한다.
-
-- 결정 시점에 플레이어가 알 수 있는 정보만 입력한다. 공개 로그에 없는 자기 팀 정보의
-  복원·추정·누락을 구별하고, 이후 공개된 상대 정보나 같은 턴 상대 선택을 입력에 소급하지 않는다.
-- 관측 가능한 실제 선택 행동을 모방 타깃으로 삼는다. 식별할 수 없는 선택은 누락/mask로
-  처리하는 기준을 정하며, 선택 행동을 승률1·미선택 행동을 승률0으로 바꾸지 않는다.
-- 동일 경기의 양측 관점·중복 경기·팀 계열에 대한 분할 기준을 정하고 기존 평가 holdout을
-  보존한다. 대국 승패를 모든 후보 행동의 정답 q로 취급하지 않는다.
-
-자료 준비는 기존 리플레이와 CPU 기반 처리를 우선 활용한다. 추가 교사가 필요하면 CPU
-규칙·탐색 활용 여부를 후속 설계에서 판단하며, 별도 LLM 합성 라벨 생성은 전제하지 않는다.
-자기대국에는 모델 추론과 학습 비용이 발생하므로 경기 수·결정당 추론/탐색량·GPU·시간 예산과
-중단 기준을 실행 전에 명시한다. 이번 목표는 추론 비용 없는 자기대국을 뜻하지 않는다.
-
-초기 모델·활용 환경·데이터 채택/복원·출력/손실·자기대국 알고리즘·상대 구성·탐색 사용·
-예산·평가 규모/성공 기준은 후속 bounded plan과 EX에서 구체화한다. AlphaZero/MCTS나 특정
-강화학습 알고리즘을 자동 채택하지 않는다. 기존 Abyssal 후속 정책 조건부 q의 의미와
-EX-066 실행 조건·봉인 자료는 유지하며, 이 절의 목표 문서화 자체로 새 학습·배틀을 시작하지 않는다.
-
-<a id="qwen-action-value-first-run"></a>
-
-### 첫 학습 — EX-060 후보별 조건부 행동가치
-
-[D-098](decisions/D-098-qwen-action-value.md)의 사용자 계획 구현 지시로 첫 실행을 확정한다.
-EX-060 전체22관측·167후보를 개발 학습 자료로 사용하고, 후보당32분기의 q=(승+0.5무)/32를
-이진 [q,1-q] 타깃으로 둔다. 전체 정보 half-Brier 손실은 관측별 후보 평균 후 관측을 동일 가중한다.
-반전만 추출하지 않으며 단일 후보·전체 실패 상태도 유지한다. 입력은 전문 관측과 합법 행동뿐이다.
-bandit RLCD와 구분하고 고정 숨은 상태·Abyssal 후속 정책 조건의 교사 값으로 해석한다.
-독립 validation/test나 일반 Gen9 OU 배틀 개선 claim은 없다.
-모델·처치·예산·지표·성공/중단의 동결 원문은 [EX-061의 동결 실행 조건부터 검증·중단·복구 절](experiments/EX-061-qwen-action-value.md)을 참조 편입한다.
-기술 성공과 개발 자료 적합을 분리한다. 후속 독립 배틀 평가는 별도 계획이며 현재 실행하지 않는다.
-앞 절의 TBD 중 이 첫 실행에 해당하는 항목만 확정한 것이며 세 환경 비교·일반 성능 설계는 미정이다.
-실행 결과와 기술/개발 적합 판정·MAE 증가 한계는 [EX-061 최종 보고](exec-plans/evidence/ep102/report.md)에 보존한다.
-
-<a id="qwen-local-battle"></a>
-
-### Qwen 실시간 연결 — EX-062
-
-[D-099](decisions/D-099-qwen-local-battle.md)로 EX-061 최종 모델의 로컬 서빙·배틀 연결을 승인한다.
-[EX-062 동결 protocol](experiments/EX-062-qwen-local-battle.md)을 이번 기술 검증의 조건·분모·
-완료/중단 원문으로 채택한다. 개발 자료 재생은 새 일반화 평가가 아니며, Abyssal2경기의 승패는
-연결 검증 결과로만 보고한다. EX-061의 교사 q 의미·개발 적합/MAE 한계·후속 독립 평가 경계를 유지한다.
-
-<a id="qwen-training-matchup"></a>
-
-### Qwen 학습 원대진 — EX-063
-
-[D-100](decisions/D-100-qwen-training-matchup.md)의 명시적 후속 지시로 학습에 사용한
-EX-058 battle-19 원대진을 새 Qwen p2 대 Abyssal p1 한 경기로 실행한다. 원 팀/진영/seed를
-재사용하므로 D-091의 신규 팀 목록 제한에는 이 지정 재현 대진만 예외다. 상세 protocol·분모·
-복구/중단·완료 원문은 [EX-063](experiments/EX-063-qwen-training-matchup.md)이다.
-학습 대진 개발 진단이며 원 JEV와의 승패 차이를 학습 인과 효과·독립 성능 개선으로 해석하지 않는다.
-기존 EX-062의 중단·봉인은 보존한다.
-
-## 2. 연구 질문 (Research Questions)
-
-기존 Qwen 입력 개선의 [D-102](decisions/D-102-qwen-candidate-state.md)는 제공 정보의
-결정별 행동 순서·상태 변화 연결을 개발 가설로 둔다. [EX-064](experiments/EX-064-qwen-candidate-state.md)의
-저장 관측 3조건과 별도 진단은 조건부 상태 정확성·후보 순위·비용을 분리해 비교한다.
-고정 모델의 학습 입력 분포 변화가 포함되며 q의 Abyssal 후속 조건 의미를 유지한다.
-정확한 진단 출력은 q가 해당 예측을 사용했다는 증거가 아니며 개발 장면 개선을 독립 승률
-개선으로 해석하지 않는다. 새 배틀·재학습·독립 성능 평가는 이 처치 범위 밖이다.
-
-<a id="intermediate-objectives"></a>
-
-### 중간 연구 목표와 최종 목표의 연결
-
-[D-063](decisions/D-063-intermediate-research-objectives.md)에 따라 다음 중간 목표를 채택한다.
-
-> 포켓몬 배틀에서 모델에 제공하는 정보의 종류·표현·이력 범위가 행동 선택과 배틀 성능,
-> 비용에 미치는 영향을 평가하고, 이를 바탕으로 L1-L5 메모리 구조에 담을 정보와 관리 방식을 설계한다.
-
-| 단계 | 연구 질문 | 다음 단계에 넘길 산출물 |
-|---|---|---|
-| 입력 정보 실험 | 현재 상태·게임 규칙·계산 결과 등 어떤 정보와 표현이 도움이 되는가? | 포함·제외·판단 보류할 정보와 근거, 기준 프롬프트 후보 |
-| 이력·요약 실험 | 과거 정보 중 무엇을 보존해야 하며, 요약하면 무엇이 손실되는가? | 기억할 내용과 갱신·요약 기준 후보, 손실과 성능·비용의 관계 |
-| L1-L5 적용·평가 | 선정한 정보를 계층적으로 관리하면 어떤 차이가 생기는가? | 계층별 대응과 비교 설계, 구조의 효과와 한계에 대한 평가 |
-
-이 단계는 연구 결과와 설계 결정의 연결을 나타내며 새 실행 목록이나 과거 중단 실험의
-재개 지시가 아니다. 현재 이 브랜치는 [포켓몬 전용 학습 목표](#pokemon-training-objective)를 따른다.
-입력 정보·이력·요약 연구는 학습 입력의 참고 근거이며 L1-L5 구조 설계는 별도 연구선에서 관리한다.
-기존 이력·요약 진단도 당시 조건과 유효성 범위에서 참고하며, 모든 단계가 완료되었다고 전제하지 않는다.
-
-중간 목표의 완료 기준은 사전에 정한 비교 범위를 마치고, 채택·제외·판단 보류할 정보와
-그 근거·한계 및 후속 메모리 설계에 반영할 결정을 정리하는 것이다. 성능 향상을 필수 조건으로
-두거나 향상이 나올 때까지 실험을 늘리지 않는다. 효과를 확인하지 못한 결과도 불확실성과 함께
-기록하며, 근거 부족을 효과 없음으로 단정하지 않는다. 입력·이력 단계의 완료가 L1-L5 전체
-효능 검증 완료를 뜻하지 않는다.
-
-### 현재 연구 질문
-
-| ID | Status | Current formulation | 확정에 필요한 것 |
-|---|---|---|---|
-| **RQ1** | **Preserved — research/l1-l5-port, operationalization TBD** | AgenticSTS의 L1-L5 계층형 메모리/컨텍스트 구조를 `pokechamp`에 적용하면 `pokechamp`의 성능이 개선되는가? | Layer별 대응, 대상 population/version, baseline/treatment, performance metric과 claim criterion 승인 |
-| **RQ2** | **Current — 학습 입력 참고, 새 비교 TBD** | 제공하는 정보의 종류와 표현이 행동 선택·배틀 성능·비용에 어떤 영향을 미치는가? | 정보 내용과 표현의 비교 범위, 통제 조건, 행동 변화·성능·비용의 측정 및 완료 기준 |
-| **RQ3** | **Current — 학습 입력 참고, 새 비교 TBD** | 제공하는 이력의 범위와 요약 방식이 정보 보존·행동 선택·배틀 성능·비용에 어떤 영향을 미치는가? | 이력 범위·요약 조건, 정보 보존·손실 평가와 비교 protocol |
-| **RQ4** | **Current — 주 목표, 후속 실행 설계 TBD** | 세 RLCD 환경을 활용한 포켓몬 전용 학습이 기준선 대비 행동 선택·배틀 성능에 어떤 변화를 만드는가? | 초기 모델·데이터/분할·학습 처치·통제 조건·평가 지표/분모·예산 및 claim criterion |
-
-학습 연구선 RQ4의 기존 비교 설계는 [모방 학습·정책 개선·고정 대진 연구](#pokemon-imitation-self-play)에 보존한다.
-모방 학습 전후와 자기대국 전후의 효과를 구분하고, 구체적인 평가 조건은 실행 전에 정한다.
-
-RQ2·RQ3은 RQ1의 메모리 내용·관리 방식 설계를 위한 중간 연구 질문이다. 구체적인 처치·지표·
-표본 수·예산·중단 규칙은 새 실험별로 실행 전에 정한다. 행동 선택의 변화 자체를 품질 개선으로
-해석하지 않는다. L1-L5 전체 효능 비교에서 무엇을 성능으로 측정할지와 correctness,
-reliability, efficiency를 secondary outcome으로 다룰지는 **TBD**다.
-
-상속 repository에는 bounded typed context와 accumulating transcript의 비교, L1-L5 layer의
-기여 분해, self-evolution, cross-backbone behavior, cost/latency에 관한 원저자 질문이 나타난다.
-근거는 [root README](../README.md),
-[`AgenticSTS/docs/reference/ABLATION.md`](../AgenticSTS/docs/reference/ABLATION.md), 과거
-competitor report에 있다. 이들은 모두 **Excluded legacy**이며 현재 RQ 번호를 부여하지 않는다.
-
-## 3. 가설 (Hypotheses)
-
-L1-L5 전체 효능 비교의 H1은 아직 미정이다. 개별 학습·운영 실험에 채택된 질문·가설·판정은
-각 D별 절과 동결 EX를 따르며, H1의 미정 상태로 그 설계나 결과를 부정하지 않는다.
-
-### H1 — TBD
-
-- Status: **Unresolved**
-- Claim: **TBD**
-- Expected direction: **TBD**
-- Comparison: **TBD**
-- Supporting evidence rule: **TBD**
-- Rejection rule: **TBD**
-- Inconclusive rule: **TBD**
-
-상속된 README와 reproduction material의 directional claim 또는 과거 point estimate를 H1으로
-승격하지 않는다. `Provisional` hypothesis를 추가할 때도 claim, direction, comparison,
-support/reject/inconclusive criterion을 실행 전에 함께 승인해야 한다.
-
+<a id="4-실험-단위와-처리-조건-experimental-units--treatments"></a>
 ## 4. 실험 단위와 처리 조건 (Experimental Units / Treatments)
 
+<a id="연구선별-적용-범위와-보존된-pilot-조건"></a>
 ### 연구선별 적용 범위와 보존된 pilot 조건
 
 학습 연구선의 기존 처치·분할·평가는 해당 EX의 동결 조건을 따른다. 후속 실행 조건은
@@ -581,69 +59,7 @@ legacy reproduction 범위에만 적용하며 새 run 이름을 추측으로 joi
 `on`으로 설명하지만 `Condition.postrun` default, matrix construction, tests는 `False`와
 `--no-postrun`을 확인한다. 이 차이는 **Unresolved treatment-definition conflict**다.
 
-## 5. 독립 변수 (Independent Variables)
-
-L1-L5 전체 효능 비교의 independent variable과 estimand는 **TBD**다. 상속 stack에는 다음 configurable
-factor가 관찰되지만, configuration switch라는 이유만으로 연구 변수가 되지는 않는다.
-
-| Observed factor | 구현 surface | 현재 연구 변수 여부 |
-|---|---|---|
-| Prompt family 및 visibility gate | `STS2_PROMPT_VARIANT`, `STS2_PROMPT_HINT_FILTER`, `STS2_KNOWLEDGE_STRICT`, `STS2_INCLUDE_BOSS_HP` | 미채택 (TBD) |
-| Context/memory layer | `STS2_MEMORY_ENABLED`, `STS2_SKILLS_ENABLED`, `STS2_STM_ENABLED`, `STS2_COMBAT_CONVERSATION_ENABLED` | 미채택 (TBD) |
-| Skill source와 writable learning | expert seeds, Mode B stubs, postrun/evolution flags, data-root policy | 미채택 (TBD) |
-| Model/provider/effort routing | model family, tier별 model/provider/effort | 미채택. Treatment가 아니면 control 또는 stratification 대상일 수 있음 |
-| Character, ascension, run progression | `--character`, `--ascension` | 미채택. Population/difficulty definition 후보일 뿐임 |
-
-새 variable은 변경되는 한 요소, 고정되는 요소, 측정하려는 causal contrast를 함께 명시해야
-한다. 여러 switch를 묶으면 component별 기여가 아니라 그 bundle의 효과만 해석할 수 있다.
-
-## 6. 통제 변수 (Controlled Variables)
-
-Pilot은 D-012의 model/environment/team/seed/source snapshot을 고정한다. 아래 표는 상속 stack이 제공하는
-control/recording capability와 아직 필요한 결정을 구분한다.
-
-| Factor | Observed control 또는 record | Current design status |
-|---|---|---|
-| Task/population | Legacy harness는 STS2 run을 단위로 받고 character와 ascension을 CLI로 지정 | Target domain은 `pokechamp`; 대상 version, task/population, experimental unit과 difficulty는 TBD |
-| Model/provider | `model_profile`에 configured tier model, family, provider, effort와 profile hash를 기록 | 사용할 identity와 fallback 허용 여부 TBD. 실제 per-call route 검증 필요 |
-| Sampling parameter | Default `LLM_TEMPERATURE=0`; provider/thinking mode에 따라 temperature가 생략되거나 다른 값이 강제될 수 있음 | Sealing rule TBD |
-| Prompt/context family | Ablation env override와 일부 `model_profile` field로 기록 | 어떤 field를 고정할지 TBD |
-| Mode B flags | Orchestrator가 env를 명시적으로 override | `model_profile`/`RunRecord`에는 세 Mode B flag가 없어 provenance가 불완전함 |
-| Environment version | History append가 `game_version`, `mod_version`, `data_schema_version`을 JSONL에 추가 | 허용 version과 drift policy TBD |
-| Data/store state | `data_repo_sha` 기록 가능; `self-evolve`는 writable store를 분리 | Clean/frozen start, snapshot identity, shared-state exception TBD |
-| Legal action/runtime contract | Mod state/action API, local parser와 validation boundary는 [`CONTRACTS.md`](CONTRACTS.md)에 정의 | Efficacy control이 아니라 먼저 통과해야 할 technical qualification |
-| Run ordering | Legacy orchestrator는 matrix order대로 condition별 run을 연속 실행 | Randomization/blocking/order policy TBD |
-| Qualification | State/API tests와 smoke tooling은 존재 | L1-L5 전체 효능 비교용 suite와 threshold는 TBD; 운영 qualification evidence는 해당 EP/EX record 참조 |
-| PokéChamp environment qualification | EP-001이 source/tool/server/cloud-adapter contract와 local/cloud smoke를 정의 | Completed — local deterministic smoke, real Cloud probe 및 29/29 valid-action one-battle 통과. Efficacy protocol은 아님 |
-| PokéChamp decision observability | D-010/EP-002 bundle이 source SHA, seed, state/protocol, LLM wire call과 sent action을 기록 | Recording/viewer capability는 완료. 운영 run은 개별 EX record에 등록되며 L1-L5 전체 효능 protocol은 아님 |
-| Showdown battle timer | Pinned server는 `forcetimer=true`지만 D-011 parent launcher가 process-local `false`로 override한다 | **Current:** 별도 timed-run 지시가 없으면 inactivity timer를 끈다. Timed run은 activation/configuration을 사전 선언·기록하고 untimed run과 같은 condition으로 합치지 않는다. |
-
-## 7. 결과 측정치 (Outcome Measures)
-
-학습·정책 개선 연구의 지표·분모·판정은 개별 EX가 소유한다. 후속 독립 평가는 학습·모델
-선택 자료와 분리하고 사전 기준을 명시한다. 아래 TBD는 L1-L5 전체 효능 비교에 한정한다.
-
-### Current outcomes — L1-L5 전체 효능 비교
-
-- Primary outcome: **TBD**
-- Secondary outcomes: **TBD**
-- Unit of analysis 및 aggregation: **TBD**
-- Uncertainty/statistical procedure: **TBD**
-
-다음은 상속 artifact에서 계산 가능한 **Observed measures**다. 새 연구의 outcome으로 채택된 것은
-아니다.
-
-| Available measure | 측정 단위와 관찰된 aggregation | Data source | 제한 |
-|---|---|---|---|
-| `victory` / `outcome` | Run별 terminal outcome; legacy paper는 `victory`/`defeat`만 denominator로 한 win rate와 Wilson 95% CI 사용 | [`runs/history.jsonl`](../AgenticSTS-Data/runs/history.jsonl), [`reproduce_table_2.py`](../AgenticSTS/scripts/reproduce/reproduce_table_2.py) | 새 연구 denominator와 primary status는 TBD |
-| Derived paper score | Run별 `100` if victory, else `floor + (52/3) * bosses`; legacy table은 mean과 percentile-bootstrap 95% CI | [`scripts/reproduce/_lib.py`](../AgenticSTS/scripts/reproduce/_lib.py) | Stored `score`/`fitness`와 동일하다고 가정하면 안 됨 |
-| `final_floor` | Run별 도달 floor; legacy report에서 mean 사용 | [`src/runs/history.py`](../AgenticSTS/src/runs/history.py) | Difficulty/termination이 맞지 않으면 비교 불가 |
-| `combats_won` / `combats_total` | Run을 합쳐 combat win fraction 계산 가능 | `history.jsonl`, [`ablation_report.py`](../AgenticSTS/scripts/ablation_report.py) | Combat mix와 run length에 민감하며 current metric 아님 |
-| `duration_seconds`, `llm_calls`, `total_actions` | Run별 runtime 및 call/action count | `history.jsonl` | 직접적인 latency, token 또는 monetary cost와 같지 않음 |
-| Per-call latency/token/cache fields | LLM call별 latency, prompt/completion/cache token | [`session_logger.py`](../AgenticSTS/src/log/session_logger.py), [`PokéChamp observability schema`](../integration/pokechamp/observability/SCHEMA.md) | 두 recording capability가 있으나 현재 연구 bundle과 승인된 aggregation은 없음 |
-| Action result status | Action별 `ok`, `soft_fail`, `hard_fail`와 error | `session_logger.py` | Illegal-action/contract-violation rate의 canonical numerator·denominator는 미정 |
-| LLM-as-judge quality | Legacy script의 action/reasoning/conciseness rubric | [`eval_decision_quality.py`](../AgenticSTS/scripts/eval_decision_quality.py) | Judge model, rubric validity, sampling protocol이 current design으로 승인되지 않음 |
-
+<a id="8-평가-절차-evaluation-protocol"></a>
 ## 8. 평가 절차 (Evaluation Protocol)
 
 L1-L5 baseline-vs-treatment efficacy comparison procedure는 미정이다. 기준선 pilot의
@@ -664,20 +80,12 @@ unit/count/sampling/order/retry/stopping은 D-012와 EX-002에 승인되어 있�
 7. [§11.1](#defect-recovery)의 복구 규칙 적용 여부, 별도 전체 중단 사유·범위,
    재수집 허용 여부·단위·한도, 동일 승인·예산·시계 연결 및 실행기의 지원 여부.
 
-### Observed legacy procedure — not adopted
-
-`run_ablation.py`는 default로 model별 5개 condition, condition당 10 run, `Silent`,
-`--ascension auto`, 최대 5000 step을 condition-major order로 실행한다. `agent_abort`와
-`mcp_error`를 slot당 최대 3회 retry하고, `interrupt`는 보존하며, `max_steps`는 non-victory
-filled slot으로 센다. 반면 paper reproduction의 `filter_cell`은 `max_steps`까지 제외하고
-start time 기준 첫 completed run을 고른다. 이 절차와 숫자는 **Excluded legacy**이며 서로 다른
-denominator 규칙은 새 protocol을 정하기 전 해소해야 한다.
-
 <a id="io-explanation-review"></a>
 
+<a id="81-기본-io-테스트의-설명-오류-검토-기본값"></a>
 ### 8.1 기본 IO 테스트의 설명 오류 검토 기본값
 
-[D-050](decisions/D-050-io-explanation-review-opt-in.md)에 따라 2026-09-14 이후 새로 계획하는
+[D-050](shared/governance/decisions/D-050-io-explanation-review-opt-in.md)에 따라 2026-09-14 이후 새로 계획하는
 **기본 IO 알고리즘 테스트에서는 별도 사용자 지시가 없으면 설명 오류 검토·기입을 수행하지 않는다.**
 일반 IO 실행·입출력 동작·성능 확인 및 그 viewer 생성 요청에 설명 평가를 자동 추가하지 않는다.
 원본 IO 또는 개선 IO를 시험한다는 이유만으로 과거 실험의 설명 전수 검토를 상속하지 않는다.
@@ -696,6 +104,7 @@ denominator 규칙은 새 protocol을 정하기 전 해소해야 한다.
 해당 명시 범위를 따른다. 아래 실험별 전수 검토 규칙을 새 기본 테스트의 필수 요건으로 자동
 복사하지 않는다. 계약 및 실행기 적용 경계는 [C-032](CONTRACTS.md#c-032-io-explanation-review)를 따른다.
 
+<a id="9-무작위성과-재현성-randomness-and-reproducibility"></a>
 ## 9. 무작위성과 재현성 (Randomness and Reproducibility)
 
 | Source of variation | Observed state | Reproducibility status |
@@ -712,6 +121,7 @@ denominator 규칙은 새 protocol을 정하기 전 해소해야 한다.
 Pilot은 C-010의 sealed plan, 경기별 actual seed와 actor source bundle을 사용한다. Remote
 model decoding의 완전한 재현성은 보장하지 않으며 model response identity와 UTC를 기록한다.
 
+<a id="10-교란-요인과-타당도-위협-confounders-and-threats-to-validity"></a>
 ## 10. 교란 요인과 타당도 위협 (Confounders and Threats to Validity)
 
 아래 위험은 상속 stack을 새 연구에 재사용할 때 직접 관련되는 항목이다.
@@ -731,6 +141,7 @@ model decoding의 완전한 재현성은 보장하지 않으며 model response i
 | Evidence availability | Run-level archive는 존재하지만 full per-decision trajectory 일부는 이 checkout에 없다고 data README가 명시한다. 세부 correctness/cost audit이 제한될 수 있다. |
 | Sample size | Current design에는 N이나 power/precision target이 없다. Legacy N=5/N=10 result를 새 claim의 충분한 evidence로 간주할 수 없다. |
 
+<a id="11-무효화-및-즉시-중단-기준-invalidation--hard-stop-criteria"></a>
 ## 11. 무효화 및 즉시 중단 기준 (Invalidation / Hard-stop Criteria)
 
 | Situation | Classification | Required handling |
@@ -750,9 +161,10 @@ model decoding의 완전한 재현성은 보장하지 않으며 model response i
 
 <a id="defect-recovery"></a>
 
+<a id="111-테스트평가-도구-결함의-공통-복구-절차"></a>
 ### 11.1 테스트·평가 도구 결함의 공통 복구 절차
 
-[D-029](decisions/D-029-experiment-defect-recovery.md) 채택(2026-09-09) 후 **새로 승인·등록하는
+[D-029](shared/governance/decisions/D-029-experiment-defect-recovery.md) 채택(2026-09-09) 후 **새로 승인·등록하는
 실험부터** 아래 절차를 기본으로 적용한다. 기존 실험과 이 문서의 D-019~D-028 등 실험별 절에
 기록된 전체 중단·재시도·재개 규칙은 당시 실험에 유지한다. 기존 실험의 증거·무효 판정·
 `Blocked`를 소급 복구하지 않는다. 새 실험에서 별도 전체 중단 규칙이 필요하면 사유와 범위를
@@ -818,9 +230,10 @@ model decoding의 완전한 재현성은 보장하지 않으며 model response i
 
 <a id="provider-judgment-errors"></a>
 
+<a id="112-공급자-판단-오류는-전체-실험-중단-사유가-아니다"></a>
 ### 11.2 공급자 판단 오류는 전체 실험 중단 사유가 아니다
 
-[D-074](decisions/D-074-provider-judgment-policy.md)의 사용자 지시에 따라 새 실험은 공급자·모델의
+[D-074](shared/execution/decisions/D-074-provider-judgment-policy.md)의 사용자 지시에 따라 새 실험은 공급자·모델의
 판단 오류를 측정 대상으로 기록하며 전체 중단 gate로 사용하지 않는다. 이 절은 §11.1의 도구
 결함과 구분한다. 과거 동결 실험의 당시 규칙·판정·Blocked는 보존한다.
 
@@ -845,705 +258,210 @@ model decoding의 완전한 재현성은 보장하지 않으며 model response i
 [C-046](CONTRACTS.md#c-046-provider-judgment)을 따른다. 문서 개정이 기존 실행기의 동작을
 자동 변경하거나 중단 실험을 재개하는 것은 아니다.
 
-## 12. 해석 규칙 (Interpretation Rules)
-
-1. L1-L5 전체 효능 비교의 H1이 미정이므로 어떤 기존 또는 신규 result도 그 H1을
-   support/reject한 것으로 분류할 수 없다. 개별 실험의 판정은 해당 동결 EX를 따른다.
-2. Hypothesis support는 사전에 선언한 contrast, expected direction, metric, denominator,
-   uncertainty rule을 충족하고 필요한 evidence가 온전할 때만 주장한다.
-3. Qualification success는 interface와 evidence pipeline이 의도대로 작동한다는 뜻이며 efficacy
-   success가 아니다. Infrastructure failure도 treatment의 연구적 실패가 아니다.
-4. 여러 factor가 함께 달라진 comparison은 bundle 차이만 설명한다. 특정 layer, memory contract
-   또는 learning algorithm의 독립 기여로 귀속하지 않는다.
-5. 다른 model/provider, game version, routing, cadence 또는 interface의 operational comparison은
-   caveat를 유지하며 controlled single-variable ablation으로 relabel하지 않는다.
-6. 같은 point estimate는 equivalence를 증명하지 않는다. 작은 sample, 겹치는 interval 또는
-   nonsignificant result를 효과 없음의 증거로 해석하지 않는다. L1-L5 전체 효능 비교의
-   equivalence margin, significance level, minimum effect는 모두 TBD다.
-7. Legacy archive는 새 RQ와 eligibility rule이 명시적으로 연결될 때만 secondary evidence로
-   사용할 수 있다. 원저자의 claim을 새 연구 결론으로 그대로 가져오지 않는다.
-8. Missing 또는 invalid attempt를 조용히 삭제하지 않는다. 모든 exclusion과 retry는 record와
-   denominator 설명에 남긴다.
-9. 정보 추가·표현 변경의 효과와 계층형 메모리 구조의 효과를 구분한다. 예를 들어 게임 규칙
-   사전 추가의 결과만으로 L1-L5 구조의 기여를 주장하지 않는다. 구조 자체를 비교할 때는
-   가능한 한 동일 정보에 접근하는 비계층 기준선을 두고, 정보 접근·예산 등 일치시키지 못한
-   차이를 명시한다. 정보와 구조를 함께 바꾼 비교는 그 결합 효과로 해석한다.
-10. D-063 이전 실험은 당시 목적·조건·유효성·분모 안에서 중간 목표의 참고 근거로 연결한다.
-    새 RQ의 사전 검증 결과로 소급 변경하지 않으며, 기존 무효·미완료·Blocked 판정을 유지한다.
-
-<a id="kev-battle-connection"></a>
-
-### D-108 Kev r1 연결 검증
-
-[EX-068](experiments/EX-068-kev-battle.md)의 validation 재현과 Kev-p2 대 Abyssal-p1 한 경기는
-기술적 연결 검사다. 기존 WEAK 오프라인 신호나 이 한 경기의 승패로 배틀 효과를 주장하지 않는다.
-원 serializer·자기 팀·bf16/T1을 고정하고 Tera 허용과 사용 이후 학습 분포 밖 상태를 기록한다.
-효과 비교는 독립 protocol·같은 상대 팀/seed의 짝지은 기준선·사전 경기 수가 있는 별도 범위다.
-
-[D-109](decisions/D-109-kev-fused-validation.md)는 원 예측 불일치 후 사용자가 승인한 별도
-merged·fused 경로의 추가 수락 검사다. 원 입력·dev 비교 기준은 유지하며 원 실패를 보존한다.
-이 설정 묶음의 차이를 개별 커널이나 merge의 독립 인과 효과로 해석하지 않는다. 원 시계와
-누적 사용량, 승인된 추가3요청 및 전체1경기 경계는 EX-068의 추가 실행 절에서 관리한다.
-
-[D-110](decisions/D-110-kev-test-battles.md) / [EX-069](experiments/EX-069-kev-test-battles.md)는
-기존 EX-065 test20 대진의 고정 Kev 정책 본 평가다. 추가 사전검사는 사용자 지시로 생략하고
-test 팀/seed 메타데이터를 사용하며, 잠긴 suite의 저장 test 입력/타깃을 읽지 않는다.
-표본/지표/원 Abyssal 참고 비교·불확실성·실행 방식 차이의 해석은 EX-069에 사전 고정한다.
-EX-068의 연결 검사 및 과거 실패·판정을 소급 변경하지 않는다.
-
-[D-111](decisions/D-111-kev-continuation-question.md) / [EX-070](experiments/EX-070-kev-continuation-question.md)는
-후보 질문만 Kev 후속 정책 문구로 바꾼 동일 첫 대진1경기 진단이다. 정확한 질문·통제·상한·분모·
-비교를 EX-070에 동결한다. 재학습 없이 현재 Abyssal 후속 정책 학습 타깃은 유지하므로 새 문구가
-Kev 후속 승률의 정확한 추정을 보장하지 않는다. 이미 결과를 확인한 단일 대진이며 승률 개선이나
-전패 원인을 확정하지 않는다. 후보 p/선택 직접 비교는 동일 JointInput 바이트의 결정에 한정한다.
-
+<a id="13-증거-연결-evidence-mapping"></a>
 ## 13. 증거 연결 (Evidence Mapping)
 
 | Research item | Required evidence | Current source | Status |
 |---|---|---|---|
-| 학습 연구선 / RQ4 | 명시적 사용자 지시, 학습·평가 설계 및 재현 증거 | [학습 목표와 보존 근거](#pokemon-training-objective), [D-096](decisions/D-096-pokemon-training-objective.md), [D-131](decisions/D-131-research-branch-preservation.md), 개별 EX | **실행별 완료·중단·성능 판정은 해당 EX를 따름; 후속 실행 설계 TBD** |
-| L1-L5 이식 연구선 / RQ1 | 명시적 사용자 승인과 Charter-compatible formulation | [`CHARTER.md`](CHARTER.md), [`D-005`](decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md), [`STATUS.md`](STATUS.md) | **Objective와 broad RQ 승인; operationalization Unresolved** |
-| 중간 연구 목표 / RQ2·RQ3 | 명시적 사용자 승인, 단계별 산출물·완료 기준 및 최종 목표와의 연결 | [이 문서 §2](#intermediate-objectives), [D-063](decisions/D-063-intermediate-research-objectives.md) | **목표와 broad RQ 승인; 새 실험별 operationalization TBD, 목표 달성은 미평가** |
+| 학습 연구선 / RQ4 | 명시적 사용자 지시, 학습·평가 설계 및 재현 증거 | [학습 목표와 보존 근거](research/policy-learning/DESIGN.md#pokemon-training-objective), [D-096](research/policy-learning/decisions/D-096-pokemon-training-objective.md), [D-131](shared/governance/decisions/D-131-research-branch-preservation.md), 개별 EX | **실행별 완료·중단·성능 판정은 해당 EX를 따름; 후속 실행 설계 TBD** |
+| L1-L5 이식 연구선 / RQ1 | 명시적 사용자 승인과 Charter-compatible formulation | [`CHARTER.md`](CHARTER.md), [`D-005`](research/l1-l5-port/decisions/D-005-adopt-pokechamp-l1-l5-research-goal.md), [`STATUS.md`](STATUS.md) | **Objective와 broad RQ 승인; operationalization Unresolved** |
+| 중간 연구 목표 / RQ2·RQ3 | 명시적 사용자 승인, 단계별 산출물·완료 기준 및 최종 목표와의 연결 | [이 문서 §2](research/input-and-memory/DESIGN.md#intermediate-objectives), [D-063](research/input-and-memory/decisions/D-063-intermediate-research-objectives.md) | **목표와 broad RQ 승인; 새 실험별 operationalization TBD, 목표 달성은 미평가** |
 | H1 | Claim, direction, contrast, support/reject/inconclusive rule | 이 문서 §3 | **Missing / Unresolved** |
 | L1-L5 전체 효능 baseline/treatments | Exact configuration manifest와 isolation rule | 이 문서 §4; legacy `run_ablation.py`는 참고 가능 | **Missing** — 별도 운영 조건의 부재를 뜻하지 않음 |
 | Runtime contract qualification | API/state/action/parser evidence와 declared qualification result | [`CONTRACTS.md`](CONTRACTS.md), [`test_upstream_api_contract.py`](../AgenticSTS/tests/test_upstream_api_contract.py), [`test_upstream_state_parser.py`](../AgenticSTS/tests/test_upstream_state_parser.py) | 운영 검증 상태는 해당 EP/EX record 참조; L1-L5 이전본의 qualification은 미정 |
 | Legacy condition behavior | Executable matrix와 regression tests | [`run_ablation.py`](../AgenticSTS/scripts/run_ablation.py), [`test_run_ablation_conditions.py`](../AgenticSTS/tests/test_run_ablation_conditions.py) | **Observed legacy**, definition conflict 있음 |
 | Legacy run outcome | Run identity, outcome, floor, config/profile fields | [`AgenticSTS-Data/runs/history.jsonl`](../AgenticSTS-Data/runs/history.jsonl) | Available inherited evidence; current study에는 미등록 |
-| Legacy paper aggregation | Cell tags, completed filter, score/CI code | [`scripts/reproduce/`](../AgenticSTS/scripts/reproduce/) | Available inherited method; current protocol로 미채택 |
+| Legacy paper aggregation | Cell tags, completed filter, score/CI code | [`scripts/reproduce/`](../AgenticSTS/scripts/reproduce) | Available inherited method; current protocol로 미채택 |
 | 운영 experiment configuration/result | 개별 `EX-XXX` record와 linked raw evidence | [`experiments/INDEX.md`](experiments/INDEX.md), [`STATUS.md`](STATUS.md) | **등록됨** — 유효성·중단·미완료는 개별 record를 따르며 L1-L5 전체 효능 evidence로 승격하지 않음 |
-| PokéChamp technical environment | Pinned source/toolchain, loopback server, secret-safe cloud route와 smoke artifact | [`EP-001`](exec-plans/completed/EP-001-pokechamp-reproducible-environment.md), [`C-008`](CONTRACTS.md), local `.artifacts/pokechamp/` | **Complete — local 및 real Cloud qualification 통과; efficacy evidence 아님** |
+| PokéChamp technical environment | Pinned source/toolchain, loopback server, secret-safe cloud route와 smoke artifact | [`EP-001`](shared/execution/plans/EP-001-pokechamp-reproducible-environment.md), [`C-008`](CONTRACTS.md), local `.artifacts/pokechamp/` | **Complete — local 및 real Cloud qualification 통과; efficacy evidence 아님** |
 | Randomness/reproducibility seal | Game seed, decoding/service identity, order, code/data/environment snapshot | PokéChamp schema 및 개별 EX record의 manifest·receipt·source seal | 운영 seal과 한계는 개별 record 참조; L1-L5 전체 효능용 evidence는 미등록 |
 | Per-call correctness/efficiency | Full state/decision/action/LLM telemetry와 aggregation definition | [`C-009`](CONTRACTS.md), [`PokéChamp observability schema`](../integration/pokechamp/observability/SCHEMA.md), 개별 EX record | 운영 호출·비용·오류 evidence는 등록됨; L1-L5 전체 효능용 집계와 근거는 미정 |
 
-## 14. 미해결 연구 질문 (Open Research Questions)
-
-이 목록은 L1-L5 전체 이식·효능 설계의 미해결 질문이며 implementation TODO가 아니다.
-해당 research design에서 정할 결정과 필요한 evidence를 나타낸다. 학습 후속 실행의
-미정 조건은 [학습 목표 절](#pokemon-training-objective)과 개별 새 plan/EX에서 관리한다.
-
-| ID | Question | Why it matters | Resolution evidence/decision |
-|---|---|---|---|
-| OQ-001 | `pokechamp`의 performance를 어떤 primary outcome과 성공 기준으로 operationalize하며 intended contribution을 어디까지 주장할 것인가? | Broad RQ를 검증 가능한 hypothesis와 claim으로 바꾸는 선행 조건이다. | Metric, denominator, uncertainty 및 claim criterion 승인 |
-| OQ-002 | `pokechamp`의 어떤 component에 L1-L5를 어떻게 대응시키고 AgenticSTS의 code/data/contract 중 무엇을 이전 또는 재구현할 것인가? | Treatment identity, implementation scope와 external validity가 달라진다. | Target architecture 및 reuse-boundary decision |
-| OQ-003 | 어떤 baseline과 treatment contrast가 핵심 estimand를 식별하는가? | Coupled legacy cells를 그대로 쓰면 component 기여를 분리할 수 없다. | Exact treatment manifest와 rationale |
-| OQ-004 | Primary outcome, secondary outcome, success/rejection 기준은 무엇인가? | 결과 선택과 사후 해석 편향을 막는다. | Metric definition, denominator, uncertainty/claim rule 승인 |
-| OQ-005 | Unit 수, stopping rule, ordering/randomization, incomplete-run과 retry policy는 무엇인가? | Selection bias, time drift, precision을 결정한다. | Pre-run protocol 및 experiment record |
-| OQ-006 | Model/provider/effort와 fallback을 고정할지 연구 변수로 둘지 어떻게 정할 것인가? | Model effect와 treatment effect가 섞이는 것을 막는다. | Routing manifest와 provider-identity policy |
-| OQ-007 | Game seed, local RNG, environment/data snapshot을 어느 수준까지 pin 또는 record할 것인가? | Exact replay와 stochastic comparison의 수준을 결정한다. | Reproducibility manifest와 qualification evidence |
-| OQ-008 | 298-game legacy corpus와 과거 experiment를 새 RQ의 evidence로 사용할 수 있는가? | 재사용은 비용을 줄이지만 다른 목표·protocol의 selection bias를 가져올 수 있다. | Eligibility/exclusion rule과 provenance review |
-| OQ-009 | `full` postrun drift와 outcome denominator 차이를 어떤 canonical definition으로 해소할 것인가? | Treatment identity와 sample inclusion이 불명확하면 비교가 재현되지 않는다. | 별도 accepted decision과 current-state/code 정합화 evidence |
-
-## 15. 현재 연구 단계 (Current Research Stage)
-
-**모델 학습·정책 개선·독립 평가를 주 개발 연구선으로 관리한다.**
-분리 기반의 보존·Git 기준선·문서·worktree·검증과 완료 근거는 [EP-135](exec-plans/completed/EP-135-research-branch-preservation.md)가 소유한다.
-학습·평가 실험은 실행 중이지 않으며 후속 방법·초기 모델·데이터·독립 평가·자원 조건을
-새 범위에서 정한다. 기존 EX-079·EX-080의 종료·시험 결과와 주효능 미입증을 보존한다.
-기존 Qwen·Kev·Abyssal·JEV 결과 및 중단 판정도 해당 EX의 조건·분모·한계 안에서 해석한다.
-
-L1-L5 전체 효능 설계의 미정 상태는 별도 `research/l1-l5-port`에 유지한다.
-기존 구현·환경의 존재나 과거 완료 이력은 새 실행 권한이 아니다.
-운영 현황은 [STATUS](STATUS.md), 작업·보존본·출력·복원은 [연구선 작업·출력·복원 안내](RESEARCH_WORKFLOW.md)를 따른다.
-
-### 보존된 운영 검증의 범위
-
-[EP-007](exec-plans/completed/EP-007-model-concurrency.md)의 운영 측정도 완료했다. EX-004에서
-C*=10을 선택했고, EX-011/012의 동일 source 8판 비교는 각각 유효 6/8과 관측 속도비
-3.39배로 진행 기준을 통과했다. EX-013은 32 slot을 37.22분에 처리했지만 유효 완료는
-20판이며 출력 오류 4건과 watchdog 8건을 보존했다. 전체 실측은 125.23분이었다.
-이는 해당 요청 조건의 운영 evidence이며 L1-L5 효능이나 정상 minimax 성능의 검증이 아니다.
-32판 모두 정상 완료하는 소요시간은 미검증이며 세부 한계는 실험 기록과 STATUS에 있다.
-
-상속된 runtime, test, five-condition harness와 frozen archive는 존재하지만
-[`D-002`](decisions/D-002-reset-research-direction.md)에 따라 새 연구의 qualification 또는 efficacy
-evidence로 자동 승계되지 않는다. EP-001 smoke는 새 treatment나 metric을 검증하지 않으며 pilot,
-efficacy evaluation, ablation 또는 replication이 아니다. L1-L5 이식 연구선의 후속 설계에서는
-OQ-001·OQ-002를 포함한 operational research/transfer design을 명시적으로 정해야 한다.
-이 문서는 그 결정을 대신하거나 해당 후속 작업을 자동 시작하지 않는다.
-
-## D-017 요청 조건 변경과 운영 검증
-
-공개 미리보기의 미등장 상대 팀원을 후보에 포함하고 요청별 허용 JSON 목록을 명시한다.
-설명 요구를 제거한다. 이는 prompt/관찰 정보 사용 조건 변경이므로 과거 C*=10을 승계하지 않는다.
-[D-017](decisions/D-017-battle-identity-action-candidates.md)의24상태×2동시성×3반복, 로컬8판,
-Cloud8판→조건부32판 gate와4시간 제한을 채택한다. 최대 처리량이나 효능 확증이 아니다.
-
-상대 요청은 기존 16턴 관찰 history와 actor가 가진 구조화된 target state로 구성하여 자기
-강제 교체를 상대 명령으로 전달하던 지시를 제거한다. 기술 후보는 기존
-`get_opponent_current_moves()`의 관찰·추정 결과를 그대로 구조화한다. 요청 전 상대 비공개
-팀 파일은 읽지 않는다. 로컬8판은 Cloud 역할만 seeded Random으로 대체한 환경 검증이다.
-새 Cloud8/32판의 `retry_transient=0`을 execution record에 봉인하여 실패 보충을 하지 않는다.
-기존 execution record에서 해당 필드가 없으면 기존 transient1회 재시도를 유지한다.
-
-## D-018 원본 fallback 운영 조건
-
-[D-018](decisions/D-018-upstream-fallback.md)에 따라 `action_policy="upstream"`에 한해
-C-010/C-012의 출력 terminal·후보 prompt 규칙 대신 원본 프롬프트/추출/행동 변환/재시도/fallback을
-적용한다. Provider·환경·무결성 종료는 유지한다. 필드 부재는 strict다. 정상 fallback 완료는
-유효하며 전체/유효 각각 실제 전송 판단과 경기 분모를 보고한다. D-017 gate는 EX-016에
-적용하지 않는다. 고정 fixture·로컬2판 후32슬롯10/10을 실행하며 Cloud4시간/신규3시간45분
-중지와 retry_transient=0을 봉인한다. 이전 결과와 정상 minimax/효능/최대 처리량 주장은 분리한다.
-
-## D-019 IO 3조건 탐색적 비교 (Current)
-
-[D-019](decisions/D-019-improved-io.md)의 조건·표본·gate·중단 규칙을 사용자 지시에 따라
-채택한다. A=upstream IO, B=개선 IO, C=B+배틀 내 요약이다. A 대비 B/C는 출력·오류 정책까지
-결합된 전체 개선이며 C−B는 요약 추가의 차이다. L1–L5 전체 효능 설계의 TBD는 유지한다.
-개발 b01–b04에서 조건당16판, 전체48판; smoke12판은 비교 분모에서 제외한다.
-승패는 상대별 draw-adjusted score와 두 상대 동일 가중 평균으로 계산한다. 같은 block의
-완료된 대응만 차이에 사용하고 누락 대응 및 예정/시도/완료/실패/미실행을 별도 보고한다.
-요청/역할별 오류·token·지연과 실제 배치 경과 시간을 보고하며 actor 시간 합은 자원 지표다.
-조건과 순서 seed20260908을 실행 전 봉인한다. 모든 배틀10/요청10, 재시도0;
-Cloud 요청 동시성1은 지연 기준 측정 전용이다. 세부 gate와4시간 예산은 D-019를 따른다.
-분석에 이미 사용된 자료의 탐색적 비교이므로 작은 승률 차이로 우월성을 주장하지 않는다.
-
-[D-020](decisions/D-020-project-owned-ruination-patch.md) 이후 B/C는 원본 버전0.11.0과
-ruination-v1의 패치 JSON 및 적용 파일 해시로 식별한다. EX-017의 원본 계산 실패와
-패치 후 EX-018을 같은 조건의 연속 성공으로 합치지 않는다. 이번 재검증 분모는 기존15장면과
-별도 사후3건이며 의미 rubric/전체 offline gate 및 병렬·Cloud gate와 분리한다.
-
-## D-021 특수 기술 오프라인 진단 (Current)
-
-[D-021](decisions/D-021-special-move-diagnostics.md)의 현재 팀1·2·6·12/고정 prior와
-고위험 기술을 대상으로 독립 pinned Showdown Gen9 실행과 raw/운영 wrapper를 비교한다.
-실행 전 manifest에 후보·조건·제외·미검증 사유와 source hash를 고정한다.
-직접 피해의 HP 차감 전 수치와 실제 차감, 타격별 관측 및 HP 재분배를 구별한다.
-단타 난수16개 및 명시적 명중/타수 조건은 조건부 수치 검증이며 확률 추정이 아니다.
-개별 불일치·미지원은 독립 진단을 계속하고 새 fixture로 불일치를 재현한다.
-기준 데이터·source identity·상태 변환·검증기 오류에는 전체 실행을 중단한다.
-입력 표현 부족을 임의 보충하거나 정상0을 지원으로 해석하지 않는다.
-모든 선정 시험의 결과/미검증 사유 확보와 도구 회귀 통과를 진단 완료로 정의하며
-계산기 전체 통과, 의미 rubric 통과 또는 offline gate 통과를 뜻하지 않는다.
-
-## D-022 재실험 (Current)
-
-[D-022](decisions/D-022-resume-io-experiment.md)에 따라 D-019 단계 gate를 EX-020에서 재개한다.
-기존15장면 의미 expected/must_not 및 사후3건을 모두 통과해야 offline receipt를 발급한다.
-행동180호출, C 입력 요약 별도 분모,30행동 이상4자료×(요약3+통합1)×3=48호출을 구별한다.
-실제 발생 계산/입력 오류는 독립 재현 후 패치하고 새 source로 이전 단계를 재검증한다.
-패치 전후 cohort는 분리하며 비교 도중 패치는48판 전체 재시작이다. 최초 Cloud부터4시간
-(신규 작업3시간45분 중지) 시계는 패치·재검증·재시작에도 유지한다. 다른 D-019 기준은 불변이다.
-
-[D-026](decisions/D-026-continue-io-experiment.md)의 현재 사용자 재개 승인으로 EX-023에서
-EX-022 후속 상태 교정을 사용해 D-019/D-022 운영 단계를 새로 실행한다. 표본·조건·low·
-gate·4시간 상한은 유지한다. EX-020의 halt/clock 및 EX-021/022 무효 비교는 복구하지 않는다.
-새 Cloud 시계는 EX-023 최초 제출에서 시작하며 해당 실행 내 재시작에도 유지한다.
-
-## D-023 요약 harness 진단 (Current)
-
-이 절에서 채택한 조건·절차·평가·해석의 중복 원문은 [EX-021 §실행 전 protocol](experiments/EX-021-summary-harness-diagnostics.md#실행-전-protocol)에 그대로 보존되어 있다.
-해당 절의 아래 원문 범위를 이 문서의 규범 내용으로 명시적으로 참조 편입한다.
-참조 범위는 “동일 모델·장면에서 의미 명확화와 반복 request 축소의 기여를 분리한다.”부터
-“차이가 없거나 오류가 남았다는 이유로 모델 한계를 확정하지 않는다.”까지다.
-EX-021에서만 모델 요약 오류는 측정치로 계속 수집하고 provider·환경·무결성·입력 변환 오류에는 전체 중단한다. 운영 gate와 EX-020 halt는 불변이다.
-
-## D-024 상태 정비 후 요약 thinking 진단 (Current)
-
-이 절에서 채택한 조건·절차·평가·해석의 중복 원문은 [EX-022 §질문 및 사전 protocol](experiments/EX-022-state-summary-thinking.md#질문-및-사전-protocol)에 그대로 보존되어 있다.
-해당 절의 아래 원문 범위를 이 문서의 규범 내용으로 명시적으로 참조 편입한다.
-참조 범위는 “정비된 운영 요약 입력에서 장면당 입력 하나를 만들고 반복 request 원본을 보존한다.”부터
-“중단 시 미완료 분모를 보존한다. 운영 적용/EX-020 재개는 결과로 자동 승인하지 않는다.”까지다.
-근거: [D-024](decisions/D-024-state-summary-thinking.md).
-
-## D-027 low 요약 지시 개선 IO 재실험 (Current)
-
-[D-027](decisions/D-027-low-summary-prompt-reexperiment.md)에 따라 EX-024에서 요약/통합
-지시만 최대3버전 개선한다. 기존 A/B/C·15장면·4원자료·7제목·10/3주기와 모든 역할 low를
-유지한다. 사전300+회귀/15/3/18/로컬12 → C요약8 → 별도요약48 → 행동180 → smoke12 →
-조건부48판을 수행한다. 원문 독립 기준 사전 봉인 및 연쇄 선행 의미검토 통과가 필수다.
-오류/누락0·HTTP겹침10·p95비율≤2·smoke12/12 후50%여유 예상시간이 예산에 들어야 한다.
-요약 오류는 버전 중단 후 새 source 사전 검증, 행동출력/provider/환경/무결성은 전체 중단이다.
-최초 제출의4시간/3시간45분 시계는 버전 변경에도 유지한다. 조합은 최대3개이고 실패보충은 없다.
-모든 gate·48판 유효성·C요약 원문대조·대응분석·정리 완료만 실험 완료다. 개발 자료에서
-지시를 개선·선택한 탐색적 비교이며 과거 무효 비교/중단 자료는 복구하지 않는다.
-
-## D-028 고정 이전 메모리 요약 low/max 진단 (Current)
-
-[D-028](decisions/D-028-summary-max-diagnostic.md)의 EX-025는 glm-5.3-flash·v1.1.2와
-동일 입력에서 thinking만 low/max로 바꾼다. EX-024 경계22개(첫8/후속10/통합4),
-각 조건3반복=132호출이다. 원문 검토된 고정 메모리를 사용하고 새 응답의 연쇄 재사용은 없다.
-125필수 사실 재대조·입력별 기준·메모리 근거를 호출 전 봉인하며 평가 기준은 입력에 넣지 않는다.
-주지표는 사실/진영/시점/identity/형식 오류 또는 필수 누락이 있는 응답 비율이다.
-입력별3반복 후 max−low를 계산하고 종류별 보고 및 원배틀별 평균의 동일 가중 전체를 사용한다.
-경계·진영·반복은 독립 표본이 아니다. 가림 검토·보조지표·재발항목·132/4시간 한도·중단은 D-028을 따른다.
-오류 감소는 고정 개발입력에서의 탐색적 근거이며 남은 오류는 max로 해결되지 않았음을 보고한다.
-모델의 유일 원인, 연쇄 누적, 실배틀 효능·운영 적용·IO 재개는 자동 추론하지 않는다.
-
-실행 상태: EX-025는132응답 수집 후 실제 입력에 없는 과거 HP를 필수 평가한 불일치로
-전체 무효·미완료다. 무효 초안126과 미검토6을 보존하며 low/max 효과는 추정하지 않는다.
-이 상태 기록은 사전 기준이나 중단 규칙의 변경이 아니다.
-
-
-## D-030 요약 없는 improved_io A/B 탐색 비교 (Current)
-
-[D-030](decisions/D-030-io-battle-only.md)의 새 EX-026 설계를 채택한다. A는 upstream IO,
-B는 교정 관측·고정 prior·계산기·기존 battle_fixed.txt·엄격한 출력 검증이며 요약/통합과
-메모리 주입은0이다. 요약 실험은 분리하고 이전 중단 상태는 유지한다. 전체 B 구성의
-탐색적 비교이며 prompt 단독 효과 또는 L1-L5 전체 효능으로 해석하지 않는다.
-
-EX-016 개발16대진(Abyssal/OneStep×b01–b04×양쪽)에 A/B를 대응시킨32판,
-순서 seed20260908이다. 전체 공개 prefix로 현재 관측을 만들고 최근10결정 원문만 전송한다.
-원문과 실제 입력·계산에 근거한 평가를 사전 봉인하며 짧은 설명에 모든 사실의 나열이나
-최적 행동을 강제하지 않는다. 로컬15장면/사후3/fake32 후 행동90(15×1/10×3)의 무오류·
-HTTP overlap10·병렬p95≤순차2배 gate, b04 smoke8 유효/동시8·요약0을 요구한다.
-Smoke 대진별 최대시간의10자리32판 추정×1.5가 남은 신규 작업 시간에 들어갈 때 비교한다.
-
-최초 Cloud4시간/신규3시간45분, 총4000요청(A 추가·실패·미확정 포함), low/temperature0/
-seed100/출력131072/context기본/timeout300/동시10/retry0이다. D-029의 복구1차까지
-누적 gate180/smoke16/compare64를 허용하며 시계/상한을 보존한다. 실제 입력·처치·수집
-결함은 영향 대응 A/B 양쪽 및 공유 영향 전체를 무효화·독립 검증 후 재수집한다.
-평가 구현 교정은 온전한 응답을 대칭 재평가, rubric 교정은 별도 사후 수정 분석이다.
-모델 오답 재수집은 금지한다. Gate 실패는 후속 배틀을 막고 배틀 출력/provider 오류는
-신규 배틀 제출을 중지한다. 합법 완료 설명 사실 오류는 별도 오류율로 기록한다.
-
-조건별 예정/시도/유효/실패/무효/미실행/미확정/복구, 상대별 draw-adjusted score·
-두 상대 동일 가중 평균·완료 대응 차이/누락, IO/설명 오류·A fallback·호출/token/HTTP/
-배치 시간을 보고한다. Smoke/과거 결과는 본 비교에 합치지 않는다. 사전 gate·smoke8·
-compare32/16유효대응·검토/분석/정리 미충족 시 EP-018은 미완료다.
-
-## D-031 행동 필드 설명서 구현 범위
-
-[D-031](decisions/D-031-battle-field-guide.md)은 새 B 행동 v1.1.0의 입력 필드 설명서와
-전달 경로의 로컬 구현·검증만 승인한다. 새로운 기본 준비에는 이 버전을 명시적으로 봉인하되
-EX-026의 기존 v1.0.0 처치·입력·응답·평가·halt·시계·Blocked는 변경하지 않는다.
-기술/특성/item 효과 사전·가설·평가 기준·해석 규칙은 추가하거나 변경하지 않는다.
-모델 오류 감소·유료 gate·효능 비교는 이번 완료 기준에 포함되지 않는다. 후속 유료 실험의
-등록·승인·gate 없이 이 변경을 EX-026 재개나 성공 처치로 사용하지 않는다.
-
-## D-032 필드 설명서 실제 Cloud 탐색 비교
-
-이 절에서 채택한 조건·절차·평가·해석의 중복 원문은 [EX-027 §설계·승인·복구](experiments/EX-027-battle-guide-live.md#설계승인복구)에 그대로 보존되어 있다.
-해당 절의 아래 원문 범위를 이 문서의 규범 내용으로 명시적으로 참조 편입한다.
-참조 범위는 “A는 upstream IO·fallback, B는 교정 관측·고정 prior·계산기·필드 설명서 v1.1.0이다.”부터
-“전체 B 구성의 개발 대진 탐색적 비교이며 설명서 단독 효과나 L1–L5 전체 효능으로 귀속하지 않는다.”까지다.
-
-
-## D-033 사전 검증 생략 직접32판 탐색 비교
-
-[D-033](decisions/D-033-battle-guide-direct32.md)의 명시적 사용자 변경을 새 EX-028에만 적용한다. C-014/C-019/C-020의 기존 엄격 gate·출력 중단 경로는 유지한다.
-
-이 절에서 채택한 조건·절차·평가·해석의 중복 원문은 [EX-028 §사전 등록](experiments/EX-028-battle-guide-direct32.md#사전-등록)에 그대로 보존되어 있다.
-해당 절의 아래 원문 범위를 이 문서의 규범 내용으로 명시적으로 참조 편입한다.
-참조 범위는 “A는 EX-027의 upstream IO·fallback, B는 교정 관측·고정 prior·계산기·필드 설명서 v1.1.0이며 요약·통합·메모리 주입0이다.”부터
-“오류 처리 정책을 포함한 전체 구성의 개발 대진 탐색 비교이며 설명서 단독 효과나 L1–L5 효능으로 해석하지 않는다.”까지다.
-
-
-## D-034 계산기 교정 동일32판
-
-[D-034](decisions/D-034-calculator-entry-calcfix32.md)의 명시적 사용자 승인과 EX-029 사전등록을 채택한다.
-기존 D-033 결과·정책은 보존하고, 필수 결함 재현·독립 Showdown 검증·전체회귀 후 새 정책으로 동일32 slot을 실행한다.
-EX-028 영향은 별도 정정 분석이며 새 실행과 독립표본으로 합산하지 않는다. 기존 Blocked 재개는 없다.
-
-## D-035 계산기 입력 정확성 로컬 진단
-
-EX-030은 전체 입력 변환·계산·전달의 정확성을 조사하고 지원 범위 결함을 수정한다.
-EX-028/029의636개 입력과 pinned Showdown 독립 기준을 사용하며 결과를 승률 개선으로 해석하지 않는다.
-기존 응답/판정/봉인/원장/중단은 보존하고 수정 입력의 영향은 별도 분석한다.
-과거 모델 행동·승패 복원이나 기존 무효 결과의 복구를 주장하지 않는다. 유료 재실험은 제외한다.
-
-
-이 로컬 감사의 영향 집계는 기존 시나리오 수치/피해 구조의 교정, 선택 테라 방어 coverage 추가,
-필수 상태·버전·설명만의 변경을 분리한다. 기존 수치의 최초 오염 시점과 coverage 누락 시점을
-각각 기록하고 두 집합의 합집합 이후 결정/전개/대응 비교를 의존 범위로 표시한다.
-이 사후 정확성 분석은 새로운 효능 평가 기준이나 선택된 비영향 표본의 승률 추정이 아니다.
-636입력(응답632/무응답4)을 모두 포함하고 기존 주석은 수신 입력에 대한 당시 기록으로 보존한다.
-수정 입력의 모델 단독 오류율·행동·승패는 새 응답 없이 복원하지 않는다.
-[조사 보고서](exec-plans/evidence/ep023/report.md), [별도 영향 분석](exec-plans/evidence/ep023/impact.md).
-
-
-## D-036 교정 입력·계산기 동일32판
-
-[D-036](decisions/D-036-calculator-inputfix32.md)의 명시적 사용자 승인에 따라 EX-031에서 새 A16/B16을 실행한다.
-C-021 출력복구·실패격리·재수집0을 유지하며 B만 calculator-input-v2/battle-v1.2.0/mechanics-v2다.
-EX-028 봉인 대진·설정·순서를 유지하며 qualification과 semantics/runtime patch를 최종 source 및 실제 요청까지 연결한다.
-기존 정책 정의/hash/과거 실험은 보존한다. 필수 로컬 검증 뒤 Cloud90/smoke8/별도fake32 없이 직접32판을 실행한다.
-EX-028/029 사용량은 각 원본을 한 번씩 연결하고 미확정1건을 유지한다.
-전수 검토·분모·보존·실패 정책·완료 판단의 사전 등록은 [EP-024](exec-plans/completed/EP-024-calculator-inputfix32.md)를 따른다.
-성능 비교 완료는 유효32판/16대응에만 표시하며 과거 무효 결과 합산·계산기 단독/L1–L5 효과 귀속은 금지한다.
-
-
-## D-038 수정 완료본 A/B32판
-
-명시적 사용자 지시로 EX-032의 새 A16/B16을 승인한다. D-036의 대진·설정·출력복구·실패격리·전수검토·분모·해석 규칙을 유지한다.
-B 계산기의 EP-025 수정본과 기존 v2 입력/프롬프트를 사용한다. EP-025593회귀·독립28조건/16roll·81재생의 봉인을 재사용하고 실행 연결 변경분만 새 검사한다.
-최종 source 전체 회귀로 표시하지 않는다. 필수 연결·봉인 후 별도fake32/Cloud90/smoke8 없이 본32판을 새 실행한다.
-과거 EX-028/029/031 자체 사용량을 각각 한 번 누적하고 미확정1건을 보존한다. 유효32판/16대응에만 비교 완료를 표시한다.
-상세 승인·조건·중단·보고는 [EP-026](exec-plans/completed/EP-026-battle-guide-movefix32.md)에 등록한다.
-
-## D-039 외부 메모리 장애 후 동일 조건 반복
-
-사용자는 외부 프로세스 RAM 급증이 EX-032 중단 원인으로 판단되고 현재 해소됐다고 보고하며
-같은 조건의 새32판을 승인했다. 귀속은 사용자 보고로 기록하고 독립 OOM 확정이나 permit 수정으로 표시하지 않는다.
-EX-033은 EX-032와 동일한 처치/설정/대진/seed/순서를 사용하고 새 실행 identity·기준 검증 재사용·과거 사용량 연결만 추가한다.
-기존 실패·성능 분모·halt는 유지한다. EX-032의 완료분을 새 실행에 합치지 않으며 반복을 독립 표본으로 합산하지 않는다.
-기존 최초시계·누적 미확정1건/사용량을 연결한다. 상세 새 실행 승인·중단·검토·완료는
-[EP-027](exec-plans/completed/EP-027-external-memory-repeat32.md)을 따른다.
-
-
-## D-040 Smogon 기반 원본 A 진단 평가 준비
-
-[D-040](decisions/D-040-smogon-diagnostic-design.md)은 명시적 사용자 계획에 따라
-[EX-034](experiments/EX-034-smogon-diagnostic-design.md)의 팀 선별·대진·평가·자원 명세와
-로컬 검증만 채택한다. 유료 대전·실행기/API 구현은 포함하지 않는다. 방향성 실패 가설 없이
-원본 A가 어떤 운용 상황에서 판단하는지 조사할 준비이며 L1–L5 효능 평가가 아니다.
-
-Smogon Sample/Bazaar에서 과제별 후보3개·선정2개, 총12후보/8팀을 기록한다.
-셋업·공격 순서, 교체·설치기 누적, 회복·핵심 보존, 날씨 등 제한된 턴의 각1팀은 탐색,
-나머지1팀은 후속확인으로 둔다. 동일·유사 변형을 양쪽에 나누지 않는다. 합법성은 pinned
-Gen9 OU, 다음은 완전성·운용 근거·기존 팀과 다른 판단 기회를 우선한다. 커뮤니티 평가와
-연구자의 과제 적합성 판단을 구분하고 원본 팀·작성자/출처/수집일/hash/불확실성을 보존한다.
-
-탐색4×기존 팀2/6×Abyssal/OneStep×양쪽 팀 배정×반복2의64 slot과 전체 seed/제출 순서를
-고정한다. 셀마다 반복2개는 서로 다른 게임 seed와 A의 p1/p2를 한 번씩 쓴다.
-진영·게임 난수의 독립 효과나64개 독립 전략 표본을 가정하지 않는다.
-A 입력 생성·prompt·모델·upstream fallback은 EX-033 기준으로 유지하며 팀 해설을 추가하지 않는다.
-
-승률/무승부 반영 점수를 정책·팀 배정·과제별로 보고하고 예정/시도/유효완료/실패/무효/미실행을
-보존한다. 모든 A 결정(무호출·fallback·실패 경기 포함)을 실제 입력·원응답·전송·공개 prefix와
-연결하여 검토한다. 판단 오류·입력의 누락/오류·출력/실행 실패를 구별하고 증거가 부족한 전략
-판정은 미확정이다. 원본 노출 한계는 baseline의 특성이고 새 수집 이탈은 C-018 결함이다.
-패배 자체로 한계를 확정하지 않으며 승리의 실수도 포함한다. 서로 다른 게임2개 이상의
-동일 유형은 후속 가설 후보 기준일 뿐 확증 기준이 아니다. 보류 팀의 확인 조건은 탐색 후 별도 등록한다.
-
-Slot1회/provider retry0/보충·재수집0, 경기별 실패격리·공유 결함의 영향 범위 중단을
-기본안으로 한다. 원본 A 파싱 재질의는 provider 재시도와 구분한다.
-EX-033 A만의 사용량을 기준으로 추정하고 장기전/입력 증가·watchdog의 완료 한계를 밝힌다.
-새 실행기 지원과 유료 상한/시계·실행 승인은 별도이며 EX-033 무상한/gate 생략을 승계하지 않는다.
-준비 완료는 실패 사례 발견이나 대전 완료가 아닌 재현 가능한 평가 명세의 검증으로 판단한다.
-기존 실험/Blocked/원자료/판정/halt/시계는 유지한다. 세부 기준은 EX-034의 versioned protocol을 따른다.
-
-
-## D-041 원본 A64 진단 실행
-
-[D-041](decisions/D-041-a-diagnostic64.md)의 명시적 사용자 승인으로 EX-034 준비에서 EX-035 실행으로 진행한다.
-EX-034 평가 protocol v1은 유지하고 운영 watchdog만3600초로 변경한다.
-새 a-diagnostic64-v1은 A-only, 첫10 검사 후54, 로컬/fake64 필수, Cloud90/smoke8 없음,
-최초 요청부터20700초 수집/21600초 총시간·8000요청 원자 예약·동시성10·재수집0이다.
-기존 정책/원자료는 보존하며 상세 사전등록은 [EP-029](exec-plans/completed/EP-029-a-diagnostic64.md)를 따른다.
-EX-035는 유효64/64·1902결정 전수검토·보존/보고를 완료했다. 결과와 사후 분류 정규화·기회 집계·
-해석 한계는 [최종 보고서](exec-plans/evidence/ep029/report.md)에 보존하며 protocol v1을 대체하지 않는다.
-후속 가설은 탐색 산출물이고 보류팀 실행이나 새 treatment를 자동 승인하지 않는다.
-
-## D-042 원본 A/B 직접 대결32
-
-[D-042](decisions/D-042-ab-head-to-head32.md)의 현재 사용자 지시와
-[EX-036](experiments/EX-036-ab-head-to-head32.md)의 사전등록을 채택한다.
-EX-033 전체 A/B 처치는 불변이고 각 진영의 actor_conditions로 연결한다.
-공통8000요청/20700초 수집/21600초 총시간,첫10 기술검사 후22,재수집0이다.
-주지표는 B의 A상대 승률·무승부보정점수이며 양쪽 유효16대응쌍은 쌍내 B점수 평균을 쓴다.
-양쪽 모든 결정을 받은 입력과 결정직전 공개prefix로 검토한다. 기존 정책/Blocked는 유지한다.
-
-## D-044 Protect 수정본 A/B 직접32
-
-[D-044](decisions/D-044-ab-head-to-head32-protectfix.md)와 [EX-037](experiments/EX-037-ab-head-to-head32-protectfix.md)의 현재 명시적 지시를 채택한다.
-이 절에서 채택한 조건·절차·평가·해석의 중복 원문은 [EP-032 §목표·범위·승인·불변조건](exec-plans/active/EP-032-ab-head-to-head32-protectfix.md#목표범위승인불변조건)에 그대로 보존되어 있다.
-해당 절의 아래 원문 범위를 이 문서의 규범 내용으로 명시적으로 참조 편입한다.
-참조 범위는 “현재 사용자 제공 실행 계획을 명시적 승인 근거로 EX-037/EP-032/D-044를 등록한다.”부터
-“중단 시에도 수집분 검토/보고/보존/정리와 실제분모·미완료 사유를 기록하며 중단처리 완료를 비교완료로 표시하지 않는다.”까지다.
-
-
-## D-045 전체 Cloud 기본 동시성8
-
-[D-045](decisions/D-045-cloud-concurrency-default8.md)의 명시적 사용자 지시를 채택한다.
-새 Cloud 병렬 실행과 gate/요청 검증은 기본8을 선언하고 순차1·명시1–10을 유지한다.
-새 Z.ai 준비에는 아래 D-056의 기본4 예외가 우선한다.
-별도 동시성 측정의 명시적인1–10 조건은 변경하지 않는다. 기존 실행/정책 identity와 결과는 소급 변경하지 않는다.
-동시성은 새로운 execution evidence에 별도로 봉인하며 보고·추정·검증은 그 값을 사용한다.
-이 운영 기본값 변경은 timeout 원인의 입증이나 개선 효과의 실험 결과가 아니다.
-EP-033은 비실험 구현·로컬 검증이며 기존 Blocked 재개나 추가 유료 실험을 포함하지 않는다.
-
-## D-046 B 프롬프트 오프라인 최적화
-
-EX-037의 실패 경기 포함 B 입력1060 전체를 B0–B3에 공통 사용하고 응답 유무를 분리한다.
-정보 보존은 합법 행동/순서·상태·사실/가설·계산 시나리오/수치/조건 및 최근10결정 복원으로
-검사한다. 명시적 제외 항목 이외 손실은 실패다. 원본 검증과 무네트워크 전달 검사를 분리한다.
-system/user/구성 요소 문자·UTF-8 byte 평균/중앙값/p95/최대, 단계별 및 누적 절감을 보고한다.
-최소 절감률은 강제하지 않는다. 일치 tokenizer 미확인이면 토큰 절감률 미측정이다.
-과거 선택 행동 일치는 정답 기준이 아니며 오프라인 통과는 모델 판단력·승률·지연 개선을
-뜻하지 않는다. 실제 모델 평가·후속 후보 선택은 이번 범위 밖이고 기존 Blocked를 유지한다.
-
-
-## D-047 B2 직접대결32
-
-이 절에서 채택한 조건·절차·평가·해석의 중복 원문은 [EX-038 §사전 protocol](experiments/EX-038-ab-head-to-head32-b2.md#사전-protocol)에 그대로 보존되어 있다.
-해당 절의 아래 원문 범위를 이 문서의 규범 내용으로 명시적으로 참조 편입한다.
-참조 범위는 “2026-09-14 사용자가 EX-037 직접대결 재사용, 코드 버그만 확인한 뒤 바로 본실험 진입을 선택하고 제시된 계획의 구현을 명시적으로 지시했다.”부터
-“미달이면 부분 결과와 원인을 보존하고 Blocked로 남긴다. 중단처리 완료는 비교완료가 아니다.”까지다.
-
-
-
-## D-052 B2 선봉 정책 구현과 후속 비교 준비
-
-현재 사용자 지시로 Gen9 OU singles의 선봉 선택 하나를 추가한다. 동일 EP-036 교정 source의 B2를
-통제/처치에 공통 사용하고 팀/세트·모델/thinking·배틀 prompt·압축·계산·전투 행동 정책은 고정한다.
-D-052의 승인 당시에는 `seeded_random` 대 `llm_lead`의 대응 탐색 비교 초안만 준비했고 표본·비용·수집은 미승인이었다.
-후속 실제 실행 승인은 아래 D-053과 EX-039를 따른다.
-선봉 외 순열의 상대 순서와 actor RNG 소비를 보존한다. 로컬 기술 검증은 효능 평가가 아니다.
-EX-038은 A 대 B2 중단 비교이며 과거 B와의 부분 성적 유사성을 B/B2 동등성 또는 압축 효과로 해석하지 않는다.
-설명 오류 사후 annotation은 §8.1 기본 제외, 전략적 성능은 미평가다.
-
-## D-053 EX-039 선봉 정책 대응 비교 실행
-
-[사용자 실행 지시](decisions/D-053-b2-lead-comparison.md)에 따라 EX-039의32경기/16대응쌍·첫 대응쌍 기술 gate를 채택한다.
-사전 조건·지표·분모·실패·해석 기준의 원문은 [EX-039](experiments/EX-039-b2-lead-proposal.md)다.
-금액 상한은 사용자 후속 지시로 제외한다. 기술 gate는 승패·전략·설명 평가로 판정하지 않는다.
-
-## D-055 EX-040 Z.ai 선봉 정책 비교
-
-[EX-040](experiments/EX-040-b2-lead-zai.md)을 새32경기/16대응쌍 비교의 조건·한도·gate·분모·해석 원문으로 채택한다. D-053의 과거 실행은 보존하며 Z.ai 환경의 선봉 정책 비교만 허용한다.
-
-## D-056 Z.ai 기본4·EX-041 재실험
-
-새 Z.ai 기본 동시성은 D-045의 해당 범위에 우선하여4다. 명시 설정과 과거 봉인값은 유지한다.
-[EX-041](experiments/EX-041-b2-lead-zai4.md)을 조건·한도·gate·분모·해석 원문으로 채택한다.
-EX-039/040과 결과를 합산하지 않으며429 원인이나 동시성 인과 효과를 주장하지 않는다.
-
+## 주제별 원문과 이전 앵커
+
+<a id="현재-연구-설계-research-design"></a>
+- [분리 전 안내](shared/governance/DESIGN.md#현재-연구-설계-research-design)
+<a id="jev-planner-environment"></a><a id="glm-plannerjev-설정-환경"></a>
+- [GLM planner–JEV 설정 환경](research/planner-executor/DESIGN.md#jev-planner-environment)
+<a id="0-d-012-기준선-pilot의-현재-설계"></a>
+- [0. D-012 기준선 pilot의 현재 설계](shared/execution/DESIGN.md#0-d-012-기준선-pilot의-현재-설계)
+<a id="01-d-016-운영-동시성-측정"></a>
+- [0.1 D-016 운영 동시성 측정](shared/execution/DESIGN.md#01-d-016-운영-동시성-측정)
+<a id="branch-research-objective"></a><a id="current-state"></a>
+- [Current state](shared/governance/DESIGN.md#branch-research-objective)
+<a id="pokemon-training-objective"></a><a id="주-연구-목표--포켓몬-전용-모델-학습정책-개선독립-평가"></a>
+- [주 연구 목표 — 포켓몬 전용 모델 학습·정책 개선·독립 평가](research/policy-learning/DESIGN.md#pokemon-training-objective)
+<a id="pokemon-imitation-self-play"></a><a id="fixed-matchup-objective"></a><a id="단기-목표--고정-대진-공개-상태-정책-개선"></a>
+- [단기 목표 — 고정 대진 공개 상태 정책 개선](research/fixed-matchup-learning/DESIGN.md#pokemon-imitation-self-play)
+<a id="abyssal-first-objective"></a><a id="이전-단기-단계--qwen-모방-학습-이후-abyssal-상대-정책-개선"></a>
+- [이전 단기 단계 — Qwen 모방 학습 이후 Abyssal 상대 정책 개선](research/policy-learning/DESIGN.md#abyssal-first-objective)
+<a id="qwen-action-value-first-run"></a><a id="첫-학습--ex-060-후보별-조건부-행동가치"></a>
+- [첫 학습 — EX-060 후보별 조건부 행동가치](research/action-value/DESIGN.md#qwen-action-value-first-run)
+<a id="qwen-local-battle"></a><a id="qwen-실시간-연결--ex-062"></a>
+- [Qwen 실시간 연결 — EX-062](research/action-value/DESIGN.md#qwen-local-battle)
+<a id="qwen-training-matchup"></a><a id="qwen-학습-원대진--ex-063"></a>
+- [Qwen 학습 원대진 — EX-063](research/action-value/DESIGN.md#qwen-training-matchup)
+<a id="2-연구-질문-research-questions"></a>
+- [2. 연구 질문 (Research Questions)](research/l1-l5-port/DESIGN.md#2-연구-질문-research-questions)
+<a id="intermediate-objectives"></a><a id="중간-연구-목표와-최종-목표의-연결"></a>
+- [중간 연구 목표와 최종 목표의 연결](research/input-and-memory/DESIGN.md#intermediate-objectives)
+<a id="현재-연구-질문"></a>
+- [현재 연구 질문](research/l1-l5-port/DESIGN.md#현재-연구-질문)
+<a id="3-가설-hypotheses"></a>
+- [3. 가설 (Hypotheses)](research/l1-l5-port/DESIGN.md#3-가설-hypotheses)
+<a id="h1--tbd"></a>
+- [H1 — TBD](research/l1-l5-port/DESIGN.md#h1--tbd)
+<a id="5-독립-변수-independent-variables"></a>
+- [5. 독립 변수 (Independent Variables)](research/l1-l5-port/DESIGN.md#5-독립-변수-independent-variables)
+<a id="6-통제-변수-controlled-variables"></a>
+- [6. 통제 변수 (Controlled Variables)](research/l1-l5-port/DESIGN.md#6-통제-변수-controlled-variables)
+<a id="7-결과-측정치-outcome-measures"></a>
+- [7. 결과 측정치 (Outcome Measures)](research/l1-l5-port/DESIGN.md#7-결과-측정치-outcome-measures)
+<a id="current-outcomes--l1-l5-전체-효능-비교"></a>
+- [Current outcomes — L1-L5 전체 효능 비교](research/l1-l5-port/DESIGN.md#current-outcomes--l1-l5-전체-효능-비교)
+<a id="observed-legacy-procedure--not-adopted"></a>
+- [Observed legacy procedure — not adopted](research/l1-l5-port/DESIGN.md#observed-legacy-procedure--not-adopted)
+<a id="12-해석-규칙-interpretation-rules"></a>
+- [12. 해석 규칙 (Interpretation Rules)](research/rule-learning/DESIGN.md#12-해석-규칙-interpretation-rules)
+<a id="kev-battle-connection"></a><a id="d-108-kev-r1-연결-검증"></a>
+- [D-108 Kev r1 연결 검증](research/model-evaluation/DESIGN.md#kev-battle-connection)
+<a id="14-미해결-연구-질문-open-research-questions"></a>
+- [14. 미해결 연구 질문 (Open Research Questions)](research/l1-l5-port/DESIGN.md#14-미해결-연구-질문-open-research-questions)
+<a id="15-현재-연구-단계-current-research-stage"></a>
+- [15. 현재 연구 단계 (Current Research Stage)](research/l1-l5-port/DESIGN.md#15-현재-연구-단계-current-research-stage)
+<a id="보존된-운영-검증의-범위"></a>
+- [보존된 운영 검증의 범위](shared/execution/DESIGN.md#보존된-운영-검증의-범위)
+<a id="d-017-요청-조건-변경과-운영-검증"></a>
+- [D-017 요청 조건 변경과 운영 검증](shared/execution/DESIGN.md#d-017-요청-조건-변경과-운영-검증)
+<a id="d-018-원본-fallback-운영-조건"></a>
+- [D-018 원본 fallback 운영 조건](shared/execution/DESIGN.md#d-018-원본-fallback-운영-조건)
+<a id="d-019-io-3조건-탐색적-비교-current"></a>
+- [D-019 IO 3조건 탐색적 비교 (Current)](research/input-and-memory/DESIGN.md#d-019-io-3조건-탐색적-비교-current)
+<a id="d-021-특수-기술-오프라인-진단-current"></a>
+- [D-021 특수 기술 오프라인 진단 (Current)](research/input-and-memory/DESIGN.md#d-021-특수-기술-오프라인-진단-current)
+<a id="d-022-재실험-current"></a>
+- [D-022 재실험 (Current)](research/input-and-memory/DESIGN.md#d-022-재실험-current)
+<a id="d-023-요약-harness-진단-current"></a>
+- [D-023 요약 harness 진단 (Current)](research/input-and-memory/DESIGN.md#d-023-요약-harness-진단-current)
+<a id="d-024-상태-정비-후-요약-thinking-진단-current"></a>
+- [D-024 상태 정비 후 요약 thinking 진단 (Current)](research/input-and-memory/DESIGN.md#d-024-상태-정비-후-요약-thinking-진단-current)
+<a id="d-027-low-요약-지시-개선-io-재실험-current"></a>
+- [D-027 low 요약 지시 개선 IO 재실험 (Current)](research/input-and-memory/DESIGN.md#d-027-low-요약-지시-개선-io-재실험-current)
+<a id="d-028-고정-이전-메모리-요약-lowmax-진단-current"></a>
+- [D-028 고정 이전 메모리 요약 low/max 진단 (Current)](research/input-and-memory/DESIGN.md#d-028-고정-이전-메모리-요약-lowmax-진단-current)
+<a id="d-030-요약-없는-improved_io-ab-탐색-비교-current"></a>
+- [D-030 요약 없는 improved_io A/B 탐색 비교 (Current)](research/input-and-memory/DESIGN.md#d-030-요약-없는-improved_io-ab-탐색-비교-current)
+<a id="d-031-행동-필드-설명서-구현-범위"></a>
+- [D-031 행동 필드 설명서 구현 범위](research/input-and-memory/DESIGN.md#d-031-행동-필드-설명서-구현-범위)
+<a id="d-032-필드-설명서-실제-cloud-탐색-비교"></a>
+- [D-032 필드 설명서 실제 Cloud 탐색 비교](research/input-and-memory/DESIGN.md#d-032-필드-설명서-실제-cloud-탐색-비교)
+<a id="d-033-사전-검증-생략-직접32판-탐색-비교"></a>
+- [D-033 사전 검증 생략 직접32판 탐색 비교](research/input-and-memory/DESIGN.md#d-033-사전-검증-생략-직접32판-탐색-비교)
+<a id="d-034-계산기-교정-동일32판"></a>
+- [D-034 계산기 교정 동일32판](research/input-and-memory/DESIGN.md#d-034-계산기-교정-동일32판)
+<a id="d-035-계산기-입력-정확성-로컬-진단"></a>
+- [D-035 계산기 입력 정확성 로컬 진단](research/input-and-memory/DESIGN.md#d-035-계산기-입력-정확성-로컬-진단)
+<a id="d-036-교정-입력계산기-동일32판"></a>
+- [D-036 교정 입력·계산기 동일32판](research/input-and-memory/DESIGN.md#d-036-교정-입력계산기-동일32판)
+<a id="d-038-수정-완료본-ab32판"></a>
+- [D-038 수정 완료본 A/B32판](research/input-and-memory/DESIGN.md#d-038-수정-완료본-ab32판)
+<a id="d-039-외부-메모리-장애-후-동일-조건-반복"></a>
+- [D-039 외부 메모리 장애 후 동일 조건 반복](research/input-and-memory/DESIGN.md#d-039-외부-메모리-장애-후-동일-조건-반복)
+<a id="d-040-smogon-기반-원본-a-진단-평가-준비"></a>
+- [D-040 Smogon 기반 원본 A 진단 평가 준비](research/input-and-memory/DESIGN.md#d-040-smogon-기반-원본-a-진단-평가-준비)
+<a id="d-041-원본-a64-진단-실행"></a>
+- [D-041 원본 A64 진단 실행](research/input-and-memory/DESIGN.md#d-041-원본-a64-진단-실행)
+<a id="d-042-원본-ab-직접-대결32"></a>
+- [D-042 원본 A/B 직접 대결32](research/input-and-memory/DESIGN.md#d-042-원본-ab-직접-대결32)
+<a id="d-044-protect-수정본-ab-직접32"></a>
+- [D-044 Protect 수정본 A/B 직접32](research/input-and-memory/DESIGN.md#d-044-protect-수정본-ab-직접32)
+<a id="d-045-전체-cloud-기본-동시성8"></a>
+- [D-045 전체 Cloud 기본 동시성8](shared/execution/DESIGN.md#d-045-전체-cloud-기본-동시성8)
+<a id="d-046-b-프롬프트-오프라인-최적화"></a>
+- [D-046 B 프롬프트 오프라인 최적화](research/input-and-memory/DESIGN.md#d-046-b-프롬프트-오프라인-최적화)
+<a id="d-047-b2-직접대결32"></a>
+- [D-047 B2 직접대결32](research/input-and-memory/DESIGN.md#d-047-b2-직접대결32)
+<a id="d-052-b2-선봉-정책-구현과-후속-비교-준비"></a>
+- [D-052 B2 선봉 정책 구현과 후속 비교 준비](research/lead-policy/DESIGN.md#d-052-b2-선봉-정책-구현과-후속-비교-준비)
+<a id="d-053-ex-039-선봉-정책-대응-비교-실행"></a>
+- [D-053 EX-039 선봉 정책 대응 비교 실행](research/lead-policy/DESIGN.md#d-053-ex-039-선봉-정책-대응-비교-실행)
+<a id="d-055-ex-040-zai-선봉-정책-비교"></a>
+- [D-055 EX-040 Z.ai 선봉 정책 비교](research/lead-policy/DESIGN.md#d-055-ex-040-zai-선봉-정책-비교)
+<a id="d-056-zai-기본4ex-041-재실험"></a>
+- [D-056 Z.ai 기본4·EX-041 재실험](research/lead-policy/DESIGN.md#d-056-zai-기본4ex-041-재실험)
 <a id="d-057-배틀선봉-상세-효과-사전"></a>
-
-## D-057 배틀·선봉 상세 효과 사전
-
-새 B/B2·선봉 프롬프트에 일반 게임 지식을 추가하는 처치 변경을 명시한다. 상세 원문은 요청당
-항목별 한 번 제공하며 기존 관측·prior·계산 의미·출력 정책은 유지한다. 기존 EX에는 소급하지 않는다.
-이번 범위는 구현·로컬 검증 및 EX-041 입력의 오프라인 표현 감사다. 성능 비교·유료 호출0이며
-문자/byte 증가·중복 제거량은 보고하되 토큰·지연·전략·승률·L1-L5 효능 개선으로 해석하지 않는다.
-
-## D-058 새 응답 대기·연결 재시도 기본값
-
-새 요청의 전송 정책은 [C-038](CONTRACTS.md#c-038-transport-retry)을 따른다.
-논리적인 모델 요청과 HTTP 시도를 별도 분모로 기록한다. 재시도는 새 경기/표본/출력 재질의가 아니다.
-기존 EX의 retry0·300초 및 중단 상태는 유지한다. §11.1의 도구 결함 복구는 이번 명시적
-연결 재시도보다 넓은 재시도를 허용하지 않는다. 공급자 반반 비교의 세부 설계는 미정이다.
-
-## D-059 공급자4+4 분산 선봉 비교
-
-[EX-042](experiments/EX-042-distributed-lead.md)의 조건·배정·지표·분모·gate·중단·해석을 새 실험의 원문으로 채택한다. 공급자별 유효 완료율/완료쌍이 주지표이며 서로 다른 seed·지원 옵션 때문에 공급자 우열 확증으로 해석하지 않는다. 과거 실험과 합산하거나 prompt/재시도의 단독 효과를 주장하지 않는다.
-
-## D-060 새 공급자 오류 재시도
-
-새 전송 기본값은 [C-038](CONTRACTS.md#c-038-transport-retry)의 provider-retry-v2다.
-연결·timeout·5xx·429의 고정1/2/4초 최대3재시도 및 최종429 전체 중단을 채택한다.
-재시도는 같은 논리 요청의 전송이며 표본·경기 추가나 출력 재추첨이 아니다.
-과거 EX-042 및 모든 동결 실행의 정책·결과·Blocked는 보존한다. 새 유료 실험 승인은 아니다.
-
-## D-061 선봉 전략·규칙 입력 개선
-
-matchup-v2는 모든 자기 후보의 초반 이득·방해 선봉·실제 세팅 행동·불리한 대면의 교체와 비용·후반 보존·차선 대비 이유를 비교한다. 공개 상대6종을 검토하며 미제공 정책/확률을 만들지 않는다.
-dex-v2는 타입/면역/기술 속성 및 범위 제한 가능성의 일반 지식 추가다. 두 처치는 독립 비교 가능하며 새 준비 기본값만 변경한다.
-검증은 오프라인 코드/입력/전송·기존32선봉 재생이다. 특정 슬롯을 정답으로 고정하지 않는다. 원본 명시적 주장의 자기 기술 보유·타입·면역·계획 조건을 검사하고 설명 누락은 기록된 근거 부족으로 분류한다.
-내부 고려 부재나 패배 원인을 추론하지 않는다. 새 모델의 오류 재발률·선택 품질·승률·지연 및 L1–L5 효능은 미평가다.
-
-## D-064 교정 B2 개선 선봉 비교
-
-[EX-043](experiments/EX-043-corrected-lead.md)의 조건·표본·중단·지표·완료·해석 규칙을 이번 실험의 원문으로 채택한다. 개선 정책 묶음의 탐색 비교이며 전략/Dex 개별 효과와 L1–L5 구조 효과는 분리하지 않는다. 과거 EX-042 정정·미완료는 유지한다.
-
-## EX-044 직접 본실험
-
-D-065의 명시적 재실행·사전 검사 생략 지시에 따라 [EX-044](experiments/EX-044-direct-corrected-lead.md)를 적용한다. 처치/표본/지표/해석은 EX-043을 유지하고 별도 사전 검증만 skipped_by_user다. 본실험 gate/입력 감사는 유지하며 과거 중단 결과와 합산하지 않는다.
-
-## D-066 공식 관측 소스 전환
-
-새 B/B2 모델·계산 입력의 소스를 공식 client-v1으로 바꾸는 처치 변경이다.
-EP-056 검증 완료 후 새 준비에만 기본 적용한다. 기존 계산식/지원 범위·선봉 정책은 유지한다.
-100개 보존 결정 경계 전수 재생과 팀6/12 진영 교환2경기(결정적 mock, 경기당600초·재경기0)는
-기술적 입력/실행 검증이다. 지연/메모리는 보고하되 모델 판단·승률·L1–L5 효능 근거로 해석하지 않는다.
-과거 관측·실험 봉인·실패 판정은 보존하고 새 source로 소급 유효화하지 않는다. 유료 호출은 없다.
-
-## D-067 공식 관측 B2 선봉 정책 비교
-
-[EX-045](experiments/EX-045-official-lead.md)의 조건·표본·지표·gate·중단·완료·해석을 이번 실험 원문으로 채택한다. 공식 관측 공통 입력에서 LLM 선봉 묶음 대 무작위 선봉의 탐색 비교다. 공식 관측 자체·legacy 대비·전략/Dex 개별·L1–L5 효과를 분리하지 않는다. 과거 결과와 합산하지 않는다.
-
-## D-069 비동기 교정본 공식 관측 본실험
-
-[EX-046](experiments/EX-046-async-official-lead.md)의 신규 실행 및 명시적 진입 차이를 채택한다. EX-045의 비교·평가·중단·해석은 유지하고 과거 결과와 합산하지 않는다.
-
-## D-071 JEV Choice 기술 진단
-
-[EX-047](experiments/EX-047-jev-battle.md)의 간결한 공식 관측·Choice/선봉·Abyssal2경기 진단을
-채택한다. 계산과 사전을 제외한 별도 처치이며 B2의 표현 변경이나 모델 단독 효과 비교가 아니다.
-상한/분모/중단·유료복구0은 EX-047을 따른다. 2경기 승패로 효능을 주장하지 않는다.
-
-## D-072 JEV 수치 표현 호환성 교정
-
-사용자 지적에 따라 확률 합계를 새 JEV 출력 수락 조건에서 제거한다. runtime 원문은 C-045다.
-과거 EX-047의 동결 기준·실행 판정·미완료는 보존하고 새 기준의 저장 응답 검증은 별도 오프라인
-근거로 기록한다. 실제 실험 재개나 완주를 뜻하지 않는다.
-
-## D-073 JEV 수정본 재실행
-
-사용자 재실행 지시에 따른 [EX-048](experiments/EX-048-jev-repeat.md)의2경기 조건·상한·중단·완료 기준을 채택한다. EX-047과 별도 원장/시계로 수집하고 과거 실패를 보존한다.
-
-## D-081 JEV 대 Abyssal32 탐색 측정
-
-[EX-052](experiments/EX-052-jev-abyssal32.md)의 EX-046 대진 재사용·Abyssal 고정·JEV32경기와
-완료쌍 평균점수·분모·기술통계 해석을 채택한다. 모델 우열이나 L1-L5 효능 비교가 아니다.
-
-## D-082 JEV v3 일반 게임 지식 추가
-
-새 JEV v3는 사용자 제공 Gen9 singles 기본 지식과 요청별 상세 효과 사전을 추가하는 처치다.
-계약은 C-045를 따른다. EX-052 저장 입력의 오프라인 비교만 수행하며 성능·지연·토큰·승률·
-L1-L5 효능을 평가하지 않는다. 과거 v1/v2 실험의 입력·결과·판정은 변경하지 않는다.
-
-## D-083 JEV v3 동일32 전후 비교
-
-[EX-053](experiments/EX-053-jev-v3-abyssal32.md)은 EP-074 전체 처치를 EX-052 동일 대진32경기에
-적용한다. EX-052 봉인 v2와 slot_id로 연결한 공통 유효 완료쌍 점수차의 동일가중 평균을
-탐색적으로 보고한다. 지식·사전·PP 출처 제거의 개별 효과와 모델 버전 변화의 인과 분리는 하지 않는다.
-실행 조건·분모·중단·해석의 실험별 원문은 EX-053이며 D-082의 오프라인 범위를 별도 승인으로 확장한다.
-
-## D-084 provider 재시도3회
-
-사용자의 명시적 지시로 새 JEV 전송 재시도를3회로 고정한다. 기술 오류의 최종 중단은
-허용 재시도 소진 뒤 적용하며 판단 오류 처리는 RD11.2를 유지한다. 재시도는 별도 배틀이나
-독립 표본으로 세지 않으며 사용량·실패 분모에 포함한다. 과거 동결 실험의 중단·판정은 보존한다.
-
-## D-085 EX-054 동일 조건 재실험
-
-사용자 지시로 EX-053의 v3 동일32경기를 EX-054로 새 실행한다. D-084 provider 재시도3회를 적용하고
-EX-052 공통 완료쌍의 탐색적 전후 비교를 유지한다. 재시도 정책·모델 변화는 운영 교란으로 보고한다.
-승인·조건·새 시계/예산·분모/중단 원문은 [EX-054](experiments/EX-054-jev-v3-retry32.md)이다.
-
-## D-088 EX-056 직접 본실험
-
-사용자 지시로 [EX-056](experiments/EX-056-jev-direct32.md)의 새32경기·사전 검증 생략·경기별/종료 감사를 채택한다. EX-052 공통 완료쌍 비교·재시도/모델 교란 제한을 유지한다.
-
-## D-089 EX-057 모델 고정 본실험
-
-[EX-057](experiments/EX-057-jev-pinned32.md)은 사용자 지시로 EX-056의 요청 모델만 jev-1.13.0으로 고정한 새32경기다. 사전검증 생략·새 시계·실패 격리/기술 중단·EX-052 공통쌍 비교를 유지하며 모델 요청명 차이를 해석 제한으로 명시한다.
-
-
-<a id="role-corpus-expansion"></a>
-
-## D-090 팀 데이터 기반 열람 역할 DB
-
-사용자 승인으로 [D-090](decisions/D-090-team-corpus-role-expansion.md)의409종 역할 자료를
-오프라인으로 확장한다. 실제 세트와 기계적 효과의 조건 일치는 역할 가능성에 대한 추론이며,
-새 역할의 prior/OU 실전성·전략적 적합성은 미평가다. 전세트 커버리지는 자료의 적용 범위를
-나타낼 뿐 정확성/성능 지표가 아니다. 새 API/배틀·운영 처치 변경·기존 실험 재개는 포함하지 않는다.
-
-## D-091 현재 팀 후보 제한
-
-사용자 지시에 따라 현재 팀 후보는 [D-091](decisions/D-091-reviewed-species-team-list.md)의
-검토 완료108종만으로 구성된 Metamon Gen9 OU 파일 목록으로 제한한다.
-[목록과 사용 기준](../export/teams/README.md)을 새 팀 선택의 입력으로 삼는다.
-세트별 역할 매칭은 추가 포함 조건이 아니며 검토 완료를 역할 확정/전략적 정확성으로 해석하지
-않는다. 새 평가의 대진·표본·예산은 별도 EX에서 고정하며 과거 동결 모집단은 유지한다.
-
-## D-092 JEV 오프라인 표현·정보 생략 비교
-
-현재 사용자 지시에 따라 별도 오프라인 입력을 구현하고 저장 관측의 구조·정보 보존을 검증한다.
-효과 인라인/슬롯 통합/방어 타입/로그의 표현 변경, 역할·상성·피해량의 정보 추가, 상대 벤치 요약의
-정보 생략, 자기 벤치 선택 축약의 정보 생략을 구분한다. 자기 축약은 동일한 새 상세 입력과
-비교하며 선봉·강제교체에는 적용하지 않는다. 대리 토크나이저 수치는 JEV 실측 usage가 아니다.
-판단 성능·승률·효능 평가는 없고 구조 검증으로 개선을 주장하지 않는다.
-[D-093](decisions/D-093-speed-uncertainty.md)의 명시적 후속 지시로 스피드 확률 요구는 세트별
-정성적 비교와 불확실성 표시로 대체한다. 확률 가중치나 위험 선택 정책은 도입하지 않는다.
-추천 세트 내부/사이의 불확실성을 보존하고 후보 전체 일치도 해당 유한 지원 내 결과로 한정한다.
-
-## D-094 — 개선 입력 전체 처치 탐색 비교
-
-[EX-058](experiments/EX-058-jev-improved32.md)의 EX-057 동일32경기·공통 완료쌍 비교를 채택한다.
-새 후보를 고르는 대신 이번 재현 범위에서 봉인 대진을 유지한다. EP-093 표현/정보 추가/상대
-벤치 생략 전체 처치이며 개별 효과·일반 성능 향상을 주장하지 않는다. 상세 protocol은 EX가 소유한다.
-
-## D-095 — 자기 벤치 축약 탐색 비교
-
-[EX-059](experiments/EX-059-jev-compact32.md)의 EX-058 동일32경기 및 공통 유효 완료쌍의 축약−상세
-동일가중 점수차를 채택한다. EX-057은 참고 성적이다. 자기 벤치 정보 생략의 탐색 비교이며
-일반 성능 향상·성능 동등성·L1-L5 효능을 주장하지 않는다. 상세 protocol은 EX가 소유한다.
-
-## D-097 — 한 경기 조건부 행동 가치 데이터
-
-[EX-060](experiments/EX-060-single-battle-branch-rollouts.md)의 원재현 gate·고정 대진·양측 Abyssal 후속·32반복 수집을 채택한다. 입력은 실전 관측이며 타깃은 실제 숨은 상태와 후속 정책 조건부 값이다. 기존 경기 패배와 다른 후속 정책의 승리를 직접 비교하지 않고 원행동도 같은 조건에서 수집한다. 일반 OU/최적 정책/JEV 성능·확정 우열 claim은 하지 않으며 사용 대진은 개발 자료로 분류한다.
-
-## D-103 — 공동 q 학습 데이터
-
-[EX-065](experiments/EX-065-joint-q-data.md)의 신규80경기·고정 숨은 상태·Abyssal32후속
-조건부 q 수집과10경기 파일럿 gate를 채택한다. 상세 모집단/split/분모/복구/오염 관리/
-해석은 해당 EX가 소유한다. 공동 입력/로더 구축이며 모델 학습·성능 평가는 수행하지 않는다.
-
-## D-107 — 자발적 Tera 보완 공동 q 데이터
-
-[EX-067](experiments/EX-067-abyssal-tera-joint-q.md)의 동결 정책부터 산출물과 완료까지를
-이번 수집의 규범으로 채택한다. 원경기와 후속 양측의 자발적 Tera·이후 관측 보완이 목적이며
-고정 휴리스틱의 최적성·배틀 성능 향상을 평가하는 실험은 아니다. 새로운 q는 해당 후속 정책에
-조건부이고 기존 EX-065 q/EX-066 학습에 자동 병합하지 않는다.
-
-<a id="showdown-ruleqa"></a>
-
-## D-159 — 신규 Showdown 규칙 데이터 v1
-
-Gen9 singles의 24규칙군에 한정한다: 단일 상성 방향, 복합 상성, Flying/접지,
-Levitate/Mold Breaker, 일반 Tera 방어, Tera/STAB/기술 타입, Stealth Rock 비중첩,
-Stealth Rock 진입 피해, Spikes 층/접지, Boots 제거, Balloon 소실, Rapid Spin 명중/면역,
-Ruination, 고정 피해, 피해 단위/null/0, 조건부 KO, 혼란, 마비, 화상/Guts,
-우선도/속도/Trick Room, 교체/피벗/강제 교체, Protect/명중/성공, Gigaton Hammer,
-공개/비공개/제거/억제. Stellar·다른 세대·더블·특수 포맷은 제외한다.
-
-규칙군당40대조묶음, 묶음당2상황, 상황당 짧은 Q&A/전체 State Q&A/전체 State 선택형이다.
-영어 템플릿과 1–3문장 근거, 한국어 검토 보고를 제공한다. 총1,920상황·5,760문항이며
-표현과 두 export는 독립 표본으로 합산하지 않는다. seed20261019, 규칙군별 묶음32/4/4를
-train/validation/test에 배정한다. 이름·ID만 다른 동일/근접 문제와 파생 문항은 split을 넘지 않는다.
-
-새 CPU Showdown 장면만 생성한다. Dex/시뮬레이션/기존 계산기를 고정하고 정답과 조건을
-구조화된 사실에서 판정한다. 설명에서 정답을 역추론하지 않는다. 확률과 조건부 결과를 구별하고
-최적 행동을 주장하지 않는다. 공개 사실만으로 결정 불가능하면 명시적 불확실성 문제만
-cannot determine를 허용하며 나머지는 제외한다. 기존 EX-083/088/105는 선정 근거로만 사용한다.
-
-전수 oracle·설명·선택형 유일정답·정보경계·관련조건 대조·무관변형 불변·State 교정 범위·
-경계 사례·분할 중복 검사를 수행한다. Tacit-9B/JEV-27B tokenizer로 실제 질문/선택지를 포함한
-입력32,768 이하를 무절단 검사한다. 규칙군별4상황 총96상황을 별도 의미 검토한다.
-실패 규칙군의 export는 차단하고 실패/수정 근거를 보존한다. 학습·추론·승률 평가와
-효능 주장은 범위 밖이며, CPU worker≤4·GPU/API/추가 다운로드0이다.
-
-D-159의 구현·자료·검증 결과는 [EP-169](exec-plans/completed/EP-169-showdown-ruleqa.md)에 연결한다.
-완료는 규칙 자료의 검증을 뜻하며 모델/배틀 효과의 입증이 아니다. 제어 개입·소규모 팀·같은 템플릿 계열의
-분할이라는 실제 자료 범위와 규칙별 예외는 해당 manifest/report에서 확인한다.
-
-## Strategist 첫 배틀 탐색 평가
-
-D-160의 EX-106은 단독 텍스트 행동 생성 모델의 완주·합법성 탐색이다. 실험별 방법·예산·대체 정책·분모·해석 원문은 [EX-106](experiments/EX-106-strategist-first-battle.md)이며 기존 JEV 비교 조건을 상속하지 않는다.
-
-## Tacit 규칙 Q&A LoRA
-
-D-161의 [EX-107](experiments/EX-107-tacit-ruleqa-lora.md)을 별도 학습 실험 규범으로 채택한다. D-159 자료 생성 범위를 소급 변경하지 않는다. 기존 split·validation 선택·잠긴 test로 같은 템플릿 내 적용을 비교하고 배틀·긴 Thinking·미지 형식 일반화를 주장하지 않는다.
-
-## 학습 Tacit 실전32
-
-D-162의 [EX-108](experiments/EX-108-tacit-ruleqa-battle32.md)을 별도 단독 배틀 탐색으로 채택한다. EX107의 선택/잠긴test를 변경하지 않고 선택adapter 검증후 실행한다. 규칙QA와 실제 행동선택 전이를 구분하고 기반모델 미비교의 한계를 유지한다.
-
-## OpenAI Decisions v6 상세 고정 대진 탐색
-
-D-164/[EX-109](experiments/EX-109-openai-decisions-v6-battle32.md)는 v6 상세 입력을
-OpenAI gpt-6-luna의 단일 Choice로 평가하는 새32경기다. 기존 입력·후보 의미를 보존하고
-provider/전송 형식 차이를 명시하며 일반 성능·모델 크기만의 효과를 주장하지 않는다.
-구체 조건/예산/완료분모/복구는 EX-109, 기술 계약은 C-079에 둔다.
-
-## OpenAI 통신 재시도 새32경기
-
-D-165/EX110은 사용자의 후속 지시에 따라 연결실패/timeout의 반복으로 제한하지 않는
-새32경기다. EX109 원결과를 새분모에 계승하지 않고 같은모델/v6/대진에서 통신·시간정책만 바꾼다.
-조건·미확정사용량·분모/복구는 EX110, runtime은 C-080에 둔다.
-
-
-## JevK5-9B v6 상세32경기
-
-D-166의 [EX-111](experiments/EX-111-jevk5-v6-battle32.md)을 별도 탐색 평가 규범으로 채택한다. v6 원정보·고정대진과 JevK5 native 선택지 점수 판독/공식temperature를 결합한다. 기존 결과·중단·진행 중 EX110은 보존하며 단일모델 고정대진 결과를 인과/일반화 효과로 확대하지 않는다.
-
-## 후보별 현재 대면 상성·효과 요약
-
-D-167은 기존 v6/원후보를 유지하면서 현재대면의 적용결과를 후보 가까이에 보강하는 표현가설이다.
-정보 연결/해석의 개선 가능성을 검토하며 면역 선택 원인을 지식부족/상성표 결함으로 확정하지 않는다.
-표현·규칙/보존 오프라인 검증과 실제모델 선택/승률 비교를 구분한다. 이번 범위는 구현/오프라인검증이다.
-후속 비교에서는 원v6와 요약추가만의 차이를 명시하고 모델/대진/실패규칙을 별도 동결한다.
-
-D-167의 요약에는 공개규칙을 코드로 적용한 계산보조도 포함된다. 향후 선택 변화가 관측되더라도
-단순 문자열 배치만의 효과로 분리해 주장하지 않는다. 현재 구조/규칙 검증은 EP182에서 완료했다.
-
-## 후보별 요약 OpenAI 동일32 탐색 비교
-
-D-168의 [EX-112](experiments/EX-112-openai-candidate-matchup-battle.md)를 새실험의 방법·평가·분모·해석 원문으로 채택한다. EX110과의 과거 기준선 비교이며 D167의 오프라인 범위를 소급 변경하지 않는다.
-
-
-## JevK5 규칙 선택형 LoRA
-
-D169의 [EX113](experiments/EX-113-jevk5-ruleqa-lora.md)을 독립 학습·보정·평가 규범으로 채택한다. 기존 test 재사용과 동일템플릿 한계를 유지하며 배틀효과로 확대하지 않는다.
+- [D-057 배틀·선봉 상세 효과 사전](research/input-and-memory/DESIGN.md#d-057-배틀선봉-상세-효과-사전)
+<a id="d-058-새-응답-대기연결-재시도-기본값"></a>
+- [D-058 새 응답 대기·연결 재시도 기본값](shared/execution/DESIGN.md#d-058-새-응답-대기연결-재시도-기본값)
+<a id="d-059-공급자44-분산-선봉-비교"></a>
+- [D-059 공급자4+4 분산 선봉 비교](research/lead-policy/DESIGN.md#d-059-공급자44-분산-선봉-비교)
+<a id="d-060-새-공급자-오류-재시도"></a>
+- [D-060 새 공급자 오류 재시도](shared/execution/DESIGN.md#d-060-새-공급자-오류-재시도)
+<a id="d-061-선봉-전략규칙-입력-개선"></a>
+- [D-061 선봉 전략·규칙 입력 개선](research/lead-policy/DESIGN.md#d-061-선봉-전략규칙-입력-개선)
+<a id="d-064-교정-b2-개선-선봉-비교"></a>
+- [D-064 교정 B2 개선 선봉 비교](research/lead-policy/DESIGN.md#d-064-교정-b2-개선-선봉-비교)
+<a id="ex-044-직접-본실험"></a>
+- [EX-044 직접 본실험](research/lead-policy/DESIGN.md#ex-044-직접-본실험)
+<a id="d-066-공식-관측-소스-전환"></a>
+- [D-066 공식 관측 소스 전환](research/input-and-memory/DESIGN.md#d-066-공식-관측-소스-전환)
+<a id="d-067-공식-관측-b2-선봉-정책-비교"></a>
+- [D-067 공식 관측 B2 선봉 정책 비교](research/lead-policy/DESIGN.md#d-067-공식-관측-b2-선봉-정책-비교)
+<a id="d-069-비동기-교정본-공식-관측-본실험"></a>
+- [D-069 비동기 교정본 공식 관측 본실험](research/lead-policy/DESIGN.md#d-069-비동기-교정본-공식-관측-본실험)
+<a id="d-071-jev-choice-기술-진단"></a>
+- [D-071 JEV Choice 기술 진단](research/model-evaluation/DESIGN.md#d-071-jev-choice-기술-진단)
+<a id="d-072-jev-수치-표현-호환성-교정"></a>
+- [D-072 JEV 수치 표현 호환성 교정](research/model-evaluation/DESIGN.md#d-072-jev-수치-표현-호환성-교정)
+<a id="d-073-jev-수정본-재실행"></a>
+- [D-073 JEV 수정본 재실행](research/model-evaluation/DESIGN.md#d-073-jev-수정본-재실행)
+<a id="d-081-jev-대-abyssal32-탐색-측정"></a>
+- [D-081 JEV 대 Abyssal32 탐색 측정](research/model-evaluation/DESIGN.md#d-081-jev-대-abyssal32-탐색-측정)
+<a id="d-082-jev-v3-일반-게임-지식-추가"></a>
+- [D-082 JEV v3 일반 게임 지식 추가](research/input-and-memory/DESIGN.md#d-082-jev-v3-일반-게임-지식-추가)
+<a id="d-083-jev-v3-동일32-전후-비교"></a>
+- [D-083 JEV v3 동일32 전후 비교](research/input-and-memory/DESIGN.md#d-083-jev-v3-동일32-전후-비교)
+<a id="d-084-provider-재시도3회"></a>
+- [D-084 provider 재시도3회](shared/execution/DESIGN.md#d-084-provider-재시도3회)
+<a id="d-085-ex-054-동일-조건-재실험"></a>
+- [D-085 EX-054 동일 조건 재실험](research/input-and-memory/DESIGN.md#d-085-ex-054-동일-조건-재실험)
+<a id="d-088-ex-056-직접-본실험"></a>
+- [D-088 EX-056 직접 본실험](research/input-and-memory/DESIGN.md#d-088-ex-056-직접-본실험)
+<a id="d-089-ex-057-모델-고정-본실험"></a>
+- [D-089 EX-057 모델 고정 본실험](research/input-and-memory/DESIGN.md#d-089-ex-057-모델-고정-본실험)
+<a id="role-corpus-expansion"></a><a id="d-090-팀-데이터-기반-열람-역할-db"></a>
+- [D-090 팀 데이터 기반 열람 역할 DB](shared/datasets/DESIGN.md#role-corpus-expansion)
+<a id="d-091-현재-팀-후보-제한"></a>
+- [D-091 현재 팀 후보 제한](shared/datasets/DESIGN.md#d-091-현재-팀-후보-제한)
+<a id="d-092-jev-오프라인-표현정보-생략-비교"></a>
+- [D-092 JEV 오프라인 표현·정보 생략 비교](research/input-and-memory/DESIGN.md#d-092-jev-오프라인-표현정보-생략-비교)
+<a id="d-094--개선-입력-전체-처치-탐색-비교"></a>
+- [D-094 — 개선 입력 전체 처치 탐색 비교](research/input-and-memory/DESIGN.md#d-094--개선-입력-전체-처치-탐색-비교)
+<a id="d-095--자기-벤치-축약-탐색-비교"></a>
+- [D-095 — 자기 벤치 축약 탐색 비교](research/input-and-memory/DESIGN.md#d-095--자기-벤치-축약-탐색-비교)
+<a id="d-097--한-경기-조건부-행동-가치-데이터"></a>
+- [D-097 — 한 경기 조건부 행동 가치 데이터](research/action-value/DESIGN.md#d-097--한-경기-조건부-행동-가치-데이터)
+<a id="d-103--공동-q-학습-데이터"></a>
+- [D-103 — 공동 q 학습 데이터](research/action-value/DESIGN.md#d-103--공동-q-학습-데이터)
+<a id="d-107--자발적-tera-보완-공동-q-데이터"></a>
+- [D-107 — 자발적 Tera 보완 공동 q 데이터](research/action-value/DESIGN.md#d-107--자발적-tera-보완-공동-q-데이터)
+<a id="showdown-ruleqa"></a><a id="d-159--신규-showdown-규칙-데이터-v1"></a>
+- [D-159 — 신규 Showdown 규칙 데이터 v1](research/rule-learning/DESIGN.md#showdown-ruleqa)
+<a id="strategist-첫-배틀-탐색-평가"></a>
+- [Strategist 첫 배틀 탐색 평가](research/model-evaluation/DESIGN.md#strategist-첫-배틀-탐색-평가)
+<a id="tacit-규칙-qa-lora"></a>
+- [Tacit 규칙 Q&A LoRA](research/rule-learning/DESIGN.md#tacit-규칙-qa-lora)
+<a id="학습-tacit-실전32"></a>
+- [학습 Tacit 실전32](research/rule-learning/DESIGN.md#학습-tacit-실전32)
+<a id="openai-decisions-v6-상세-고정-대진-탐색"></a>
+- [OpenAI Decisions v6 상세 고정 대진 탐색](research/model-evaluation/DESIGN.md#openai-decisions-v6-상세-고정-대진-탐색)
+<a id="openai-통신-재시도-새32경기"></a>
+- [OpenAI 통신 재시도 새32경기](research/model-evaluation/DESIGN.md#openai-통신-재시도-새32경기)
+<a id="jevk5-9b-v6-상세32경기"></a>
+- [JevK5-9B v6 상세32경기](research/model-evaluation/DESIGN.md#jevk5-9b-v6-상세32경기)
+<a id="후보별-현재-대면-상성효과-요약"></a>
+- [후보별 현재 대면 상성·효과 요약](research/input-and-memory/DESIGN.md#후보별-현재-대면-상성효과-요약)
+<a id="후보별-요약-openai-동일32-탐색-비교"></a>
+- [후보별 요약 OpenAI 동일32 탐색 비교](research/input-and-memory/DESIGN.md#후보별-요약-openai-동일32-탐색-비교)
+<a id="jevk5-규칙-선택형-lora"></a>
+- [JevK5 규칙 선택형 LoRA](research/rule-learning/DESIGN.md#jevk5-규칙-선택형-lora)

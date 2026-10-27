@@ -1,16 +1,12 @@
-# D-058 — 응답 대기600초·연결 오류 재시도
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-15
-- 승인: 현재 사용자가 전달한 계획의 구현·검증 지시
+원문: [D-058](../shared/execution/decisions/D-058-transport-retry.md)
 
-## 결정과 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-새 Z.ai/Ollama 호출의 읽기 대기600초와 연결 오류 최대2회 재시도를 채택한다.
-정확한 전송·봉인·호환 계약은 [C-038](../CONTRACTS.md#c-038-transport-retry)다.
-D-054의 새 호출 재시도0 범위를 명시적으로 대체하며 과거 EX·봉인에는 소급하지 않는다.
-EX-041의 timeout/연결 오류가 배경이지만 개선 효과나 원인은 입증하지 않는다.
-도구 결함 복구를 이유로 한 임의 재시도 확대와 이번 명시적 전송 정책을 구별한다.
+<a id="d-058--응답-대기600초연결-오류-재시도"></a>
+[d-058--응답-대기600초연결-오류-재시도](../shared/execution/decisions/D-058-transport-retry.md#d-058--응답-대기600초연결-오류-재시도)
 
-외부 호출·중단 실험 재개·공급자 반반 비교의 설계/실행은 승인 범위 밖이다.
-[EP-047](../exec-plans/completed/EP-047-transport-retry.md)에서 구현·무외부호출 검증한다.
+<a id="결정과-범위"></a>
+[결정과-범위](../shared/execution/decisions/D-058-transport-retry.md#결정과-범위)

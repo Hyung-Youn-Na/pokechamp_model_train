@@ -1,17 +1,15 @@
-# D-116 — Abyssal 전용 4GPU·24시간 학습 승인
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-10-03
+원문: [D-116](../research/policy-learning/decisions/D-116-abyssal-rl.md)
 
-## 승인 근거·결정
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-사용자가 제공한 구체적 계획의 구현·검증·실행 지시로 EX-073/EP-119를 등록한다.
-EX-071 모방 모델 출발, 기본 Abyssal 전용, GPU4장 공동 정책, 독립 train/dev/test와
-승률60%·95% 하한50% 초과 목표, 최초 GPU 검사부터24시간을 채택한다.
-연구 조건 전문은 EX-073, runtime은 C-057이 소유한다. 추가 재승인은 요구하지 않는다.
+<a id="d-116--abyssal-전용-4gpu24시간-학습-승인"></a>
+[d-116--abyssal-전용-4gpu24시간-학습-승인](../research/policy-learning/decisions/D-116-abyssal-rl.md#d-116--abyssal-전용-4gpu24시간-학습-승인)
 
-## 영향·제한
+<a id="승인-근거결정"></a>
+[승인-근거결정](../research/policy-learning/decisions/D-116-abyssal-rl.md#승인-근거결정)
 
-D-115의 미정 후속 설계를 이번 실행에 한해 구체화한다. EX-072 동결 설정·결과·코드와
-EX-066 재로딩 실패·자료는 보존한다. 기존 작업 종료나 과거 Blocked 재개는 승인하지 않는다.
-학습 완료·성능 목표 달성·초기 대비 유의한 개선을 각각 판단한다.
+<a id="영향제한"></a>
+[영향제한](../research/policy-learning/decisions/D-116-abyssal-rl.md#영향제한)

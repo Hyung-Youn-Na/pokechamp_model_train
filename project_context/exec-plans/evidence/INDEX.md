@@ -8,12 +8,24 @@
 
 | 필요한 근거 | 실제 위치와 읽기 범위 |
 |---|---|
-| 후보별 요약 EX112 분모미달 종결 | [보고](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/report.md) → [비교](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/comparison/report.md) · [사례](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/case-review.md) · [종결](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/completion.json) · [뷰어](../../../exports/battle_viewers/ex112/index.html) |
+| 최근Smogon 전략 역할 System1 | [보고](ep200/report.md) → [독립검토](ep200/independent-review.json) · [배포확인](ep200/delivery.json) |
+| 조건부 KO System1 판정자료 | [보고](ep199/report.md) → [독립검토](ep199/independent-review.json) · [배포/한국어표시](ep199/delivery.json) |
+| 실제 리플레이 KO System1 자료 | [보고](ep198/report.md) → [독립검토](ep198/independent-review.json) · [배포확인](ep198/delivery.json) |
+| Gen9 날씨·영역 System 1 자료 | [보고](ep197/report.md) → [CPU검사](ep197/loss-check.json) · [배포확인](ep197/delivery.json) |
+| Gen9 행동우선도 System 1 자료 | [보고](ep196/report.md) → [CPU손실검사](ep196/loss-check.json) · [배포확인](ep196/delivery.json) |
+| Gen9 상태이상 System 1 자료 | [보고](ep195/report.md) → [교정](ep195/corrections.md) · [손실검사](ep195/loss-check.json) · [배포확인](ep195/delivery.json) |
+| Gen9 타입 System 1 판별자료 | [보고](ep193/report.md) → [손실 검사](ep193/loss-check.json) · [배포 확인](ep193/delivery.json) |
+| Gen9 타입 상성 전수 학습자료 | [보고](ep192/report.md) → [생성·검증](ep192/generation.log) · [배포 확인](ep192/delivery.json) · [사용 안내](../../../exports/gen9-type-matchup-v1/README.md) |
+| JevK5 LoRA vLLM 서빙 확인 EP190 | [보고](ep190/report.md) → [26요청 확인](ep190/summary.json) · [문항별 비교](ep190/results.json) |
+| JevK5 규칙 선택형 LoRA EX113 | [보고](ep184/report.md) → [종결 검사](ep184/completion-audit.json) · [CPU 검사](ep184/recovery-tests.log) · [보정확률 검사](ep184/calibrated-probabilities-test.log) |
+| 후보별 요약 EX112 분모미달 종결 | [보고](../../../../mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/report.md) → [비교](../../../../mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/comparison/report.md) · [사례](../../../../mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/case-review.md) · [종결](../../../../mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-112/evidence/completion.json) · [뷰어](../../../exports/battle_viewers/ex112/index.html) |
+| 학습 JevK5 LoRA 실전32 EX114 | [보고](ep191/report.md) → [종결](ep191/closure.json) · [뷰어](../../../exports/battle_viewers/ex114/index.html) |
 | JevK5-9B v6 상세32 EX111 | [보고](ep181/report.md) → [오프라인](ep181/final-browser.json) · [봉인](ep181/seal-receipt.json) · [뷰어](../../../exports/battle_viewers/ex111/index.html) |
 | 후보별 현재대면 요약 EP182 | [보고](ep182/report.md) → [전후예시](ep182/examples.md) · [보존/coverage](ep182/validation.json) · [검사](ep182/tests.log) · [종결](ep182/completion.json) |
-| OpenAI Decisions v6 상세32 EX110 | [보고](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/report.md) → [지표](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/metrics.json) · [종결](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/completion.json) · [뷰어](../../../exports/battle_viewers/ex110/index.html) |
+| OpenAI Decisions v6 상세32 EX110 | [보고](../../../../mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/report.md) → [지표](../../../../mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/metrics.json) · [종결](../../../../mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/completion.json) · [뷰어](../../../exports/battle_viewers/ex110/index.html) |
 | 학습 Tacit 실전32 EX-108 | [보고](ep176/report.md) → [지표](ep176/final-summary.json) · [감사](ep176/audit.json) · [브라우저](ep176/browser-check.json) · [무결성/반환](ep176/final-integrity.json) · [종결](ep176/completion.json) |
 | Tacit 규칙QA LoRA EX-107 | [보고](ep173/report.md) → [감사](ep173/final-audit.json) · [블라인드검토](ep173/semantic-review.json) · [checkpoint](ep173/checkpoint-audit.json) · [종결/봉인](ep173/seal-receipt.json) |
+| 우선순위별 규칙 적용 System1 자료 | [EP-201 보고](ep201/report.md) → [생성](ep201/generation.log)·[P1/P3 검토](ep201/p13-review.json)·[P2 검토](ep201/p2-review.json)·[P4/P5 검토](ep201/p45-review.json)·[전달](ep201/delivery.json) |
 | Smogon OU 전략 전수 수집 | [보고](ep175/report.md) → [통계](ep175/statistics.json) · [원문 대조](ep175/validation.json) · [브라우저](ep175/browser-validation.json) · [Parquet](ep175/parquet-validation.json) · [종결](ep175/completion.json) |
 | Strategist 첫 배틀 EX-106 | [보고](ep172/report.md) → [지표](ep172/report.json) · [감사](ep172/audit.json) · [오프라인 뷰어](ep172/browser-check.json) · [종결/봉인](ep172/completion.json) |
 | Tacit vLLM low EX-105 | [보고](ep164/report.md) → [감사](ep164/audit.json) · [비교](ep164/comparison.md) · [사례](ep164/case-review.md) · [속도](ep164/decision-latency.json) · [뷰어](ep164/browser.json) · [종결](ep164/completion.json) |

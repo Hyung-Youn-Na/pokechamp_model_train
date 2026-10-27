@@ -1,48 +1,27 @@
-# EP-099 — 포켓몬 전용 모델 학습 당면 목표 문서화
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Completed
-- 완료일: 2026-09-28
-- 생성일: 2026-09-28
-- 책임자: Codex
-- 승인 근거·범위: 현재 사용자 지시 “현재 구성한 3개의 jev 계열 학습 환경을 활용해 포켓몬 배틀에 최적화 학습을 진행하는 것을 당면 목표로 하도록 문서를 업데이트”.
-- 관련: [CHARTER](../../CHARTER.md), [연구 설계](../../RESEARCH_DESIGN.md), [환경 구성](../completed/EP-098-rlcd-lite-environment.md)
+원문: [EP-099](../../research/policy-learning/plans/EP-099-pokemon-training-objective.md)
 
-## 목표와 범위
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-LAYA-RLCD·EVE-RLCD·RLCD-Lite 환경을 활용한 포켓몬 배틀 최적화 학습을 당면 목표로
-채택하고, 장기 L1-L5 목표와의 관계·현재 준비 상태·미정 설계·다음 단계를 동기화한다.
-CHARTER·RESEARCH_DESIGN·STATUS·INDEX·Decision/exec-plan 색인과 새 D-096·이 계획 및
-검증 증거만 변경한다. 기존 active plan의 목표·범위와 중단 보존 상태를 확인했으며,
-이번 목표 문서화는 해당 실험의 재개나 조건 변경과 겹치지 않는다.
-Runtime·세 worktree·가상환경·기존 ADR/EP/EX와 원자료는 보존한다.
-학습 실행·새 배틀·외부 API 호출·학습 데이터 채택·구체적인 보상/평가 protocol 확정은 범위 밖이다.
+<a id="ep-099--포켓몬-전용-모델-학습-당면-목표-문서화"></a>
+[ep-099--포켓몬-전용-모델-학습-당면-목표-문서화](../../research/policy-learning/plans/EP-099-pokemon-training-objective.md#ep-099--포켓몬-전용-모델-학습-당면-목표-문서화)
 
-## 완료 기준
+<a id="검증"></a>
+[검증](../../research/policy-learning/plans/EP-099-pokemon-training-objective.md#검증)
 
-- [x] 세 환경을 활용한 당면 목표 및 장기 목표와의 관계 반영.
-- [x] 환경 준비 완료와 학습·효능 미평가, 후속 설계의 미정 항목 구분.
-- [x] 결정·상태·색인·링크 동기화 및 기존 기록 보존 검사.
+<a id="결과-및-증거"></a>
+[결과-및-증거](../../research/policy-learning/plans/EP-099-pokemon-training-objective.md#결과-및-증거)
 
-## 검증
+<a id="목표와-범위"></a>
+[목표와-범위](../../research/policy-learning/plans/EP-099-pokemon-training-objective.md#목표와-범위)
 
-문서 전후 대조·로컬 링크/신규 앵커·목표/현재 단계 정합성을 확인한다.
-기존 ADR/EP/EX의 SHA-256을 변경 전 manifest와 대조한다.
-문서만 변경하므로 runtime 테스트·배틀 viewer·복구/재수집/실험 시계는 해당 없음.
-변경 전 문서와 보존 manifest는 `../evidence/ep099/`에 기록한다.
+<a id="완료-기준"></a>
+[완료-기준](../../research/policy-learning/plans/EP-099-pokemon-training-objective.md#완료-기준)
 
-## 진행
+<a id="진행"></a>
+[진행](../../research/policy-learning/plans/EP-099-pokemon-training-objective.md#진행)
 
-- 2026-09-28 — INDEX/CHARTER·RD·STATUS·D-063·환경 구성 EP-096–098·active plan 범위 확인, 문서 작업 등록.
-- 2026-09-28 — D-096·RQ4·헌장 당면 목표·현재 단계/다음 단계 반영, 문서 대조·링크·기존 기록 보존 검사 후 종결.
-
-## 차단·중단
-
-[INDEX 공통 기준](../../INDEX.md#workflow)을 따른다. 비실험 문서 작업이며 추가 blocker 없음.
-
-## 결과 및 증거
-
-당면 학습 목표를 CHARTER·연구 설계·STATUS에 반영하고 D-096 및 탐색/작업 색인을
-동기화했다. L1-L5 장기 목표는 유지했으며 데이터·보상·예산·평가 설계는 미정으로 명시했다.
-문서 반영 완료는 실제 학습이나 포켓몬 성능 개선 달성을 뜻하지 않는다.
-새 학습·배틀·API 호출0. 기존 ADR/EP/EX255개 SHA-256 일치.
-문서 diff·링크/상태 정합성 검사 결과는 [검증 보고](../evidence/ep099/report.md)를 따른다.
+<a id="차단중단"></a>
+[차단중단](../../research/policy-learning/plans/EP-099-pokemon-training-objective.md#차단중단)

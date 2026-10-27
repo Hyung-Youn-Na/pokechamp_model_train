@@ -1,29 +1,21 @@
-# D-074 — 공급자 판단 오류의 전체 실험 중단 제외
+<!-- context-redirect -->
+# 문서 위치 안내
 
-- 상태: Accepted
-- 날짜: 2026-09-21
-- 승인: 사용자 “provider의 판단관련 오류는 전체 실험 중단으로 이어지지 않도록 메뉴얼을 수정해. 계속 끊긴다.”
+원문: [D-074](../shared/execution/decisions/D-074-provider-judgment-policy.md)
 
-## 맥락·근거
+이 파일은 탐색용 연결이며 규범·실행 계획 원문이 아니다. 실행기는 등록 ID로 조회한다.
 
-EX-047은 확률합0.99, EX-048은 선택0.24/다른 후보0.25 검사로 중단했다.
-사용자는 판단 관련 오류가 전체 실험을 반복해서 중단하는 운영 규칙의 변경을 요청했다.
-모델 판단 품질은 평가 대상이며 실행 가능성과 구분한다.
+<a id="d-074--공급자-판단-오류의-전체-실험-중단-제외"></a>
+[d-074--공급자-판단-오류의-전체-실험-중단-제외](../shared/execution/decisions/D-074-provider-judgment-policy.md#d-074--공급자-판단-오류의-전체-실험-중단-제외)
 
-## 결정
+<a id="검증"></a>
+[검증](../shared/execution/decisions/D-074-provider-judgment-policy.md#검증)
 
-새 실험은 [RD §11.2](../RESEARCH_DESIGN.md#provider-judgment-errors)에 따라 판단 오류를
-진단으로 기록하고, 실행 불가능한 응답은 경기 단위로 격리한다. Runtime 요구사항은
-[C-046](../CONTRACTS.md#c-046-provider-judgment)이다. 기술적 공유 결함과 통신·상한 규칙은 유지한다.
-포괄적인 첫 오류 전체 중단을 새 실험에 상속하지 않는다.
+<a id="결정"></a>
+[결정](../shared/execution/decisions/D-074-provider-judgment-policy.md#결정)
 
-## 영향·대안
+<a id="맥락근거"></a>
+[맥락근거](../shared/execution/decisions/D-074-provider-judgment-policy.md#맥락근거)
 
-문서 범위의 변경이며 코드 적용·유료 재실행은 포함하지 않는다. 현재 실행기의 지원 한계를
-매뉴얼에 명시한다. 과거 D-071/072/073의 동결 버전·실험·감사 규칙은 변경하지 않는다.
-최댓값으로 자동 교체하는 방식은 공급자의 실제 선택을 바꾸므로 채택하지 않는다.
-실패 표본을 제외하거나 사후 성공으로 고치는 대신 원문·실패 분모를 보존한다.
-
-## 검증
-
-[EP-065](../exec-plans/completed/EP-065-provider-judgment-policy.md)의 문서·사례 검토를 따른다.
+<a id="영향대안"></a>
+[영향대안](../shared/execution/decisions/D-074-provider-judgment-policy.md#영향대안)

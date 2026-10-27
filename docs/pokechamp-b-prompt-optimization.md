@@ -11,8 +11,8 @@
 [상세 계약·생성법](../integration/pokechamp/effects/README.md) · [검증 보고](../project_context/exec-plans/evidence/ep046/report.md)
 
 
-[D-046](../project_context/decisions/D-046-b-prompt-optimization.md)과
-[C-030](../project_context/CONTRACTS.md#c-030--b-오프라인-전달-표현)의 별도 오프라인 인터페이스다.
+[D-046](../project_context/research/input-and-memory/decisions/D-046-b-prompt-optimization.md)과
+[C-030](../project_context/research/input-and-memory/CONTRACTS.md#c-030--b-오프라인-전달-표현)의 별도 오프라인 인터페이스다.
 EX-037의 B0 원문, 운영 `battle-v1.2.0`, 관측·prior·계산식·출력복구는 보존한다.
 B1/B2/B3는 현재 live selector에 등록하지 않는다.
 
