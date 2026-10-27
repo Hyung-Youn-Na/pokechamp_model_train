@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# EP-215 chain (plan approved 2026-10-26: GPU1 training and battles run without a separate approval).
+# EX-130 measure -> features -> data -> parity -> train -> evaluate; EX-131 runs regardless of EX-130's numbers (D-191),
+# only after a clean mock. Stops at the first failing stage; nothing is re-run automatically.
+set -euo pipefail
+cd /workspace
+RUN=/workspace/scripts/laya-imitation
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+
+stage "v4 measure";  "$RUN" v4 measure
+stage "v4 features"; "$RUN" v4 features
+stage "v4 data";     "$RUN" v4 data
+stage "v4 parity";   "$RUN" v4 parity
+stage "v4 train";    "$RUN" v4 train
+stage "v4 evaluate"; "$RUN" v4 evaluate
+
+stage "compare5 mock"; "$RUN" compare5 mock
+python3 - <<'PY'
+import json
+r = json.load(open('/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-131/mock/result.json'))
+bad = [o['slot_id'] for o in r['outcomes'] if o['status'] != 'completed' or not o.get('audit_passed')]
+if r['phase_error'] or bad or not r['outcomes']:
+    raise SystemExit('EX-131 mock failed: %r %r' % (r['phase_error'], bad))
+PY
+stage "compare5 prepare"; "$RUN" compare5 prepare
+stage "compare5 execute"; "$RUN" compare5 execute
+stage "compare5 export";  "$RUN" compare5 export
+stage "EP-215 chain finished"

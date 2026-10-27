@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# EP-217 chain (plan approved 2026-10-26: GPU2 battles run without a separate approval).
+# EX-134 (mock already passed) prepare -> execute -> export -> offline viewer check; then wait until EX-132 and
+# EX-130 are completed and sealed, and run EX-135 the same way (D-191: offline numbers never gate the battles).
+# Stops at the first failing stage; nothing is re-run automatically.
+set -euo pipefail
+cd /workspace
+RUN=/workspace/scripts/laya-imitation
+RUNS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep217
+CHECK_PY=/tmp/ep037/tools/bin/python
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+viewer_check() {
+  if [ -x "$CHECK_PY" ]; then
+    PYTHONPATH=/workspace PYTHONDONTWRITEBYTECODE=1 "$CHECK_PY" -m integration.laya_imitation.browser_check \
+      "/workspace/exports/battle_viewers/$1" "$EVIDENCE/$1-viewer-check.json" h2h \
+      || stage "viewer check failed for $1 (battles unaffected; check by hand)"
+  else
+    stage "no Playwright interpreter at $CHECK_PY; viewer check for $1 left to a manual run"
+  fi
+}
+
+stage "EX-134 prepare"; "$RUN" h2h prepare --study EX-134
+stage "EX-134 execute"; "$RUN" h2h execute --study EX-134
+stage "EX-134 export";  "$RUN" h2h export --study EX-134
+stage "EX-134 viewer check"; viewer_check ex134
+
+stage "waiting for EX-132 and EX-130 (completed)"
+for _ in $(seq 1 216); do   # up to 36 h, every 10 min
+  done_=$(python3 - "$RUNS" <<'PY'
+import json, sys
+from pathlib import Path
+runs = Path(sys.argv[1])
+stages = [json.load(open(runs / ex / 'status.json')).get('stage') if (runs / ex / 'status.json').exists() else None
+          for ex in ('EX-132', 'EX-130')]
+print('failed' if 'failed' in stages else 'yes' if stages == ['completed', 'completed'] else 'no')
+PY
+)
+  [ "$done_" = yes ] && break
+  [ "$done_" = failed ] && { stage "EX-132 or EX-130 failed; EX-135 not started"; exit 1; }
+  sleep 600
+done
+[ "$done_" = yes ] || { stage "EX-132/EX-130 not completed within 36 h; EX-135 not started"; exit 1; }
+
+stage "EX-135 prepare"; "$RUN" h2h prepare --study EX-135
+stage "EX-135 execute"; "$RUN" h2h execute --study EX-135
+stage "EX-135 export";  "$RUN" h2h export --study EX-135
+stage "EX-135 viewer check"; viewer_check ex135
+stage "EP-217 chain finished"

@@ -1,0 +1,62 @@
+{
+  "version": "effect-rules-v1",
+  "engine": {"repository": "pokemon-showdown", "commit": "e64915c0e"},
+  "labels": {
+    "works": "it works normally",
+    "fails": "it fails or is blocked",
+    "immune": "the target is immune (no effect)",
+    "absorbed": "the target's Ability absorbs it",
+    "reflected": "it is bounced back at me"
+  },
+  "weather_moves": {"auroraveil": ["snow", "snowscape", "hail"]},
+  "screens": {"auroraveil": "aurora_veil", "reflect": "reflect", "lightscreen": "light_screen"},
+  "sleep_moves": ["sleeptalk", "snore"],
+  "rest_blockers": ["insomnia", "vitalspirit", "comatose"],
+  "first_turn_moves": ["fakeout", "firstimpression"],
+  "future_moves": ["futuresight", "doomdesire"],
+  "hazards": {"spikes": ["spikes", 3], "toxicspikes": ["toxic_spikes", 2], "stealthrock": ["stealth_rock", 1],
+              "stickyweb": ["sticky_web", 1]},
+  "foe_attack_moves": ["suckerpunch", "thunderclap"],
+  "counter_moves": {"counter": "physical", "mirrorcoat": "special"},
+  "fixed_damage_moves": ["seismictoss", "nightshade"],
+  "scrappy": ["scrappy", "mindseye"],
+  "absorb": {
+    "voltabsorb": ["electric"], "lightningrod": ["electric"], "motordrive": ["electric"],
+    "waterabsorb": ["water"], "stormdrain": ["water"], "dryskin": ["water"],
+    "flashfire": ["fire"], "wellbakedbody": ["fire"], "sapsipper": ["grass"], "eartheater": ["ground"]
+  },
+  "absorb_wind": ["windrider"],
+  "flag_immune": {"soundproof": "sound", "bulletproof": "bullet", "overcoat": "powder"},
+  "powder_item": "safetygoggles",
+  "status_moves": {
+    "thunderwave": "par", "glare": "par", "stunspore": "par",
+    "toxic": "tox", "poisonpowder": "psn",
+    "willowisp": "brn", "spore": "slp", "sleeppowder": "slp", "hypnosis": "slp",
+    "sing": "slp"
+  },
+  "status_type_immune": {"par": ["electric"], "brn": ["fire"], "psn": ["poison", "steel"], "tox": ["poison", "steel"],
+                         "slp": []},
+  "status_ability_immune": {
+    "par": ["limber", "purifyingsalt", "comatose"],
+    "brn": ["waterveil", "waterbubble", "thermalexchange", "purifyingsalt", "comatose"],
+    "psn": ["immunity", "pastelveil", "purifyingsalt", "comatose"],
+    "tox": ["immunity", "pastelveil", "purifyingsalt", "comatose"],
+    "slp": ["insomnia", "vitalspirit", "sweetveil", "purifyingsalt", "comatose"]
+  },
+  "corrosion": "corrosion",
+  "mold_breaker": ["moldbreaker", "teravolt", "turboblaze", "neutralizinggas"],
+  "unbreakable": ["comatose"],
+  "infiltrator": "infiltrator",
+  "type_shifters": ["protean", "libero"],
+  "status_ability_ignore": ["myceliummight"],
+  "unmodelled_attacks": ["fakeout", "firstimpression", "suckerpunch", "thunderclap", "upperhand", "counter", "mirrorcoat",
+                         "metalburst", "comeuppance", "dreameater", "belch", "lastresort", "steelroller", "poltergeist",
+                         "burnup", "doubleshock", "synchronoise", "aurawheel", "hyperspacefury", "fling",
+                         "naturalgift", "spitup", "focuspunch", "shelltrap", "beakblast", "skydrop", "endeavor",
+                         "finalgambit", "snore", "explosion", "selfdestruct", "mistyexplosion", "mindblown",
+                         "struggle", "futuresight", "doomdesire", "hyperspacehole", "dragondarts"],
+  "priority_blockers": ["dazzling", "queenlymajesty", "armortail"],
+  "terrain_status": {"misty_terrain": ["par", "brn", "psn", "tox", "slp"], "electric_terrain": ["slp"]},
+  "status_disablers": {"taunt": "effect", "assaultvest": "item"},
+  "choice_items": ["choiceband", "choicespecs", "choicescarf"]
+}

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# EP-214 chain (user-authorized 2026-10-25: GPU training and battles run without a separate approval).
+# EX-128 data -> parity -> train -> evaluate; EX-129 only when EX-128's frozen battle gate holds.
+# Stops at the first failing stage; nothing is re-run automatically.
+set -euo pipefail
+cd /workspace
+RUN=/workspace/scripts/laya-imitation
+EX128=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-128
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+
+stage "v3 measure";  "$RUN" v3 measure
+stage "v3 features"; "$RUN" v3 features
+stage "v3 data";     "$RUN" v3 data
+stage "v3 parity";   "$RUN" v3 parity
+stage "v3 train";    "$RUN" v3 train
+stage "v3 evaluate"; "$RUN" v3 evaluate
+
+gate=$(python3 -c "import json; print(json.load(open('$EX128/status.json')).get('battle_gate'))")
+if [ "$gate" != "True" ]; then
+  stage "EX-129 not started: EX-128 battle gate is $gate"
+  exit 0
+fi
+
+stage "compare4 mock"; "$RUN" compare4 mock
+python3 - <<'EOF'
+import json
+r = json.load(open('/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-129/mock/result.json'))
+bad = [o['slot_id'] for o in r['outcomes'] if o['status'] != 'completed' or not o.get('audit_passed')]
+if r['phase_error'] or bad or not r['outcomes']:
+    raise SystemExit('EX-129 mock failed: %r %r' % (r['phase_error'], bad))
+EOF
+stage "compare4 prepare"; "$RUN" compare4 prepare
+stage "compare4 execute"; "$RUN" compare4 execute
+stage "compare4 export";  "$RUN" compare4 export
+stage "EP-214 chain finished"

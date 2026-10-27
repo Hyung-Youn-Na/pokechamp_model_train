@@ -1,0 +1,18 @@
+{
+  "version": "tera-rules-v1",
+  "engine": {"repository": "pokemon-showdown", "commit": "e64915c0e"},
+  "per_battle": 1,
+  "blocks_whole_team": true,
+  "fainted_tera_still_used": true,
+  "before_moves": true,
+  "persists_after_switch": true,
+  "defensive_types": "tera_only_except_stellar",
+  "stab": {"original": 1.5, "tera_new_type": 1.5, "tera_same_as_original": 2.0, "adaptability_same": 2.25, "adaptability_other": 2.0},
+  "low_power": {"floor": 60, "requires_tera_type": true, "excludes_priority": true, "excludes_multihit": true,
+                "excludes_variable_power": ["crushgrip", "dragonenergy", "electroball", "eruption", "flail", "fling", "grassknot",
+                                            "gyroball", "hardpress", "heatcrash", "heavyslam", "lowkick", "reversal", "waterspout"]},
+  "tera_blast": {"type": "tera_type_when_terastallized", "physical_if_atk_gt_spa": true},
+  "opponent_tera_hidden_until_used": true,
+  "types": ["bug", "dark", "dragon", "electric", "fairy", "fighting", "fire", "flying", "ghost", "grass", "ground", "ice",
+            "normal", "poison", "psychic", "rock", "steel", "water"]
+}

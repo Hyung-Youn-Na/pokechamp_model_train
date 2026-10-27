@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# EX-129 run after D-190 (user ran it although EX-128's gate was not met). Mock must pass first.
+# Stops at the first failing stage; nothing is re-run automatically.
+set -euo pipefail
+cd /workspace
+RUN=/workspace/scripts/laya-imitation
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+
+stage "compare4 mock"; "$RUN" compare4 mock
+python3 - <<'PY'
+import json
+r = json.load(open('/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-129/mock/result.json'))
+bad = [o['slot_id'] for o in r['outcomes'] if o['status'] != 'completed' or not o.get('audit_passed')]
+if r['phase_error'] or bad or not r['outcomes']:
+    raise SystemExit('EX-129 mock failed: %r %r' % (r['phase_error'], bad))
+PY
+stage "compare4 prepare"; "$RUN" compare4 prepare
+stage "compare4 execute"; "$RUN" compare4 execute
+stage "compare4 export";  "$RUN" compare4 export
+stage "EX-129 finished"

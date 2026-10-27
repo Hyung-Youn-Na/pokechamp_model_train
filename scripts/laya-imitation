@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# EP-208 (EX-118/119), EP-209 (EX-120), EP-210 (EX-121/122), EP-212 (EX-124/125), EP-213 (EX-126/127), EP-214 (EX-128/129), EP-215 (EX-130/131), EP-216 (EX-132/133), EP-217 (EX-134/135) launcher. Training/serving use the laya 0.4.13 env; battles use pokechamp's.
+set -euo pipefail
+cd /workspace
+export PYTHONPATH=/workspace:/workspace/pokechamp
+export PYTHONDONTWRITEBYTECODE=1
+export TOKENIZERS_PARALLELISM=false
+export HF_HUB_OFFLINE=1
+case "${1:-}" in
+  battle|general|compare|compare2|compare3|compare4|compare5|compare6|h2h) exec /workspace/pokechamp/.venv/bin/python -m integration.laya_imitation.cli "$@" ;;
+  *) exec /workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python -m integration.laya_imitation.cli "$@" ;;
+esac

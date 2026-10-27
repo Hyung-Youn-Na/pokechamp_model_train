@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# EP-218 chain (plan approved 2026-10-27 with option A: training and battles run without a separate approval).
+# Done before this script: D-195 parser fields, EX-071 re-parse (laya-item-state/v1), v5 features/data/parity, and the
+# EX-137 mock (2/2 completed and audited on the live D-195 path).
+# GPU0: EX-136 train -> evaluate -> EX-137 prepare/execute/export. GPU2: once EX-136 is completed, EX-138 mock ->
+# prepare/execute/export. Battles run regardless of EX-136's numbers (D-191). Each lane stops at its first failing
+# stage; nothing is re-run automatically.
+set -euo pipefail
+cd /workspace
+RUN=/workspace/scripts/laya-imitation
+RUNS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep218
+CHECK_PY=/tmp/ep037/tools/bin/python
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+viewer_check() {
+  mkdir -p "$EVIDENCE"
+  if [ -x "$CHECK_PY" ]; then
+    PYTHONPATH=/workspace PYTHONDONTWRITEBYTECODE=1 "$CHECK_PY" -m integration.laya_imitation.browser_check \
+      "/workspace/exports/battle_viewers/$1" "$EVIDENCE/$1-viewer-check.json" ${2:-} \
+      || stage "viewer check failed for $1 (battles unaffected; check by hand)"
+  else
+    stage "no Playwright interpreter at $CHECK_PY; viewer check for $1 left to a manual run"
+  fi
+}
+
+stage "v5 train";    "$RUN" v5 train
+stage "v5 evaluate"; "$RUN" v5 evaluate
+
+h2h_lane() {
+  set -euo pipefail
+  stage "EX-138 mock"; "$RUN" h2h mock --study EX-138
+  python3 - <<'PY'
+import json
+r = json.load(open('/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-138/mock/result.json'))
+bad = [o['slot_id'] for o in r['outcomes'] if o['status'] != 'completed' or not o.get('audit_passed')]
+if r['phase_error'] or bad or not r['outcomes']:
+    raise SystemExit('EX-138 mock failed: %r %r' % (r['phase_error'], bad))
+PY
+  stage "EX-138 prepare"; "$RUN" h2h prepare --study EX-138
+  stage "EX-138 execute"; "$RUN" h2h execute --study EX-138
+  stage "EX-138 export";  "$RUN" h2h export --study EX-138
+  stage "EX-138 viewer check"; viewer_check ex138 h2h
+}
+
+compare_lane() {
+  set -euo pipefail
+  stage "compare7 prepare"; "$RUN" compare7 prepare
+  stage "compare7 execute"; "$RUN" compare7 execute
+  stage "compare7 export";  "$RUN" compare7 export
+  stage "EX-137 viewer check"; viewer_check ex137
+}
+
+h2h_lane > "$RUNS/EP-218-h2h.log" 2>&1 &
+H2H=$!
+compare_lane
+wait "$H2H" || { stage "EX-138 lane failed (see $RUNS/EP-218-h2h.log)"; exit 1; }
+stage "EP-218 chain finished"

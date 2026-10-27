@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# EP-216 chain (plan approved 2026-10-26: GPU0 training and battles run without a separate approval).
+# EX-132 weights (already built) -> train -> evaluate; EX-133 runs regardless of EX-132's numbers (D-191),
+# only after a clean mock. Stops at the first failing stage; nothing is re-run automatically.
+set -euo pipefail
+cd /workspace
+RUN=/workspace/scripts/laya-imitation
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+
+stage "weighted train";    "$RUN" weighted train
+stage "weighted evaluate"; "$RUN" weighted evaluate
+
+stage "compare6 mock"; "$RUN" compare6 mock
+python3 - <<'PY'
+import json
+r = json.load(open('/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-133/mock/result.json'))
+bad = [o['slot_id'] for o in r['outcomes'] if o['status'] != 'completed' or not o.get('audit_passed')]
+if r['phase_error'] or bad or not r['outcomes']:
+    raise SystemExit('EX-133 mock failed: %r %r' % (r['phase_error'], bad))
+PY
+stage "compare6 prepare"; "$RUN" compare6 prepare
+stage "compare6 execute"; "$RUN" compare6 execute
+stage "compare6 export";  "$RUN" compare6 export
+stage "EP-216 chain finished"
