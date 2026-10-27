@@ -1,7 +1,7 @@
 # JevK5-9B v6 상세32경기
 
-EX111 전용. 조건·상한·해석은 [EX111](../../project_context/experiments/EX-111-jevk5-v6-battle32.md),
-진행은 [EP181](../../project_context/exec-plans/completed/EP-181-jevk5-v6-battle32.md)을 따른다.
+EX111 전용. 조건·상한·해석은 [EX111](../../project_context/research/model-evaluation/experiments/EX-111-jevk5-v6-battle32.md),
+진행은 [EP181](../../project_context/research/model-evaluation/plans/EP-181-jevk5-v6-battle32.md)을 따른다.
 
 `scripts/jevk5-battle status`는 저장 기록만 읽는다. capture는 외부 서버/로컬파일 정체성을
 기록하며 모델을 적재하지 않는다. mock은 모의2경기, gates는 대표3종 각2회 실제 추론,

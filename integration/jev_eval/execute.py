@@ -1,6 +1,8 @@
 """One-shot v6 cohort controller, sequential admission and immutable closure."""
 from __future__ import annotations
 
+from integration.project_context.registry import freeze_document
+
 import argparse
 import asyncio
 import fcntl
@@ -105,7 +107,7 @@ def source_snapshot(config, sources):
         model_python=str(PYTHON),actor_python=str(ACTOR_PYTHON)))
     for name in ('CHARTER.md','RESEARCH_DESIGN.md','CONTRACTS.md', *cfg.cohort.protocol_files):
         target=cfg.run/'protocol'/name;target.parent.mkdir(parents=True,exist_ok=True)
-        shutil.copyfile(ROOT/'project_context'/name,target)
+        freeze_document(ROOT/'project_context'/name, target)
 
 
 def closure(config=None):

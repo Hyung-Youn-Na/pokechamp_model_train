@@ -1,6 +1,8 @@
 """EX-070: one prompt-only diagnostic, including an owned GPU3 server lifecycle."""
 from __future__ import annotations
 
+from integration.project_context.registry import record_aliases, record_relative
+
 import argparse
 import copy
 import hashlib
@@ -22,8 +24,8 @@ OUTPUT = ROOT / '.pokechamp-data/kev/ex070'
 EVIDENCE = ROOT / 'project_context/exec-plans/evidence/ep113'
 ADMISSION = ROOT / '.pokechamp-data/kev/ex070-admission.json'
 COLLECT_ADMISSION = ROOT / '.pokechamp-data/kev/ex070-battle-admission.json'
-PROTOCOL = 'project_context/experiments/EX-070-kev-continuation-question.md'
-DECISION = 'project_context/decisions/D-111-kev-continuation-question.md'
+PROTOCOL = record_relative('EX-070', prefix=True)
+DECISION = record_relative('D-111', prefix=True)
 BASELINE_CONFIG_SHA256 = '0e1bee32c1495e7acad2d8cc8460290bef016852583450f50015e53a4055d4b5'
 GAME = 'test-t100817-s0'
 LIMITS = dict(games=1, request_seconds=600, battle_seconds=1800, total_seconds=3600,
@@ -82,7 +84,7 @@ def compare_identity(plan):
     if before.keys() - after.keys() or not after.keys() - before.keys() <= ADDED_SOURCES:
         raise ValueError('EX-070 source additions/removals exceed scope')
     # Historical EX status text was finalized after its execution freeze.
-    documents = {main_run.PROTOCOL, 'project_context/experiments/EX-068-kev-battle.md'}
+    documents = record_aliases('EX-069', prefix=True) | record_aliases('EX-068', prefix=True)
     if not changed <= CHANGED_SOURCES | documents:
         raise ValueError('EX-070 unrelated runtime changed: ' + repr(sorted(changed - CHANGED_SOURCES - documents)))
     for team in plan['teams'].values():

@@ -1,7 +1,7 @@
 # Tacit 규칙 Q&A 학습
 
-[D-161](../../../project_context/decisions/D-161-tacit-ruleqa-lora.md) /
-[EX-107](../../../project_context/experiments/EX-107-tacit-ruleqa-lora.md)의 로컬 오프라인 실행기다.
+[D-161](../../../project_context/research/rule-learning/decisions/D-161-tacit-ruleqa-lora.md) /
+[EX-107](../../../project_context/research/rule-learning/experiments/EX-107-tacit-ruleqa-lora.md)의 로컬 오프라인 실행기다.
 물리 GPU1·2·3만 사용하고 GPU0의 별도 작업과 기존 실험 산출물을 보존한다.
 
 ```bash

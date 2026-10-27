@@ -9,9 +9,9 @@ D/EX가 지정된 조건·경로·재개 명령은 해당 실험의 범위로 �
 유지한다. 새 실험의 입력·출력·실행 범위는 등록된 작업에서 정한다.
 
 
-승인 조건은 [EX-073](../../../project_context/experiments/EX-073-abyssal-rl.md),
-실행 진행은 [EP-119](../../../project_context/exec-plans/active/EP-119-abyssal-rl.md),
-runtime은 [C-057](../../../project_context/CONTRACTS.md#c-057-abyssal-rl)이 소유한다.
+승인 조건은 [EX-073](../../../project_context/research/policy-learning/experiments/EX-073-abyssal-rl.md),
+실행 진행은 [EP-119](../../../project_context/research/policy-learning/plans/EP-119-abyssal-rl.md),
+runtime은 [C-057](../../../project_context/research/policy-learning/CONTRACTS.md#c-057-abyssal-rl)이 소유한다.
 EX-072 구현·동결 자료를 수정하지 않고 입력·모델·배틀 감사 기능을 재사용한다.
 
 ```bash

@@ -14,9 +14,9 @@ prefix 이력, 단일 교대/테라 phase, 명시 hit/위력 branch, state/reque
 [EX-030 보고서](../../../project_context/exec-plans/evidence/ep023/report.md)를 따른다.
 과거 prompt/실험 정책 선택과 모든 기존 중단은 보존한다. 유료 재실험은 수행하지 않았다.
 
-요약 경로의 최근 재실험은 [EX-024](../../../project_context/experiments/EX-024-low-summary-prompt-reexperiment.md)이며 현재 중단 상태다.
-과거 중단 근거는 [EX-020](../../../project_context/experiments/EX-020-resume-io.md),
-현재 실행 범위는 [EP-011](../../../project_context/exec-plans/active/EP-011-improved-io.md)를 따른다.
+요약 경로의 최근 재실험은 [EX-024](../../../project_context/research/input-and-memory/experiments/EX-024-low-summary-prompt-reexperiment.md)이며 현재 중단 상태다.
+과거 중단 근거는 [EX-020](../../../project_context/research/input-and-memory/experiments/EX-020-resume-io.md),
+현재 실행 범위는 [EP-011](../../../project_context/research/input-and-memory/plans/EP-011-improved-io.md)를 따른다.
 EX-020은 Cloud 요약의 사실 오류로 중단했다. 오프라인/로컬 통과는 Cloud 운용 자격이나
 48판 비교 완료를 뜻하지 않는다. 과거 EX-017/018/019와 실패 receipt는 보존한다.
 

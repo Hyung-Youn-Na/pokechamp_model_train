@@ -1,6 +1,10 @@
 """One-shot EX-084 preparation, single-server qualification, collection and closure."""
 from __future__ import annotations
 
+from integration.project_context.registry import freeze_document
+
+from integration.project_context.registry import record_relative
+
 import argparse
 import asyncio
 import fcntl
@@ -74,11 +78,11 @@ def source_snapshot(sources):
         working_changes=subprocess.check_output(['git','status','--short'],cwd=ROOT,text=True),source=sources,
         model_python=str(PYTHON),actor_python=str(ACTOR_PYTHON)))
     for name in ('CHARTER.md','RESEARCH_DESIGN.md','CONTRACTS.md',
-                 'decisions/D-133-quyet-medium-two-stage.md',
-                 'exec-plans/active/EP-138-quyet-medium-two-stage.md',
-                 'experiments/EX-084-quyet-medium-two-stage.md'):
+                 record_relative('D-133'),
+                 record_relative('EP-138'),
+                 record_relative('EX-084')):
         target=RUN/'protocol'/name;target.parent.mkdir(parents=True,exist_ok=True)
-        shutil.copyfile(ROOT/'project_context'/name,target)
+        freeze_document(ROOT/'project_context'/name, target)
     shutil.copytree(QUYET_SOURCE/'src/quyet',RUN/'source/external/quyet',
                     ignore=shutil.ignore_patterns('__pycache__','*.pyc'))
     for name in ('LICENSE', 'NOTICE'):

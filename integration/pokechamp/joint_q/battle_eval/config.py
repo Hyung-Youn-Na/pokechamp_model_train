@@ -1,4 +1,6 @@
 """The independently authorized EX081 identity; EX066 metadata stays unchanged."""
+
+from integration.project_context.registry import record_relative
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -19,7 +21,7 @@ MANIFEST_SHA256 = 'e1d1f15a64746e0ce5888de42846cf3f16eb25638f64183cbdae1ed6a5ea7
 LIMITS = dict(games=20, request_seconds=600, battle_seconds=3600, total_seconds=28800,
               cleanup_reserve_seconds=1800, concurrency=1, retries=0, fallback=0,
               recollection=0)
-PROTOCOL = 'project_context/experiments/EX-081-joint-q-battle.md'
-DECISION = 'project_context/decisions/D-129-joint-q-battle.md'
+PROTOCOL = record_relative('EX-081', prefix=True)
+DECISION = record_relative('D-129', prefix=True)
 SEED = 20261008
 

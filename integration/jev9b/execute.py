@@ -1,6 +1,10 @@
 """One-shot EX-085 preparation, eight-request single-server qualification, collection and closure."""
 from __future__ import annotations
 
+from integration.project_context.registry import freeze_document
+
+from integration.project_context.registry import record_relative
+
 import argparse
 import asyncio
 import fcntl
@@ -80,11 +84,11 @@ def source_snapshot(sources):
         working_changes=subprocess.check_output(['git','status','--short'],cwd=ROOT,text=True),source=sources,
         model_python=str(PYTHON),actor_python=str(ACTOR_PYTHON)))
     for name in ('CHARTER.md','RESEARCH_DESIGN.md','CONTRACTS.md',
-                 'decisions/D-134-jev9b-single-choice.md',
-                 'exec-plans/active/EP-139-jev9b-single-choice.md',
-                 'experiments/EX-085-jev9b-single-choice.md'):
+                 record_relative('D-134'),
+                 record_relative('EP-139'),
+                 record_relative('EX-085')):
         target=RUN/'protocol'/name;target.parent.mkdir(parents=True,exist_ok=True)
-        shutil.copyfile(ROOT/'project_context'/name,target)
+        freeze_document(ROOT/'project_context'/name, target)
 
 
 def closure():

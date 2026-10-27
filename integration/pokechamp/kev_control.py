@@ -1,6 +1,8 @@
 """EX-068 preparation and admission. Never starts or stops the Kev server."""
 from __future__ import annotations
 
+from integration.project_context.registry import record_aliases, record_relative
+
 import argparse
 import asyncio
 import hashlib
@@ -23,12 +25,12 @@ PROBE_ADMISSION = ROOT / '.pokechamp-data/kev/ex068-probe-admission.json'
 FUSED_PROBE_ADMISSION = ROOT / '.pokechamp-data/kev/ex068-fused-probe-admission.json'
 FUSED_AUTHORIZATION = ROOT / '.pokechamp-data/kev/ex068-fused-authorization.json'
 AUTHORIZATION_SHA256 = 'c07d419040837a9793c5857e5edcdbe20c2dd87a30ae79a514d6f289bc08ddb5'
-DECISION = 'project_context/decisions/D-109-kev-fused-validation.md'
+DECISION = record_relative('D-109', prefix=True)
 SERVING = dict(merged=True, fused=True, dtype='bfloat16', temperature=1, gpu_index=3,
                backend='torch', cuda_graphs='1', date_facts=False, lora_scale=1)
 SOURCE_CHANGES = {'integration/pokechamp/kev_control.py', 'integration/pokechamp/kev_acceptance.py',
     'integration/pokechamp/tests/test_kev_control.py', 'integration/pokechamp/tests/test_kev_acceptance.py',
-    'project_context/experiments/EX-068-kev-battle.md'}
+    *record_aliases('EX-068', prefix=True)}
 BASE = 'Qwen/Qwen3.5-4B-Base'
 REVISION = '1001bb4d826a52d1f399e183466143f4da7b741b'
 COMMIT = 'bb7185cb567e698b3ed0a2a682b0c3863371bf13'
@@ -131,7 +133,7 @@ def sources():
     from . import jev_battle
     result = jev_battle.source_identity()
     paths = [ROOT / 'scripts/pokechamp-kev', ROOT / 'integration/pokechamp/viewer_assets/kev-local.html',
-             ROOT / 'project_context/experiments/EX-068-kev-battle.md',
+             ROOT / record_relative('EX-068', prefix=True),
              ROOT / DECISION,
              ROOT / 'export/teams/gen9ou_reviewed108_teams.json']
     result.update({str(p.relative_to(ROOT)): file_hash(p) for p in paths})

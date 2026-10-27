@@ -1,5 +1,7 @@
 """Four-device ownership, complete-step distributed persistence and supervision."""
 from __future__ import annotations
+
+from integration.project_context.registry import authority_paths, record_relative
 from contextlib import contextmanager
 import fcntl
 import os
@@ -203,10 +205,11 @@ def freeze(directory):
     documents = [
         'project_context/INDEX.md', 'project_context/CHARTER.md',
         'project_context/RESEARCH_DESIGN.md', 'project_context/CONTRACTS.md',
-        'project_context/decisions/D-116-abyssal-rl.md',
-        'project_context/experiments/EX-073-abyssal-rl.md',
-        'project_context/exec-plans/active/EP-119-abyssal-rl.md',
+        record_relative('D-116', prefix=True),
+        record_relative('EX-073', prefix=True),
+        record_relative('EP-119', prefix=True),
     ]
+    documents += [str(p.relative_to(config.ROOT)) for p in authority_paths(root=config.ROOT)]
     protocol_docs = {name: sha(config.ROOT / name) for name in documents}
     manifest = dict(expected, protocol_docs=protocol_docs, environment=provenance(verify_weights=True), frozen_at=time.time(),
                     initial_checkpoint_sha256=sha(config.INITIAL / 'files.json'))

@@ -1,6 +1,10 @@
 """One-shot EX-083 controller: validate, qualify four GPUs, collect nine, close."""
 from __future__ import annotations
 
+from integration.project_context.registry import freeze_document
+
+from integration.project_context.registry import record_relative
+
 import argparse
 import asyncio
 import fcntl
@@ -100,12 +104,12 @@ def _source_receipt(evidence, sources):
     protocol = Path(evidence).parent / 'protocol'
     protocol.mkdir()
     for name in ('CHARTER.md', 'RESEARCH_DESIGN.md', 'CONTRACTS.md',
-                 'decisions/D-132-jev27b-four-gpu-continuation.md',
-                 'exec-plans/active/EP-137-jev27b-four-gpu-continuation.md',
-                 'experiments/EX-083-jev27b-four-gpu-continuation.md'):
+                 record_relative('D-132'),
+                 record_relative('EP-137'),
+                 record_relative('EX-083')):
         target = protocol / name
         target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(ROOT / 'project_context' / name, target)
+        freeze_document(ROOT / 'project_context' / name, target)
 
 
 def completion_passed(result, final, browser_result, closure, error, cleanup_errors):

@@ -1,4 +1,8 @@
 """새 실험의 출처 동결·상한·분모 집계."""
+
+from integration.project_context.registry import freeze_document
+
+from integration.project_context.registry import record_relative
 import copy
 import json
 import shutil
@@ -11,7 +15,7 @@ from integration.jev27b.study import file_hash, write_json, seal, summarize as i
 from .core import ROOT, RUN, BASELINE, MODEL, ENDPOINT, CALL_LIMIT, COLLECTION_SECONDS
 
 
-def source_identity(*, candidate_matchup=False):
+def source_identity(*, candidate_matchup=False, candidate_action=False):
     sources=j.source_identity()
     for folder in ('openai_decisions','openai_decisions_battle','jev27b','jev_eval'):
         for path in (ROOT/'integration'/folder).rglob('*'):
@@ -26,6 +30,12 @@ def source_identity(*, candidate_matchup=False):
         sources[str(path.relative_to(ROOT))]=file_hash(path)
     for name in ('scripts/openai-decisions-battle','scripts/openai-decisions-retry-battle'):
         if (ROOT/name).exists():sources[name]=file_hash(ROOT/name)
+    if candidate_action:
+        for path in (ROOT/'integration/candidate_action').rglob('*'):
+            if path.is_file() and path.suffix in ('.py','.json','.txt','.html','.js'):
+                sources[str(path.relative_to(ROOT))]=file_hash(path)
+        path=ROOT/'scripts/candidate-action-battle'
+        sources[str(path.relative_to(ROOT))]=file_hash(path)
     return sources
 
 
@@ -57,11 +67,11 @@ def freeze(manifest, *, run=RUN, protocol_files=None):
     for relative in manifest['source']:
         target=run/'source'/relative;target.parent.mkdir(parents=True,exist_ok=True)
         shutil.copyfile(ROOT/relative,target)
-    for name in (protocol_files or ('exec-plans/active/EP-179-openai-decisions-v6-battle32.md',
-                 'experiments/EX-109-openai-decisions-v6-battle32.md',
-                 'decisions/D-164-openai-decisions-v6-battle32.md','CONTRACTS.md','RESEARCH_DESIGN.md')):
+    for name in (protocol_files or (record_relative('EP-179'),
+                 record_relative('EX-109'),
+                 record_relative('D-164'),'CONTRACTS.md','RESEARCH_DESIGN.md')):
         target=run/'protocol'/name;target.parent.mkdir(parents=True,exist_ok=True)
-        shutil.copyfile(ROOT/'project_context'/name,target)
+        freeze_document(ROOT/'project_context'/name, target)
     write_json(run/'environment.json',dict(
         branch=subprocess.check_output(['git','branch','--show-current'],cwd=ROOT,text=True).strip(),
         commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
@@ -71,9 +81,14 @@ def freeze(manifest, *, run=RUN, protocol_files=None):
 
 def verify_live_identity(manifest):
     profile=manifest.get('candidate_matchup_profile')
+    action=manifest.get('input_profile')
+    if action is not None and action!='candidate-action-v1':raise ValueError('unknown input profile')
     if profile is not None and profile!='candidate-matchup-v1':raise ValueError('unknown candidate matchup profile')
-    if manifest['source']!=source_identity(candidate_matchup=profile is not None):raise ValueError('frozen source changed')
-    if profile:
+    if manifest['source']!=source_identity(candidate_matchup=profile is not None,candidate_action=action is not None):raise ValueError('frozen source changed')
+    if action:
+        from integration.candidate_action import adapter
+        identity=adapter.data_identity()
+    elif profile:
         from integration.candidate_matchup import adapter
         identity=adapter.data_identity()
     else:identity=jev_v6.data_identity()
@@ -93,6 +108,9 @@ def summarize(session,outcomes,schedule,error=None):
             predecessor_api_requests=session.prior_calls,
             retry_wait_seconds=sum(e['delay_seconds'] for e in session.records if e['type']=='provider_retry'))
         if unknown:result['tokens']=None
+    if getattr(session,'response_recovery',False):
+        from integration.candidate_action.metrics import response_metrics
+        result.update(response_metrics(session.records))
     return result
 
 

@@ -1,6 +1,8 @@
 """EX-069: one pass over the original EX-065 test20 battle metadata."""
 from __future__ import annotations
 
+from integration.project_context.registry import record_aliases, record_relative
+
 import argparse
 import hashlib
 import json
@@ -20,8 +22,8 @@ OUTPUT = ROOT / '.pokechamp-data/kev/ex069'
 ADMISSION = ROOT / '.pokechamp-data/kev/ex069-battle-admission.json'
 PREVIOUS = ROOT / '.pokechamp-data/kev/ex068-v3'
 QUALIFICATION = ROOT / 'project_context/exec-plans/evidence/ep111-fused/verification-final.json'
-PROTOCOL = 'project_context/experiments/EX-069-kev-test-battles.md'
-DECISION = 'project_context/decisions/D-110-kev-test-battles.md'
+PROTOCOL = record_relative('EX-069', prefix=True)
+DECISION = record_relative('D-110', prefix=True)
 MANIFEST_SHA256 = 'e1d1f15a64746e0ce5888de42846cf3f16eb25638f64183cbdae1ed6a5ea71ef'
 TEST_TEAMS = (100817, 7627, 38229, 48494, 5742)
 LIMITS = dict(games=20, request_seconds=600, battle_seconds=1800, total_seconds=14400,
@@ -118,7 +120,7 @@ def _reuse_identity(plan):
         raise ProvenanceError('EX-065 own packed team/text changed')
     for name, checksum in previous['source'].items():
         # Its completed status was updated after the sealed EX-068 execution.
-        if name == 'project_context/experiments/EX-068-kev-battle.md':
+        if name in record_aliases('EX-068', prefix=True):
             continue
         if plan['source'].get(name) != checksum:
             raise ProvenanceError('accepted runtime source changed: ' + name)

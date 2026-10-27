@@ -14,6 +14,7 @@ import threading
 import time
 
 from integration.pokechamp.providers import redact
+from integration.project_context.registry import freeze_document
 from .config import (HERE, ROOT, ConfigurationError, conditions, digest, formatter, load_config,
                      model_spec, read_json, validate_prepared)
 from .storage import (Recorder, file_hash, snapshot_sources, source_identity, verify_prepared,
@@ -111,6 +112,9 @@ def prepare(config_path, output, *, mode='mock', run_id=None):
         manifest['experiment_record'] = copy.deepcopy(config['evaluation']['experiment_record'])
     output.mkdir(parents=True, exist_ok=False)
     snapshot_sources(output, source)
+    if mode == 'live':
+        record_path = Path(manifest['experiment_record']['path'])
+        freeze_document(record_path, output / 'protocol' / record_path.name)
     for item in expanded:
         condition = output / 'conditions' / item['name']
         write_json(condition / 'config.json', item['config'])

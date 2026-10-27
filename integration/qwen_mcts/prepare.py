@@ -6,6 +6,8 @@ are copied into <run>/docs and only their copies are checked, so editing them el
 """
 from __future__ import annotations
 
+from integration.project_context.registry import authority_paths, record_relative, runtime_paths
+
 import json
 import os
 from pathlib import Path
@@ -20,10 +22,13 @@ EXCLUDED = ("tests", "finalize", "__pycache__")
 SNAPSHOT_FILES = ("config.json", "tokenizer.json", "tokenizer_config.json", "model.safetensors.index.json",
                   "model.safetensors-00001-of-00001.safetensors")
 DOCUMENTS = ("project_context/RESEARCH_DESIGN.md", "project_context/CONTRACTS.md", "project_context/CHARTER.md",
-             "project_context/decisions/D-127-qwen-matrix-selfplay.md",
-             "project_context/decisions/D-128-qwen-fixed-shape-serving.md",
-             "project_context/experiments/EX-080-qwen-matrix-selfplay.md",
-             "project_context/exec-plans/active/EP-132-qwen-matrix-selfplay.md")
+             record_relative('D-127', prefix=True),
+             record_relative('D-128', prefix=True),
+             record_relative('EX-080', prefix=True),
+             record_relative('EP-132', prefix=True))
+
+DOCUMENTS += tuple(str(p.relative_to(ROOT)) for p in authority_paths(root=ROOT)
+                   if str(p.relative_to(ROOT)) not in DOCUMENTS)
 
 
 def source_files():
@@ -33,6 +38,7 @@ def source_files():
         files += [p for p in (ROOT / "pokemon-showdown/dist" / name).rglob("*") if p.is_file() and p.suffix in (".js", ".json")]
     files += [p for p in (ROOT / "pokechamp/poke_env").rglob("*") if p.is_file() and p.suffix in (".py", ".json", ".csv", ".txt")]
     files += [ROOT / "export/teams/gen9ou_reviewed108_teams.txt", ROOT / "scripts/qwen-mcts"]
+    files.extend(runtime_paths(root=ROOT))
     return sorted(set(files))
 
 

@@ -11,7 +11,7 @@ D/EX가 지정된 조건·경로·재개 명령은 해당 실험의 범위로 �
 
 EX-065의 공개 `JointInput`/로더와 Qwen3.5-4B-Base 고정 revision을 사용하는 별도 학습 경로다.
 전체 타깃 MSE이며 bandit RLCD와 구분한다. 실행 조건·해석의 원문은
-[EX-066](../../../../project_context/experiments/EX-066-joint-q-training.md), 진행은 EP-108이다.
+[EX-066](../../../../project_context/research/action-value/experiments/EX-066-joint-q-training.md), 진행은 EP-108이다.
 한 backbone forward의 후보별 `Q_VALUE=` hidden state에서 독립 sigmoid q를 반환한다.
 입력은 원 관측과 전체 후보이며 타깃/private/seed를 허용하지 않는다.
 

@@ -1,4 +1,6 @@
 """Explicit download/prepare/execute/status/export stages for EX-106."""
+
+from integration.project_context.registry import freeze_document, resolve_record
 import argparse
 import asyncio
 import json
@@ -80,10 +82,9 @@ def prepare():
         limits=dict(seconds=14400,calls=20000,input_tokens=1024,turns=300,decisions=600),
         historical_construction_counts=counts,created=time.time())
     for name in ('EP-172','EX-106','D-160'):
-        paths=list((ROOT/'project_context').rglob(name+'-*.md'))
-        if len(paths)!=1:
-            raise ValueError('ambiguous protocol registration: '+name)
-        target=RUN/'protocol'/paths[0].name;target.parent.mkdir(exist_ok=True);shutil.copy2(paths[0],target)
+        source = resolve_record(name, root=ROOT)
+        target = RUN / 'protocol' / source.name
+        freeze_document(source, target)
     write(RUN/'manifest.json',manifest)
     for relative in source:
         target=RUN/'source'/relative;target.parent.mkdir(parents=True,exist_ok=True)

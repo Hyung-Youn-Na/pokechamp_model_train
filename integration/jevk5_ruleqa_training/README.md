@@ -1,7 +1,7 @@
 # JevK5 규칙 선택형 LoRA
 
 EX-113 전용 실행기다. 조건과 승인 범위는
-[EX113](../../project_context/experiments/EX-113-jevk5-ruleqa-lora.md)에 둔다.
+[EX113](../../project_context/research/rule-learning/experiments/EX-113-jevk5-ruleqa-lora.md)에 둔다.
 기존 EX107의 DDP/체크포인트 구조를 분리 계승하고 JevK5 공식 prompt를 사용한다.
 
 ```bash

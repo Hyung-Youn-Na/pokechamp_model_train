@@ -9,10 +9,10 @@ D/EX가 지정된 조건·경로·재개 명령은 해당 실험의 범위로 �
 유지한다. 새 실험의 입력·출력·실행 범위는 등록된 작업에서 정한다.
 
 
-[EX-071](../../../project_context/experiments/EX-071-qwen-replay-imitation.md)의 첫 학습·평가
+[EX-071](../../../project_context/research/policy-learning/experiments/EX-071-qwen-replay-imitation.md)의 첫 학습·평가
 실행 경로다. 조건과 해석은 EX-071, 입력·Choice 의미는
-[C-055](../../../project_context/CONTRACTS.md#c-055-imitation), 작업 상태는
-[EP-115](../../../project_context/exec-plans/completed/EP-115-qwen-replay-imitation.md)가 소유한다.
+[C-055](../../../project_context/research/policy-learning/CONTRACTS.md#c-055-imitation), 작업 상태는
+[EP-115](../../../project_context/research/policy-learning/plans/EP-115-qwen-replay-imitation.md)가 소유한다.
 
 ## 구성
 
@@ -74,7 +74,7 @@ CPU 준비 교정도 원본과 실패 증거를 별도 버전으로 보존해야
 - `exports/battle_viewers/ex071/index.html`: 완료된40경기의 오프라인 뷰어
 
 첫 실행은2026-10-02에 완료했다. [통합 보고](../../../.pokechamp-data/experiments/ex071-qwen-replay-imitation/final/report.md)와
-[해석·표현 보충](../../../project_context/experiments/EX-071-qwen-replay-imitation.md#final-results),
+[해석·표현 보충](../../../project_context/research/policy-learning/experiments/EX-071-qwen-replay-imitation.md#final-results),
 [뷰어](../../../exports/battle_viewers/ex071/index.html)를 열람할 수 있다. 추가 학습·평가를 시작하는
 명령으로 위 완료 단계를 반복하지 않는다.
 

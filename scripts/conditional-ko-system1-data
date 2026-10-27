@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /workspace
+exec /workspace/.pokechamp-data/jev35b-nvfp4-runtime/.venv/bin/python -B -m integration.conditional_ko_system1.build "$@"

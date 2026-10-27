@@ -1,4 +1,6 @@
 """EX-110 새32경기. EX-109 원자료와 실패 판정은 변경하지 않는다."""
+
+from integration.project_context.registry import record_relative
 import argparse
 import asyncio
 import json
@@ -38,9 +40,9 @@ def prepare():
     if manifest['input_data_identity']!=manifest['previous_experiment']['input_data_identity']:
         raise ValueError('v6 input changed')
     freeze(manifest,run=RUN,protocol_files=(
-        'exec-plans/active/EP-180-openai-decisions-retry32.md',
-        'experiments/EX-110-openai-decisions-retry32.md',
-        'decisions/D-165-openai-decisions-retry32.md','CONTRACTS.md','RESEARCH_DESIGN.md'))
+        record_relative('EP-180'),
+        record_relative('EX-110'),
+        record_relative('D-165'),'CONTRACTS.md','RESEARCH_DESIGN.md'))
     write_json(RUN/'freeze.json',dict(manifest_sha256=file_hash(RUN/'manifest.json'),at=time.time()))
     return dict(passed=True,games=32,previous_games_included=0)
 

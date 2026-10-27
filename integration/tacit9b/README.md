@@ -1,6 +1,6 @@
 # Tacit-9B 수행 모델 연결
 
-[EX-104](../../project_context/experiments/EX-104-tacit-thinking-low.md)의 고정 모델
+[EX-104](../../project_context/research/planner-executor/experiments/EX-104-tacit-thinking-low.md)의 고정 모델
 `morriszjm/Tacit-9B@884838f1698d1fd746625b3c20c8ec2be077a183`을
 공유 `jev-planner` 실행기에 연결한다. 실행 승인·한도·중단 기준은 EX-104가 소유한다.
 

@@ -1,7 +1,7 @@
 # Showdown 규칙 Q&A v1
 
-[EP-169](../../../project_context/exec-plans/completed/EP-169-showdown-ruleqa.md)·
-[D-159](../../../project_context/decisions/D-159-showdown-ruleqa.md)의 CPU 생성기다.
+[EP-169](../../../project_context/research/rule-learning/plans/EP-169-showdown-ruleqa.md)·
+[D-159](../../../project_context/research/rule-learning/decisions/D-159-showdown-ruleqa.md)의 CPU 생성기다.
 기존 평가/replay를 읽어 학습 입력으로 만들지 않는다. 새 Gen9 OU 팀·제어 장면과 공식 관측기를 사용한다.
 
 ## 실행

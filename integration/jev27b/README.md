@@ -1,9 +1,9 @@
 # JEV-27B 로컬 평가
 
 공개 JEV-27B의 고정 revision·공식 formatter·BF16 backbone·FP32 결정 head를 사용한다.
-규범은 [C-063/C-064](../../project_context/CONTRACTS.md#c-064-jev27b-continuation),
-실행 조건은 [EX-082](../../project_context/experiments/EX-082-jev27b-ex058-reproduction.md)와
-[EX-083](../../project_context/experiments/EX-083-jev27b-four-gpu-continuation.md)를 따른다.
+규범은 [C-063/C-064](../../project_context/research/model-evaluation/CONTRACTS.md#c-064-jev27b-continuation),
+실행 조건은 [EX-082](../../project_context/research/model-evaluation/experiments/EX-082-jev27b-ex058-reproduction.md)와
+[EX-083](../../project_context/research/model-evaluation/experiments/EX-083-jev27b-four-gpu-continuation.md)를 따른다.
 
 ## EX-083 계승
 

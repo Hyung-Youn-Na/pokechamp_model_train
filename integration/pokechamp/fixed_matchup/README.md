@@ -15,7 +15,7 @@ D-126/EX-079의 실행기는 완료된 round1에서 종료조건을 적용해 �
 `stopping-run`을 실행한다. 기본 출력은 `.pokechamp-data/experiments/ex079-fixed-matchup-stopping`이다.
 원 모델/optimizer/RNG/replay·시계를 검증 계승하고 최대32라운드 안에서 정기 개발 평가로
 목표/정체를 판정한다. 실제 최고 후보를 잠근 뒤 별도test640을1회 실행한다.
-종료 조건 전문과 승인 범위는 [EX-079](../../../project_context/experiments/EX-079-fixed-matchup-stopping.md)를 따른다.
+종료 조건 전문과 승인 범위는 [EX-079](../../../project_context/research/fixed-matchup-learning/experiments/EX-079-fixed-matchup-stopping.md)를 따른다.
 벽시계 상한은 없고 단계별 알람을 사용한다. 기존pilot gate를 통과한 것으로 소급 표시하지 않는다.
 `stopping-finalize --directory <실행 경로>`는 새 배틀 없이 전수 감사·뷰어/보고를 수행한다.
 이전 실행 파일은 보존하며 완료/기술중단 receipt가 있는 경로는 자동 재실행하지 않는다.
@@ -38,11 +38,11 @@ D-122/EX-077 경로는 전체 예상24시간 이하일 때만 학습을 시작�
 
 ## EX-076에서 이어진 공통 구현
 
-[EX-076](../../../project_context/experiments/EX-076-fixed-matchup-mcts.md)에서 시작해 후속 실험으로
+[EX-076](../../../project_context/research/fixed-matchup-learning/experiments/EX-076-fixed-matchup-mcts.md)에서 시작해 후속 실험으로
 확장된 실행기다. 현재 일반 `prepare`·`run`은 `config.py`의
-[EX-077](../../../project_context/experiments/EX-077-fixed-matchup-day.md) 기본 조건을 사용하며,
+[EX-077](../../../project_context/research/fixed-matchup-learning/experiments/EX-077-fixed-matchup-day.md) 기본 조건을 사용하며,
 EX-076을 선택하는 범용 CLI 인자는 없다. D-121의 기절 분류 교정 복구는 별도 `recover-prepare` 경로다.
-실험 조건·판정은 각 EX, 정보 경계는 [C-060](../../../project_context/CONTRACTS.md#c-060-fixed-matchup)을 따른다.
+실험 조건·판정은 각 EX, 정보 경계는 [C-060](../../../project_context/research/fixed-matchup-learning/CONTRACTS.md#c-060-fixed-matchup)을 따른다.
 
 ## 모델과 데이터 흐름
 

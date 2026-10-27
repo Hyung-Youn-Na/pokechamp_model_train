@@ -1,6 +1,6 @@
 # 학습 Tacit 실전32 예약
 
-[EX-108](../../project_context/experiments/EX-108-tacit-ruleqa-battle32.md)의 전용 실행기다.
+[EX-108](../../project_context/research/rule-learning/experiments/EX-108-tacit-ruleqa-battle32.md)의 전용 실행기다.
 사용자의 취침 중32경기 예약 및 모든 미정 조건을 권장값으로 정하라는 지시에 따른다.
 
 ```bash

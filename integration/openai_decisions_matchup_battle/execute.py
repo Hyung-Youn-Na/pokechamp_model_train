@@ -1,4 +1,6 @@
 """EX-112: explicit profile, immutable schedule, no paid preflight."""
+
+from integration.project_context.registry import record_relative
 import argparse
 import asyncio
 import json
@@ -84,9 +86,9 @@ def prepare():
     if previous['source']!=value['source'] or previous['input_data_identity']!=value['input_data_identity']:
         raise ValueError('source changed after mock; review and repeat affected validation before freezing')
     study.freeze(value,run=RUN,protocol_files=(
-        'exec-plans/active/EP-183-openai-candidate-matchup-battle.md',
-        'experiments/EX-112-openai-candidate-matchup-battle.md',
-        'decisions/D-168-openai-candidate-matchup-battle.md','CONTRACTS.md','RESEARCH_DESIGN.md'))
+        record_relative('EP-183'),
+        record_relative('EX-112'),
+        record_relative('D-168'),'CONTRACTS.md','RESEARCH_DESIGN.md'))
     write_json(RUN/'freeze.json',dict(manifest_sha256=file_hash(RUN/'manifest.json'),
         mock_sha256=file_hash(RUN/'mock/result.json'),browser_sha256=file_hash(RUN/'evidence/mock-browser.json'),at=time.time()))
     return dict(passed=True,games=32)

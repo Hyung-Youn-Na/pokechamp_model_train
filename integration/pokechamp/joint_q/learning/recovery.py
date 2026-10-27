@@ -1,4 +1,6 @@
 """Evidence-gated recovery of an untrained preflight implementation defect."""
+
+from integration.project_context.registry import record_relative
 from pathlib import Path
 from ..storage import ROOT, atomic, digest, read, sha
 from .artifacts import assert_frozen, environment, latest, now, source_hashes, validate_checkpoint
@@ -96,12 +98,12 @@ def validate_preflight_recovery(data,out,receipt_path):
     old_config,new_config=dict(old['config']),dict(new['config'])
     fallback=receipt.get('gpu_authorization')=='D-106'
     if fallback:
-        decision=ROOT/'project_context/decisions/D-106-joint-q-idle-gpu.md'
+        decision=ROOT/record_relative('D-106', prefix=True)
         if new_config['physical_gpu']!=1 or receipt.get('gpu_authorization_sha256')!=sha(decision):
             raise ValueError('idle GPU fallback lacks the specific user authorization')
     changed_gpu=old_config['physical_gpu']!=new_config['physical_gpu']
     if changed_gpu:
-        decision=ROOT/'project_context/decisions/D-105-joint-q-gpu2.md'
+        decision=ROOT/record_relative('D-105', prefix=True)
         if (old_config['physical_gpu']!=1 or new_config['physical_gpu']!=2
                 or receipt.get('gpu_authorization')!='D-105'
                 or receipt.get('gpu_authorization_sha256')!=sha(decision)):

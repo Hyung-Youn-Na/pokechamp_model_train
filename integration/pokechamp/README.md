@@ -32,22 +32,22 @@ IO 기술 검사와 응답/reasoning 기록·표시는 유지하며, 미평가�
 새 기본 테스트는 설명 미검토만으로 완료를 막지 않는다. 기존 오류 기록·viewer·Blocked 및
 아래 과거 실험별 명시 gate는 보존한다. [규범 기본값](../../project_context/RESEARCH_DESIGN.md#io-explanation-review).
 
-이 디렉터리는 [`D-007`](../../project_context/decisions/D-007-adopt-pokechamp-dotenv-credential.md)과
-[`EP-001`](../../project_context/exec-plans/completed/EP-001-pokechamp-reproducible-environment.md)의
+이 디렉터리는 [`D-007`](../../project_context/shared/execution/decisions/D-007-adopt-pokechamp-dotenv-credential.md)과
+[`EP-001`](../../project_context/shared/execution/plans/EP-001-pokechamp-reproducible-environment.md)의
 repository-owned integration이다. 외부 submodule을 수정하지 않고 pinned PokéChamp baseline을
 bootstrap하고 local/선택된 Cloud 공급자의 실행 가능성을 확인한다. Battle 결과는 technical qualification
 evidence일 뿐 성능 평가 결과가 아니다.
 
 ## 새 Cloud 실행의 동시성 기본값
 
-[D-056](../../project_context/decisions/D-056-zai-concurrency4.md)/
-[C-036](../../project_context/CONTRACTS.md#c-036-zai4)에 따라 Z.ai를 지원하는 새 준비는
+[D-056](../../project_context/research/lead-policy/decisions/D-056-zai-concurrency4.md)/
+[C-036](../../project_context/research/lead-policy/CONTRACTS.md#c-036-zai4)에 따라 Z.ai를 지원하는 새 준비는
 공급자 확정 후 배틀·계정·모델 기본 동시성 **4**와 `zai-default4-v1`을 봉인한다.
 명시 동시성은 실험별 제한 안에서 우선하며 실행·검증·보고는 봉인값을 사용한다.
 Z.ai 기본 소유 포트는8100–8103이다. 기존 Z.ai 동시성8의 봉인 자료도 당시 선언으로 검증한다.
 
-[D-045](../../project_context/decisions/D-045-cloud-concurrency-default8.md)/
-[C-029](../../project_context/CONTRACTS.md#c-029--새-cloud-기본-동시성8)에 따라 Ollama 및 기존 공급자 전용 경로의 새 병렬 실행은
+[D-045](../../project_context/shared/execution/decisions/D-045-cloud-concurrency-default8.md)/
+[C-029](../../project_context/shared/execution/CONTRACTS.md#c-029--새-cloud-기본-동시성8)에 따라 Ollama 및 기존 공급자 전용 경로의 새 병렬 실행은
 배틀·계정·모델 요청 기본값이 각각 **8**이다. A 진단/A·B 직접대결, IO 비교, 행동/요약 요청 검증과
 Cloud gate에 적용한다. 준비 CLI의 `--concurrency 10`처럼 명시한1–10 값은 그대로 사용한다.
 순차/병렬 비교 gate의 병렬 조건은2–10이며 기본 비교는1/8이다.
@@ -75,7 +75,7 @@ Gate에는 같은 표식과 `parallel_concurrency`, 요약 진단에는 config�
 | Server | `127.0.0.1:8000`, `--no-security --ai-tournament` |
 | Showdown battle timer | 기본 off; 명시적 timed-run에서만 opt-in |
 | Cloud | 명시적 `ollama`/`zai` 선택, 모델 `glm-5.3-flash` |
-| Request | 읽기 timeout600초·연결/쓰기/pool300초 ([C-038](../../project_context/CONTRACTS.md#c-038-transport-retry)), output 상한 131072 (128K), Cloud 기본 최대 context, fallback 없음 |
+| Request | 읽기 timeout600초·연결/쓰기/pool300초 ([C-038](../../project_context/shared/execution/CONTRACTS.md#c-038-transport-retry)), output 상한 131072 (128K), Cloud 기본 최대 context, fallback 없음 |
 | JSON action | thinking low, 131072-token cap, compact JSON 지시, available action 검증, 첫 위반 시 fail-closed |
 
 Showdown은 `.artifacts/pokechamp/runtime/` 아래의 marker-protected 임시 Git worktree에서 실행한다.
@@ -84,7 +84,7 @@ CLI가 만든 PID와 worktree만 제거한다.
 
 ### Battle 시간 정책
 
-Decision [`D-011`](../../project_context/decisions/D-011-default-untimed-showdown-battles.md)에
+Decision [`D-011`](../../project_context/shared/execution/decisions/D-011-default-untimed-showdown-battles.md)에
 따라 별도 timed-run 지시가 없는 qualification 및 research battle은 **시간 제한 없이** 실행한다.
 여기서 시간 제한 없음은 Pokémon Showdown의 turn별·battle 전체 inactivity countdown이 꺼진다는
 뜻이다. Pinned fork의 `forcetimer=true`는 parent launcher가 server process 안에서 `false`로
@@ -110,7 +110,7 @@ scripts/pokechamp-env smoke --local-only
 scripts/pokechamp-env server stop
 ```
 
-[D-054](../../project_context/decisions/D-054-zai-provider.md)에 따라 로컬 기본 공급자는 Z.ai다.
+[D-054](../../project_context/shared/execution/decisions/D-054-zai-provider.md)에 따라 로컬 기본 공급자는 Z.ai다.
 루트 `.env`에 자신의 API 기본 주소와 키를 입력한다. 기존 키·다른 설정은 보존하고 권한은 `0600`으로 유지한다.
 새 checkout에서는 `.env`가 없을 때만 `.env.example`을 복사한다.
 
@@ -163,7 +163,7 @@ state이며 Git에서 제외된다.
 ## Research battle observability
 
 Qualification과 별도로, 사람이 LLM output·실제 action·이후 battle 전개를 함께 검토할 때만
-[`D-010`](../../project_context/decisions/D-010-adopt-pokechamp-battle-observability.md)의 opt-in
+[`D-010`](../../project_context/shared/viewers/decisions/D-010-adopt-pokechamp-battle-observability.md)의 opt-in
 research command를 사용한다. 이 경로는 prompt, raw response와 provider reasoning까지 저장하므로
 local sensitive research data로 취급한다. `experiment_id`와 별도 data root가 모두 명시되지 않으면
 활성화되지 않는다. `POKECHAMP_DATA_ROOT`는 credential `.env` parser의 대상이 아니므로 command를
@@ -418,7 +418,7 @@ provider/환경/입력/평가/무결성 오류는 전체 중단하며 기존응�
 
 보고서는 입력별3반복→원배틀별 평균→원배틀 동일 가중으로 집계한다. 고정 이전메모리에서의
 탐색적 비교이며 운영 적용·연쇄 오류누적·배틀 효능 자격을 자동 부여하지 않는다. 현재 실행
-상태는 [EX-025](../../project_context/experiments/EX-025-summary-max-diagnostic.md)를 따른다.
+상태는 [EX-025](../../project_context/research/input-and-memory/experiments/EX-025-summary-max-diagnostic.md)를 따른다.
 
 <a id="provider-judgment-errors"></a>
 
@@ -440,14 +440,14 @@ provider/환경/입력/평가/무결성 오류는 전체 중단하며 기존응�
 선택이 합법이면 그 선택을 실행하며 확률 재정규화나 최댓값으로의 교체도 하지 않는다.
 
 **지원 범위:** JEV 새 `choice-action-v3`/EX-050는 합법 choice 실행·보조 점수 진단·경기
-출력 실패 격리를 구현한다. 검증은 [EP-066](../../project_context/exec-plans/completed/EP-066-jev-judgment-repeat.md)을
+출력 실패 격리를 구현한다. 검증은 [EP-066](../../project_context/research/model-evaluation/plans/EP-066-jev-judgment-repeat.md)을
 따른다. 기존 v1/v2 및 EX-047/048 감사는 당시 기준을 보존한다. 다른 실행기의 지원은 별도 확인한다.
 
 <a id="defect-recovery"></a>
 
 ## 테스트·평가 도구 결함 발견 시 운영 절차
 
-[D-029](../../project_context/decisions/D-029-experiment-defect-recovery.md) 채택(2026-09-09) 후
+[D-029](../../project_context/shared/governance/decisions/D-029-experiment-defect-recovery.md) 채택(2026-09-09) 후
 **새로 승인·등록하는 실험부터** 적용한다. 규범 판단은
 [RESEARCH_DESIGN §11.1](../../project_context/RESEARCH_DESIGN.md#defect-recovery), 실행·보존 경계는
 [C-018](../../project_context/CONTRACTS.md#c-018-recovery)을 따른다.
@@ -654,7 +654,7 @@ python -m integration.pokechamp.ab_head_to_head run --directory /workspace/.poke
 
 ## B2 LLM 선봉 선택
 
-[C-033](../../project_context/CONTRACTS.md#c-033-llm-lead)의 `b2-llm-lead-v1`에서 actor별
+[C-033](../../project_context/research/lead-policy/CONTRACTS.md#c-033-llm-lead)의 `b2-llm-lead-v1`에서 actor별
 `team_preview_policy`를 `seeded_random` 또는 `llm_lead`로 선택한다. 생략 시 기존 무작위 선발을 그대로 사용한다.
 예를 들어 동일 B2의 두 actor를 비교하는 slot은 다음 설정을 가진다.
 
@@ -698,7 +698,7 @@ PYTHONPATH=/workspace .venv/bin/python -m integration.pokechamp.diagnostics.team
 등록 후 기존 `benchmark.run_attempt`와 actor 생성·Cloud backend가 같은 source에서 동작하며 별도 선봉 모델은 필요 없다.
 `POKECHAMP_LEAD_STUDY_ROOT`의 양쪽 actor 요청은 같은 원자 예약 원장에 들어간다.
 후속 표본·단계·가격/금액 상한·실제 coordinator 실행·완료 분모는
-[EX-039](../../project_context/experiments/EX-039-b2-lead-proposal.md)와 D-053/EP-041이 규정한다.
+[EX-039](../../project_context/research/lead-policy/experiments/EX-039-b2-lead-proposal.md)와 D-053/EP-041이 규정한다.
 D-053은 실제32경기 수집을 승인했고 후속 사용자 지시로 금액 상한을 제외했다. 실행 상태는 STATUS/EP-041을 참조한다.
 
 기술 경계:
@@ -745,7 +745,7 @@ report는 원자료를 바꾸지 않는 새 파생 보고서를 만든다. 조�
 
 ## EX-040 Z.ai 선봉 정책 비교
 
-[EX-040](../../project_context/experiments/EX-040-b2-lead-zai.md)의 명시적 승인 범위에서만 실행한다.
+[EX-040](../../project_context/research/lead-policy/experiments/EX-040-b2-lead-zai.md)의 명시적 승인 범위에서만 실행한다.
 `python -m integration.pokechamp.team_preview_study prepare --experiment-id EX-040 --transport cloud --directory .pokechamp-data/b2-lead/ex040-zai`로 준비한다.
 로컬 검증 receipt와 승인 기록을 등록한 뒤 `team_preview_run run --directory ... --data-root .pokechamp-data --verification ...`을 사용한다.
 실험 식별자에서 protocol과 영속 binding을 선택한다. 기존 EX-039 기본값·binding은 보존한다.
@@ -755,8 +755,8 @@ report는 원자료를 바꾸지 않는 새 파생 보고서를 만든다. 조�
 
 ## EX-041 Z.ai 동시성4 선봉 정책 재실험
 
-[EP-045](../../project_context/exec-plans/active/EP-045-zai-concurrency4.md)와
-[EX-041](../../project_context/experiments/EX-041-b2-lead-zai4.md)을 따른다.
+[EP-045](../../project_context/research/lead-policy/plans/EP-045-zai-concurrency4.md)와
+[EX-041](../../project_context/research/lead-policy/experiments/EX-041-b2-lead-zai4.md)을 따른다.
 `team_preview_study prepare --experiment-id EX-041`은 별도 ex041-zai identity/binding을 사용하며
 동시성4만 허용한다. 첫429 영속 중단·최초 시계·원장·source 보존은 실험 protocol을 선택해 적용한다.
 EX-039/040의 중단·binding을 삭제하거나 재등록하여 이어 실행하지 않는다.
@@ -784,8 +784,8 @@ PYTHONPATH=/workspace .venv/bin/python -m integration.pokechamp.team_preview_stu
 
 ## 새 응답 대기·공급자 오류 재시도
 
-[D-060](../../project_context/decisions/D-060-provider-retry-viewer.md) 이후 새 준비·직접 호출은
-[C-038](../../project_context/CONTRACTS.md#c-038-transport-retry)의 provider-retry-v2를 기본 봉인한다.
+[D-060](../../project_context/shared/execution/decisions/D-060-provider-retry-viewer.md) 이후 새 준비·직접 호출은
+[C-038](../../project_context/shared/execution/CONTRACTS.md#c-038-transport-retry)의 provider-retry-v2를 기본 봉인한다.
 읽기600초·연결/쓰기/pool300초다. 연결 오류·네 단계 timeout·HTTP5xx·429에
 1초/2초/4초 대기 후 최대3재시도(총4시도)를 적용한다. Retry-After는 기록만 하고 고정 대기를 바꾸지 않는다.
 첫429에서는 재시도하며 최종 실패429에서 전체 신규 수집을 중단한다. 기타4xx·출력·계산·설정·무결성 오류는 제외한다.
@@ -802,7 +802,7 @@ retry 후속 기록은 요청 원장에 연결되고 상세/원인 메시지는 
 
 ## EX-042 공급자4+4 실행
 
-`team_preview_study prepare --experiment-id EX-042 --transport fake|cloud --directory <새경로>`는 공급자별 설정과 대응쌍 배정을 봉인한다. `verify`, `register_execution`, `team_preview_run run/report`의 기존 경로를 사용한다. 조건은 [EX-042](../../project_context/experiments/EX-042-distributed-lead.md), 계약은 [C-039](../../project_context/CONTRACTS.md#c-039-distributed-lead)다.
+`team_preview_study prepare --experiment-id EX-042 --transport fake|cloud --directory <새경로>`는 공급자별 설정과 대응쌍 배정을 봉인한다. `verify`, `register_execution`, `team_preview_run run/report`의 기존 경로를 사용한다. 조건은 [EX-042](../../project_context/research/lead-policy/experiments/EX-042-distributed-lead.md), 계약은 [C-039](../../project_context/research/lead-policy/CONTRACTS.md#c-039-distributed-lead)다.
 최종 source의 fake32와 공급자별 로컬 대응2경기 검증 receipt·승인 기록을 등록한 뒤만 실제 수집한다. 첫 네 경기 gate가 후속28 진입을 제어한다. 호출 상한 없음·최초예약20100초 신규 중단/21600초 정리·첫429 전체 halt·보충/재수집/재개0이다. 중단·원자료를 삭제하거나 폴더를 바꿔 시계를 초기화할 수 없다.
 
 ## 정상 완료 경기 목록
@@ -831,16 +831,16 @@ PYTHONPATH=/workspace:/workspace/pokechamp /workspace/pokechamp/.venv/bin/python
 ```
 
 과거 옵션 없는 준비는 당시 봉인 identity를 사용한다. 과거 EX 지정 준비에 새 옵션을 혼합하면 거부한다.
-새 준비는 과거 실행 승인·예산을 승계하지 않는다. [C-040](../../project_context/CONTRACTS.md#c-040-lead-components),
+새 준비는 과거 실행 승인·예산을 승계하지 않는다. [C-040](../../project_context/research/lead-policy/CONTRACTS.md#c-040-lead-components),
 [자산 설명](lead_rules/README.md), [EP-050 검증](../../project_context/exec-plans/evidence/ep050/report.md)을 참조한다.
 
 ## EX-043 교정 선봉 비교
 
-`team_preview_study prepare --experiment-id EX-043`은 별도 namespace 일정·matchup-v2/dex-v2·provider-retry-v2를 봉인한다. 기존 등록/실행 CLI를 사용하며 EX-043 승인·사전 검증 receipt가 필요하다. 종료 경기의 공개 입력 감사 실패는 전체 신규 수집을 중단한다. 과거 EX-039–042 봉인/중단과 결과를 보존한다. 조건·한도·분모 원문은 [EX-043](../../project_context/experiments/EX-043-corrected-lead.md)다.
+`team_preview_study prepare --experiment-id EX-043`은 별도 namespace 일정·matchup-v2/dex-v2·provider-retry-v2를 봉인한다. 기존 등록/실행 CLI를 사용하며 EX-043 승인·사전 검증 receipt가 필요하다. 종료 경기의 공개 입력 감사 실패는 전체 신규 수집을 중단한다. 과거 EX-039–042 봉인/중단과 결과를 보존한다. 조건·한도·분모 원문은 [EX-043](../../project_context/research/lead-policy/experiments/EX-043-corrected-lead.md)다.
 
 ## EX-045 공식 관측 선봉 비교
 
-[D-067/EX-045](../../project_context/experiments/EX-045-official-lead.md)는 공식 관측을 공통 입력으로
+[D-067/EX-045](../../project_context/research/lead-policy/experiments/EX-045-official-lead.md)는 공식 관측을 공통 입력으로
 새 identity에서 선봉 정책을 비교한다. `team_preview_study prepare --experiment-id EX-045`는
 공급자별 official-client-v1/빌드·v1.4.0/b2-official-v1·최신 선봉 및 전송 설정을 봉인한다.
 기존 EX 지정은 legacy 관측/당시 감사 버전을 유지한다.
@@ -903,8 +903,8 @@ context manager 또는 `close()`로 연결을 정리한다.
 
 독립 클라이언트 준비 단계는 모의 HTTP로 검증했다. 이후 EX-047에서 실제17호출·16행동 전송을 확인했으며 확률합 검증으로 첫 경기를 중단했다.
 `POKECHAMP_PROVIDER=jev`는 지원하지 않는다. 배틀에는 아래 별도 JEV Choice 경로와 C-045 계약을 사용한다.
-계약은 [C-044](../../project_context/CONTRACTS.md#c-044-jev),
-검증은 [EP-061](../../project_context/exec-plans/completed/EP-061-jev-client.md)을 참조한다.
+계약은 [C-044](../../project_context/shared/execution/CONTRACTS.md#c-044-jev),
+검증은 [EP-061](../../project_context/shared/execution/plans/EP-061-jev-client.md)을 참조한다.
 
 ## JEV Choice 배틀 진단
 
@@ -970,8 +970,8 @@ PYTHONPATH=/workspace:/workspace/pokechamp .venv/bin/python -m integration.pokec
 PYTHONPATH=/workspace:/workspace/pokechamp .venv/bin/python -m integration.pokechamp.jev_study live
 ```
 
-조건·중단·복구·분모는 [EX-052](../../project_context/experiments/EX-052-jev-abyssal32.md),
-검증·실행 근거는 [EP-073](../../project_context/exec-plans/completed/EP-073-jev-abyssal32.md)이다.
+조건·중단·복구·분모는 [EX-052](../../project_context/research/model-evaluation/experiments/EX-052-jev-abyssal32.md),
+검증·실행 근거는 [EP-073](../../project_context/research/model-evaluation/plans/EP-073-jev-abyssal32.md)이다.
 
 ## JEV v3 오프라인 입력 검증
 
@@ -992,7 +992,7 @@ PYTHONPATH=/workspace:/workspace/pokechamp pokechamp/.venv/bin/python -m integra
 
 EX-052 봉인 manifest의 팀/seed/순서/모델 설정을 직접 사용한다. 과거 기본 일정 명령은 v2로
 해석하며 새 실험은 명시 선택한다. 조건·상한·중단·분모는
-[EX-053](../../project_context/experiments/EX-053-jev-v3-abyssal32.md)이다.
+[EX-053](../../project_context/research/input-and-memory/experiments/EX-053-jev-v3-abyssal32.md)이다.
 
 ```bash
 # cwd=/workspace/pokechamp, PYTHONPATH=/workspace:/workspace/pokechamp
@@ -1001,7 +1001,7 @@ EX-052 봉인 manifest의 팀/seed/순서/모델 설정을 직접 사용한다. 
 .venv/bin/python -m integration.pokechamp.jev_study live --experiment EX-053
 ```
 
-결과는 [EP-075](../../project_context/exec-plans/active/EP-075-jev-v3-abyssal32.md)에 연결한다.
+결과는 [EP-075](../../project_context/research/input-and-memory/plans/EP-075-jev-v3-abyssal32.md)에 연결한다.
 
 ## D-084/D-087 provider 재시도3회·대기 확대
 
@@ -1017,7 +1017,7 @@ Ollama/Z.ai의 `provider-retry-v2`도 기존대로3회다. 과거 고정 EX 유�
 ## EX-054 동일 조건 재실험
 
 EX-053의 봉인 일정/처치와 D-084 재시도3회를 결합한다. 새 EX-054 receipt·출력은 독립하며
-조건·새6시간·중단·분모는 [EX-054](../../project_context/experiments/EX-054-jev-v3-retry32.md)를 따른다.
+조건·새6시간·중단·분모는 [EX-054](../../project_context/research/input-and-memory/experiments/EX-054-jev-v3-retry32.md)를 따른다.
 
 ```bash
 # cwd=/workspace/pokechamp, PYTHONPATH=/workspace:/workspace/pokechamp
@@ -1025,7 +1025,7 @@ EX-053의 봉인 일정/처치와 D-084 재시도3회를 결합한다. 새 EX-05
 .venv/bin/python -m integration.pokechamp.jev_study live --experiment EX-054
 ```
 
-실행·검증 근거는 [EP-077](../../project_context/exec-plans/active/EP-077-jev-v3-retry32.md)에 연결한다.
+실행·검증 근거는 [EP-077](../../project_context/research/input-and-memory/plans/EP-077-jev-v3-retry32.md)에 연결한다.
 
 ## EX-056 사전 검증 생략 직접32
 
@@ -1033,13 +1033,13 @@ D-088의 사용자 승인 범위에서 cwd=/workspace/pokechamp,
 `PYTHONPATH=/workspace:/workspace/pokechamp .venv/bin/python -m integration.pokechamp.jev_study live --experiment EX-056`을 사용한다.
 고정 ex056-live 최초1회만 허용하며 entry-record.json에 사전 검사 생략·승인·identity를 기록한다.
 모의/probe/첫4 특별점검0, 재시도10/30/60초. 경기별 및 종료 감사·보고·뷰어는 유지한다.
-조건은 [EX-056](../../project_context/experiments/EX-056-jev-direct32.md)을 따른다.
+조건은 [EX-056](../../project_context/research/input-and-memory/experiments/EX-056-jev-direct32.md)을 따른다.
 
 ## EX-057 jev-1.13.0 고정 직접32
 
 `TYPESAFE_MODEL=jev-1.13.0 PYTHONPATH=/workspace:/workspace/pokechamp .venv/bin/python -m integration.pokechamp.jev_study live --experiment EX-057`
 (cwd=/workspace/pokechamp). EX-056 봉인 대진·같은 endpoint·새 시계로 직접 진입한다.
-사전 검사0·경기별/종료 감사 유지. [EX-057](../../project_context/experiments/EX-057-jev-pinned32.md).
+사전 검사0·경기별/종료 감사 유지. [EX-057](../../project_context/research/input-and-memory/experiments/EX-057-jev-pinned32.md).
 
 ### EX-058 개선 입력 동일 대진 재현
 
@@ -1050,7 +1050,7 @@ EP-094의 동결 source/data 및4개 저장 사례 receipt를 확인한 뒤 재�
 통과하면 같은 source/config로 순차 수집한다. 사전 요청의 최초 wall/monotonic 시계를 본수집에 이어서
 +20100초 신규 수집 차단·+21600초 정리 한도를 적용한다. 사전 요청은 성적/본수집 사용량에서 분리한다.
 고정 출력 경로 또는 사전 요청 경로가 이미 있으면 재실행하지 않는다. 이 명령 설명은 재수집 승인이 아니다.
-모든 조건·중단·완료 기준은 [EX-058](../../project_context/experiments/EX-058-jev-improved32.md),
+모든 조건·중단·완료 기준은 [EX-058](../../project_context/research/input-and-memory/experiments/EX-058-jev-improved32.md),
 결과·검증은 [EP-094 보고](../../project_context/exec-plans/evidence/ep094/report.md)를 따른다.
 
 ### EX-060 한 경기 행동 분기 데이터
@@ -1059,7 +1059,7 @@ EP-094의 동결 source/data 및4개 저장 사례 receipt를 확인한 뒤 재�
 저장된22개 결정에서 후보별로 양측 Abyssal 후속 경기를 수집한다.
 원경기·모든 root 복원 검증, 후보 공통 난수, 누적 예산 원장, private state와 학습 export 분리,
 후보별 통계·오프라인 뷰어·감사/봉인을 포함한다.
-[실행 안내](branch_rollouts/README.md) · [동결 조건](../../project_context/experiments/EX-060-single-battle-branch-rollouts.md).
+[실행 안내](branch_rollouts/README.md) · [동결 조건](../../project_context/research/action-value/experiments/EX-060-single-battle-branch-rollouts.md).
 반복 실행으로 예산을 초기화하지 않으며 이 안내는 새 수집 승인이 아니다.
 # Qwen 최종 LoRA 로컬 서빙과 배틀
 
@@ -1090,8 +1090,8 @@ total_tokens/elapsed_seconds를 포함한다. 최대 q와 원순서 동률을 �
 합계 정규화는 하지 않는다. 입력16384토큰 초과는 무절단400, 요청600초 초과는408이며 재시도0이다.
 FP32 가중치·BF16 forward·FP32 A/B readout·eval/no_grad를 유지한다.
 서빙 원자료는 `.pokechamp-data/qwen/ex062-server/<owner>/`, 배틀은 `ex062-live/`에 보존한다.
-모델·입력·팀·시간·실패 범위 원문은 [EX-062](../../project_context/experiments/EX-062-qwen-local-battle.md),
-규범 경계는 [C-049](../../project_context/CONTRACTS.md#c-049-qwen-local)이다.
+모델·입력·팀·시간·실패 범위 원문은 [EX-062](../../project_context/research/action-value/experiments/EX-062-qwen-local-battle.md),
+규범 경계는 [C-049](../../project_context/research/action-value/CONTRACTS.md#c-049-qwen-local)이다.
 
 ### EX-063 학습 원대진 1경기
 
@@ -1108,7 +1108,7 @@ scripts/pokechamp-qwen stop
 ```
 
 배틀 cwd는 upstream 상대 경로 세트 자료를 읽도록 `/workspace/pokechamp`를 사용한다.
-[실험 조건](../../project_context/experiments/EX-063-qwen-training-matchup.md).
+[실험 조건](../../project_context/research/action-value/experiments/EX-063-qwen-training-matchup.md).
 
 ## Qwen 후보 상태 입력과 저장 입력 비교
 
@@ -1136,7 +1136,7 @@ scripts/pokechamp-qwen study-run --output /workspace/.pokechamp-data/qwen/ex064-
 `study-run`은 사전 검사 후 파일을 동결하고 새 소유 서버에서 기존 모델의 저장 입력만
 평가한다. q 비교 뒤 별도 진단과 전후 q 무변경 대조를 실행하고 서버 정리·보고·봉인을
 완료한다. 새 배틀 명령 전송과 모델 업데이트는 없다. 실행 조건·분모·시간 상한·실패·
-해석 원문은 [EX-064](../../project_context/experiments/EX-064-qwen-candidate-state.md)이며,
+해석 원문은 [EX-064](../../project_context/research/action-value/experiments/EX-064-qwen-candidate-state.md)이며,
 후속 재수집이나 독립 배틀 평가는 별도 등록 범위다.
 
 Qwen/JEV 실험자 뷰어는 선택·결정 목록·후보를 실제 기술명과 교체/선봉 대상명으로 표시한다.

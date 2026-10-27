@@ -17,6 +17,9 @@ SNAPSHOT_KEYS = (
 )
 MON_KEYS = ('slot','species','hp_percent','status','boosts','item','ability','moves','types',
             'tera_type','terastallized','effects')
+# D-195: kept when present; inputs without them (EX-071 prepared) stay valid and unchanged.
+OPTIONAL_SNAPSHOT_KEYS = ('weather_turn',)
+OPTIONAL_MON_KEYS = ('item_state','status_counter','status_source')
 SET_KEYS = ('species','item','ability','moves','nature','evs','ivs','level','gender','teraType','happiness')
 FORBIDDEN = {'winner','outcome','rating','players','player','username','replay_id','sample_id',
              'label','target','targets','seed','rng','audit','provenance','metadata','future',
@@ -41,7 +44,7 @@ def _boundary(value):
 def _snapshot(value):
     if not isinstance(value, dict) or set(SNAPSHOT_KEYS) - set(value):
         raise ValueError('incomplete normalized snapshot')
-    result = {key: value[key] for key in SNAPSHOT_KEYS}
+    result = {key: value[key] for key in SNAPSHOT_KEYS + OPTIONAL_SNAPSHOT_KEYS if key in value}
     if result['decision_kind'] not in KINDS:
         raise ValueError('label-dependent or unsupported decision kind')
     if type(result['turn']) is not int or result['turn'] < 0:
@@ -56,7 +59,7 @@ def _snapshot(value):
         for mon in team:
             if set(MON_KEYS) - set(mon):
                 raise ValueError('incomplete public pokemon state')
-            row = {key: mon[key] for key in MON_KEYS}
+            row = {key: mon[key] for key in MON_KEYS + OPTIONAL_MON_KEYS if key in mon}
             if side == 'own_team':
                 if not isinstance(mon.get('original_set'), dict):
                     raise ValueError('missing original own set')

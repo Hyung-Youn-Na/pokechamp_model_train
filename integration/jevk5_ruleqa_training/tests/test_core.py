@@ -36,6 +36,10 @@ class Tests(unittest.TestCase):
         self.assertAlmostEqual(float(loss.detach()),-math.log(.3),places=12)
         torch.testing.assert_close(z.grad,torch.tensor([.2,-.7,.5,0.],dtype=torch.float64))
         self.assertEqual(probabilities([1,1,1]).argmax(),0)
+        roots=[math.sqrt(x) for x in (2,3,5)]
+        for temperature,expected in [(1.,[.2,.3,.5]),(2.,[x/sum(roots) for x in roots])]:
+            actual=probabilities([math.log(2),math.log(3),math.log(5)],temperature)
+            for got,want in zip(actual,expected):self.assertAlmostEqual(float(got),want,places=12)
 
     def test_actual_ddp_accumulation(self):
         with tempfile.TemporaryDirectory() as temp:

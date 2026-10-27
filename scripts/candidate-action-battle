@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /workspace
+export PYTHONPATH=/workspace:/workspace/pokechamp
+exec /workspace/pokechamp/.venv/bin/python -m integration.candidate_action.execute "$@"

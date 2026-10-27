@@ -111,7 +111,19 @@ def test_protocol_snapshot_uses_own_cohort_authorization(tmp_path, monkeypatch, 
     for relative in cfg.cohort.protocol_files:
         assert (cfg.run / 'protocol' / relative).read_bytes() == (config.ROOT / 'project_context' / relative).read_bytes()
     decision = 'D-135-jev-public-memory-v6.md' if name == 'EX-086' else 'D-136-jev-v6-corrected-evaluation.md'
-    assert {p.name for p in (cfg.run / 'protocol/decisions').glob('*.md')} == {decision}
+    selected_decisions = [
+        relative for relative in cfg.cohort.protocol_files
+        if Path(relative).name.startswith('D-')
+    ]
+    assert {Path(relative).name for relative in selected_decisions} == {decision}
+    for relative in selected_decisions:
+        assert (cfg.run / 'protocol' / relative).is_file()
+    context = cfg.run / 'protocol/context'
+    assert (context / 'CONTRACTS.md').is_file()
+    assert (context / 'research/input-and-memory/CONTRACTS.md').is_file()
+    snapshot = json.loads((context / 'snapshot.json').read_text())
+    assert snapshot['role'] == 'reference_context_not_additional_execution_authorization'
+    assert set(selected_decisions) <= set(snapshot['selected_documents'])
     assert file_hash(cfg.run / 'source/scripts/jev-eval') == sources['scripts/jev-eval']
 
 

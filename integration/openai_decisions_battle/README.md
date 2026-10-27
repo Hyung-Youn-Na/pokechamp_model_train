@@ -1,7 +1,7 @@
 # OpenAI Decisions v6 상세32경기
 
 EX-109 전용 실행기다. 조건·예산·실패·복구·해석은
-[실험 원문](../../project_context/experiments/EX-109-openai-decisions-v6-battle32.md)을 따른다.
+[실험 원문](../../project_context/research/model-evaluation/experiments/EX-109-openai-decisions-v6-battle32.md)을 따른다.
 
 - 모델: gpt-6-luna, 공식 POST /v1/decisions, 단일 choice 질문.
 - 입력: 교정 v6 상세 state·원 지시문·원 후보 ID/순서. 피해/스피드 포함, planner off, 테라 허용.
@@ -45,9 +45,9 @@ scripts/openai-decisions-retry-battle status
 인증/권한/요청/무결성 오류는 일시적통신으로 처리하지 않는다. 미응답의 실제 공급자 실행/
 비용은 미확정이며 모든 물리시도와 확인usage를 원장에 보존한다.
 
-새조건은 [EX-110](../../project_context/experiments/EX-110-openai-decisions-retry32.md),
-진행은 [EP-180](../../project_context/exec-plans/completed/EP-180-openai-decisions-retry32.md)에 둔다.
+새조건은 [EX-110](../../project_context/research/model-evaluation/experiments/EX-110-openai-decisions-retry32.md),
+진행은 [EP-180](../../project_context/research/model-evaluation/plans/EP-180-openai-decisions-retry32.md)에 둔다.
 
 EX110은 정상32경기/16쌍·16승16패(50%)로 완료했다. 실패/무효/미실행0이며 실제 재시도0이다.
 [결과 뷰어](../../exports/battle_viewers/ex110/index.html)와
-[최종 보고서](/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/report.md)를 참조한다.
+[최종 보고서](../../../mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/report.md)를 참조한다.

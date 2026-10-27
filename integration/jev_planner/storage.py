@@ -24,6 +24,7 @@ def file_hash(path):
 
 
 def source_identity():
+    from integration.project_context.registry import runtime_paths
     paths = []
     for directory in ('integration/jev_planner', 'integration/jev27b', 'integration/jev9b',
                       'integration/jev_eval', 'integration/minicpm5_jev', 'integration/jev35b_nvfp4', 'integration/jev_omni', 'integration/tacit9b', 'integration/tacit9b_vllm', 'integration/pokechamp'):
@@ -32,6 +33,7 @@ def source_identity():
                      and not (directory == 'integration/jev_planner'
                               and any(part in ('prompts', 'examples', 'fixtures') for part in p.parts)))
     paths.append(ROOT / 'scripts/jev-planner')
+    paths.extend(runtime_paths(root=ROOT))
     return {str(p.relative_to(ROOT)): file_hash(p) for p in sorted(set(paths))}
 
 

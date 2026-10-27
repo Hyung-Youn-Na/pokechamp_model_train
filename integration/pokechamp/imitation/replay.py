@@ -85,6 +85,11 @@ class Timeline:
         self.public_tera = set()
         self.tera_slots = set()
         self.tera_types = {}
+        # D-195 optional public state: item held/removed (any reveal path), sleep/toxic counters,
+        # weather start turn. Existing snapshot fields are untouched by these trackers.
+        self.item_state = {}
+        self.status_state = {}
+        self.weather_turn = None
         self.aux = defaultdict(lambda: dict(last_move=None, last_move_turn=None,
             choice_changed=False, automatic=None, unknown_first_choice=False, unsupported=set()))
         self.records = []
@@ -178,6 +183,13 @@ class Timeline:
                    tera_type=(ident(original.get("teraType", "")) if own else
                               ident(pokemon.tera_type) if key in self.public_tera else None),
                    terastallized=key in self.tera_slots, effects=_mapping(pokemon.effects))
+        tracked = self.status_state.get(key)
+        counted = tracked is not None and tracked["status"] == row["status"] and row["status"] in {"slp", "tox"}
+        row["status_counter"] = tracked["counter"] if counted else None
+        row["status_source"] = tracked["source"] if counted else None
+        if not own:
+            state, held, cause = self.item_state.get(key, ("unknown", None, None))
+            row["item_state"] = dict(state=state, item=held, cause=cause)
         if own:
             row["original_set"] = _original_set(original)
         # Opponent list order is public preview order; own list order is frozen
@@ -210,7 +222,8 @@ class Timeline:
                     weather=_clean(state.weather), field=_mapping(state.battle_field),
                     own_side_conditions=_mapping(state.conditions_1 if perspective == "p1" else state.conditions_2),
                     opponent_side_conditions=_mapping(state.conditions_2 if perspective == "p1" else state.conditions_1),
-                    history=self.normalized_history(perspective))
+                    history=self.normalized_history(perspective),
+                    weather_turn=self.weather_turn if _clean(state.weather) else None)
 
     def candidates(self, snapshot, perspective):
         kind = snapshot["decision_kind"]
@@ -419,6 +432,8 @@ class Timeline:
                 if key:
                     self.public_ability.add(key)
             if args:
+                self._track_public_state(event, args)
+            if args:
                 if any(a.startswith("[from] ability:") for a in args) or (len(args) > 1 and args[1].startswith("ability:")):
                     token = next((a for a in args if a.startswith("[of] ")), args[0])
                     key = self.key(token)
@@ -475,6 +490,61 @@ class Timeline:
                     self.pending[side] = self.new_record(side, "turn_action", cutoff=index + 1)
         self.line_number = len(self.lines)
         return self
+
+    def _track_public_state(self, event, args):
+        """D-195 trackers, fed only by public protocol rows."""
+        key = self.key(args[0])
+        if event == "-weather":
+            if ident(args[0]) == "none":
+                self.weather_turn = None
+            elif "[upkeep]" not in args:
+                self.weather_turn = self.turn
+            return
+        if event == "-item" and key and len(args) > 1:
+            self.item_state[key] = ("held", ident(args[1]), None)
+        elif event == "-enditem" and key and len(args) > 1:
+            item = ident(args[1])
+            sources = [a for a in args[2:] if a.startswith("[from]")]
+            if any("Knock Off" in a for a in args[2:]):
+                cause = "knockoff"
+            elif item == "airballoon" and not sources:
+                cause = "popped"
+            elif sources:
+                cause = "other"
+            else:
+                cause = "consumed"
+            self.item_state[key] = ("removed", item, cause)
+        else:
+            # Items revealed by their effect (Leftovers, Black Sludge, Rocky Helmet, ...).
+            named = [a.split(":", 1)[1] for a in args[1:] if a.startswith("[from] item:")]
+            if not named and event in {"-activate", "-block", "-immune", "-fail"} and len(args) > 1 \
+                    and args[1].startswith("item:"):
+                named = [args[1].split(":", 1)[1]]
+            if named:
+                holder = self.key(next((a for a in args if a.startswith("[of] ")), args[0]))
+                if holder and self.item_state.get(holder, ("unknown",))[0] != "removed":
+                    self.item_state[holder] = ("held", ident(named[0]), None)
+        if not key:
+            return
+        tracked = self.status_state.get(key)
+        if event == "-status" and len(args) > 1:
+            status = ident(args[1])
+            self.status_state[key] = dict(status=status, counter=0 if status in {"slp", "tox"} else None,
+                                          source="rest" if any("move: Rest" in a for a in args[2:]) else None)
+        elif event == "-curestatus" or event == "faint":
+            self.status_state.pop(key, None)
+        elif event == "-cureteam":
+            for other in [k for k in self.status_state if k[0] == key[0]]:
+                self.status_state.pop(other)
+        elif event in {"switch", "drag"} and tracked and tracked["status"] == "tox":
+            tracked["counter"] = 0
+        elif tracked and tracked["status"] == "slp" and event == "cant" and len(args) > 1 and ident(args[1]) == "slp":
+            # Showdown prints `cant|slp` on every asleep move attempt, Sleep Talk/Snore included.
+            tracked["counter"] += 1
+        elif tracked and tracked["status"] == "tox" and (
+                (event == "-damage" and "[from] psn" in args) or
+                (event == "-heal" and "[from] ability: Poison Heal" in args)):
+            tracked["counter"] += 1
 
 
 def _percent_condition(condition):

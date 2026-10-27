@@ -10,6 +10,7 @@ from pathlib import Path
 import re
 
 from integration.pokechamp.transport_policy import CURRENT, policy_fields
+from integration.project_context.registry import resolve_document, resolve_record
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).parent
@@ -108,10 +109,12 @@ def formatter(name):
     return importlib.import_module(model_spec(name)['formatter_module'])
 
 
-def _asset(value, base, *, json_data=False):
+def _asset(value, base, *, json_data=False, document=False):
     if not isinstance(value, str) or not value.strip():
         raise ConfigurationError('asset must be a nonempty file path')
     path = (base / value).resolve()
+    if document:
+        path = resolve_document(path)
     raw = path.read_bytes()
     result = dict(path=str(path), sha256=hashlib.sha256(raw).hexdigest())
     if json_data:
@@ -236,7 +239,8 @@ def load_config(path):
         evaluation['schedule'] = _asset(evaluation.get('schedule'), path.parent, json_data=True)
         validate_schedule(evaluation['schedule']['data'])
     if evaluation.get('experiment_record') is not None:
-        evaluation['experiment_record'] = _asset(evaluation['experiment_record'], path.parent)
+        evaluation['experiment_record'] = _asset(
+            evaluation['experiment_record'], path.parent, document=True)
     limits = _object(evaluation.get('limits', {}), DEFAULT_LIMITS, 'evaluation.limits')
     evaluation['explicit_limits'] = sorted(limits)
     evaluation['limits'] = dict(DEFAULT_LIMITS, **limits)
@@ -319,10 +323,13 @@ def validate_mode(config, mode):
     record = evaluation.get('experiment_record')
     if not record or not re.fullmatch(r'EX-\d+-[^/]+\.md', Path(record['path']).name):
         raise ConfigurationError('live execution requires a registered EX experiment_record')
-    if (Path(record['path']).parent != ROOT / 'project_context/experiments'
-            or Path(record['path']).name not in (ROOT / 'project_context/experiments/INDEX.md').read_text()):
-        raise ConfigurationError('experiment_record must be registered in project_context/experiments/INDEX.md')
     match = re.match(r'EX-(\d+)-', Path(record['path']).name)
+    try:
+        registered = resolve_record('EX-' + match[1], root=ROOT)
+    except (KeyError, ValueError, OSError) as exc:
+        raise ConfigurationError('experiment_record must be registered in catalog/records.json') from exc
+    if Path(record['path']).resolve() != registered.resolve():
+        raise ConfigurationError('experiment_record must be the canonical path in catalog/records.json')
     if int(match[1]) <= 91:
         raise ConfigurationError('preserved experiments cannot be resumed through the planner runner')
     if set(evaluation['explicit_limits']) != set(DEFAULT_LIMITS):

@@ -9,9 +9,9 @@ D/EX가 지정된 조건·경로·재개 명령은 해당 실험의 범위로 �
 유지한다. 새 실험의 입력·출력·실행 범위는 등록된 작업에서 정한다.
 
 
-조건 원문은 [EX-080](../../project_context/experiments/EX-080-qwen-matrix-selfplay.md),
-결정은 [D-127](../../project_context/decisions/D-127-qwen-matrix-selfplay.md),
-당시 실행·완료 기록은 [EP-132](../../project_context/exec-plans/completed/EP-132-qwen-matrix-selfplay.md)를 따른다.
+조건 원문은 [EX-080](../../project_context/research/fixed-matchup-learning/experiments/EX-080-qwen-matrix-selfplay.md),
+결정은 [D-127](../../project_context/research/fixed-matchup-learning/decisions/D-127-qwen-matrix-selfplay.md),
+당시 실행·완료 기록은 [EP-132](../../project_context/research/fixed-matchup-learning/plans/EP-132-qwen-matrix-selfplay.md)를 따른다.
 
 ## EX-080 명령 (기술 참조)
 

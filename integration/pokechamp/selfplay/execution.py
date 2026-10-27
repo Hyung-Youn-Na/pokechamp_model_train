@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from integration.project_context.registry import authority_paths, record_relative, runtime_paths
+
 import os
 import shutil
 import signal
@@ -25,6 +27,7 @@ def source_files():
         and "tests" not in p.parts
     ]
     files.append(config.ROOT / "scripts/pokechamp-selfplay")
+    files.extend(runtime_paths(root=config.ROOT))
     return {str(p.relative_to(config.ROOT)): sha(p) for p in sorted(files)}
 
 
@@ -72,12 +75,16 @@ def freeze(directory):
         if sha(target) != digest:
             raise ValueError("source changed while preserving it")
     for name in (
-        "project_context/experiments/EX-072-selfplay-rlcd.md",
-        "project_context/decisions/D-114-selfplay-rlcd.md",
+        record_relative('EX-072', prefix=True),
+        record_relative('D-114', prefix=True),
     ):
         target = directory / "source" / name
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(config.ROOT / name, target)
+    for source in authority_paths(root=config.ROOT):
+        target = directory / "source" / source.relative_to(config.ROOT)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source, target)
     atomic(path, manifest, immutable=True)
     return manifest
 

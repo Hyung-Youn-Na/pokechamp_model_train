@@ -537,8 +537,10 @@ def player_class():
 
 
 def source_identity():
+    from integration.project_context.registry import runtime_paths
     paths = sorted(p for p in (ROOT / "integration/pokechamp").rglob("*")
                    if p.is_file() and p.suffix in (".py", ".cjs", ".json", ".txt"))
+    paths.extend(runtime_paths(root=ROOT))
     return {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
 
 

@@ -10,8 +10,8 @@ D/EX가 지정된 조건·경로·재개 명령은 해당 실험의 범위로 �
 
 
 EX066 epoch3를 변경 없이 GPU0에서 서빙하고 EX065 test20의 고정 대진을 실행한다.
-실행 조건·8시간·재현 gate·실패/복구는 [EX-081](../../../../project_context/experiments/EX-081-joint-q-battle.md),
-진행은 [EP-133](../../../../project_context/exec-plans/completed/EP-133-joint-q-battle.md)을 따른다.
+실행 조건·8시간·재현 gate·실패/복구는 [EX-081](../../../../project_context/research/action-value/experiments/EX-081-joint-q-battle.md),
+진행은 [EP-133](../../../../project_context/research/action-value/plans/EP-133-joint-q-battle.md)을 따른다.
 원 학습 실행기/체크포인트·GPU1 metadata와 과거 실패는 유지한다.
 
 ```bash

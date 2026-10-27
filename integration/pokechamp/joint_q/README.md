@@ -2,7 +2,7 @@
 
 고정 자기 팀 p2, reviewed108 상대20팀, 신규 Abyssal80경기(50/10/20)의 모든 관측·합법 후보를
 32회씩 평가한다. 모델 호출·본학습·GPU·외부 API는 사용하지 않는다. 실행 조건은
-[EX-065](../../../project_context/experiments/EX-065-joint-q-data.md), 진행은 EP-107이다.
+[EX-065](../../../project_context/research/action-value/experiments/EX-065-joint-q-data.md), 진행은 EP-107이다.
 사용자 후속 지시로 이번 뷰어는 생성하지 않는다.
 
 ## 실행

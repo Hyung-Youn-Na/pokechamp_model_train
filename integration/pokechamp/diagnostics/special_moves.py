@@ -7,6 +7,8 @@ PYTHONPATH=. pokechamp/.venv/bin/python -m \
 
 from __future__ import annotations
 
+from integration.project_context.registry import record_relative
+
 import argparse
 import hashlib
 import json
@@ -91,7 +93,7 @@ def sources(loaded):
     paths |= {
         ROOT / "project_context/RESEARCH_DESIGN.md",
         ROOT / "project_context/CONTRACTS.md",
-        ROOT / "project_context/decisions/D-021-special-move-diagnostics.md",
+        ROOT / record_relative('D-021', prefix=True),
     }
     paths |= {Path(p) for p in loaded}
     paths |= {Path(p) for p in verify_build_sources(loaded)}

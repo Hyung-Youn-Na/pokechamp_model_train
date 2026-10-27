@@ -44,4 +44,4 @@ HTTP timeout은 60초, 자동 재시도와 redirect는 없다. 오류 시 종료
 실제 API/계정 권한은 키 입력 후 첫 호출로 확인해야 한다. 이번 환경 구성에서는 실 API를
 호출하지 않았으며 배틀 평가·학습·모델 성능은 검증하지 않았다.
 
-근거: [EP-178](../../project_context/exec-plans/completed/EP-178-openai-decisions-environment.md).
+근거: [EP-178](../../project_context/shared/execution/plans/EP-178-openai-decisions-environment.md).

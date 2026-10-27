@@ -4,6 +4,9 @@
 후보 ID/순서/명령·원 지시문·상성표·계산값은 그대로다. 요약 제거로 원 입력을 정확히 복원할 수 있다.
 현재 프로필을 새 실험에서 명시 선택하며, 기존 실험이나 진행 중인 수집에 자동 적용하지 않는다.
 
+팀·기술·계산·상성표를 포함한 전체 입력과 실제 API 형식은
+[EX-112 입력 필드 구조](../../project_context/research/input-and-memory/input-structures/EX112_INPUT_STRUCTURE.md)를 참조한다.
+
 ## 구성과 해석
 
 | 필드 | 의미 |
@@ -75,8 +78,8 @@ PYTHONPATH=/workspace:/workspace/pokechamp pokechamp/.venv/bin/python -m pytest 
 
 게임 규칙은 pinned Showdown Dex를 읽으며 공식 관측/기존 계산기 설치나 소스는 수정하지 않는다.
 오프라인 보존·게임 엔진 대조는 모델 선택 개선이나 승률 향상을 입증하지 않는다.
-조건/진행 원문: [D-167](../../project_context/decisions/D-167-candidate-matchup-summary.md),
-[EP-182](../../project_context/exec-plans/completed/EP-182-candidate-matchup-summary.md).
+조건/진행 원문: [D-167](../../project_context/research/input-and-memory/decisions/D-167-candidate-matchup-summary.md),
+[EP-182](../../project_context/research/input-and-memory/plans/EP-182-candidate-matchup-summary.md).
 
 검증 결과와 실제 입력 전후 예시는 [EP182 보고](../../project_context/exec-plans/evidence/ep182/report.md)와
 [예시](../../project_context/exec-plans/evidence/ep182/examples.md)에 있다.

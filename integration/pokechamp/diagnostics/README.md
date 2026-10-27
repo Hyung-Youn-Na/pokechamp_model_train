@@ -57,7 +57,7 @@ hash를 확인하고, 재현에서는 protocol의 wall-clock `|t:|`만 비교에
 `diagnostic_complete`는 선정 시험의 결과/미검증 사유가 확보되었다는 뜻이다.
 `calculator_all_passed`나 `offline_gate_passed`가 아니며 gate receipt를 발급하지 않는다.
 EX-017·018과 개발 실패 자료는 변경하지 않는다. 자세한 원인과 최종 검증은
-[EX-019](../../../project_context/experiments/EX-019-special-move-diagnostics.md)에 기록한다.
+[EX-019](../../../project_context/research/input-and-memory/experiments/EX-019-special-move-diagnostics.md)에 기록한다.
 
 
 ## B2 선봉 로컬 검증
@@ -66,4 +66,4 @@ EX-017·018과 개발 실패 자료는 변경하지 않는다. 자세한 원인�
 fake model을 쓰는2대응 경기/4 actor만 실행한다. 양측 선봉·첫 출전·B2 전투 입력·공통 원장/시계·viewer와
 permit 반환을 검사하고 `verification.json`으로 봉인한다. 모델 호출/전략적 성능 평가는 없다.
 실행은 `/workspace/pokechamp`에서 `PYTHONPATH=/workspace .venv/bin/python`을 사용한다.
-[설정·명령·제한](../README.md#llm-lead), [EX-039 후속 초안](../../../project_context/experiments/EX-039-b2-lead-proposal.md).
+[설정·명령·제한](../README.md#llm-lead), [EX-039 후속 초안](../../../project_context/research/lead-policy/experiments/EX-039-b2-lead-proposal.md).

@@ -1,0 +1,21 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="__CSP__"><title>__TITLE__</title><style>__STYLE__
+.panel{margin-bottom:14px}.page-header{overflow-wrap:anywhere}.replay{align-self:start}.replay iframe{min-height:300px}.replay details{margin:0;padding:12px}.replay .code{max-height:20vh;padding:12px}.content{overflow-wrap:anywhere}.scope{display:flex;align-items:center;gap:8px}.scope input{width:18px;height:18px}#state-content:empty{display:none}.state details .code{max-height:45vh}.log-row{padding:8px 0;border-bottom:1px solid var(--line);white-space:pre-wrap}.source-ref{font-size:11px;color:var(--muted)}.raw-wrap>summary{padding:12px 18px}.replay header button{margin-top:8px}.synthetic{margin:0 28px 14px;padding:12px;background:#fff3d9;border:2px dashed #b77918}.empty{padding:18px}.table-wrap th{white-space:nowrap}
+@media(max-width:1100px){.replay{order:-1;position:static;height:auto;width:100%}.replay iframe{flex:auto;height:400px}.replay .code{max-height:160px}.main{width:100%}.layout{padding:0 12px 12px}.page-header{padding:12px}}@media(max-width:600px){.replay iframe{height:380px;min-height:0}.navigation select{flex-basis:100%}.toolbar p{min-width:0}.tabs{padding:0 6px}.synthetic{margin:0 12px 12px}}
+</style></head><body>
+<header class="page-header"><a href="../index.html">← 경기 목록</a><h1 id="heading"></h1><p id="game-summary" class="muted"></p><p class="muted">battle-viewer-ui-v1 · 공개 기록과 모델이 실제 받은 입력을 구분합니다.</p></header>
+<p id="synthetic" class="synthetic" hidden>합성 UI 경계 검사 · 실제 경기·모델 추론·성적이 아닙니다.</p>
+<main class="layout"><div class="main">
+<nav class="panel navigation" aria-label="결정 탐색"><button id="previous" aria-keyshortcuts="ArrowLeft">← 이전 결정</button><select id="decision" aria-label="결정 선택"></select><button id="next" aria-keyshortcuts="ArrowRight">다음 결정 →</button><span id="position" class="muted"></span></nav>
+<nav class="panel navigation" aria-label="턴 탐색"><button id="previous-turn">← 이전 턴</button><select id="turn" aria-label="턴 선택"></select><button id="next-turn">다음 턴 →</button></nav>
+<section class="panel"><div class="summary"><div id="phase" class="eyebrow"></div><div id="choice" class="chosen"></div><div id="metrics" class="metrics"></div><p id="diagnostics" class="notice" hidden></p></div>
+<div class="tabs" role="tablist" aria-label="결정 내용"></div>
+<div class="toolbar"><p id="note" class="muted"></p><button id="copy">복사</button><button id="download">다운로드</button></div>
+<div id="log-controls" class="toolbar" hidden><label class="scope"><input type="checkbox" id="cutoff">선택한 결정 전까지</label><span id="cutoff-note" class="muted"></span></div>
+<section id="content" class="content" role="tabpanel" tabindex="0"><div id="state-content" class="state" hidden></div><details id="raw-wrap" class="raw-wrap"><summary>저장 원문 전체</summary><pre id="raw" class="code"></pre></details></section>
+<div id="status" class="status" role="status" aria-live="polite"></div></section>
+<p class="muted">← → 결정 이동 · <a href="decisions.json">전체 결정 JSON</a> · <a href="showdown.log">전체 공개 로그</a></p>
+</div><aside class="panel replay"><header><strong>배틀 리플레이</strong><p class="muted"><a href="replay.html" target="_blank" rel="noopener">크게 열기</a> · 애니메이션은 인터넷 연결 필요</p><button id="align-replay">선택한 턴으로 이동</button><p id="replay-status" class="muted" role="status">외부 영상 준비 중 · 공개 로그는 아래에서 오프라인 열람 가능</p></header>
+<iframe id="animation" title="배틀 리플레이" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
+<details open><summary>선택 턴 전체의 공개 로그 · 결정 이후 결과 포함</summary><pre id="replay-log" class="code"></pre></details></aside></main>
+<script id="viewer-data" type="application/json">__DATA__</script><script>__SCRIPT__</script></body></html>

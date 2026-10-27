@@ -8,10 +8,10 @@ JEV-27B와 MiniCPM5-2B-Jev도 기존 고정 revision·formatter·자원 프로�
 계획은 전략 조언이며 최종 합법 행동은 JEV가 고른다.
 
 이번 EP-145 검증은 CPU·모의 모델·로컬 Showdown 연결이다. 실제 API/GPU 성공이나 승률 효과를
-검증한 결과가 아니다. 규범은 [D-139](../../project_context/decisions/D-139-jev-planner-environment.md)와
-[C-070](../../project_context/CONTRACTS.md#c-070-jev-planner)이다.
+검증한 결과가 아니다. 규범은 [D-139](../../project_context/research/planner-executor/decisions/D-139-jev-planner-environment.md)와
+[C-070](../../project_context/research/planner-executor/CONTRACTS.md#c-070-jev-planner)이다.
 
-후속 [EX-092](../../project_context/experiments/EX-092-planner-first-battle-sample.md)에서는
+후속 [EX-092](../../project_context/research/planner-executor/experiments/EX-092-planner-first-battle-sample.md)에서는
 현재 역할guide·표시이름의 GLM/JEV-9B 실제1경기를55턴 승리로 정상종료하고 감사/뷰어·자원반환을
 완료했다. [실제 샘플 뷰어](../../exports/battle_viewers/ex092/index.html).
 단일 사례이며 다른 조합의 실행 성공이나 일반 성능 향상의 검증은 아니다.

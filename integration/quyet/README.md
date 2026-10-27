@@ -1,7 +1,7 @@
 # Quyet-Medium 2단계 평가
 
-[EX-084](../../project_context/experiments/EX-084-quyet-medium-two-stage.md)와
-[C-065](../../project_context/CONTRACTS.md#c-065-quyet-two-stage)가 조건·실행 경계의 원문이다.
+[EX-084](../../project_context/research/model-evaluation/experiments/EX-084-quyet-medium-two-stage.md)와
+[C-065](../../project_context/research/model-evaluation/CONTRACTS.md#c-065-quyet-two-stage)가 조건·실행 경계의 원문이다.
 기존 jev-choice-v4 관측과 Abyssal·대진 자산을 사용하며 새 모델 성적은32경기 모두 새로 수집한다.
 
 ```bash

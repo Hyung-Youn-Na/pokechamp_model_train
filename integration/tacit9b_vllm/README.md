@@ -1,6 +1,6 @@
 # Tacit-9B 외부 vLLM 연결
 
-[EX-105](../../project_context/experiments/EX-105-tacit-vllm-low.md)의 `executor.model: tacit9b-vllm`은
+[EX-105](../../project_context/research/planner-executor/experiments/EX-105-tacit-vllm-low.md)의 `executor.model: tacit9b-vllm`은
 사용자가 기동한 `http://127.0.0.1:18847/v1`의 `tacit9b`에 연결하는 CPU 프런트다.
 외부 GPU1 서버를 적재·재시작·종료하지 않는다. 원 실행 EX-104의 소스·산출물은 보존한다.
 

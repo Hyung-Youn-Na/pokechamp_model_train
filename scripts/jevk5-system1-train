@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /workspace
+export PYTHONPATH=/workspace
+export PYTHONDONTWRITEBYTECODE=1
+export TOKENIZERS_PARALLELISM=false
+exec /ref/kev/.venv/bin/python -m integration.jevk5_system1_training.cli "$@"

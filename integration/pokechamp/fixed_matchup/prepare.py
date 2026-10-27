@@ -1,6 +1,8 @@
 """CPU-only manifest preparation; never starts a battle or loads a model."""
 from __future__ import annotations
 
+from integration.project_context.registry import authority_paths, record_relative, runtime_paths
+
 import platform
 import json
 import sys
@@ -20,19 +22,21 @@ def source_files():
                  ROOT / "pokemon-showdown/dist/lib"):
         files.extend(p for p in root.rglob("*") if p.is_file() and p.suffix in (".py", ".cjs", ".js", ".json"))
     files.extend(ROOT / p for p in ["project_context/CONTRACTS.md", "project_context/RESEARCH_DESIGN.md",
-        "project_context/CHARTER.md", "project_context/experiments/EX-076-fixed-matchup-mcts.md",
-        "project_context/experiments/EX-077-fixed-matchup-day.md",
-        "project_context/decisions/D-122-fixed-matchup-day.md",
-        "project_context/decisions/D-123-fixed-matchup-first-round.md",
-        "project_context/decisions/D-124-fixed-matchup-no-time-limit.md",
-        "project_context/decisions/D-125-first-round-single-retry.md",
-        "project_context/decisions/D-126-fixed-matchup-stopping.md",
-        "project_context/experiments/EX-079-fixed-matchup-stopping.md",
-        "project_context/experiments/EX-078-fixed-matchup-first-round.md",
-        "project_context/decisions/D-119-fixed-matchup-mcts.md",
-        "project_context/decisions/D-120-fixed-matchup-run.md",
-        "project_context/decisions/D-121-fixed-matchup-fnt-recovery.md",
+        "project_context/CHARTER.md", record_relative('EX-076', prefix=True),
+        record_relative('EX-077', prefix=True),
+        record_relative('D-122', prefix=True),
+        record_relative('D-123', prefix=True),
+        record_relative('D-124', prefix=True),
+        record_relative('D-125', prefix=True),
+        record_relative('D-126', prefix=True),
+        record_relative('EX-079', prefix=True),
+        record_relative('EX-078', prefix=True),
+        record_relative('D-119', prefix=True),
+        record_relative('D-120', prefix=True),
+        record_relative('D-121', prefix=True),
         "export/teams/gen9ou_reviewed108_teams.txt", "scripts/pokechamp-fixed-matchup"])
+    files.extend(authority_paths(root=ROOT))
+    files.extend(runtime_paths(root=ROOT))
     # Canonical opponent code is used through poke-env and must also be pinned.
     for relative in ("pokechamp/poke_env",):
         files.extend(p for p in (ROOT / relative).rglob("*") if p.is_file()

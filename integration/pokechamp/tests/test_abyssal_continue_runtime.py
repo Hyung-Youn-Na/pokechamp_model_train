@@ -1,4 +1,6 @@
 """CPU failure-isolation and ownership regression tests for EX-074."""
+
+from integration.project_context.registry import record_relative
 import tempfile
 import unittest
 from pathlib import Path
@@ -211,13 +213,16 @@ def test_freeze_rejects_document_mutation_and_preserves_original_clock(tmp_path,
     output = tmp_path / 'experiment'
     docs = ['project_context/INDEX.md', 'project_context/CHARTER.md',
             'project_context/RESEARCH_DESIGN.md', 'project_context/CONTRACTS.md',
-            'project_context/decisions/D-117-abyssal-rl-continue.md',
-            'project_context/experiments/EX-074-abyssal-rl-continue.md',
-            'project_context/exec-plans/active/EP-121-abyssal-rl-continue.md']
+            record_relative('D-117', prefix=True),
+            record_relative('EX-074', prefix=True),
+            record_relative('EP-121', prefix=True),
+            'project_context/research/policy-learning/CONTRACTS.md']
     for name in docs:
         path = tmp_path / name
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text('frozen protocol\n')
+    atomic(tmp_path / 'project_context/catalog/records.json',
+           {'authorities': ['research/policy-learning/CONTRACTS.md']})
     initial = tmp_path / 'initial'
     atomic(initial / 'files.json', {})
     atomic(output / 'verification/cpu.json', {'passed':True, 'source':{}})

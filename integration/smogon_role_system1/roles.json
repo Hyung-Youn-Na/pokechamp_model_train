@@ -1,0 +1,107 @@
+[
+  {
+    "id": "wallbreaker",
+    "name_ko": "벽 돌파",
+    "definition": "Applies substantial offensive pressure to break defensive Pokemon or defensive cores; more specific than merely having damaging moves."
+  },
+  {
+    "id": "setup_sweeper",
+    "name_ko": "랭크업 스위퍼",
+    "definition": "Uses self-boosting setup to threaten a sweep or a sequence of knockouts; not every use of a boosting move establishes this role."
+  },
+  {
+    "id": "cleaner",
+    "name_ko": "후반 정리",
+    "definition": "Finishes weakened opponents or cleans late in a game, as described for this set."
+  },
+  {
+    "id": "revenge_killer",
+    "name_ko": "리벤지 킬러",
+    "definition": "Removes offensive threats after a teammate falls or after a free entry; includes an explicitly described revenge-killing role."
+  },
+  {
+    "id": "speed_control",
+    "name_ko": "스피드 제어",
+    "definition": "Provides strategically described speed control through Choice Scarf, priority, speed-altering support or similar means; an EV speed benchmark alone is insufficient."
+  },
+  {
+    "id": "offensive_pivot",
+    "name_ko": "공격형 피벗",
+    "definition": "Combines offensive pressure with a switching move or explicit momentum-generation role to bring teammates in."
+  },
+  {
+    "id": "defensive_pivot",
+    "name_ko": "수비형 피벗",
+    "definition": "Uses defensive switching capability and pivoting or sustained recovery to bring teammates in safely."
+  },
+  {
+    "id": "physical_wall",
+    "name_ko": "물리막이",
+    "definition": "Is described as a dedicated or broad physical wall, rather than only checking one named physical threat."
+  },
+  {
+    "id": "special_wall",
+    "name_ko": "특수막이",
+    "definition": "Is described as a dedicated or broad special wall, rather than only checking one named special threat."
+  },
+  {
+    "id": "defensive_check",
+    "name_ko": "수비 체크",
+    "definition": "Provides an explicitly described defensive check or switch-in to a limited set of threats; this is not a universal counter claim."
+  },
+  {
+    "id": "hazard_setter",
+    "name_ko": "설치기 담당",
+    "definition": "Sets entry hazards as a described contribution of this set or one of its listed variants."
+  },
+  {
+    "id": "hazard_remover",
+    "name_ko": "설치물 제거",
+    "definition": "Removes entry hazards from its side as a described role of this set."
+  },
+  {
+    "id": "hazard_preserver",
+    "name_ko": "설치물 유지",
+    "definition": "Blocks or deters the opponent's hazard removal, for example through spinblocking or blocking Defog, as a described contribution."
+  },
+  {
+    "id": "status_spreader",
+    "name_ko": "상태이상 유포",
+    "definition": "Uses status infliction to cripple opponents as a described contribution; merely having a move with a secondary chance is insufficient."
+  },
+  {
+    "id": "team_healer",
+    "name_ko": "팀 회복 지원",
+    "definition": "Heals or cures teammates, such as Wish passing or Healing Wish support; self-recovery alone does not qualify."
+  },
+  {
+    "id": "weather_setter",
+    "name_ko": "날씨 전개",
+    "definition": "Establishes weather to support a team strategy, not merely benefits from weather set by a teammate."
+  },
+  {
+    "id": "terrain_setter",
+    "name_ko": "필드 전개",
+    "definition": "Establishes terrain to support a team strategy, not merely benefits from a teammate's terrain."
+  },
+  {
+    "id": "screen_setter",
+    "name_ko": "벽 전개",
+    "definition": "Establishes Reflect, Light Screen or Aurora Veil as team support."
+  },
+  {
+    "id": "stallbreaker",
+    "name_ko": "장기전 방해",
+    "definition": "Breaks or disrupts defensive/stall strategies through explicitly described denial, disruption or sustained pressure, beyond generic damage alone."
+  },
+  {
+    "id": "phazer",
+    "name_ko": "강제 교체",
+    "definition": "Uses forced switching to displace opponents, deny setup or accumulate hazard damage as a described role."
+  },
+  {
+    "id": "hazard_denier",
+    "name_ko": "설치기 억제",
+    "definition": "Prevents or deters opposing entry-hazard setup, for example with explicitly described Magic Bounce or Taunt use; distinct from removing existing hazards or preserving allied hazards."
+  }
+]

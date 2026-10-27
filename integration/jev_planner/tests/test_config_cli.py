@@ -156,7 +156,7 @@ def test_missing_registered_ex_and_resource_declaration_block_live(tmp_path):
     record = tmp_path / 'EX-092-unregistered.md'
     record.write_text('not a registered experiment')
     cfg['evaluation']['experiment_record'] = dict(path=str(record), text=record.read_text())
-    with pytest.raises(config.ConfigurationError, match='INDEX'):
+    with pytest.raises(config.ConfigurationError, match='catalog'):
         config.validate_mode(cfg, 'live')
 
 

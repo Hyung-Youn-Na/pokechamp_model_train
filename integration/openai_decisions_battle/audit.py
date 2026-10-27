@@ -19,7 +19,11 @@ def audit(directory, events, outcome, manifest):
         client=OfficialClient(outcome['jev_actor'])
         profile=manifest.get('candidate_matchup_profile')
         require(profile in (None,'candidate-matchup-v1'),'unknown candidate matchup profile')
-        if profile:
+        action=manifest.get('input_profile')
+        require(action in (None,'candidate-action-v1'),'unknown input profile')
+        if action:
+            from integration.candidate_action import adapter as input_adapter
+        elif profile:
             from integration.candidate_matchup import adapter as input_adapter
         else:input_adapter=jev_v6
         adapter=input_adapter.Adapter(json.loads((DEFAULT_BUILD/'dex.json').read_text()))
@@ -28,7 +32,7 @@ def audit(directory, events, outcome, manifest):
                 protocols.setdefault(event['username'],[]).append(dict(event_seq=event['sequence'],protocol=event['protocol']))
             if event.get('decision'):
                 group=groups.setdefault(event['decision'],{'_attempt_history':[]})
-                transport_types={'transport','http_request','http_response','attempt_failure','provider_retry'}
+                transport_types={'transport','http_request','http_response','attempt_failure','provider_retry','response_attempt','response_retry','request_cancelled'}
                 if event['type'] in transport_types:
                     group['_attempt_history'].append(event)
                 else:
@@ -67,14 +71,17 @@ def audit(directory, events, outcome, manifest):
                     require(row['transport']['attempt']==ordinal,'retry attempt sequence differs')
                     require(row['http_request']['body']==expected and row['http_request']['raw_body']==dumps(expected),
                             'retry changed input/body')
-                    if ordinal<len(attempts):
+                    if ordinal<len(attempts) and 'response_retry' not in row:
                         failure=row.get('attempt_failure')
                         require(failure is not None and 'provider_retry' in row,'retry without failure/wait evidence')
                         status=failure.get('status_code')
                         require(failure['category']=='transport' or status in (408,429) or
                                 (isinstance(status,int) and 500<=status<=599),'nontransient error retried')
                         require(row['provider_retry']['next_attempt']==ordinal+1,'retry linkage differs')
-                if manifest.get('execution_profile') not in ('openai-decisions-v6-unlimited-v1','openai-decisions-matchup-unlimited-v1'):
+                if action:
+                    from integration.candidate_action.audit import audit_responses
+                    audit_responses(attempts,criteria,group,outcome)
+                elif manifest.get('execution_profile') not in ('openai-decisions-v6-unlimited-v1','openai-decisions-matchup-unlimited-v1'):
                     require(len(attempts)==1,'unexpected retry in historical profile')
             if 'response' in group:
                 require(response is not None and 200<=response['status_code']<300,'response without successful HTTP')

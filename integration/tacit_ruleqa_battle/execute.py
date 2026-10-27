@@ -1,4 +1,6 @@
 """Prepare, reserve, and execute one EX-108 after validated EX-107 export."""
+
+from integration.project_context.registry import freeze_document, resolve_record
 import argparse
 import asyncio
 import json
@@ -72,9 +74,9 @@ def prepare():
         limits=dict(seconds=43200,calls=20000,input_tokens=32768,turns=300,decisions=600),
         historical_construction_counts=counts,created=time.time())
     for name in ('EP-176','EX-108','D-162'):
-        paths=list((ROOT/'project_context').rglob(name+'-*.md'))
-        if len(paths)!=1:raise ValueError('ambiguous protocol registration: '+name)
-        target=RUN/'protocol'/paths[0].name;target.parent.mkdir(exist_ok=True);shutil.copy2(paths[0],target)
+        source_document = resolve_record(name, root=ROOT)
+        target = RUN / 'protocol' / source_document.name
+        freeze_document(source_document, target)
     write(RUN/'manifest.json',manifest)
     for relative in source:
         target=RUN/'source'/relative;target.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(ROOT/relative,target)

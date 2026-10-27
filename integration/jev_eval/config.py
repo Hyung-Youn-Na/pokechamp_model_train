@@ -1,4 +1,6 @@
 """Frozen model identities, input treatments and independent evaluation cohorts."""
+
+from integration.project_context.registry import record_relative
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -32,34 +34,34 @@ class Cohort:
 
 
 ORIGINAL_COHORT = Cohort('EX-086', 'EX-087', (
-    'decisions/D-135-jev-public-memory-v6.md',
-    'exec-plans/active/EP-140-jev-public-memory-v6.md',
-    'experiments/EX-086-jev27b-public-memory-v6.md',
-    'experiments/EX-087-jev9b-public-memory-v6.md',
+    record_relative('D-135'),
+    record_relative('EP-140'),
+    record_relative('EX-086'),
+    record_relative('EX-087'),
 ))
 CORRECTED_COHORT = Cohort('EX-088', 'EX-089', (
-    'decisions/D-136-jev-v6-corrected-evaluation.md',
-    'exec-plans/active/EP-141-jev-v6-corrected-evaluation.md',
-    'experiments/EX-088-jev27b-v6-corrected.md',
-    'experiments/EX-089-jev9b-v6-corrected.md',
+    record_relative('D-136'),
+    record_relative('EP-141'),
+    record_relative('EX-088'),
+    record_relative('EX-089'),
     # The new protocols explicitly adopt these preserved common conditions.
-    'experiments/EX-086-jev27b-public-memory-v6.md',
-    'experiments/EX-087-jev9b-public-memory-v6.md',
+    record_relative('EX-086'),
+    record_relative('EX-087'),
 ), ROOT / 'project_context/exec-plans/evidence/ep140/poststop-accounting', RUNS / 'EX-086')
 NO_DAMAGE_COHORT = Cohort('EX-090', None, (
-    'decisions/D-137-jev9b-no-damage.md',
-    'exec-plans/active/EP-143-jev9b-no-damage.md',
-    'experiments/EX-090-jev9b-no-damage.md',
-    'experiments/EX-089-jev9b-v6-corrected.md',
-    'experiments/EX-088-jev27b-v6-corrected.md',
-    'experiments/EX-086-jev27b-public-memory-v6.md',
-    'experiments/EX-087-jev9b-public-memory-v6.md',
+    record_relative('D-137'),
+    record_relative('EP-143'),
+    record_relative('EX-090'),
+    record_relative('EX-089'),
+    record_relative('EX-088'),
+    record_relative('EX-086'),
+    record_relative('EX-087'),
 ))
 MINICPM_COHORT = Cohort('EX-091', None, (
-    'decisions/D-138-minicpm5-2b-jev.md',
-    'exec-plans/active/EP-144-minicpm5-2b-jev.md',
-    'experiments/EX-091-minicpm5-2b-jev.md',
-    'experiments/EX-089-jev9b-v6-corrected.md',
+    record_relative('D-138'),
+    record_relative('EP-144'),
+    record_relative('EX-091'),
+    record_relative('EX-089'),
 ))
 
 

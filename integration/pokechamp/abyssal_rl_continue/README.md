@@ -9,8 +9,8 @@ D/EX가 지정된 조건·경로·재개 명령은 해당 실험의 범위로 �
 유지한다. 새 실험의 입력·출력·실행 범위는 등록된 작업에서 정한다.
 
 
-조건 원문: [EX-074](../../../project_context/experiments/EX-074-abyssal-rl-continue.md).
-작업: [EP-121](../../../project_context/exec-plans/completed/EP-121-abyssal-rl-continue.md).
+조건 원문: [EX-074](../../../project_context/research/policy-learning/experiments/EX-074-abyssal-rl-continue.md).
+작업: [EP-121](../../../project_context/research/policy-learning/plans/EP-121-abyssal-rl-continue.md).
 
 ```bash
 scripts/pokechamp-abyssal-rl-continue prepare

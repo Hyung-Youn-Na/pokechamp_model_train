@@ -1,6 +1,6 @@
 # 선봉 전용 규칙 자산
 
-[C-040](../../../project_context/CONTRACTS.md#c-040-lead-components), D-061의 선봉 전송 전용 자산이다.
+[C-040](../../../project_context/research/lead-policy/CONTRACTS.md#c-040-lead-components), D-061의 선봉 전송 전용 자산이다.
 `effects/`의 v1 자산은 수정하지 않는다. `matchup-v2.txt`는 영어 전략 원문,
 `rules-guide.txt`는 추가 필드 설명이다. 네 조합은 런타임에 기존 구조 설명과 결합하고 각 구성요소 및 결합 prompt hash를 봉인한다.
 

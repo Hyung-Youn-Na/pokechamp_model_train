@@ -1,9 +1,9 @@
 # JEV-9B 단일 Choice 평가
 
-[EX-085](../../project_context/experiments/EX-085-jev9b-single-choice.md)의 공식 JEV-9B 패키지와
+[EX-085](../../project_context/research/model-evaluation/experiments/EX-085-jev9b-single-choice.md)의 공식 JEV-9B 패키지와
 jev-choice-v4 단일 Choice를 연결한다. 기존 JEV 모델 환경·관측 생성·후보 순서·배틀 player·
 전송 원장·감사·뷰어 자산을 재사용하고 모델 identity와32층 배치만 명시 프로필로 분리한다.
-규범은 [C-066](../../project_context/CONTRACTS.md#c-066-jev9b-single-choice)이다.
+규범은 [C-066](../../project_context/research/model-evaluation/CONTRACTS.md#c-066-jev9b-single-choice)이다.
 
 ```bash
 scripts/jev9b download --workers 2

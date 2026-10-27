@@ -1,6 +1,6 @@
 # EX-060 원경기 분기 데이터
 
-[EX-060](../../../project_context/experiments/EX-060-single-battle-branch-rollouts.md)의
+[EX-060](../../../project_context/research/action-value/experiments/EX-060-single-battle-branch-rollouts.md)의
 원경기 재현·분기 수집·보고 실행기다. 기본 대상은 EX-058 battle-19 한 경기이며,
 이후 양측 정책은 canonical Abyssal이다. 실제 수집은 등록된 예산과 승인 범위 안에서만 실행한다.
 

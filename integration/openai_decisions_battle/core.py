@@ -31,6 +31,10 @@ class TransportFailure(DecisionsError):
         self.retry_after = retry_after
 
 
+class ResponseParseFailure(DecisionsError):
+    """Successful HTTP response whose body cannot be parsed as JSON."""
+
+
 def retry_after_seconds(value):
     if not value:
         return 0.0
@@ -49,8 +53,10 @@ def dumps(value):
 
 
 def to_request(payload):
-    if payload['state']['version'] != 'jev-choice-v6':
-        raise ValueError('v6 detailed input required')
+    if payload['state']['version'] not in ('jev-choice-v6', 'jev-choice-v7'):
+        raise ValueError('registered detailed input required')
+    if payload['state']['version'] == 'jev-choice-v7' and payload['state'].get('input_profile') != 'candidate-action-v1':
+        raise ValueError('v7 requires explicit candidate-action-v1')
     if set(payload) != {'state', 'questions'} or set(payload['questions']) != {'action'}:
         raise ValueError('unexpected source fields; refusing to drop information')
     question = payload['questions']['action']
@@ -127,7 +133,7 @@ def call_http(request, key, record, *, decision, request_number, client=None, at
         try:
             raw = json.loads(text)
         except ValueError:
-            raise DecisionsError('OpenAI response is not JSON') from None
+            raise ResponseParseFailure('OpenAI response is not JSON') from None
         return normalized_response(raw)
     finally:
         if owned:

@@ -415,5 +415,80 @@ class ReplayBridgeTests(unittest.TestCase):
         self.assertTrue(all(r["audit"]["mask_reason"] == "unsupported_legal_mask:unobserved_choice_lock" for r in rows))
 
 
+class OptionalPublicStateTests(unittest.TestCase):
+    """D-195 optional fields: item held/removed, sleep/toxic counters, weather start turn."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.bridge = BridgeClient(corpus())
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.bridge.close()
+
+    def state(self, events):
+        return self.bridge.snapshot(fixture()["log"] + events, sets(P1), "p1", "turn_action")
+
+    def item(self, events, slot=1):
+        return self.state(events)["opponent_team"][slot - 1]["item_state"]
+
+    def test_item_state_separates_unknown_held_and_removal_causes(self):
+        self.assertEqual(self.item(""), dict(state="unknown", item=None, cause=None))
+        healed = "|-heal|p2a: Secret Nick|94/100|[from] item: Leftovers\n"
+        state = self.state(healed)
+        # The legacy item field keeps its reveal rule; only item_state learns effect reveals.
+        self.assertIsNone(state["opponent_team"][0]["item"])
+        self.assertEqual(state["opponent_team"][0]["item_state"], dict(state="held", item="leftovers", cause=None))
+        later = healed + "".join(f"|upkeep|\n|turn|{turn}\n" for turn in range(2, 8))
+        self.assertEqual(self.item(later)["item"], "leftovers")
+        knocked = later + "|-enditem|p2a: Secret Nick|Leftovers|[from] move: Knock Off|[of] p1a: Clever Nick\n"
+        self.assertEqual(self.item(knocked), dict(state="removed", item="leftovers", cause="knockoff"))
+        balloon = "|-item|p2a: Secret Nick|Air Balloon\n"
+        self.assertEqual(self.item(balloon), dict(state="held", item="airballoon", cause=None))
+        self.assertEqual(self.item(balloon + "|-enditem|p2a: Secret Nick|Air Balloon\n"),
+                         dict(state="removed", item="airballoon", cause="popped"))
+        self.assertEqual(self.item("|-enditem|p2a: Secret Nick|Sitrus Berry|[eat]\n"),
+                         dict(state="removed", item="sitrusberry", cause="consumed"))
+        self.assertEqual(self.item("|-enditem|p2a: Secret Nick|Booster Energy\n")["cause"], "consumed")
+        self.assertEqual(self.item("|-enditem|p2a: Secret Nick|Leftovers|[silent]|[from] move: Thief|"
+                                   "[of] p1a: Clever Nick\n")["cause"], "other")
+        helmet = "|-damage|p1a: Clever Nick|80/100|[from] item: Rocky Helmet|[of] p2a: Secret Nick\n"
+        self.assertEqual(self.item(helmet)["item"], "rockyhelmet")
+        regained = knocked + "|-item|p2a: Secret Nick|Choice Scarf\n"
+        self.assertEqual(self.item(regained), dict(state="held", item="choicescarf", cause=None))
+        self.assertNotIn("item_state", self.state(healed)["own_team"][0])
+
+    def test_sleep_and_toxic_counters_follow_public_attempts_and_switches(self):
+        rest = "|move|p2a: Secret Nick|Rest|p2a: Secret Nick\n|-status|p2a: Secret Nick|slp|[from] move: Rest\n"
+        mon = self.state(rest)["opponent_team"][0]
+        self.assertEqual((mon["status"], mon["status_counter"], mon["status_source"]), ("slp", 0, "rest"))
+        # Showdown prints `cant|slp` before Sleep Talk too: one attempt, one count.
+        attempts = rest + "|upkeep|\n|turn|2\n|cant|p2a: Secret Nick|slp\n" \
+            "|move|p2a: Secret Nick|Sleep Talk|p2a: Secret Nick\n" \
+            "|move|p2a: Secret Nick|Rest||[from] move: Sleep Talk|[still]\n|upkeep|\n|turn|3\n"
+        self.assertEqual(self.state(attempts)["opponent_team"][0]["status_counter"], 1)
+        woke = attempts + "|-curestatus|p2a: Secret Nick|slp|[msg]\n"
+        mon = self.state(woke)["opponent_team"][0]
+        self.assertEqual((mon["status"], mon["status_counter"], mon["status_source"]), (None, None, None))
+        tox = "|-status|p2a: Secret Nick|tox\n|upkeep|\n|turn|2\n|-damage|p2a: Secret Nick|94/100 tox|[from] psn\n" \
+            "|upkeep|\n|turn|3\n|-damage|p2a: Secret Nick|81/100 tox|[from] psn\n"
+        self.assertEqual(self.state(tox)["opponent_team"][0]["status_counter"], 2)
+        back = tox + "|switch|p2a: Crown|Iron Crown|100/100\n|switch|p2a: Secret Nick|Iron Hands|81/100 tox\n"
+        self.assertEqual(self.state(back)["opponent_team"][0]["status_counter"], 0)
+        own = "|-status|p1a: Clever Nick|slp\n|upkeep|\n|turn|2\n|cant|p1a: Clever Nick|slp\n"
+        mon = self.state(own)["own_team"][0]
+        self.assertEqual((mon["status_counter"], mon["status_source"]), (1, None))
+        burned = self.state("|-status|p2a: Secret Nick|brn\n")["opponent_team"][0]
+        self.assertEqual((burned["status"], burned["status_counter"]), ("brn", None))
+
+    def test_weather_turn_is_start_turn_until_weather_ends(self):
+        self.assertIsNone(self.state("")["weather_turn"])
+        rain = "|-weather|RainDance|[from] ability: Drizzle|[of] p2a: Secret Nick\n|upkeep|\n|turn|2\n"
+        self.assertEqual(self.state(rain)["weather_turn"], 1)
+        kept = rain + "|-weather|RainDance|[upkeep]\n|upkeep|\n|turn|3\n"
+        self.assertEqual(self.state(kept)["weather_turn"], 1)
+        self.assertIsNone(self.state(kept + "|-weather|none\n")["weather_turn"])
+
+
 if __name__ == "__main__":
     unittest.main()

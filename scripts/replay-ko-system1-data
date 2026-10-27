@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd /workspace
+exec /workspace/pokechamp/.venv/bin/python -B -m integration.replay_ko_system1.build "$@"

@@ -1,7 +1,7 @@
 # 요청별 Gen9 상세 효과 사전
 
-[D-057](../../../project_context/decisions/D-057-effect-reference.md) /
-[C-037](../../../project_context/CONTRACTS.md#c-037-effect-reference)의 원본 자산과 전송 경계다.
+[D-057](../../../project_context/research/input-and-memory/decisions/D-057-effect-reference.md) /
+[C-037](../../../project_context/research/input-and-memory/CONTRACTS.md#c-037-effect-reference)의 원본 자산과 전송 경계다.
 `gen9-effects-v1.json`은 저장소 고정 Showdown의 Gen9 Dex `desc`를 그대로 수록한다.
 이름·설명은 영어 원문이며 요약·번역·shortDesc 대체·설명 속 다른 항목의 재귀 확장을 하지 않는다.
 출처 commit, 자산/extractor SHA-256, 항목 수는 [provenance.json](provenance.json),
@@ -50,5 +50,5 @@ D-066 이후 기본 선택은 [공식 관측 안내](../observation/README.md)�
 
 JEV v3는 별도 `../jev_effects.py`의 typed projection으로 동일 자산을 사용한다.
 후보 move.id와 요청 기술 슬롯 ID를 읽고 불리언 terastallize를 이름으로 해석하지 않는다.
-JEV 계약은 [C-045](../../../project_context/CONTRACTS.md#c-045-jev-battle),
+JEV 계약은 [C-045](../../../project_context/research/model-evaluation/CONTRACTS.md#c-045-jev-battle),
 [오프라인 검증](../../../project_context/exec-plans/evidence/ep074/report.md)을 참조한다.

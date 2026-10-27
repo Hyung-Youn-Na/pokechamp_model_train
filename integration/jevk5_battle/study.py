@@ -1,4 +1,8 @@
 """새 실험의 출처 동결·상한·분모 집계."""
+
+from integration.project_context.registry import freeze_document
+
+from integration.project_context.registry import record_relative
 import copy
 import json
 import shutil
@@ -50,11 +54,11 @@ def freeze(manifest, *, run=RUN, protocol_files=None):
     for relative in manifest['source']:
         target=run/'source'/relative;target.parent.mkdir(parents=True,exist_ok=True)
         shutil.copyfile(ROOT/relative,target)
-    for name in (protocol_files or ('exec-plans/active/EP-181-jevk5-v6-battle32.md',
-                 'experiments/EX-111-jevk5-v6-battle32.md',
-                 'decisions/D-166-jevk5-v6-battle32.md','CONTRACTS.md','RESEARCH_DESIGN.md')):
+    for name in (protocol_files or (record_relative('EP-181'),
+                 record_relative('EX-111'),
+                 record_relative('D-166'),'CONTRACTS.md','RESEARCH_DESIGN.md')):
         target=run/'protocol'/name;target.parent.mkdir(parents=True,exist_ok=True)
-        shutil.copyfile(ROOT/'project_context'/name,target)
+        freeze_document(ROOT/'project_context'/name, target)
     write_json(run/'environment.json',dict(
         branch=subprocess.check_output(['git','branch','--show-current'],cwd=ROOT,text=True).strip(),
         commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
