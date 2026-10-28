@@ -1,7 +1,8 @@
 'use strict';
-// Local Showdown server for one scenario: an imported battle whose input log replays battle-gen9ou-39 up to the start
-// of turn 2. A person types `/scenario` (any room); the server creates a fresh copy of that battle, seats the bot as p2
-// and the person as p1, so every game starts from the same turn-2 position. One game at a time.
+// Local Showdown server for one scenario: an imported battle whose input log brings a past game to a fixed turn
+// (battle39_t2: a replayed turn 1; battle38_t46: the original 45 turns plus the simulator state, see build_b38t46.py).
+// A person types `/scenario` (any room); the server creates a fresh copy of that battle, seats the bot as p2 and the
+// person as p1, so every game starts from the same position. One game at a time.
 // Same server settings as laya_play/showdown_server.cjs: --no-security, untimed, one worker, explicit bind.
 // A person who leaves the battle room for ABANDON_SECONDS loses it, like laya-play's timer rule.
 // Usage: node scenario_server.cjs <showdown-root> <port> <bind> <inputlog.json> <bot name>
@@ -14,7 +15,7 @@ if (!root || !path.isAbsolute(root) || !logPath || !botName) {
 	throw new Error('usage: scenario_server.cjs <showdown-root> <port> <bind> <inputlog.json> <bot name>');
 }
 const port = Number(portArg || 8000);
-const inputLog = JSON.parse(fs.readFileSync(logPath, 'utf8')).inputlog;
+const { inputlog: inputLog, title } = JSON.parse(fs.readFileSync(logPath, 'utf8'));
 const ABANDON_SECONDS = 300;
 if (!process.argv.includes('--no-security')) process.argv.push('--no-security');
 
@@ -53,7 +54,7 @@ function start(user) {
 	if (!room) throw new Chat.ErrorMessage('Could not create the scenario battle.');
 	games += 1;
 	awaySince = null;
-	room.add(`|html|<div class="broadcast-blue"><strong>laya scenario</strong>: battle-gen9ou-39 from turn 2 ` +
+	room.add(`|html|<div class="broadcast-blue"><strong>laya scenario</strong>: ${title} ` +
 		`(game ${games}). You are p1 (NHJ's team, reconstructed); ${botName} is p2.</div>`).update();
 	// The bot first, so the person's battle opens with someone there to answer it.
 	seat(bot, 'p2');
@@ -69,7 +70,7 @@ const install = setInterval(() => {
 			scenario(target, roomContext, user) {
 				start(user);
 			},
-			scenariohelp: [`/scenario - Start the battle-gen9ou-39 turn-2 scenario against ${botName}.`],
+			scenariohelp: [`/scenario - Start the scenario (${title}) against ${botName}.`],
 		},
 	}, 'laya-scenario');
 	log(`ready: type /scenario to play against ${botName}`);

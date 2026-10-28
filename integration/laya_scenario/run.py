@@ -1,9 +1,12 @@
-"""Play the battle-gen9ou-39 turn-2 scenario against LayaBot served as EX-130 v4t or EX-136 v5t, in a browser.
+"""Play a fixed position of an NHJ-20261028 game against LayaBot served as EX-130 v4t or EX-136 v5t, in a browser.
+
+Scenarios: `b39t2` (battle-gen9ou-39 from turn 2, Ninetales' Aurora Veil) and `b38t46` (battle-gen9ou-38 from turn 46,
+where the original bot's Gholdengo used Trick).
 
 Processes (stopped together on Ctrl-C): the scenario Showdown server (`scenario_server.cjs`, research checkout
 /workspace/pokemon-showdown), laya serving (`scripts/laya-imitation serve`), the bot (`bot.py`, battle env), and a
 static web server for the pinned Showdown client (a thread of this process; laya-play's `laya.html` page).
-In the browser: choose a name, then type `/scenario` in any chat box. The game opens at turn 2 with you as p1.
+In the browser: choose a name, then type `/scenario` in any chat box. The game opens at that turn with you as p1.
 """
 from __future__ import annotations
 import argparse
@@ -30,8 +33,7 @@ MODELS = {   # served name, checkpoint, renderer: the EX-131/137/138 battle sett
     'v4t': ('laya-v4t', RUNS / 'EX-130/checkpoints/selected', 'v4'),
     'v5t': ('laya-v5t', RUNS / 'EX-136/checkpoints/selected', 'v5'),
 }
-SCENARIO = HERE / 'battle39_t2.json'
-INPUTLOG = HERE / 'battle39_t2.inputlog.json'
+SCENARIOS = {'b39t2': 'battle39_t2', 'b38t46': 'battle38_t46'}   # <name>.json (bot side) + <name>.inputlog.json
 
 
 def wait_port(host, port, process, seconds, what):
@@ -126,6 +128,7 @@ class ClientHandler(SimpleHTTPRequestHandler):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--scenario', default='b39t2', choices=sorted(SCENARIOS))
     parser.add_argument('--model', default='v4t', choices=sorted(MODELS))
     parser.add_argument('--device', default='cuda', choices=('cuda', 'cpu'))
     parser.add_argument('--gpu', default='0', help='CUDA device index for serving')
@@ -137,6 +140,9 @@ def main(argv=None):
     parser.add_argument('--games-limit', type=int, default=0, help='bot stops after N games (0 = until Ctrl-C)')
     args = parser.parse_args(argv)
     model, checkpoint, render = MODELS[args.model]
+    name = SCENARIOS[args.scenario]
+    scenario, inputlog = HERE / (name + '.json'), HERE / (name + '.inputlog.json')
+    title = json.loads(inputlog.read_text())['title']
     if not args.no_client and not (CLIENT / 'play.pokemonshowdown.com' / 'laya.html').exists():
         raise SystemExit('web client missing at %s' % CLIENT)
 
@@ -167,7 +173,7 @@ def main(argv=None):
     try:
         print('[run] scenario Showdown on %s:%d' % (args.host, args.showdown_port), flush=True)
         server = spawn('showdown', ['node', str(HERE / 'scenario_server.cjs'), str(SHOWDOWN), str(args.showdown_port),
-                                    args.host, str(INPUTLOG), args.bot_name], dict(base), SHOWDOWN)
+                                    args.host, str(inputlog), args.bot_name], dict(base), SHOWDOWN)
         wait_port('127.0.0.1' if args.host == '0.0.0.0' else args.host, args.showdown_port, server, 120, 'Showdown')
 
         print('[run] loading %s (%s, render %s) on %s' % (model, checkpoint.parent.parent.name, render, args.device),
@@ -188,7 +194,7 @@ def main(argv=None):
               flush=True)
 
         spawn('bot', [str(BATTLE_PYTHON), str(HERE / 'bot.py'), '--port', str(args.showdown_port),
-                      '--name', args.bot_name, '--serving', str(ready), '--scenario', str(SCENARIO),
+                      '--name', args.bot_name, '--serving', str(ready), '--scenario', str(scenario),
                       '--games', str(RUNTIME / 'games'), '--games-limit', str(args.games_limit)],
               dict(base, PYTHONPATH='%s:%s' % (ROOT, ROOT / 'pokechamp'), PYTHONDONTWRITEBYTECODE='1',
                    CUDA_VISIBLE_DEVICES=''), ROOT / 'pokechamp')
@@ -198,7 +204,7 @@ def main(argv=None):
             web = ThreadingHTTPServer((args.host, args.client_port), partial(ClientHandler, directory=str(CLIENT)))
             threading.Thread(target=web.serve_forever, daemon=True).start()
             print('\n  Open  http://localhost:%d/  in a browser.' % args.client_port)
-        print('  Choose a name, then type  /scenario  in a chat box: battle-gen9ou-39 opens at turn 2,')
+        print('  Choose a name, then type  /scenario  in a chat box: %s,' % title)
         print('  you are p1 with NHJ\'s (reconstructed) team, %s plays p2 as %s.' % (args.bot_name, model))
         print('  Logs: %s, game records: %s.  Ctrl-C to stop.\n' % (logs, RUNTIME / 'games'), flush=True)
 

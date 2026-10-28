@@ -1,16 +1,22 @@
-# laya 시나리오 대전: battle-gen9ou-39 2턴부터
+# laya 시나리오 대전: NHJ-20261028 경기의 고정 국면부터
 
-NHJ-20261028 39번 경기(laya-play v1.1 봇 승)를 1턴이 끝난 국면에서 다시 시작해, 사람이 p1(NHJ 팀)으로 LayaBot v4t(EX-130) 또는 v5t(EX-136)를 상대한다.
+NHJ-20261028 경기를 원래 국면에서 다시 시작해, 사람이 p1(NHJ 팀)으로 LayaBot v4t(EX-130) 또는 v5t(EX-136)를 상대한다.
 
-- 1턴: NHJ Dragapult 리드 → U-turn(Ninetales 299/322) → Slowking-Galar 등장, 봇 Ninetales-Alola 리드 → Aurora Veil, 눈 날씨.
-- 사람이 `/scenario`를 칠 때마다 같은 2턴 국면의 새 판이 만들어진다. 한 번에 한 판이다.
+| `--scenario` | 국면 | 만드는 방법 |
+|---|---|---|
+| `b39t2`(기본) | 39번 2턴. 1턴: NHJ Dragapult U-turn(Ninetales 299/322) → Slowking-Galar, 봇 Ninetales-Alola Aurora Veil, 눈 | 1턴이 원본과 같아지는 seed를 찾아 그대로 진행(`seed_search.cjs`) |
+| `b38t46` | 38번 46턴. 봇 Gholdengo(299/315) 대 NHJ Zamazenta(방어 +2). 원래 v1.1은 여기서 Trick(둘 다 Leftovers) | 시작만 진행한 뒤 `>eval` 하나로 1~45턴 로그와 46턴 직전 상태를 넣는다(`build_b38t46.py`) |
+
+- 사람이 `/scenario`를 칠 때마다 같은 국면의 새 판이 만들어진다. 한 번에 한 판이다.
+- `b38t46`은 클라이언트가 45턴 기록을 애니메이션으로 재생하므로, 들어가면 **⏭ Skip to end**를 한 번 누른다.
 - 봇의 판단 경로는 laya-play·EX-131/137과 같다(공식 클라이언트 스냅샷 → Metamon → 렌더러 v4/v5 → argmax).
 
 ## 실행
 
 ```bash
 cd /workspace
-pokechamp/.venv/bin/python integration/laya_scenario/run.py --model v4t --host 0.0.0.0   # 또는 --model v5t
+pokechamp/.venv/bin/python integration/laya_scenario/run.py --scenario b38t46 --model v4t --host 0.0.0.0
+# --scenario b39t2|b38t46, --model v4t|v5t
 ```
 
 - 옵션: `--device cpu`(결정당 약 1초), `--gpu N`, `--showdown-port 8000`, `--client-port 8080`, `--bot-name LayaBot`
@@ -23,19 +29,21 @@ pokechamp/.venv/bin/python integration/laya_scenario/run.py --model v4t --host 0
 
 | 파일 | 역할 |
 |---|---|
-| `nhj39_team.txt` | NHJ 팀 재구성(아래 가정) |
+| `nhj39_team.txt`, `nhj38_team.txt` | NHJ 팀 재구성(아래 가정). 두 판은 성별만 다르다 |
 | `battle39_t2.json` | 두 팀, 팀 순서와 1턴 선택, 원래 1턴 로그(봇 시점), 봇 프리뷰 슬롯 |
 | `seed_search.cjs` | 1턴 봇 시점 로그가 원본과 같아지는 PRNG seed를 찾아 입력 로그를 만든다 |
 | `battle39_t2.inputlog.json` | 찾은 seed(`sodium,d1a5edd9…`)와 2턴 직전까지의 입력 로그 |
+| `build_b38t46.py` | 38번 46턴: 원래 봇 46턴 요청(봇 쪽 HP·PP·아이템·순서)과 봇 입력(NHJ 쪽 %·상태·랭크·테라 사용·스텔스록)으로 `battle38_t46.json`, `.inputlog.json`을 만든다 |
+| `replay_inputlog.cjs` | 입력 로그를 시뮬레이터에 넣고 한쪽이 받는 로그와 마지막 요청을 출력한다(검증용) |
 | `scenario_server.cjs` | 고정 Showdown(e64915c0e) 실행, `/scenario` 명령, 입력 로그 import, 봇 p2·사람 p1 좌석 배정 |
 | `bot.py` | laya-play 봇에서 도전 수락만 뺀 것. 1턴 뒤에 앉으므로 원래 경기의 프리뷰 슬롯을 고정하고, 좌석 배정 때 오는 `|N|`과 빈 `|player|` 줄을 무시한다 |
 | `run.py` | 서버, 서빙(`scripts/laya-imitation serve`), 봇, 웹 클라이언트(laya-play `laya.html`, `.artifacts/laya-scenario/showdown-client`)를 함께 띄운다 |
 
 ## 확인한 것
 
-- 시뮬레이터에서 봇 시점 로그가 2턴 시작까지 원본과 같다(차이는 아바타 표시뿐).
-- 실제 서버에서 봇의 2턴 모델 입력 `input_sha256`이 원래 39번 경기 2턴 입력과 같다.
-- 스크립트 사람으로 재접속, 8턴 진행, 기권까지 한 판이 정상 종료로 기록됐다.
+- `b39t2`: 시뮬레이터에서 봇 시점 로그가 2턴 시작까지 원본과 같다(차이는 아바타 표시뿐). 실제 서버에서 봇의 2턴 모델 입력 `input_sha256`이 원래 39번 경기 2턴 입력과 같다. 스크립트 사람으로 재접속, 8턴 진행, 기권까지 한 판이 정상 종료로 기록됐다.
+- `b38t46`: 시뮬레이터가 만든 봇 46턴 요청이 원래 요청과 같고(rqid 제외), 봇이 받는 1~46턴 로그가 원본과 줄 단위로 같다. 사람 쪽에는 봇의 정확한 HP가 보이지 않는다(`|split|p2`). 실제 서버에서 봇의 46턴 모델 입력 `input_sha256`이 원래 38번 경기 46턴 입력(`35fd240c…`)과 같다.
+- `b38t46`의 NHJ 쪽 내부 값 중 HP는 봇이 본 %에 맞는 가장 작은 값, PP는 로그의 기술 사용(봇 Kyurem의 Pressure 포함)으로 정했다. 랭크·상태·아이템·테라 사용·Dauntless Shield 사용·Zamazenta의 직전 기술(Iron Defense)은 원본을 따른다.
 
 ## NHJ 팀 가정
 
