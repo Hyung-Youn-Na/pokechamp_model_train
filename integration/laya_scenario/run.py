@@ -1,7 +1,8 @@
 """Play a fixed position of an NHJ-20261028 game against LayaBot served as EX-130 v4t or EX-136 v5t, in a browser.
 
-Scenarios: `b39t2` (battle-gen9ou-39 from turn 2, Ninetales' Aurora Veil) and `b38t46` (battle-gen9ou-38 from turn 46,
-where the original bot's Gholdengo used Trick).
+Scenarios: `b39t2` (battle-gen9ou-39 from turn 2, Ninetales' Aurora Veil), `b38t46` (battle-gen9ou-38 from turn 46,
+where the original bot's Gholdengo used Trick) and `b34t15` (battle-gen9ou-34 from turn 15, where the original bot's
+Ting-Lu first used Whirlwind on the Good as Gold Gholdengo).
 
 Processes (stopped together on Ctrl-C): the scenario Showdown server (`scenario_server.cjs`, research checkout
 /workspace/pokemon-showdown), laya serving (`scripts/laya-imitation serve`), the bot (`bot.py`, battle env), and a
@@ -33,7 +34,7 @@ MODELS = {   # served name, checkpoint, renderer: the EX-131/137/138 battle sett
     'v4t': ('laya-v4t', RUNS / 'EX-130/checkpoints/selected', 'v4'),
     'v5t': ('laya-v5t', RUNS / 'EX-136/checkpoints/selected', 'v5'),
 }
-SCENARIOS = {'b39t2': 'battle39_t2', 'b38t46': 'battle38_t46'}   # <name>.json (bot side) + <name>.inputlog.json
+SCENARIOS = {'b39t2': 'battle39_t2', 'b38t46': 'battle38_t46', 'b34t15': 'battle34_t15'}   # <stem>.json, .inputlog.json
 
 
 def wait_port(host, port, process, seconds, what):

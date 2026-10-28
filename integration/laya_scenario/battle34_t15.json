@@ -1,0 +1,626 @@
+{
+ "format": "gen9ou",
+ "title": "battle-gen9ou-34 from turn 15 (Ting-Lu vs Good as Gold Gholdengo)",
+ "players": {
+  "p1": {
+   "name": "NHJ",
+   "team": "Dragapult||ChoiceSpecs|Infiltrator|DracoMeteor,ShadowBall,Flamethrower,Uturn|Timid|4,,,252,,252|F|,0,,,,|||,,,,,Ghost]Gholdengo||AirBalloon|GoodasGold|NastyPlot,MakeItRain,ShadowBall,Recover|Timid|4,,,252,,252||,0,,,,|||,,,,,Fairy]Great Tusk||HeavyDutyBoots|Protosynthesis|RapidSpin,StealthRock,HeadlongRush,KnockOff|Jolly|252,4,,,,252|||||,,,,,Steel]Kingambit||Leftovers|SupremeOverlord|SwordsDance,KowtowCleave,IronHead,SuckerPunch|Adamant|252,252,,,4,|F||||,,,,,Dark]Rillaboom||AssaultVest|GrassySurge|WoodHammer,GrassyGlide,KnockOff,Uturn|Adamant|252,252,,,4,|M||||,,,,,Grass]Primarina||Leftovers|Torrent|CalmMind,Moonblast,Surf,DrainingKiss|Bold|252,,252,4,,|F|,0,,,,|||,,,,,Poison"
+  },
+  "p2": {
+   "name": "LayaBot",
+   "team": "Corviknight||RockyHelmet|Pressure|BraveBird,Uturn,Roost,Defog|Impish|248,,252,,8,|M||||,,,,,Water]Dragonite||HeavyDutyBoots|Multiscale|DragonDance,Roost,Earthquake,ExtremeSpeed|Adamant|,252,,,4,252|M||||,,,,,Normal]Dragapult||HeavyDutyBoots|ClearBody|WillOWisp,Hex,Uturn,QuickAttack|Timid|,,,252,4,252|M||||,,,,,Ghost]Ting-Lu||Leftovers|VesselofRuin|Earthquake,Whirlwind,Taunt,StealthRock|Careful|252,,4,,252,|N||||,,,,,Poison]Raging Bolt||BoosterEnergy|Protosynthesis|DracoMeteor,VoltSwitch,CalmMind,Thunderclap|Modest|,,4,252,,252|N||||,Fighting,,,,Bug]Slowking|SlowkingGalar|BlackSludge|Regenerator|ThunderWave,ChillyReception,ToxicSpikes,FutureSight|Calm|252,,,4,252,|M||||,,,,,Poison"
+  }
+ },
+ "choices": [
+  [
+   "p1",
+   "team 123456"
+  ],
+  [
+   "p2",
+   "team 312456"
+  ]
+ ],
+ "p2_slots": {
+  "p2: Corviknight": 1,
+  "p2: Dragonite": 2,
+  "p2: Dragapult": 3,
+  "p2: Ting-Lu": 4,
+  "p2: Raging Bolt": 5,
+  "p2: Slowking": 6
+ },
+ "opening": [
+  "|init|battle",
+  "|title|NHJ vs. LayaBot",
+  "",
+  "",
+  "|t:|1793111092",
+  "|gametype|singles",
+  "|player|p1|NHJ|102|",
+  "|player|p2|LayaBot|gentleman|",
+  "|teamsize|p1|6",
+  "|teamsize|p2|6",
+  "|gen|9",
+  "|tier|Gen 9 OU",
+  "|rule|HP Percentage Mod: HP is shown in percentages",
+  "|rule|Endless Battle Clause: Forcing endless battles is banned",
+  "|rule|Species Clause: Limit one of each Pokémon",
+  "|rule|OHKO Clause: OHKO moves are banned",
+  "|rule|Evasion Items Clause: Evasion items are banned",
+  "|rule|Evasion Moves Clause: Evasion moves are banned",
+  "|rule|Evasion Abilities Clause: Evasion abilities are banned",
+  "|rule|Sleep Moves Clause: Sleep-inducing moves are banned",
+  "|clearpoke",
+  "|poke|p1|Dragapult, F|",
+  "|poke|p1|Gholdengo|",
+  "|poke|p1|Great Tusk|",
+  "|poke|p1|Kingambit, F|",
+  "|poke|p1|Rillaboom, M|",
+  "|poke|p1|Primarina, F|",
+  "|poke|p2|Corviknight, M|",
+  "|poke|p2|Dragonite, M|",
+  "|poke|p2|Dragapult, M|",
+  "|poke|p2|Ting-Lu|",
+  "|poke|p2|Raging Bolt|",
+  "|poke|p2|Slowking-Galar, M|",
+  "|teampreview",
+  "|request|{\"teamPreview\":true,\"side\":{\"name\":\"LayaBot\",\"id\":\"p2\",\"pokemon\":[{\"ident\":\"p2: Corviknight\",\"details\":\"Corviknight, M\",\"condition\":\"399/399\",\"active\":true,\"stats\":{\"atk\":210,\"def\":339,\"spa\":127,\"spd\":208,\"spe\":170},\"moves\":[\"bravebird\",\"uturn\",\"roost\",\"defog\"],\"baseAbility\":\"pressure\",\"item\":\"rockyhelmet\",\"pokeball\":\"pokeball\",\"ability\":\"pressure\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Water\",\"terastallized\":\"\"},{\"ident\":\"p2: Dragonite\",\"details\":\"Dragonite, M\",\"condition\":\"323/323\",\"active\":false,\"stats\":{\"atk\":403,\"def\":226,\"spa\":212,\"spd\":237,\"spe\":259},\"moves\":[\"dragondance\",\"roost\",\"earthquake\",\"extremespeed\"],\"baseAbility\":\"multiscale\",\"item\":\"heavydutyboots\",\"pokeball\":\"pokeball\",\"ability\":\"multiscale\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Normal\",\"terastallized\":\"\"},{\"ident\":\"p2: Dragapult\",\"details\":\"Dragapult, M\",\"condition\":\"317/317\",\"active\":false,\"stats\":{\"atk\":248,\"def\":186,\"spa\":299,\"spd\":187,\"spe\":421},\"moves\":[\"willowisp\",\"hex\",\"uturn\",\"quickattack\"],\"baseAbility\":\"clearbody\",\"item\":\"heavydutyboots\",\"pokeball\":\"pokeball\",\"ability\":\"clearbody\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Ghost\",\"terastallized\":\"\"},{\"ident\":\"p2: Ting-Lu\",\"details\":\"Ting-Lu\",\"condition\":\"514/514\",\"active\":false,\"stats\":{\"atk\":256,\"def\":287,\"spa\":131,\"spd\":284,\"spe\":126},\"moves\":[\"earthquake\",\"whirlwind\",\"taunt\",\"stealthrock\"],\"baseAbility\":\"vesselofruin\",\"item\":\"leftovers\",\"pokeball\":\"pokeball\",\"ability\":\"vesselofruin\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Poison\",\"terastallized\":\"\"},{\"ident\":\"p2: Raging Bolt\",\"details\":\"Raging Bolt\",\"condition\":\"391/391\",\"active\":false,\"stats\":{\"atk\":163,\"def\":219,\"spa\":410,\"spd\":214,\"spe\":249},\"moves\":[\"dracometeor\",\"voltswitch\",\"calmmind\",\"thunderclap\"],\"baseAbility\":\"protosynthesis\",\"item\":\"boosterenergy\",\"pokeball\":\"pokeball\",\"ability\":\"protosynthesis\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Bug\",\"terastallized\":\"\"},{\"ident\":\"p2: Slowking\",\"details\":\"Slowking-Galar, M\",\"condition\":\"394/394\",\"active\":false,\"stats\":{\"atk\":149,\"def\":196,\"spa\":257,\"spd\":350,\"spe\":96},\"moves\":[\"thunderwave\",\"chillyreception\",\"toxicspikes\",\"futuresight\"],\"baseAbility\":\"regenerator\",\"item\":\"blacksludge\",\"pokeball\":\"pokeball\",\"ability\":\"regenerator\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Poison\",\"terastallized\":\"\"}]},\"rqid\":3}",
+  "|",
+  "|t:|1793111166",
+  "|start",
+  "|switch|p1a: Dragapult|Dragapult, F|100/100",
+  "|switch|p2a: Dragapult|Dragapult, M|317/317",
+  "|turn|1"
+ ],
+ "request": {
+  "active": [
+   {
+    "moves": [
+     {
+      "move": "Earthquake",
+      "id": "earthquake",
+      "pp": 14,
+      "maxpp": 16,
+      "target": "allAdjacent",
+      "disabled": false
+     },
+     {
+      "move": "Whirlwind",
+      "id": "whirlwind",
+      "pp": 31,
+      "maxpp": 32,
+      "target": "normal",
+      "disabled": false
+     },
+     {
+      "move": "Taunt",
+      "id": "taunt",
+      "pp": 32,
+      "maxpp": 32,
+      "target": "normal",
+      "disabled": false
+     },
+     {
+      "move": "Stealth Rock",
+      "id": "stealthrock",
+      "pp": 31,
+      "maxpp": 32,
+      "target": "foeSide",
+      "disabled": false
+     }
+    ],
+    "canTerastallize": "Poison"
+   }
+  ],
+  "side": {
+   "name": "LayaBot",
+   "id": "p2",
+   "pokemon": [
+    {
+     "ident": "p2: Ting-Lu",
+     "details": "Ting-Lu",
+     "condition": "467/514",
+     "active": true,
+     "stats": {
+      "atk": 256,
+      "def": 287,
+      "spa": 131,
+      "spd": 284,
+      "spe": 126
+     },
+     "moves": [
+      "earthquake",
+      "whirlwind",
+      "taunt",
+      "stealthrock"
+     ],
+     "baseAbility": "vesselofruin",
+     "item": "leftovers",
+     "pokeball": "pokeball",
+     "ability": "vesselofruin",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Poison",
+     "terastallized": ""
+    },
+    {
+     "ident": "p2: Slowking",
+     "details": "Slowking-Galar, M",
+     "condition": "394/394",
+     "active": false,
+     "stats": {
+      "atk": 149,
+      "def": 196,
+      "spa": 257,
+      "spd": 350,
+      "spe": 96
+     },
+     "moves": [
+      "thunderwave",
+      "chillyreception",
+      "toxicspikes",
+      "futuresight"
+     ],
+     "baseAbility": "regenerator",
+     "item": "blacksludge",
+     "pokeball": "pokeball",
+     "ability": "regenerator",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Poison",
+     "terastallized": ""
+    },
+    {
+     "ident": "p2: Dragonite",
+     "details": "Dragonite, M",
+     "condition": "323/323",
+     "active": false,
+     "stats": {
+      "atk": 403,
+      "def": 226,
+      "spa": 212,
+      "spd": 237,
+      "spe": 259
+     },
+     "moves": [
+      "dragondance",
+      "roost",
+      "earthquake",
+      "extremespeed"
+     ],
+     "baseAbility": "multiscale",
+     "item": "heavydutyboots",
+     "pokeball": "pokeball",
+     "ability": "multiscale",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Normal",
+     "terastallized": ""
+    },
+    {
+     "ident": "p2: Dragapult",
+     "details": "Dragapult, M",
+     "condition": "317/317",
+     "active": false,
+     "stats": {
+      "atk": 248,
+      "def": 186,
+      "spa": 299,
+      "spd": 187,
+      "spe": 421
+     },
+     "moves": [
+      "willowisp",
+      "hex",
+      "uturn",
+      "quickattack"
+     ],
+     "baseAbility": "clearbody",
+     "item": "heavydutyboots",
+     "pokeball": "pokeball",
+     "ability": "clearbody",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Ghost",
+     "terastallized": ""
+    },
+    {
+     "ident": "p2: Raging Bolt",
+     "details": "Raging Bolt",
+     "condition": "391/391",
+     "active": false,
+     "stats": {
+      "atk": 163,
+      "def": 219,
+      "spa": 410,
+      "spd": 214,
+      "spe": 249
+     },
+     "moves": [
+      "dracometeor",
+      "voltswitch",
+      "calmmind",
+      "thunderclap"
+     ],
+     "baseAbility": "protosynthesis",
+     "item": "boosterenergy",
+     "pokeball": "pokeball",
+     "ability": "protosynthesis",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Bug",
+     "terastallized": ""
+    },
+    {
+     "ident": "p2: Corviknight",
+     "details": "Corviknight, M",
+     "condition": "399/399",
+     "active": false,
+     "stats": {
+      "atk": 210,
+      "def": 339,
+      "spa": 127,
+      "spd": 208,
+      "spe": 170
+     },
+     "moves": [
+      "bravebird",
+      "uturn",
+      "roost",
+      "defog"
+     ],
+     "baseAbility": "pressure",
+     "item": "",
+     "pokeball": "pokeball",
+     "ability": "pressure",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Water",
+     "terastallized": ""
+    }
+   ]
+  },
+  "rqid": 35
+ },
+ "state": {
+  "turn": 15,
+  "history": [
+   "|",
+   "|split|p2",
+   "|switch|p2a: Ting-Lu|Ting-Lu|514/514",
+   "|switch|p2a: Ting-Lu|Ting-Lu|100/100",
+   "|-ability|p2a: Ting-Lu|Vessel of Ruin",
+   "|switch|p1a: Kingambit|Kingambit, F|100/100",
+   "|",
+   "|upkeep",
+   "|turn|2",
+   "|",
+   "|move|p1a: Kingambit|Swords Dance|p1a: Kingambit",
+   "|-boost|p1a: Kingambit|atk|2",
+   "|move|p2a: Ting-Lu|Stealth Rock|p1a: Kingambit",
+   "|-sidestart|p1: NHJ|move: Stealth Rock",
+   "|",
+   "|upkeep",
+   "|turn|3",
+   "|",
+   "|move|p1a: Kingambit|Kowtow Cleave|p2a: Ting-Lu",
+   "|-resisted|p2a: Ting-Lu",
+   "|split|p2",
+   "|-damage|p2a: Ting-Lu|378/514",
+   "|-damage|p2a: Ting-Lu|74/100",
+   "|move|p2a: Ting-Lu|Whirlwind|p1a: Kingambit",
+   "|-end|p1a: Kingambit|fallenundefined|[silent]",
+   "|drag|p1a: Dragapult|Dragapult, F|100/100",
+   "|-damage|p1a: Dragapult|88/100|[from] Stealth Rock",
+   "|",
+   "|split|p2",
+   "|-heal|p2a: Ting-Lu|410/514|[from] item: Leftovers",
+   "|-heal|p2a: Ting-Lu|80/100|[from] item: Leftovers",
+   "|upkeep",
+   "|turn|4",
+   "|",
+   "|split|p2",
+   "|switch|p2a: Slowking|Slowking-Galar, M|394/394",
+   "|switch|p2a: Slowking|Slowking-Galar, M|100/100",
+   "|move|p1a: Dragapult|Draco Meteor|p2a: Slowking|[miss]",
+   "|-miss|p1a: Dragapult|p2a: Slowking",
+   "|",
+   "|upkeep",
+   "|turn|5",
+   "|",
+   "|switch|p1a: Great Tusk|Great Tusk|100/100",
+   "|move|p2a: Slowking|Toxic Spikes|p1a: Great Tusk",
+   "|-sidestart|p1: NHJ|move: Toxic Spikes",
+   "|",
+   "|upkeep",
+   "|turn|6",
+   "|",
+   "|split|p2",
+   "|switch|p2a: Corviknight|Corviknight, M|399/399",
+   "|switch|p2a: Corviknight|Corviknight, M|100/100",
+   "|-ability|p2a: Corviknight|Pressure",
+   "|move|p1a: Great Tusk|Rapid Spin|p2a: Corviknight",
+   "|-resisted|p2a: Corviknight",
+   "|split|p2",
+   "|-damage|p2a: Corviknight|380/399",
+   "|-damage|p2a: Corviknight|96/100",
+   "|-boost|p1a: Great Tusk|spe|1",
+   "|-damage|p1a: Great Tusk|84/100|[from] item: Rocky Helmet|[of] p2a: Corviknight",
+   "|-sideend|p1: NHJ|Toxic Spikes|[from] move: Rapid Spin|[of] p1a: Great Tusk",
+   "|-sideend|p1: NHJ|Stealth Rock|[from] move: Rapid Spin|[of] p1a: Great Tusk",
+   "|",
+   "|upkeep",
+   "|turn|7",
+   "|",
+   "|move|p1a: Great Tusk|Stealth Rock|p2a: Corviknight",
+   "|-sidestart|p2: LayaBot|move: Stealth Rock",
+   "|move|p2a: Corviknight|Brave Bird|p1a: Great Tusk",
+   "|-supereffective|p1a: Great Tusk",
+   "|-damage|p1a: Great Tusk|46/100",
+   "|split|p2",
+   "|-damage|p2a: Corviknight|326/399|[from] Recoil",
+   "|-damage|p2a: Corviknight|82/100|[from] Recoil",
+   "|",
+   "|upkeep",
+   "|turn|8",
+   "|",
+   "|-end|p1a: Great Tusk|Protosynthesis|[silent]",
+   "|switch|p1a: Kingambit|Kingambit, F|100/100",
+   "|move|p2a: Corviknight|Defog|p1a: Kingambit",
+   "|-unboost|p1a: Kingambit|evasion|1",
+   "|-sideend|p2: LayaBot|Stealth Rock|[from] move: Defog|[of] p2a: Corviknight",
+   "|",
+   "|upkeep",
+   "|turn|9",
+   "|",
+   "|split|p2",
+   "|switch|p2a: Ting-Lu|Ting-Lu|410/514",
+   "|switch|p2a: Ting-Lu|Ting-Lu|80/100",
+   "|-ability|p2a: Ting-Lu|Vessel of Ruin",
+   "|move|p1a: Kingambit|Swords Dance|p1a: Kingambit",
+   "|-boost|p1a: Kingambit|atk|2",
+   "|",
+   "|split|p2",
+   "|-heal|p2a: Ting-Lu|442/514|[from] item: Leftovers",
+   "|-heal|p2a: Ting-Lu|86/100|[from] item: Leftovers",
+   "|upkeep",
+   "|turn|10",
+   "|",
+   "|move|p1a: Kingambit|Kowtow Cleave|p2a: Ting-Lu",
+   "|-resisted|p2a: Ting-Lu",
+   "|split|p2",
+   "|-damage|p2a: Ting-Lu|307/514",
+   "|-damage|p2a: Ting-Lu|60/100",
+   "|move|p2a: Ting-Lu|Earthquake|p1a: Kingambit",
+   "|-supereffective|p1a: Kingambit",
+   "|-damage|p1a: Kingambit|47/100",
+   "|",
+   "|-heal|p1a: Kingambit|53/100|[from] item: Leftovers",
+   "|split|p2",
+   "|-heal|p2a: Ting-Lu|339/514|[from] item: Leftovers",
+   "|-heal|p2a: Ting-Lu|66/100|[from] item: Leftovers",
+   "|upkeep",
+   "|turn|11",
+   "|",
+   "|-end|p1a: Kingambit|fallenundefined|[silent]",
+   "|switch|p1a: Rillaboom|Rillaboom, M|100/100",
+   "|-fieldstart|move: Grassy Terrain|[from] ability: Grassy Surge|[of] p1a: Rillaboom",
+   "|move|p2a: Ting-Lu|Earthquake|p1a: Rillaboom",
+   "|-resisted|p1a: Rillaboom",
+   "|-damage|p1a: Rillaboom|91/100",
+   "|",
+   "|-heal|p1a: Rillaboom|97/100|[from] Grassy Terrain",
+   "|split|p2",
+   "|-heal|p2a: Ting-Lu|371/514|[from] Grassy Terrain",
+   "|-heal|p2a: Ting-Lu|73/100|[from] Grassy Terrain",
+   "|split|p2",
+   "|-heal|p2a: Ting-Lu|403/514|[from] item: Leftovers",
+   "|-heal|p2a: Ting-Lu|79/100|[from] item: Leftovers",
+   "|upkeep",
+   "|turn|12",
+   "|",
+   "|split|p2",
+   "|switch|p2a: Corviknight|Corviknight, M|326/399",
+   "|switch|p2a: Corviknight|Corviknight, M|82/100",
+   "|-ability|p2a: Corviknight|Pressure",
+   "|move|p1a: Rillaboom|Knock Off|p2a: Corviknight",
+   "|split|p2",
+   "|-damage|p2a: Corviknight|233/399",
+   "|-damage|p2a: Corviknight|59/100",
+   "|-damage|p1a: Rillaboom|81/100|[from] item: Rocky Helmet|[of] p2a: Corviknight",
+   "|-enditem|p2a: Corviknight|Rocky Helmet|[from] move: Knock Off|[of] p1a: Rillaboom",
+   "|",
+   "|-heal|p1a: Rillaboom|87/100|[from] Grassy Terrain",
+   "|upkeep",
+   "|turn|13",
+   "|",
+   "|move|p1a: Rillaboom|U-turn|p2a: Corviknight",
+   "|-resisted|p2a: Corviknight",
+   "|split|p2",
+   "|-damage|p2a: Corviknight|218/399",
+   "|-damage|p2a: Corviknight|55/100",
+   "|",
+   "|switch|p1a: Gholdengo|Gholdengo|100/100|[from] U-turn",
+   "|-item|p1a: Gholdengo|Air Balloon",
+   "|move|p2a: Corviknight|Roost|p2a: Corviknight",
+   "|split|p2",
+   "|-heal|p2a: Corviknight|399/399",
+   "|-heal|p2a: Corviknight|100/100",
+   "|-singleturn|p2a: Corviknight|move: Roost",
+   "|",
+   "|upkeep",
+   "|turn|14",
+   "|",
+   "|split|p2",
+   "|switch|p2a: Ting-Lu|Ting-Lu|403/514",
+   "|switch|p2a: Ting-Lu|Ting-Lu|79/100",
+   "|-ability|p2a: Ting-Lu|Vessel of Ruin",
+   "|move|p1a: Gholdengo|Nasty Plot|p1a: Gholdengo",
+   "|-boost|p1a: Gholdengo|spa|2",
+   "|",
+   "|split|p2",
+   "|-heal|p2a: Ting-Lu|435/514|[from] Grassy Terrain",
+   "|-heal|p2a: Ting-Lu|85/100|[from] Grassy Terrain",
+   "|split|p2",
+   "|-heal|p2a: Ting-Lu|467/514|[from] item: Leftovers",
+   "|-heal|p2a: Ting-Lu|91/100|[from] item: Leftovers",
+   "|upkeep"
+  ],
+  "field": {
+   "terrain": {
+    "id": "grassyterrain",
+    "duration": 1
+   }
+  },
+  "p1": {
+   "order": [
+    "Gholdengo",
+    "Rillaboom",
+    "Dragapult",
+    "Great Tusk",
+    "Kingambit",
+    "Primarina"
+   ],
+   "mons": [
+    {
+     "species": "Dragapult",
+     "fainted": false,
+     "status": "",
+     "boosts": {},
+     "used": {
+      "dracometeor": 1
+     },
+     "pct": 88.0
+    },
+    {
+     "species": "Gholdengo",
+     "fainted": false,
+     "status": "",
+     "boosts": {
+      "spa": 2
+     },
+     "used": {
+      "nastyplot": 1
+     },
+     "pct": 100.0,
+     "hp": "max",
+     "item": "airballoon",
+     "lastMove": "nastyplot"
+    },
+    {
+     "species": "Great Tusk",
+     "fainted": false,
+     "status": "",
+     "boosts": {},
+     "used": {
+      "rapidspin": 2,
+      "stealthrock": 2
+     },
+     "pct": 46.0
+    },
+    {
+     "species": "Kingambit",
+     "fainted": false,
+     "status": "",
+     "boosts": {},
+     "used": {
+      "swordsdance": 2,
+      "kowtowcleave": 2
+     },
+     "pct": 53.0,
+     "item": "leftovers"
+    },
+    {
+     "species": "Rillaboom",
+     "fainted": false,
+     "status": "",
+     "boosts": {},
+     "used": {
+      "knockoff": 2,
+      "uturn": 2
+     },
+     "pct": 87.0
+    },
+    {
+     "species": "Primarina",
+     "fainted": false,
+     "status": "",
+     "boosts": {},
+     "used": {},
+     "pct": null,
+     "hp": "max"
+    }
+   ],
+   "canTera": true,
+   "sideConditions": []
+  },
+  "p2": {
+   "order": [
+    "Ting-Lu",
+    "Slowking-Galar",
+    "Dragonite",
+    "Dragapult",
+    "Raging Bolt",
+    "Corviknight"
+   ],
+   "mons": [
+    {
+     "species": "Ting-Lu",
+     "fainted": false,
+     "hp": 467,
+     "status": "",
+     "item": "leftovers",
+     "pp": {
+      "earthquake": 14,
+      "whirlwind": 31,
+      "taunt": 32,
+      "stealthrock": 31
+     },
+     "boosts": {}
+    },
+    {
+     "species": "Slowking-Galar",
+     "fainted": false,
+     "hp": 394,
+     "status": "",
+     "item": "blacksludge",
+     "pp": null
+    },
+    {
+     "species": "Dragonite",
+     "fainted": false,
+     "hp": 323,
+     "status": "",
+     "item": "heavydutyboots",
+     "pp": null
+    },
+    {
+     "species": "Dragapult",
+     "fainted": false,
+     "hp": 317,
+     "status": "",
+     "item": "heavydutyboots",
+     "pp": null
+    },
+    {
+     "species": "Raging Bolt",
+     "fainted": false,
+     "hp": 391,
+     "status": "",
+     "item": "boosterenergy",
+     "pp": null
+    },
+    {
+     "species": "Corviknight",
+     "fainted": false,
+     "hp": 399,
+     "status": "",
+     "item": "",
+     "pp": null
+    }
+   ],
+   "canTera": true,
+   "sideConditions": []
+  }
+ }
+}

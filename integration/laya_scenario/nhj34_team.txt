@@ -1,0 +1,62 @@
+Dragapult (F) @ Choice Specs
+Ability: Infiltrator
+Tera Type: Ghost
+EVs: 4 HP / 252 SpA / 252 Spe
+Timid Nature
+IVs: 0 Atk
+- Draco Meteor
+- Shadow Ball
+- Flamethrower
+- U-turn
+
+Gholdengo @ Air Balloon
+Ability: Good as Gold
+Tera Type: Fairy
+EVs: 4 HP / 252 SpA / 252 Spe
+Timid Nature
+IVs: 0 Atk
+- Nasty Plot
+- Make It Rain
+- Shadow Ball
+- Recover
+
+Great Tusk @ Heavy-Duty Boots
+Ability: Protosynthesis
+Tera Type: Steel
+EVs: 252 HP / 4 Atk / 252 Spe
+Jolly Nature
+- Rapid Spin
+- Stealth Rock
+- Headlong Rush
+- Knock Off
+
+Kingambit (F) @ Leftovers
+Ability: Supreme Overlord
+Tera Type: Dark
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Swords Dance
+- Kowtow Cleave
+- Iron Head
+- Sucker Punch
+
+Rillaboom (M) @ Assault Vest
+Ability: Grassy Surge
+Tera Type: Grass
+EVs: 252 HP / 252 Atk / 4 SpD
+Adamant Nature
+- Wood Hammer
+- Grassy Glide
+- Knock Off
+- U-turn
+
+Primarina (F) @ Leftovers
+Ability: Torrent
+Tera Type: Poison
+EVs: 252 HP / 252 Def / 4 SpA
+Bold Nature
+IVs: 0 Atk
+- Calm Mind
+- Moonblast
+- Surf
+- Draining Kiss

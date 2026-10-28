@@ -879,6 +879,7 @@
    "|-heal|p2a: Gholdengo|95/100|[from] item: Leftovers",
    "|upkeep"
   ],
+  "field": {},
   "p1": {
    "order": [
     "Zamazenta",
@@ -892,13 +893,13 @@
     {
      "species": "Landorus-Therian",
      "fainted": true,
-     "status": "fnt",
+     "status": "",
      "boosts": {},
      "used": {
       "earthquake": 1
      },
-     "hp": null,
-     "pct": null
+     "pct": null,
+     "item": "rockyhelmet"
     },
     {
      "species": "Zamazenta",
@@ -911,10 +912,11 @@
       "irondefense": 2,
       "crunch": 1
      },
-     "hp": "max",
      "pct": 100.0,
-     "shieldBoost": true,
-     "lastMove": "irondefense"
+     "hp": "max",
+     "item": "leftovers",
+     "lastMove": "irondefense",
+     "shieldBoost": true
     },
     {
      "species": "Dragapult",
@@ -925,30 +927,27 @@
       "shadowball": 5,
       "dracometeor": 1
      },
-     "hp": null,
      "pct": 52.0
     },
     {
      "species": "Ogerpon-Wellspring",
      "fainted": true,
-     "status": "fnt",
+     "status": "",
      "boosts": {},
      "used": {
       "swordsdance": 1,
       "ivycudgel": 1
      },
-     "hp": null,
      "pct": null
     },
     {
      "species": "Slowking-Galar",
      "fainted": true,
-     "status": "fnt",
+     "status": "",
      "boosts": {},
      "used": {
       "futuresight": 1
      },
-     "hp": null,
      "pct": null
     },
     {
@@ -961,8 +960,8 @@
       "bodypress": 6,
       "uturn": 4
      },
-     "hp": null,
-     "pct": 48.0
+     "pct": 48.0,
+     "item": "leftovers"
     }
    ],
    "canTera": false,
@@ -991,7 +990,8 @@
       "shadowball": 16,
       "recover": 8,
       "trick": 16
-     }
+     },
+     "boosts": {}
     },
     {
      "species": "Clodsire",
