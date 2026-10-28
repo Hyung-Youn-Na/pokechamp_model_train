@@ -1,0 +1,56 @@
+{
+ "format": "gen9ou",
+ "players": {
+  "p1": {
+   "name": "NHJ",
+   "team": "Landorus-Therian||RockyHelmet|Intimidate|StealthRock,Earthquake,Uturn,Taunt|Impish|252,,216,,,40|M||||,,,,,Water]Zamazenta||Leftovers|DauntlessShield|IronDefense,BodyPress,Crunch,Roar|Impish|252,,88,,,168|||||,,,,,Steel]Dragapult||ChoiceSpecs|Infiltrator|DracoMeteor,ShadowBall,Flamethrower,Uturn|Timid|4,,,252,,252|F|,0,,,,|||,,,,,Ghost]Ogerpon-Wellspring||WellspringMask|WaterAbsorb|IvyCudgel,HornLeech,SwordsDance,PlayRough|Jolly|,252,,,4,252|F||||,,,,,Water]Slowking-Galar||HeavyDutyBoots|Regenerator|FutureSight,SludgeBomb,Flamethrower,SlackOff|Calm|252,,4,,252,|F|,0,,,,|||,,,,,Water]Corviknight||Leftovers|Pressure|BodyPress,IronDefense,Roost,Uturn|Impish|252,,252,,4,|F||||,,,,,Fire"
+  },
+  "p2": {
+   "name": "LayaBot",
+   "team": "Ninetales|NinetalesAlola|LightClay|SnowWarning|AuroraVeil,Blizzard,FreezeDry,Encore|Timid|140,,,116,,252|F||||,,,,,Water]Kyurem||LoadedDice|Pressure|Protect,Substitute,ScaleShot,IceBeam|Timid|,,,252,4,252|N||||,,,,,Dragon]Hatterene||Leftovers|MagicBounce|Nuzzle,DrainingKiss,Psyshock,DazzlingGleam|Quiet|248,,,252,8,|F||||,,,,,Psychic]Great Tusk||BoosterEnergy|Protosynthesis|KnockOff,CloseCombat,HeadlongRush,RapidSpin|Jolly|,252,4,,,252|N||||,Fighting,,,,Ice]Gholdengo||ChoiceScarf|GoodasGold|MakeItRain,DazzlingGleam,ShadowBall,NastyPlot|Timid|,,,252,4,252|N||||,,,,,Fairy]Ogerpon|OgerponWellspring|WellspringMask|WaterAbsorb|HornLeech,SwordsDance,Uturn,IvyCudgel|Jolly|,252,,,4,252|F||||,Poison,,,,Water"
+  }
+ },
+ "choices": [
+  [
+   "p1",
+   "team 312456"
+  ],
+  [
+   "p2",
+   "team 123456"
+  ],
+  [
+   "p1",
+   "move uturn"
+  ],
+  [
+   "p2",
+   "move auroraveil"
+  ],
+  [
+   "p1",
+   "switch 5"
+  ]
+ ],
+ "turn1": [
+  "|turn|1",
+  "|move|p1a: Dragapult|U-turn|p2a: Ninetales",
+  "|-resisted|p2a: Ninetales",
+  "|-damage|p2a: Ninetales|299/322",
+  "|switch|p1a: Slowking|Slowking-Galar, F|100/100|[from] U-turn",
+  "|move|p2a: Ninetales|Aurora Veil|p2a: Ninetales",
+  "|-sidestart|p2: LayaBot|move: Aurora Veil",
+  "|-weather|Snowscape|[upkeep]",
+  "|upkeep",
+  "|turn|2"
+ ],
+ "viewer": "p2",
+ "p2_slots": {
+  "p2: Ninetales": 1,
+  "p2: Kyurem": 2,
+  "p2: Hatterene": 3,
+  "p2: Great Tusk": 4,
+  "p2: Gholdengo": 5,
+  "p2: Ogerpon": 6
+ }
+}
