@@ -62,6 +62,7 @@ EX-071 리플레이 모방 스냅샷을 1,024토큰 이하 텍스트로 압축�
 | `effects data` | 효과 지식 자료 생성, 엔진 대조(불일치 시 중단), 감사, 봉인(CPU, node). 이미 있으면 실패한다. | `datasets/generated/laya-effect-knowledge/v1` |
 | `effects train [--preflight-only]` / `effects evaluate` | GPU2에서 v2-all + 테라 지식 + 효과 지식 학습 / 효과·테라 held-out, 잠긴 test, EX-124 쌍비교 | `runs/model-training/EX-126` |
 | `compare3 mock` / `prepare` / `execute` / `export` | EX-120 일정 × {v2+테라, v2+테라+효과} 256경기(GPU2, 포트 8108), 실패·무효 기술 집계 | `runs/model-training/EX-127`, `exports/battle_viewers/ex127/` |
+| `regression build` / `baseline` / `score --endpoint URL --out P` | NHJ-20261028 사람 대전 고정 결정 27개(`regression.py`)를 한 번 추출·라벨링 / 기록된 v1.1 기준 집계 / 실행 중인 서빙에 한 번씩 질의해 v1.1과 나란히 채점(보고 전용, 배틀 게이트 아님) | `tests/nhj20261028_regression.json`, `--out` |
 
 ## 규칙
 

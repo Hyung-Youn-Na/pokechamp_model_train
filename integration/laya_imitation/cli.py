@@ -1,5 +1,5 @@
 """`scripts/laya-imitation <command>`: data, train, evaluate, serve, battle, general, v2, tera, effects, v3, v4, v5, compare,
-compare2, compare3, compare4, compare5, weighted, compare6, compare7, compare8, compare9, h2h, status.
+compare2, compare3, compare4, compare5, weighted, compare6, compare7, compare8, compare9, h2h, regression, status.
 
 `status` only reads saved JSON. Every writing step refuses to overwrite a finished output and
 nothing is re-run automatically after a failure.
@@ -103,6 +103,10 @@ def main(argv=None):
     p = sub.add_parser('h2h', help='EX-134 / EX-135 / EX-138 laya-vs-laya battle stages (GPU2, port 8108)')
     p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
     p.add_argument('--study', default='EX-134', choices=('EX-134', 'EX-135', 'EX-138'))
+    p = sub.add_parser('regression', help='NHJ-20261028 fixed-decision regression set: build once, score a served model')
+    p.add_argument('stage', choices=('build', 'baseline', 'score'))
+    p.add_argument('--endpoint', help='http://127.0.0.1:PORT of a running serve (score)')
+    p.add_argument('--out', help='result JSON path, never overwritten (score)')
     sub.add_parser('status', help='read saved status only')
     args = parser.parse_args(argv)
     if args.command == 'data':
@@ -225,6 +229,17 @@ def main(argv=None):
     elif args.command == 'compare9':
         from . import tera_battle
         getattr(tera_battle, args.stage)()
+    elif args.command == 'regression':
+        from . import regression
+        if args.stage == 'build':
+            doc = regression.build()
+            print(json.dumps(dict(cases=len(doc['cases']), digest=doc['digest']), ensure_ascii=False))
+        elif args.stage == 'baseline':
+            print(json.dumps(regression.baseline(regression.read(regression.FIXTURE))[1], ensure_ascii=False, indent=1))
+        else:
+            if not args.endpoint or not args.out:
+                parser.error('regression score needs --endpoint and --out')
+            print(regression.table(regression.score(args.endpoint, args.out)))
     elif args.command == 'h2h':
         from . import headtohead
         getattr(headtohead, args.stage)(headtohead.STUDIES[args.study])
