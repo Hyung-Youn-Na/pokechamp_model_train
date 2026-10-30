@@ -24,7 +24,8 @@ MODELS = ('laya-selected', 'laya-initial', 'laya-v1', 'laya-v2', 'laya-v2-initia
           'laya-v2te', 'laya-v2te-initial', 'laya-v3t', 'laya-v3t-initial', 'laya-v4t', 'laya-v4t-initial',
           'laya-v2tw', 'laya-v2tw-initial', 'laya-v5t', 'laya-v5t-initial',
           'laya-v2t-fix', 'laya-v2t-info', 'laya-v2t-info-initial',
-          'laya-v2t-fix-tp1', 'laya-v2t-fix-tp3', 'laya-v2t-fix-tp3-initial', 'laya-v2t-fix-tdef')
+          'laya-v2t-fix-tp1', 'laya-v2t-fix-tp3', 'laya-v2t-fix-tp3-initial', 'laya-v2t-fix-tdef',
+          'laya-v6st', 'laya-v6st-initial', 'laya-v6ht', 'laya-v6ht-initial')
 
 
 def checkpoint_identity(path):
@@ -41,10 +42,12 @@ V3_RENDER_FILES = V2_RENDER_FILES + ('compact_v3.py', 'features_v3.py', 'usage_s
 V4_RENDER_FILES = V2_RENDER_FILES + ('compact_v4.py', 'features_v4.py', 'effect_knowledge.py', 'effect_rules.json',
                                      'dex_gen9_effects.json')
 V5_RENDER_FILES = V4_RENDER_FILES + ('compact_v5.py', 'features_v5.py')
+V6_RENDER_FILES = V5_RENDER_FILES + ('compact_v6.py', 'data_v6.py')
 
 
 def _dataset(render):
     return {'v1': c.DATASET, 'v2': c.V2_DATASET, 'v3': c.V3_DATASET, 'v4': c.V4_DATASET, 'v5': c.V5_DATASET,
+            'v6s': c.V6S_DATASET, 'v6h': c.V6H_DATASET,
             'v2fix': c.V2_DATASET, 'v2info': c.V2_DATASET, 'v2fixtd': c.V2_DATASET}[render]
 
 
@@ -53,7 +56,7 @@ def renderer_matches_dataset(render='v1'):
         return input_variants.matches()
     dataset = _dataset(render)
     names = {'v1': ('compact.py', 'dex.py', 'dex_gen9.json'), 'v2': V2_RENDER_FILES, 'v3': V3_RENDER_FILES,
-             'v4': V4_RENDER_FILES, 'v5': V5_RENDER_FILES}[render]
+             'v4': V4_RENDER_FILES, 'v5': V5_RENDER_FILES, 'v6s': V6_RENDER_FILES, 'v6h': V6_RENDER_FILES}[render]
     generator = dataset / 'generator-source'
     package = c.ROOT / 'integration/laya_imitation'
     return all(sha(generator / name) == sha(package / name) for name in names)
@@ -80,6 +83,14 @@ def v5_renderer(calc):
     return lambda value: compact_v5.render(value, compact_v5.MODULES, features_v5.compute(value, calc))
 
 
+def v6_renderer(variant):
+    """D-198: `v6s` / `v6h` (the latter needs inputs with `early_history`, requested by the battle worker)."""
+    def factory(calc):
+        from . import data_v6
+        return data_v6.live_renderer(variant, calc)
+    return factory
+
+
 def variant_renderer(render):
     """EX-139 (D-196): `v2fix` / `v2info` live renderer factory for the v2-trained EX-124 checkpoint."""
     return lambda calc: input_variants.renderer(render, calc)
@@ -101,11 +112,13 @@ def create_server(checkpoint, model_name, port=0, policy=None, device='cuda', re
             calc = Calc()
             renderer = dict(v2=v2_renderer, v3=v3_renderer, v4=v4_renderer, v5=v5_renderer,
                             v2fix=variant_renderer('v2fix'), v2info=variant_renderer('v2info'),
-                            v2fixtd=tera_decision.renderer)[render](calc)
-            policy = Policy(checkpoint, device=device, head_limit=c.V2_HEAD_LIMIT, renderer=renderer)
+                            v2fixtd=tera_decision.renderer, v6s=v6_renderer('v6s'), v6h=v6_renderer('v6h'))[render](calc)
+            policy = Policy(checkpoint, device=device, head_limit=c.V2_HEAD_LIMIT, renderer=renderer,
+                            token_limit=c.V6H_TOKEN_LIMIT if render == 'v6h' else c.TOKEN_LIMIT)
     identity = dict(ready=True, model=model_name, checkpoint=str(Path(checkpoint).resolve()),
                     checkpoint_sha256=checkpoint_identity(checkpoint),
-                    render=read(dataset / 'manifest.json')['render'], token_limit=c.TOKEN_LIMIT,
+                    render=read(dataset / 'manifest.json')['render'],
+                    token_limit=c.V6H_TOKEN_LIMIT if render == 'v6h' else c.TOKEN_LIMIT,
                     head_limit=c.HEAD_LIMIT if render == 'v1' else c.V2_HEAD_LIMIT,
                     calculator=calc.identity if calc else None)
     if render in input_variants.RENDERS:

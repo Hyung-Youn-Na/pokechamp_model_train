@@ -19,16 +19,18 @@ from .compact import render
 class Policy:
     """`head_limit`/`renderer` default to v1 (EX-118); EX-121 passes the v2 budget and a v2 renderer."""
 
-    def __init__(self, checkpoint, device='cuda', head_limit=c.HEAD_LIMIT, renderer=render):
+    def __init__(self, checkpoint, device='cuda', head_limit=c.HEAD_LIMIT, renderer=render, token_limit=None):
         self.model, self.tok, self.cfg = load_checkpoint(str(checkpoint))
         self.device = torch.device(device)
         self.model.to(self.device).eval()
-        # The experiment budgets, not the base checkpoint's own head_max_len (192), which would cut questions.
-        self.max_len, self.head_max_len = c.TOKEN_LIMIT, head_limit
-        self.renderer = renderer
         trained = (self.cfg.get('training') or {})
-        if any(trained.get(k) for k in ('ex118', 'ex121', 'ex128', 'ex130')) and \
-                (self.cfg['max_len'], self.cfg['head_max_len']) != (c.TOKEN_LIMIT, head_limit):
+        if token_limit is None:   # D-198: an EX-142 checkpoint is scored at the 2048 tokens it was trained with
+            token_limit = c.V6H_TOKEN_LIMIT if trained.get('ex142') else c.TOKEN_LIMIT
+        # The experiment budgets, not the base checkpoint's own head_max_len (192), which would cut questions.
+        self.max_len, self.head_max_len = token_limit, head_limit
+        self.renderer = renderer
+        if any(trained.get(k) for k in ('ex118', 'ex121', 'ex128', 'ex130', 'ex141', 'ex142')) and \
+                (self.cfg['max_len'], self.cfg['head_max_len']) != (token_limit, head_limit):
             raise ValueError('checkpoint was trained with other token budgets')
 
     def temperature(self, k):

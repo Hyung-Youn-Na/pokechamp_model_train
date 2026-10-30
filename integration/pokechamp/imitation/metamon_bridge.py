@@ -43,9 +43,12 @@ class BridgeClient:
             self.request(dict(op="corpus", entries=corpus_sets))
         return self.request(dict(op="recover", raw=raw_json, replay_id=replay_id))
 
-    def snapshot(self, prefix, own_sets, perspective, decision_kind):
-        return self.request(dict(op="snapshot", prefix=prefix, own_sets=own_sets,
-                                 perspective=perspective, decision_kind=decision_kind))
+    def snapshot(self, prefix, own_sets, perspective, decision_kind, early_history=False):
+        message = dict(op="snapshot", prefix=prefix, own_sets=own_sets,
+                       perspective=perspective, decision_kind=decision_kind)
+        if early_history:   # D-198: only requested by models trained on it; the default request is unchanged
+            message["early_history"] = True
+        return self.request(message)
 
     def extract_teams(self, raw_json):
         from .impute import extract_teams
@@ -95,7 +98,8 @@ def worker():
                     raise ValueError("initialize validated corpus before recovery")
                 result = recover(request["raw"], request["replay_id"], corpus)
             elif op == "snapshot":
-                result = serialize_state(request["prefix"], request["own_sets"], request["perspective"], request["decision_kind"])
+                result = serialize_state(request["prefix"], request["own_sets"], request["perspective"], request["decision_kind"],
+                                         early_history=request.get("early_history", False))
             else:
                 raise ValueError("unknown bridge operation")
             response = dict(ok=True, result=result)

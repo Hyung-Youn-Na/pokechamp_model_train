@@ -68,7 +68,7 @@ def _original_set(pokemon):
 
 
 class Timeline:
-    def __init__(self, raw, own_sets=None, *, replay_id="prefix"):
+    def __init__(self, raw, own_sets=None, *, replay_id="prefix", early_history=False):
         from metamon.backend.replay_parser.forward import SimProtocol
         from metamon.backend.replay_parser.replay_state import ParsedReplay
         self.lines = lines_of(raw)
@@ -78,6 +78,9 @@ class Timeline:
                                    time_played=datetime(2000, 1, 1, tzinfo=timezone.utc))
         self.sim = SimProtocol(self.replay)
         self.history = []
+        # D-198: opt-in `early_history` (events older than the four-turn `history` window). Off by default, so every
+        # existing snapshot is unchanged.
+        self.early_history = early_history
         self.nick = {}
         self.active = {}
         self.public_ability = set()
@@ -114,10 +117,10 @@ class Timeline:
             raise ValueError("unsupported original-slot species or forme: " + species)
         return candidates[0]
 
-    def normalized_history(self, perspective):
+    def normalized_history(self, perspective, early=False):
         result = []
         for row in self.history:
-            if row["turn"] < self.turn - 4:
+            if (row["turn"] < self.turn - 4) != early:
                 continue
             result.append(dict(turn=row["turn"], event=row["event"],
                 args=[a.replace("@p1", "self" if perspective == "p1" else "opponent")
@@ -215,7 +218,7 @@ class Timeline:
                           for slot in range(1, 7)]
         own_slot = self.active.get(perspective, (None, None))[1]
         opp_slot = self.active.get(other, (None, None))[1]
-        return dict(turn=self.turn, decision_kind=decision_kind, own_team=rows[perspective],
+        snapshot = dict(turn=self.turn, decision_kind=decision_kind, own_team=rows[perspective],
                     opponent_team=rows[other], own_active_slot=own_slot, opponent_active_slot=opp_slot,
                     can_tera=state.can_tera_1 if perspective == "p1" else state.can_tera_2,
                     opponent_can_tera=state.can_tera_2 if perspective == "p1" else state.can_tera_1,
@@ -224,6 +227,9 @@ class Timeline:
                     opponent_side_conditions=_mapping(state.conditions_2 if perspective == "p1" else state.conditions_1),
                     history=self.normalized_history(perspective),
                     weather_turn=self.weather_turn if _clean(state.weather) else None)
+        if self.early_history:
+            snapshot["early_history"] = self.normalized_history(perspective, early=True)
+        return snapshot
 
     def candidates(self, snapshot, perspective):
         kind = snapshot["decision_kind"]
@@ -554,7 +560,7 @@ def _percent_condition(condition):
     return condition
 
 
-def serialize_state(prefix, own_sets, perspective, decision_kind):
+def serialize_state(prefix, own_sets, perspective, decision_kind, early_history=False):
     """The sole state serializer used by both replay preparation and live play."""
     teams = extract_teams(prefix)
     order = {species_ident(s): i for i, s in enumerate(teams[perspective])}
@@ -564,7 +570,8 @@ def serialize_state(prefix, own_sets, perspective, decision_kind):
     # silently changing original-slot action identities if that invariant differs.
     if any(species_ident(s["species"]) != species_ident(t) for s, t in zip(own_sets, teams[perspective])):
         raise ValueError("public preview and original team slot order differ")
-    return Timeline(prefix, {perspective: own_sets}).consume().snapshot(perspective, decision_kind)
+    return Timeline(prefix, {perspective: own_sets}, early_history=early_history).consume().snapshot(
+        perspective, decision_kind)
 
 
 def recover(raw_json, replay_id, corpus_sets):

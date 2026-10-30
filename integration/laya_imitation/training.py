@@ -1,4 +1,5 @@
-"""EX-118 (v1) / EX-121 (v2) / EX-124 / EX-126 / EX-128 (v3) / EX-130 (v4) / EX-132 (outcome weights) / EX-136 (v5) training: preflight, 3 epochs with per-epoch validation, selection,
+"""EX-118 (v1) / EX-121 (v2) / EX-124 / EX-126 / EX-128 (v3) / EX-130 (v4) / EX-132 (outcome weights) / EX-136 (v5) /
+EX-141 (v6s) / EX-142 (v6h, 2048 tokens) training: preflight, 3 epochs with per-epoch validation, selection,
 calibration.
 
 Reuses laya 0.4.13's own loop (`train_model`), item building, checkpoint IO and temperature fit.
@@ -25,10 +26,12 @@ class Spec:
     """Which experiment a run belongs to. EX-118 (v1) is the default; EX-121 (v2) differs only here."""
 
     def __init__(self, experiment, dataset, out, head, key, max_exclusion_rate=0.0, extra_train=None,
-                 gpu=(c.GPU_INDEX, c.GPU_UUID), hours=c.TRAINING_HOURS, weights=None, same_split_as=None):
+                 gpu=(c.GPU_INDEX, c.GPU_UUID), hours=c.TRAINING_HOURS, weights=None, same_split_as=None,
+                 max_len=c.TOKEN_LIMIT):
+        # `hours=None`: no training time limit (EX-141/142, user instruction 2026-10-29).
         self.experiment, self.dataset, self.out, self.head, self.key = experiment, dataset, out, head, key
         self.max_exclusion_rate, self.extra_train, self.gpu, self.hours = max_exclusion_rate, extra_train, gpu, hours
-        self.weights, self.same_split_as = weights, same_split_as
+        self.weights, self.same_split_as, self.max_len = weights, same_split_as, max_len
 
 
 EX118 = Spec('EX-118', c.DATASET, c.RUN_TRAINING, c.HEAD_LIMIT, 'ex118')
@@ -49,6 +52,13 @@ EX130 = Spec('EX-130', c.V4_DATASET, c.RUN_V4_TRAINING, c.V2_HEAD_LIMIT, 'ex130'
 # EX-136 (D-195): EX-130's settings with the action rows rendered by v5 (opponent item state, counters), on GPU0.
 EX136 = Spec('EX-136', c.V5_DATASET, c.RUN_V5_TRAINING, c.V2_HEAD_LIMIT, 'ex136', max_exclusion_rate=0.005,
              extra_train=c.TERA_KNOWLEDGE / 'train.jsonl', hours=c.V5_TRAINING_HOURS)
+# EX-141 / EX-142 (D-198): EX-136's settings with the action rows rendered by v6s (GPU0) / v6h at 2048 tokens (GPU1),
+# trained at the same time, no time limit.
+EX141 = Spec('EX-141', c.V6S_DATASET, c.RUN_V6S_TRAINING, c.V2_HEAD_LIMIT, 'ex141', max_exclusion_rate=0.005,
+             extra_train=c.TERA_KNOWLEDGE / 'train.jsonl', hours=None)
+EX142 = Spec('EX-142', c.V6H_DATASET, c.RUN_V6H_TRAINING, c.V2_HEAD_LIMIT, 'ex142', max_exclusion_rate=0.005,
+             extra_train=c.TERA_KNOWLEDGE / 'train.jsonl', gpu=(c.GPU1_INDEX, c.GPU1_UUID), hours=None,
+             max_len=c.V6H_TOKEN_LIMIT)
 # EX-132: EX-124's rows, split and settings; imitation train rows weighted by the replay outcome (D-193), on GPU0.
 EX132 = Spec('EX-132', c.V2_DATASET, c.RUN_WEIGHTED_TRAINING, c.V2_HEAD_LIMIT, 'ex132', max_exclusion_rate=0.005,
              extra_train=c.TERA_KNOWLEDGE / 'train.jsonl', hours=c.WEIGHTED_TRAINING_HOURS,
@@ -125,7 +135,7 @@ def _freeze(out, spec=EX118):
 
 
 def _train(spec):
-    return dict(c.TRAIN, head_max_len=spec.head)
+    return dict(c.TRAIN, head_max_len=spec.head, max_len=spec.max_len)
 
 
 def preflight(out, device, spec=EX118):
@@ -138,7 +148,7 @@ def preflight(out, device, spec=EX118):
     head = spec.head
     with open(spec.dataset / 'train.jsonl') as f:
         rows = [json.loads(next(f)) for _ in range(256)]
-    small, skipped = items_from_rows(tok, rows, c.TOKEN_LIMIT, head)
+    small, skipped = items_from_rows(tok, rows, spec.max_len, head)
     if skipped or len(small) != 256:
         raise ValueError('preflight rows not usable: %r' % skipped)
     if spec.weights is not None:
@@ -146,16 +156,16 @@ def preflight(out, device, spec=EX118):
         small = weigh_items(rows, small, load(spec.weights))
     config = TrainConfig(**dict(_train(spec), epochs=2, log_every=0))
     started = time.time()
-    history = train_model(model, tok, small, config, device, c.TOKEN_LIMIT, head)
+    history = train_model(model, tok, small, config, device, spec.max_len, head)
     path = out / 'preflight/checkpoint'
-    save_checkpoint(model, tok, dict(cfg, max_len=c.TOKEN_LIMIT, head_max_len=head), str(path))
+    save_checkpoint(model, tok, dict(cfg, max_len=spec.max_len, head_max_len=head), str(path))
     # Round only the persistent tensors the checkpoint stores (fp16); `.half()` on the module would
     # also round non-persistent RoPE buffers that a reload recomputes in fp32 (diagnostics/preflight-v1).
     model.load_state_dict({k: v.half().float() for k, v in model.state_dict().items()})
-    a = calibration_records(model, tok, small[:32], device, c.TOKEN_LIMIT, head)
+    a = calibration_records(model, tok, small[:32], device, spec.max_len, head)
     again, _, _ = load_checkpoint(str(path))
     again.to(device)
-    b = calibration_records(again, tok, small[:32], device, c.TOKEN_LIMIT, head)
+    b = calibration_records(again, tok, small[:32], device, spec.max_len, head)
     diff = max(float(abs(x[1] - y[1]).max()) for x, y in zip(a, b))
     result = dict(history=history, loss_fell=history[-1] < history[0], reload_max_abs_logit_diff=diff,
                   reload_ok=diff < 1e-3, seconds=round(time.time() - started, 1),
@@ -177,8 +187,8 @@ def train(out, device, clock, spec=EX118):
     head = spec.head
     model, tok, cfg = load_checkpoint(str(c.MODEL_DIR))
     model.to(device)
-    rows, items = _items(tok, spec.dataset / 'train.jsonl', c.TOKEN_LIMIT, head)
-    _, val = _items(tok, spec.dataset / 'validation.jsonl', c.TOKEN_LIMIT, head)
+    rows, items = _items(tok, spec.dataset / 'train.jsonl', spec.max_len, head)
+    _, val = _items(tok, spec.dataset / 'validation.jsonl', spec.max_len, head)
     config = TrainConfig(**_train(spec))
     for row, item in zip(rows, items):
         item['sample_id'] = row['sample_id']
@@ -194,7 +204,7 @@ def train(out, device, clock, spec=EX118):
     extra, by_source = [], {}
     for path in extras(spec):
         # Calibration stays imitation-only (same rows as EX-121); knowledge rows only join training.
-        _, items_ = _items(tok, path, c.TOKEN_LIMIT, head)
+        _, items_ = _items(tok, path, spec.max_len, head)
         extra += items_
         by_source[path.parent.parent.name] = len(items_)
     train_items = train_items + extra
@@ -208,25 +218,25 @@ def train(out, device, clock, spec=EX118):
         if any(base[k] != split[k] for k in ('train', 'calibration', 'validation', 'extra_train')):
             raise ValueError('split differs from %s: %r vs %r' % (spec.same_split_as.name, split, base))
     atomic(out / 'split.json', split, immutable=True)
-    base_cfg = dict(cfg, max_len=c.TOKEN_LIMIT, head_max_len=head)
-    records = calibration_records(model, tok, val, device, c.TOKEN_LIMIT, head)
+    base_cfg = dict(cfg, max_len=spec.max_len, head_max_len=head)
+    records = calibration_records(model, tok, val, device, spec.max_len, head)
     append_jsonl(out / 'validation-curve.jsonl', dict(epoch=0, raw=_metrics(records, 1.0),
                                                      shipped=_metrics(records, cfg.get('temperature'),
                                                                       cfg.get('temperature_by_options'))))
 
     def on_epoch_end(epoch, mean_loss):
-        if time.time() - clock > spec.hours * 3600:
+        if spec.hours is not None and time.time() - clock > spec.hours * 3600:
             raise BudgetExceeded('training budget exceeded after epoch %d' % (epoch + 1))
         path = out / 'checkpoints' / ('epoch-%d' % (epoch + 1))
         save_checkpoint(model, tok, base_cfg, str(path))
-        recs = calibration_records(model, tok, val, device, c.TOKEN_LIMIT, head)
+        recs = calibration_records(model, tok, val, device, spec.max_len, head)
         model.train()
         row = dict(epoch=epoch + 1, train_loss=mean_loss, raw=_metrics(recs, 1.0), seconds=round(time.time() - clock),
                    peak_allocated_gib=round(torch.cuda.max_memory_allocated() / 2**30, 3))
         append_jsonl(out / 'validation-curve.jsonl', row)
         atomic(out / 'status.json', dict(stage='training', epoch=epoch + 1, of=config.epochs, at=time.time()))
 
-    history = train_model(model, tok, train_items, config, device, c.TOKEN_LIMIT, head,
+    history = train_model(model, tok, train_items, config, device, spec.max_len, head,
                           on_epoch_end=on_epoch_end)
     curve = [json.loads(line) for line in (out / 'validation-curve.jsonl').read_text().splitlines()]
     epochs = [r for r in curve if r['epoch'] > 0]
@@ -235,7 +245,7 @@ def train(out, device, clock, spec=EX118):
     torch.cuda.empty_cache()
     model, tok, cfg = load_checkpoint(str(out / 'checkpoints' / ('epoch-%d' % best['epoch'])))
     model.to(device)
-    calib = calibration_records(model, tok, calib_items, device, c.TOKEN_LIMIT, head)
+    calib = calibration_records(model, tok, calib_items, device, spec.max_len, head)
     fitted = fit_temperature_map(calib)
     selected = dict(cfg, fine_tuned=True, temperature=fitted['temperature'])
     selected.pop('temperature_by_options', None)
@@ -245,7 +255,7 @@ def train(out, device, clock, spec=EX118):
         selected_epoch=best['epoch'], history=history,
         config={k: list(v) if isinstance(v, tuple) else v for k, v in _train(spec).items()})})
     save_checkpoint(model, tok, selected, str(out / 'checkpoints/selected'))
-    recs = calibration_records(model, tok, val, device, c.TOKEN_LIMIT, head)
+    recs = calibration_records(model, tok, val, device, spec.max_len, head)
     selection = dict(selected_epoch=best['epoch'], rule='min validation raw NLL, earlier epoch on ties',
                      calibration_items=len(calib), temperature=fitted['temperature'],
                      temperature_by_options=fitted['temperature_by_options'],

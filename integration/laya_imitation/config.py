@@ -81,6 +81,21 @@ RUN_COMPARE8 = SHARED / 'runs/model-training/EX-139'   # EP-219 (D-196): EX-124 
 VIEWER_COMPARE8 = ROOT / 'exports/battle_viewers/ex139'
 RUN_COMPARE9 = SHARED / 'runs/model-training/EX-140'   # EP-220 (D-197): EX-124 Tera decision/defence, GPU1 / 8109
 VIEWER_COMPARE9 = ROOT / 'exports/battle_viewers/ex140'
+# EP-221 (D-198): two v5+Tera variants trained at the same time. No training time limit (user instruction 2026-10-29).
+EARLY_HISTORY = SHARED / 'datasets/generated/laya-early-history/v1'   # events older than the four-turn window
+V6S_DATASET = SHARED / 'datasets/generated/laya-compact-imitation/v6s-all'   # v5 + repetition counters, 1024
+V6H_DATASET = SHARED / 'datasets/generated/laya-compact-imitation/v6h-all'   # v5 + budgeted long history, 2048
+V6H_TOKEN_LIMIT = 2048
+RUN_V6S_TRAINING = SHARED / 'runs/model-training/EX-141'   # GPU0
+RUN_V6H_TRAINING = SHARED / 'runs/model-training/EX-142'   # GPU1
+RUN_COMPARE10 = SHARED / 'runs/model-training/EX-143'      # v5t vs v6st, GPU0 / 8107
+VIEWER_COMPARE10 = ROOT / 'exports/battle_viewers/ex143'
+RUN_COMPARE11 = SHARED / 'runs/model-training/EX-144'      # v5t vs v6ht, GPU1 / 8109
+VIEWER_COMPARE11 = ROOT / 'exports/battle_viewers/ex144'
+# EP-222 (D-199): laya-play's hand-built teams, v5t / v6st / v6ht against Abyssal in one run, GPU2 / 8108.
+RUN_EX145 = SHARED / 'runs/model-training/EX-145'
+VIEWER_EX145 = ROOT / 'exports/battle_viewers/ex145'
+EX145_HOURS = 16.0   # 888 games with three servings
 
 MODEL_ID = 'convaiinnovations/laya-typed-decisions'
 MODEL_REVISION = 'e929ae5cf69bc34259cd2f95c9e91145b818b1f0'

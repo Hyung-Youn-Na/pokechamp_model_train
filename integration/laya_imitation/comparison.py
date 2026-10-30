@@ -5,6 +5,7 @@ EX-129: v2+Tera (EX-124) vs v3+Tera (EX-128) on GPU0/8107, judged for non-inferi
 EX-131: v2+Tera (EX-124) vs v4+Tera (EX-130) on GPU1/8109, same judgement (no offline gate, D-191).
 EX-133: v2+Tera (EX-124) vs v2+Tera with outcome-weighted imitation (EX-132) on GPU0/8107 (D-193, no offline gate).
 EX-137: v4+Tera (EX-130) vs v5+Tera (EX-136, opponent item state and counters) on GPU0/8107 (D-195, no offline gate).
+EX-143 / EX-144: v5+Tera (EX-136) vs v6s (EX-141, GPU0/8107) / v6h (EX-142, 2048 tokens, GPU1/8109) (D-198).
 Each EX-120 swapped pair is played twice back to back (one pair per model, digest-ordered), with both servings alive.
 Per-game play, ledger, no replay of claimed slots and audits are `battle`'s, unchanged.
 """
@@ -25,7 +26,8 @@ RENDER = {'laya-v1': 'v1', 'laya-v2': 'v2', 'laya-v2-initial': 'v2', 'laya-v2t':
           'laya-v5t': 'v5', 'laya-v5t-initial': 'v5',
           'laya-v2t-fix': 'v2fix', 'laya-v2t-info': 'v2info', 'laya-v2t-info-initial': 'v2info',
           'laya-v2t-fix-tp1': 'v2fix', 'laya-v2t-fix-tp3': 'v2fix', 'laya-v2t-fix-tp3-initial': 'v2fix',
-          'laya-v2t-fix-tdef': 'v2fixtd'}
+          'laya-v2t-fix-tdef': 'v2fixtd',
+          'laya-v6st': 'v6s', 'laya-v6st-initial': 'v6s', 'laya-v6ht': 'v6h', 'laya-v6ht-initial': 'v6h'}
 
 
 class Study:
@@ -121,6 +123,32 @@ EX137 = Study(
                     '차이는 v5 렌더러의 상대 아이템 상태(미공개·들고 있음·제거)와 상태 카운터입니다. 확률은 행동 선택 확률이고 '
                     '승률이 아닙니다.',
               changelog='project_context/shared/viewers/CHANGELOG.md#ex137-laya-v1'))
+
+
+# EX-143 / EX-144 (D-198): v5+Tera (EX-136) against each v6 variant, one variable apart, run at the same time.
+EX143 = Study(
+    experiment='EX-143', plan='EP-221', seed=20261034, models=('laya-v5t', 'laya-v6st'), out=c.RUN_COMPARE10,
+    viewer=c.VIEWER_COMPARE10, gpu=(c.GPU_INDEX, c.GPU_UUID), port=c.PORT, hours=c.COMPARE_HOURS,
+    runs={'laya-v5t': ('EX-136', c.RUN_V5_TRAINING), 'laya-v6st': ('EX-141', c.RUN_V6S_TRAINING)},
+    mock_model='laya-v6st-initial', replicate=None, margin=0.05,
+    verdicts=('v6s가 배틀 성적을 개선', '퇴보를 배제하지 못함', '비퇴보'),
+    meta=dict(experiment='EX-143', plan='EP-221', slug='ex143', pairs=128, title='EX-143 · laya v5+테라·v6s 256경기',
+              heading='EX-143 · laya v5+테라(EX-136)와 v6s 반복 표시(EX-141) · EX-120 일정 대 Abyssal',
+              intro='같은 일정(새 팀 32개, 128슬롯)을 두 모델이 번갈아 진행했습니다. 두 모델 모두 v5 모듈과 테라 지식 행을 썼고 '
+                    '차이는 v6s의 같은 기술 연속 사용 표시(streak)입니다. 확률은 행동 선택 확률이고 승률이 아닙니다.',
+              changelog='project_context/shared/viewers/CHANGELOG.md#ex143-laya-v1'))
+
+EX144 = Study(
+    experiment='EX-144', plan='EP-221', seed=20261035, models=('laya-v5t', 'laya-v6ht'), out=c.RUN_COMPARE11,
+    viewer=c.VIEWER_COMPARE11, gpu=(c.GPU1_INDEX, c.GPU1_UUID), port=c.PORT2, hours=c.COMPARE_HOURS,
+    runs={'laya-v5t': ('EX-136', c.RUN_V5_TRAINING), 'laya-v6ht': ('EX-142', c.RUN_V6H_TRAINING)},
+    mock_model='laya-v6ht-initial', replicate=None, margin=0.05,
+    verdicts=('v6h가 배틀 성적을 개선', '퇴보를 배제하지 못함', '비퇴보'),
+    meta=dict(experiment='EX-144', plan='EP-221', slug='ex144', pairs=128, title='EX-144 · laya v5+테라·v6h 256경기',
+              heading='EX-144 · laya v5+테라(EX-136)와 v6h 긴 기록·2048토큰(EX-142) · EX-120 일정 대 Abyssal',
+              intro='같은 일정(새 팀 32개, 128슬롯)을 두 모델이 번갈아 진행했습니다. 두 모델 모두 v5 모듈과 테라 지식 행을 썼고 '
+                    '차이는 v6h의 과거 턴 기록(2048토큰 안에서 4턴 이전까지)입니다. 확률은 행동 선택 확률이고 승률이 아닙니다.',
+              changelog='project_context/shared/viewers/CHANGELOG.md#ex144-laya-v1'))
 
 
 def make_schedule(base, study=EX122):
@@ -435,7 +463,7 @@ def export(study=EX122):
     from .compact import render as v1_render
     from .features import Calc
     from .reporting import compare_report
-    from .serving import v2_renderer, v3_renderer, v4_renderer, v5_renderer
+    from .serving import v2_renderer, v3_renderer, v4_renderer, v5_renderer, v6_renderer
     from .viewer import export as export_viewer
     out = study.out
     result = read(out / 'result.json')
@@ -444,6 +472,8 @@ def export(study=EX122):
     with Calc() as calc:
         renderers = dict(v1=v1_render, v2=v2_renderer(calc), v3=v3_renderer(calc), v4=v4_renderer(calc),
                          v5=v5_renderer(calc))
+        for name in {RENDER[m] for m in study.models} & {'v6s', 'v6h'}:
+            renderers[name] = v6_renderer(name)(calc)
         viewer = export_viewer(out, study.viewer, meta=meta, columns=_columns,
                                renderer_for=lambda row: renderers[RENDER[row['model']]])
     compare_report(out, result, viewer, study)
@@ -552,3 +582,35 @@ def execute7():
 
 def export7():
     export(EX137)
+
+
+def mock10():
+    mock(EX143)
+
+
+def prepare10():
+    prepare(EX143)
+
+
+def execute10():
+    execute(EX143)
+
+
+def export10():
+    export(EX143)
+
+
+def mock11():
+    mock(EX144)
+
+
+def prepare11():
+    prepare(EX144)
+
+
+def execute11():
+    execute(EX144)
+
+
+def export11():
+    export(EX144)

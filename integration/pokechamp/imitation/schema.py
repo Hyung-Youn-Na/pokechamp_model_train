@@ -20,6 +20,8 @@ MON_KEYS = ('slot','species','hp_percent','status','boosts','item','ability','mo
 # D-195: kept when present; inputs without them (EX-071 prepared) stay valid and unchanged.
 OPTIONAL_SNAPSHOT_KEYS = ('weather_turn',)
 OPTIONAL_MON_KEYS = ('item_state','status_counter','status_source')
+# D-198: opt-in events older than the four-turn `history` window, only in inputs built for models trained on them.
+EXTENDED_SNAPSHOT_KEYS = ('early_history',)
 SET_KEYS = ('species','item','ability','moves','nature','evs','ivs','level','gender','teraType','happiness')
 FORBIDDEN = {'winner','outcome','rating','players','player','username','replay_id','sample_id',
              'label','target','targets','seed','rng','audit','provenance','metadata','future',
@@ -44,7 +46,7 @@ def _boundary(value):
 def _snapshot(value):
     if not isinstance(value, dict) or set(SNAPSHOT_KEYS) - set(value):
         raise ValueError('incomplete normalized snapshot')
-    result = {key: value[key] for key in SNAPSHOT_KEYS + OPTIONAL_SNAPSHOT_KEYS if key in value}
+    result = {key: value[key] for key in SNAPSHOT_KEYS + OPTIONAL_SNAPSHOT_KEYS + EXTENDED_SNAPSHOT_KEYS if key in value}
     if result['decision_kind'] not in KINDS:
         raise ValueError('label-dependent or unsupported decision kind')
     if type(result['turn']) is not int or result['turn'] < 0:
@@ -70,6 +72,11 @@ def _snapshot(value):
     result['history'] = [{key: event[key] for key in ('turn','event','args')} for event in result['history']]
     if any(e['turn'] < max(0, result['turn'] - 4) or e['turn'] > result['turn'] for e in result['history']):
         raise ValueError('history is outside the four previous turns/current prefix')
+    if 'early_history' in result:
+        result['early_history'] = [{key: event[key] for key in ('turn','event','args')} for event in result['early_history']]
+        if any(type(e['turn']) is not int or e['turn'] < 0 or e['turn'] >= result['turn'] - 4
+               for e in result['early_history']):
+            raise ValueError('early history overlaps the four-turn window')
     _boundary(result)
     return result
 

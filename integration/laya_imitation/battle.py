@@ -383,16 +383,31 @@ def export():
 
 # ----------------------------------------------------------------------------- worker
 
+# D-198: models trained on `early_history` get it in their live inputs; every other model's input is unchanged.
+EARLY_HISTORY_MODELS = ('laya-v6ht', 'laya-v6ht-initial')
+
+
 def worker(attempt, role):
     """EX-071 worker with this experiment's turn and decision limits."""
     from integration.pokechamp.imitation import player as p
     p.MAX_TURNS = c.TURN_LIMIT
+    early = read(Path(attempt) / 'request.json')['slot']['model'] in EARLY_HISTORY_MODELS
 
     class LimitedSession(p.Session):
         async def evaluate(self, value, decision):
             if self.calls >= c.DECISION_LIMIT:
                 raise p.BattleLimit('decision_limit')
             return await super().evaluate(value, decision)
+
+        def generate(self, official, prefix, actions, *, actor):
+            if not early:
+                return super().generate(official, prefix, actions, actor=actor)
+            if self.bridge is None:
+                from integration.pokechamp.imitation.metamon_bridge import BridgeClient
+                self.bridge = BridgeClient()
+            snapshot = self.bridge.snapshot(p.public_prefix(prefix), self.own_sets, actor,
+                                            p.decision_kind(official['request']), early_history=True)
+            return p.from_snapshot(snapshot, actions), snapshot
 
     p.Session = LimitedSession
     result = asyncio.run(p.worker(attempt, role))

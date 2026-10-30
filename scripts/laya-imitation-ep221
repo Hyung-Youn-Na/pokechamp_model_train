@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# EP-221 chain (D-198; user instruction 2026-10-29: run both at the same time, no training time limit).
+# Done before this script: early_history parser field + EX-071 re-parse (laya-early-history/v1), v6s/v6h data and
+# parity, and the EX-143 / EX-144 mocks (completed and audited; v6h inputs carry early_history).
+# GPU0 lane: EX-141 train -> evaluate -> EX-143 prepare/execute/export. GPU1 lane: EX-142 train -> evaluate -> EX-144.
+# Battles run regardless of the offline numbers (D-191). Each lane stops at its first failing stage; nothing is re-run
+# automatically. Both lanes import the same code: do not edit integration/laya_imitation while either runs.
+set -euo pipefail
+cd /workspace
+RUN=/workspace/scripts/laya-imitation
+RUNS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep221
+CHECK_PY=/tmp/ep037/tools/bin/python
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+viewer_check() {
+  mkdir -p "$EVIDENCE"
+  if [ -x "$CHECK_PY" ]; then
+    PYTHONPATH=/workspace PYTHONDONTWRITEBYTECODE=1 "$CHECK_PY" -m integration.laya_imitation.browser_check \
+      "/workspace/exports/battle_viewers/$1" "$EVIDENCE/$1-viewer-check.json" \
+      || stage "viewer check failed for $1 (battles unaffected; check by hand)"
+  else
+    stage "no Playwright interpreter at $CHECK_PY; viewer check for $1 left to a manual run"
+  fi
+}
+
+# A local Showdown server (e.g. the laya scenario server) rewrites two chat-plugin state files of the pinned checkout
+# when the month changes, and the battle qualification then refuses the dirty worktree. Restore exactly those two;
+# any other change stops the lane.
+SHOWDOWN_STATE="config/chat-plugins/mafia-logs.json config/chat-plugins/seasons.json"
+showdown_clean() {
+  local dirty
+  dirty=$(git -C /workspace/pokemon-showdown status --porcelain | awk '{print $2}' | sort)
+  [ -z "$dirty" ] && return 0
+  if [ -z "$(comm -23 <(echo "$dirty") <(tr ' ' '\n' <<<"$SHOWDOWN_STATE" | sort))" ]; then
+    stage "restoring Showdown chat-plugin state files: $(echo $dirty)"
+    git -C /workspace/pokemon-showdown checkout -- $SHOWDOWN_STATE
+  else
+    stage "pokemon-showdown has other uncommitted changes: $(echo $dirty)"; return 1
+  fi
+}
+
+lane() {   # lane <variant> <compare command> <viewer slug> <experiment>
+  set -euo pipefail
+  stage "$4 train ($1)";  "$RUN" v6 train --variant "$1"
+  stage "$4 evaluate";    "$RUN" v6 evaluate --variant "$1"
+  showdown_clean
+  stage "$2 prepare";     "$RUN" "$2" prepare
+  stage "$2 execute";     "$RUN" "$2" execute
+  stage "$2 export";      "$RUN" "$2" export
+  stage "$3 viewer check"; viewer_check "$3"
+  stage "lane $1 finished"
+}
+
+lane v6s compare10 ex143 EX-141 > "$RUNS/EP-221-v6s.log" 2>&1 &
+V6S=$!
+lane v6h compare11 ex144 EX-142 > "$RUNS/EP-221-v6h.log" 2>&1 &
+V6H=$!
+status=0
+wait "$V6S" || { stage "v6s lane failed (see $RUNS/EP-221-v6s.log)"; status=1; }
+wait "$V6H" || { stage "v6h lane failed (see $RUNS/EP-221-v6h.log)"; status=1; }
+stage "EP-221 chain finished (status $status)"
+exit "$status"

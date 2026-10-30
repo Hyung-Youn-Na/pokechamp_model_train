@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# EP-222 chain (D-199; user instruction 2026-10-30): EX-145 laya-play hand-built teams, v5t / v6st / v6ht vs Abyssal on
+# GPU2 / 8108. Done before this script: `teamset collect` (74 teams, sealed) and `teamset mock` (2/2, audited).
+# Stops at the first failing stage; nothing is re-run automatically. Do not edit integration/laya_imitation meanwhile.
+set -euo pipefail
+cd /workspace
+RUN=/workspace/scripts/laya-imitation
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep222
+CHECK_PY=/tmp/ep037/tools/bin/python
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+SHOWDOWN_STATE="config/chat-plugins/mafia-logs.json config/chat-plugins/seasons.json"
+showdown_clean() {   # same guard as EP-221: restore only the two chat-plugin state files a local server rewrites
+  local dirty
+  dirty=$(git -C /workspace/pokemon-showdown status --porcelain | awk '{print $2}' | sort)
+  [ -z "$dirty" ] && return 0
+  if [ -z "$(comm -23 <(echo "$dirty") <(tr ' ' '\n' <<<"$SHOWDOWN_STATE" | sort))" ]; then
+    stage "restoring Showdown chat-plugin state files: $(echo $dirty)"
+    git -C /workspace/pokemon-showdown checkout -- $SHOWDOWN_STATE
+  else
+    stage "pokemon-showdown has other uncommitted changes: $(echo $dirty)"; return 1
+  fi
+}
+showdown_clean
+stage "EX-145 prepare"; "$RUN" teamset prepare
+stage "EX-145 execute"; "$RUN" teamset execute
+stage "EX-145 export";  "$RUN" teamset export
+mkdir -p "$EVIDENCE"
+if [ -x "$CHECK_PY" ]; then
+  stage "ex145 viewer check"
+  PYTHONPATH=/workspace PYTHONDONTWRITEBYTECODE=1 "$CHECK_PY" -m integration.laya_imitation.browser_check \
+    /workspace/exports/battle_viewers/ex145 "$EVIDENCE/ex145-viewer-check.json" \
+    || stage "viewer check failed for ex145 (battles unaffected; check by hand)"
+fi
+stage "EP-222 chain finished"

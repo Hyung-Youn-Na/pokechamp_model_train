@@ -56,7 +56,8 @@ def main(argv=None):
     p.add_argument('--port', type=int, default=0)
     p.add_argument('--ready-file')
     p.add_argument('--device', default='cuda', choices=('cuda', 'cpu'))
-    p.add_argument('--render', default='v1', choices=('v1', 'v2', 'v3', 'v4', 'v5', 'v2fix', 'v2info', 'v2fixtd'))
+    p.add_argument('--render', default='v1', choices=('v1', 'v2', 'v3', 'v4', 'v5', 'v2fix', 'v2info', 'v2fixtd',
+                                                      'v6s', 'v6h'))
     p = sub.add_parser('battle', help='EX-119 stages')
     p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
     p = sub.add_parser('general', help='EX-120 stages (new-team generalization)')
@@ -79,6 +80,10 @@ def main(argv=None):
     p = sub.add_parser('v5', help='EX-136 renderer v5 (opponent item state, status/turn counters) + Tera knowledge (GPU0)')
     p.add_argument('stage', choices=('reparse', 'measure', 'features', 'data', 'parity', 'train', 'evaluate'))
     p.add_argument('--preflight-only', action='store_true')
+    p = sub.add_parser('v6', help='EX-141 v6s (repetition streaks, GPU0) / EX-142 v6h (long history, 2048, GPU1)')
+    p.add_argument('stage', choices=('reparse', 'measure', 'data', 'parity', 'train', 'evaluate'))
+    p.add_argument('--variant', choices=('v6s', 'v6h'))
+    p.add_argument('--preflight-only', action='store_true')
     p = sub.add_parser('weighted', help='EX-132 outcome-weighted imitation (v2 + Tera knowledge) stages (GPU0)')
     p.add_argument('stage', choices=('weights', 'train', 'evaluate'))
     p.add_argument('--preflight-only', action='store_true')
@@ -98,6 +103,12 @@ def main(argv=None):
     p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
     p = sub.add_parser('compare8', help='EX-139 v2+Tera (EX-124) on D-195-corrected inputs, fix/info (GPU1, port 8109)')
     p.add_argument('stage', choices=('mock', 'probe', 'prepare', 'execute', 'export'))
+    p = sub.add_parser('compare10', help='EX-143 v5+Tera vs v6s battle stages (GPU0, port 8107)')
+    p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
+    p = sub.add_parser('compare11', help='EX-144 v5+Tera vs v6h (2048 tokens) battle stages (GPU1, port 8109)')
+    p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
+    p = sub.add_parser('teamset', help='EX-145 laya-play hand-built teams: v5t / v6st / v6ht vs Abyssal (GPU2, 8108)')
+    p.add_argument('stage', choices=('collect', 'mock', 'prepare', 'execute', 'export'))
     p = sub.add_parser('compare9', help='EX-140 EX-124 on v2fix: Tera-pooled k=1/3, Tera defence text (GPU1, 8109)')
     p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
     p = sub.add_parser('h2h', help='EX-134 / EX-135 / EX-138 laya-vs-laya battle stages (GPU2, port 8108)')
@@ -192,6 +203,21 @@ def main(argv=None):
         else:
             from .evaluation_v5 import run
             run()
+    elif args.command == 'v6':
+        if args.stage == 'reparse':
+            from .early_history import reparse
+            reparse()
+        elif args.variant is None:
+            raise SystemExit('v6 %s needs --variant v6s|v6h' % args.stage)
+        elif args.stage in ('measure', 'data', 'parity'):
+            from . import data_v6
+            {'measure': data_v6.measure, 'data': data_v6.build, 'parity': data_v6.parity}[args.stage](args.variant)
+        elif args.stage == 'train':
+            from .training import EX141, EX142, run
+            run(preflight_only=args.preflight_only, spec=dict(v6s=EX141, v6h=EX142)[args.variant])
+        else:
+            from .evaluation_v6 import run
+            run(args.variant)
     elif args.command == 'weighted':
         if args.stage == 'weights':
             from .outcome_weights import build
@@ -226,6 +252,12 @@ def main(argv=None):
     elif args.command == 'compare8':
         from . import variant_battle
         getattr(variant_battle, args.stage)()
+    elif args.command == 'teamset':
+        from . import teamset_battle
+        getattr(teamset_battle, args.stage)()
+    elif args.command in ('compare10', 'compare11'):
+        from . import comparison
+        getattr(comparison, args.stage + args.command[len('compare'):])()
     elif args.command == 'compare9':
         from . import tera_battle
         getattr(tera_battle, args.stage)()
