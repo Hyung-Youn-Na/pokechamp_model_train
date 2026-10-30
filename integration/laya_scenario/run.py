@@ -1,11 +1,13 @@
-"""Play a fixed position of an NHJ-20261028 game against LayaBot served as EX-130 v4t or EX-136 v5t, in a browser.
+"""Play a fixed position of an NHJ game against LayaBot (EX-130 v4t, EX-136 v5t, EX-141 v6st, EX-142 v6ht), in a browser.
 
 Scenarios: `b39t2` (battle-gen9ou-39 from turn 2, Ninetales' Aurora Veil), `b38t46` (battle-gen9ou-38 from turn 46,
 where the original bot's Gholdengo used Trick) and `b34t15` (battle-gen9ou-34 from turn 15, where the original bot's
-Ting-Lu first used Whirlwind on the Good as Gold Gholdengo).
+Ting-Lu first used Whirlwind on the Good as Gold Gholdengo), all NHJ-20261028 (v1.1); from NHJ-20261029 (v4t),
+`b126t13` (battle-gen9ou-126 from turn 13, where v4t's Ting-Lu began 7 Ruinations into Body Press Corviknight) and
+`b126t37` (turn 37, where v4t's Tera Ogerpon used Encore, which fails, on the freshly switched-in Corviknight).
 
-Processes (stopped together on Ctrl-C): the scenario Showdown server (`scenario_server.cjs`, research checkout
-/workspace/pokemon-showdown), laya serving (`scripts/laya-imitation serve`), the bot (`bot.py`, battle env), and a
+Processes (stopped together on Ctrl-C): the scenario Showdown server (`scenario_server.cjs`, in a copy of
+the research checkout /workspace/pokemon-showdown), laya serving (`scripts/laya-imitation serve`), the bot (`bot.py`, battle env), and a
 static web server for the pinned Showdown client (a thread of this process; laya-play's `laya.html` page).
 In the browser: choose a name, then type `/scenario` in any chat box. The game opens at that turn with you as p1.
 """
@@ -26,6 +28,9 @@ import time
 ROOT = Path('/workspace')
 HERE = Path(__file__).resolve().parent
 SHOWDOWN = ROOT / 'pokemon-showdown'
+# A running Showdown server rewrites chat-plugin state files (config/chat-plugins/*.json) of the checkout it runs in;
+# the battle experiments refuse a dirty pinned checkout. The scenario server runs in a copy refreshed at each start.
+SHOWDOWN_RUNTIME = ROOT / '.artifacts/laya-scenario/showdown-runtime'
 CLIENT = ROOT / '.artifacts/laya-scenario/showdown-client'
 RUNTIME = ROOT / '.artifacts/laya-scenario'
 BATTLE_PYTHON = ROOT / 'pokechamp/.venv/bin/python'
@@ -33,8 +38,11 @@ RUNS = Path('/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-tra
 MODELS = {   # served name, checkpoint, renderer: the EX-131/137/138 battle settings
     'v4t': ('laya-v4t', RUNS / 'EX-130/checkpoints/selected', 'v4'),
     'v5t': ('laya-v5t', RUNS / 'EX-136/checkpoints/selected', 'v5'),
+    'v6st': ('laya-v6st', RUNS / 'EX-141/checkpoints/selected', 'v6s'),   # EX-143 setting (D-198 repetition streaks)
+    'v6ht': ('laya-v6ht', RUNS / 'EX-142/checkpoints/selected', 'v6h'),   # EX-144 setting (long history, 2048 tokens)
 }
-SCENARIOS = {'b39t2': 'battle39_t2', 'b38t46': 'battle38_t46', 'b34t15': 'battle34_t15'}   # <stem>.json, .inputlog.json
+SCENARIOS = {'b39t2': 'battle39_t2', 'b38t46': 'battle38_t46', 'b34t15': 'battle34_t15',   # <stem>.json, .inputlog.json
+             'b126t13': 'battle126_t13', 'b126t37': 'battle126_t37'}
 
 
 def wait_port(host, port, process, seconds, what):
@@ -173,8 +181,12 @@ def main(argv=None):
     base = {k: v for k, v in os.environ.items() if not k.startswith('PYTHON')}
     try:
         print('[run] scenario Showdown on %s:%d' % (args.host, args.showdown_port), flush=True)
-        server = spawn('showdown', ['node', str(HERE / 'scenario_server.cjs'), str(SHOWDOWN), str(args.showdown_port),
-                                    args.host, str(inputlog), args.bot_name], dict(base), SHOWDOWN)
+        SHOWDOWN_RUNTIME.mkdir(parents=True, exist_ok=True)
+        subprocess.run(['rsync', '-a', '--delete', '--exclude', '.git', '--exclude', 'logs/', str(SHOWDOWN) + '/',
+                        str(SHOWDOWN_RUNTIME) + '/'], check=True)
+        server = spawn('showdown', ['node', str(HERE / 'scenario_server.cjs'), str(SHOWDOWN_RUNTIME),
+                                    str(args.showdown_port), args.host, str(inputlog), args.bot_name], dict(base),
+                       SHOWDOWN_RUNTIME)
         wait_port('127.0.0.1' if args.host == '0.0.0.0' else args.host, args.showdown_port, server, 120, 'Showdown')
 
         print('[run] loading %s (%s, render %s) on %s' % (model, checkpoint.parent.parent.name, render, args.device),

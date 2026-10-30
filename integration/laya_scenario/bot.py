@@ -20,7 +20,31 @@ DECISION_LIMIT = 600
 GAME_SECONDS = 6 * 3600
 
 
-def player_classes(slots):
+def bind_tera_formes():
+    """Seated after its own Terastallization (b126t37), the bot's first request names the Tera forme (Ogerpon-Teal-Tera)
+    while the history's `detailschange` left the base species (poke_env `forme_change` does not store it). Give that
+    Pokemon the request details first, as the live game's earlier requests already had, so the identity adapter binds
+    it. Call after `install_identity_adapter`."""
+    from poke_env.environment.abstract_battle import AbstractBattle
+    from integration.pokechamp.battle_adapter import identity
+    bind = AbstractBattle._update_team_from_request
+
+    def update(self, side):
+        if not getattr(self, '_benchmark_request_bound', False):
+            for request in side['pokemon']:
+                pokemon = self._team.get(identity(request['ident'])[1])
+                if request.get('terastallized') and pokemon is not None:
+                    pokemon._update_from_details(request['details'])
+        return bind(self, side)
+
+    AbstractBattle._update_team_from_request = update
+
+
+# D-198: models trained on `early_history` (EX-142 v6ht) get it in their inputs, as in EX-144's battle worker.
+EARLY_HISTORY_MODELS = ('laya-v6ht',)
+
+
+def player_classes(slots, early=False):
     from integration.pokechamp.imitation import player as p
     p.MAX_TURNS = TURN_LIMIT
 
@@ -29,6 +53,16 @@ def player_classes(slots):
             if self.calls >= DECISION_LIMIT:
                 raise p.BattleLimit('decision_limit')
             return await super().evaluate(value, decision)
+
+        def generate(self, official, prefix, actions, *, actor):
+            if not early:
+                return super().generate(official, prefix, actions, actor=actor)
+            if self.bridge is None:
+                from integration.pokechamp.imitation.metamon_bridge import BridgeClient
+                self.bridge = BridgeClient()
+            snapshot = self.bridge.snapshot(p.public_prefix(prefix), self.own_sets, actor,
+                                            p.decision_kind(official['request']), early_history=True)
+            return p.from_snapshot(snapshot, actions), snapshot
 
     class SeatedPlayer(p.player_class()):
         # Seated after turn 1, the bot never sees its own team preview: freeze the original game's preview slots.
@@ -51,7 +85,7 @@ async def one_game(args, serving, scenario, directory):
     from poke_env.ps_client.server_configuration import ServerConfiguration
     from integration.pokechamp import cli as pcli
 
-    p, LimitedSession, Player = player_classes(scenario['p2_slots'])
+    p, LimitedSession, Player = player_classes(scenario['p2_slots'], early=serving['model'] in EARLY_HISTORY_MODELS)
     team = scenario['players']['p2']['team']
     session = LimitedSession(directory, model=serving['model'], serving=serving,
                              own_sets=p.submitted_sets(dict(packed=team)), deadline=time.monotonic() + GAME_SECONDS)
@@ -114,6 +148,7 @@ async def main_async(args):
     from integration.pokechamp.imitation.player import http_json
 
     install_identity_adapter()
+    bind_tera_formes()
     ready = json.loads(Path(args.serving).read_text())
     health = http_json(ready['endpoint'], '/health', timeout=10)
     if health.get('checkpoint_sha256') != ready['checkpoint_sha256']:

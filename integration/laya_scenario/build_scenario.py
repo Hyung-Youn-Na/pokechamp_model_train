@@ -1,4 +1,4 @@
-"""Build a scenario that starts an NHJ-20261028 game at a fixed turn T, as a Showdown input log.
+"""Build a scenario that starts an NHJ-20261028/29 game at a fixed turn T, as a Showdown input log.
 
 Many turns cannot be replayed from one seed, so the input log only starts the battle (the original leads) and then one
 `>eval` puts the simulator into the state of the end of turn T-1:
@@ -7,15 +7,17 @@ Many turns cannot be replayed from one seed, so the input log only starts the ba
   sent as a `|split|p2` pair (exact for the bot, percent for the person), so both see the original history;
 - every Pokemon gets its turn-T state: LayaBot's exact HP, PP, item and team order from the original turn-T request,
   its active boosts from the bot's snapshot; NHJ's HP (the smallest value with the percent the bot saw), status,
-  active boosts, revealed items, Tera use (snapshot) and PP (moves in the log, LayaBot's Pressure included); last moves
-  and once-per-battle Dauntless Shield / Intrepid Sword from the log; side conditions, terrain and weather with the
-  turns they have left;
+  active boosts, revealed items, Tera use (snapshot) and PP (moves in the log, LayaBot's Pressure included), plus a
+  third of its HP for each unseen Regenerator switch-out; last moves and once-per-battle Dauntless Shield / Intrepid
+  Sword from the log; LayaBot's active Pokemon Terastallized again when the request says it is; side conditions
+  (Stealth Rock, Spikes with their layers), terrain and weather with the turns they have left;
 - `battle.endTurn()` then starts turn T exactly as the simulator does between turns.
 
 Volatile effects on the active Pokemon (Substitute, Taunt, Encore, ...) are not rebuilt: a scenario whose snapshot
 shows any is refused.
 
-Usage: python build_scenario.py <scenario> <exported NHJ-20261028 dir> <out dir>   (scenario: b38t46, b34t15)
+Usage: python build_scenario.py <scenario> <exported NHJ archive dir> <out dir>
+  (b38t46, b34t15: NHJ-20261028; b126t13, b126t37: NHJ-20261029)
 """
 from __future__ import annotations
 import json
@@ -31,13 +33,19 @@ SCENARIOS = {
                    title='battle-gen9ou-38 from turn 46 (Gholdengo Trick)'),
     'b34t15': dict(game='battle-gen9ou-34', decision='LayaBot-35-158', team='nhj34_team.txt', stem='battle34_t15',
                    title='battle-gen9ou-34 from turn 15 (Ting-Lu vs Good as Gold Gholdengo)'),
+    # NHJ-20261029 (v4t games)
+    'b126t13': dict(game='battle-gen9ou-126', decision='LayaBot-37-169', team='nhj126_team.txt', stem='battle126_t13',
+                    title='battle-gen9ou-126 from turn 13 (Ting-Lu vs Body Press Corviknight)'),
+    'b126t37': dict(game='battle-gen9ou-126', decision='LayaBot-99-455', team='nhj126_team.txt', stem='battle126_t37',
+                    title='battle-gen9ou-126 from turn 37 (Tera Ogerpon vs freshly switched-in Corviknight)'),
 }
 SEED = 'sodium,00000000000000000000000000005eed'   # any seed: nothing random happens before the eval
 TERRAINS = {'electric_terrain': 'electricterrain', 'grassy_terrain': 'grassyterrain', 'misty_terrain': 'mistyterrain',
             'psychic_terrain': 'psychicterrain'}
 WEATHERS = {'snowscape': 'snow', 'snow': 'snow', 'raindance': 'raindance', 'rain': 'raindance',
             'sunnyday': 'sunnyday', 'sun': 'sunnyday', 'sandstorm': 'sandstorm', 'sand': 'sandstorm'}
-SIDE_CONDITIONS = {'stealth_rock': 'stealthrock'}
+SIDE_CONDITIONS = {'stealth_rock': 'stealthrock', 'spikes': 'spikes'}
+LAYERED = {'spikes'}   # the snapshot value is the layer count (for the others it is the turn the hazard was set)
 HP_FIELD = {'switch': 4, 'drag': 4, 'replace': 4, '-damage': 3, '-heal': 3, '-sethp': 3}
 CHAT = {'request', 't:', 'j', 'J', 'l', 'L', 'n', 'N', 'c', 'c:', 'raw', 'html', 'uhtml', 'uhtmlchange', 'inactive',
         'inactiveoff', 'player', 'title', 'init', 'b', 'bigerror', 'error'}
@@ -58,7 +66,7 @@ def unpack(packed):
     return json.loads(node("const {Teams}=require('./dist/sim/teams');const {Dex}=require('./dist/sim/dex');"
                            "const t=Teams.unpack(require('fs').readFileSync(0,'utf8'));"
                            "for(const s of t){const sp=Dex.species.get(s.species);"
-                           "s.ident=!s.name||Dex.toID(s.name)===sp.id?sp.baseSpecies:s.name;}"
+                           "s.ident=!s.name||Dex.toID(s.name)===sp.id?sp.baseSpecies:s.name;s.simName=sp.name;}"
                            "process.stdout.write(JSON.stringify(t))", packed))
 
 
@@ -103,15 +111,23 @@ def toid(text):
 
 def walk(lines, side, team, pressure=()):
     """One side through the log: team order after the switches, active Pokemon, PP spent (Pressure targets cost 2),
-    last move since the active Pokemon's switch-in, and who has ever been in (once-per-battle abilities)."""
+    last move since the active Pokemon's switch-in, who has ever been in (once-per-battle abilities), and how many
+    times each Pokemon left the field alive since its HP was last shown (Regenerator heals nobody sees)."""
     base = {s['ident']: i for i, s in enumerate(team)}
     order, used, active, last, seen = list(range(6)), {i: {} for i in range(6)}, 0, None, set()
+    away, down = {i: 0 for i in range(6)}, set()
     for line in lines:
         parts = line.split('|')
         if len(parts) < 4 or not parts[2].startswith(side + 'a: '):
             continue
         mon = base[parts[2][5:]]
+        if parts[1] in HP_FIELD:
+            away[mon] = 0
+            if parts[HP_FIELD[parts[1]]].startswith('0'):
+                down.add(mon)
         if parts[1] in ('switch', 'drag'):
+            if active != mon and active not in down:
+                away[active] += 1
             here = order.index(mon)
             order[0], order[here] = order[here], order[0]
             active, last = mon, None
@@ -121,7 +137,7 @@ def walk(lines, side, team, pressure=()):
             cost = 2 if len(parts) > 4 and parts[4][5:] in pressure and parts[4][:3] != side else 1
             used[mon][move] = used[mon].get(move, 0) + cost
             last = move
-    return dict(order=order, used=used, active=active, last=last, seen=seen)
+    return dict(order=order, used=used, active=active, last=last, seen=seen, away=away)
 
 
 def snapshot_of(events, decision):
@@ -129,11 +145,15 @@ def snapshot_of(events, decision):
                 if e['type'] == 'input' and e['decision'] == decision)
 
 
-def conditions(raw):
+def conditions(raw, lines, side):
+    """In the order they were first set, which is the order their switch-in effects run."""
     unknown = set(raw) - set(SIDE_CONDITIONS)
     if unknown:
         raise NotImplementedError('side conditions not rebuilt yet: %s' % sorted(unknown))
-    return [SIDE_CONDITIONS[k] for k in raw]
+    started = [toid(line.split('|')[3].removeprefix('move: ')) for line in lines
+               if line.startswith('|-sidestart|%s: ' % side)]
+    keys = sorted(raw, key=lambda k: started.index(SIDE_CONDITIONS[k]) if SIDE_CONDITIONS[k] in started else 99)
+    return [dict(id=SIDE_CONDITIONS[k], layers=raw[k]) if k in LAYERED else SIDE_CONDITIONS[k] for k in keys]
 
 
 def field_of(snapshot, turn):
@@ -153,7 +173,9 @@ EVAL = r"""(() => {
 const S = %s;
 battle.log.pop();   // the '>>> ' echo of this eval
 const add = battle.add;
+let mute = false;   // state rebuilt through simulator calls (Terastallization) must not reach the log
 battle.add = function (...args) {   // and its '<<< ' result line
+	if (mute) return;
 	if (args[0] === '' && String(args[1]).startsWith('<<<')) { battle.add = add; return; }
 	return add.apply(this, args);
 };
@@ -171,12 +193,18 @@ for (const side of battle.sides) {
 		if (hp === undefined || hp === null) {   // NHJ: the smallest HP whose public percent is what the bot saw
 			hp = Math.max(1, Math.floor(m.pct / 100 * p.maxhp));
 			while (Math.ceil(hp / p.maxhp * 100) < m.pct) hp++;
+			if (m.regen) hp = Math.min(p.maxhp, hp + m.regen * Math.trunc(p.baseMaxhp / 3));   // unseen Regenerator
 		}
 		p.hp = m.fainted ? 0 : (hp === 'max' ? p.maxhp : hp);
 		p.fainted = !!m.fainted;
 		if (!p.fainted) left++;
 		p.status = m.status || '';
 		p.statusState = battle.initEffectState({id: p.status, target: p, stage: 0});
+		if (m.tera) {   // the active, already Terastallized Pokemon (forme change and Embody Aspect included)
+			mute = true;
+			battle.actions.terastallize(p);
+			mute = false;
+		}
 		for (const [stat, value] of Object.entries(m.boosts || {})) p.boosts[stat] = value;
 		if (m.item !== undefined) p.item = m.item;
 		for (const slot of p.moveSlots) {
@@ -191,8 +219,10 @@ for (const side of battle.sides) {
 	}
 	side.pokemonLeft = left;
 	side.totalFainted = 6 - left;
-	for (const id of spec.sideConditions) {
+	for (const c of spec.sideConditions) {
+		const id = typeof c === 'string' ? c : c.id;
 		side.sideConditions[id] = battle.initEffectState({id, target: side, duration: undefined});
+		if (c.layers) side.sideConditions[id].layers = c.layers;
 	}
 }
 if (S.field.terrain) {
@@ -243,6 +273,8 @@ def main(name, source, out):
                      used=nhj['used'][i], pct=None if fainted else seen['hp_percent'])
         if seen['hp_percent'] in (100, None):   # None: never sent out, so untouched
             entry['hp'] = 'max'
+        elif not fainted and toid(set_['ability']) == 'regenerator' and nhj['away'][i]:
+            entry['regen'] = nhj['away'][i]
         state = seen['item_state']
         if state['state'] == 'held':
             entry['item'] = state['item']
@@ -261,8 +293,11 @@ def main(name, source, out):
     if own_active['effects']:
         raise ValueError('LayaBot active volatile effects are not rebuilt: %s' % own_active['effects'])
     p2_mons, p2_order = [], []
+    by_ident = {s['ident']: s for s in bot_sets}
     for mon in request['side']['pokemon']:
         species = mon['details'].split(',')[0]
+        if mon.get('terastallized'):   # a Tera forme (Ogerpon-Teal-Tera) is rebuilt from the set's species
+            species = by_ident[mon['ident'][4:]]['simName']
         p2_order.append(species)
         hp, _, status = mon['condition'].partition(' ')
         fainted = status == 'fnt'
@@ -270,6 +305,10 @@ def main(name, source, out):
         entry = dict(species=species, fainted=fainted, hp=int(hp.split('/')[0]) if not fainted else 0,
                      status='' if fainted else status, item=mon['item'],
                      pp={x['id']: x['pp'] for x in moves} if moves else None)
+        if mon.get('terastallized'):
+            if not mon['active']:
+                raise NotImplementedError('a Terastallized LayaBot Pokemon off the field is not rebuilt yet')
+            entry['tera'] = True
         if mon['active']:
             entry['boosts'] = {k: v for k, v in own_active['boosts'].items() if v}
             if bot['last']:
@@ -279,9 +318,9 @@ def main(name, source, out):
     state = dict(turn=turn, history=lines, field=field_of(snapshot, turn),
                  p1=dict(order=[nhj_sets[i]['species'] for i in nhj['order']], mons=p1_mons,
                          canTera=snapshot['opponent_can_tera'],
-                         sideConditions=conditions(snapshot['opponent_side_conditions'])),
+                         sideConditions=conditions(snapshot['opponent_side_conditions'], plain, 'p1')),
                  p2=dict(order=p2_order, mons=p2_mons, canTera=snapshot['can_tera'],
-                         sideConditions=conditions(snapshot['own_side_conditions'])))
+                         sideConditions=conditions(snapshot['own_side_conditions'], plain, 'p2')))
     spec = dict(format='gen9ou', title=cfg['title'],
                 players=dict(p1=dict(name='NHJ', team=nhj_team), p2=dict(name='LayaBot', team=bot_team)),
                 choices=[['p1', 'team 123456'], ['p2', bot_lead.removeprefix('/')]],

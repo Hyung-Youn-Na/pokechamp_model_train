@@ -1,0 +1,61 @@
+Landorus-Therian (M) @ Rocky Helmet
+Ability: Intimidate
+Tera Type: Water
+EVs: 252 HP / 216 Def / 40 Spe
+Impish Nature
+- Stealth Rock
+- Earthquake
+- U-turn
+- Taunt
+
+Zamazenta @ Leftovers
+Ability: Dauntless Shield
+Tera Type: Steel
+EVs: 252 HP / 88 Def / 168 Spe
+Impish Nature
+- Iron Defense
+- Body Press
+- Crunch
+- Roar
+
+Dragapult (M) @ Choice Specs
+Ability: Infiltrator
+Tera Type: Ghost
+EVs: 4 HP / 252 SpA / 252 Spe
+Timid Nature
+IVs: 0 Atk
+- Draco Meteor
+- Shadow Ball
+- Flamethrower
+- U-turn
+
+Ogerpon-Wellspring (F) @ Wellspring Mask
+Ability: Water Absorb
+Tera Type: Water
+EVs: 252 Atk / 4 SpD / 252 Spe
+Jolly Nature
+- Ivy Cudgel
+- Horn Leech
+- Swords Dance
+- Play Rough
+
+Slowking-Galar (F) @ Heavy-Duty Boots
+Ability: Regenerator
+Tera Type: Water
+EVs: 252 HP / 4 Def / 252 SpD
+Calm Nature
+IVs: 0 Atk
+- Future Sight
+- Sludge Bomb
+- Flamethrower
+- Slack Off
+
+Corviknight (M) @ Leftovers
+Ability: Pressure
+Tera Type: Fire
+EVs: 252 HP / 252 Def / 4 SpD
+Impish Nature
+- Body Press
+- Defog
+- Roost
+- U-turn

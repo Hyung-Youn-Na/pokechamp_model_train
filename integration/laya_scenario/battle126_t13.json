@@ -1,0 +1,621 @@
+{
+ "format": "gen9ou",
+ "title": "battle-gen9ou-126 from turn 13 (Ting-Lu vs Body Press Corviknight)",
+ "players": {
+  "p1": {
+   "name": "NHJ",
+   "team": "Landorus-Therian||RockyHelmet|Intimidate|StealthRock,Earthquake,Uturn,Taunt|Impish|252,,216,,,40|M||||,,,,,Water]Zamazenta||Leftovers|DauntlessShield|IronDefense,BodyPress,Crunch,Roar|Impish|252,,88,,,168|||||,,,,,Steel]Dragapult||ChoiceSpecs|Infiltrator|DracoMeteor,ShadowBall,Flamethrower,Uturn|Timid|4,,,252,,252|M|,0,,,,|||,,,,,Ghost]Ogerpon-Wellspring||WellspringMask|WaterAbsorb|IvyCudgel,HornLeech,SwordsDance,PlayRough|Jolly|,252,,,4,252|F||||,,,,,Water]Slowking-Galar||HeavyDutyBoots|Regenerator|FutureSight,SludgeBomb,Flamethrower,SlackOff|Calm|252,,4,,252,|F|,0,,,,|||,,,,,Water]Corviknight||Leftovers|Pressure|BodyPress,Defog,Roost,Uturn|Impish|252,,252,,4,|M||||,,,,,Fire"
+  },
+  "p2": {
+   "name": "LayaBot",
+   "team": "Clefable||LifeOrb|MagicGuard|StealthRock,CosmicPower,ThunderWave,CalmMind|Bold|252,,248,,,8|F||||,,,,,Steel]Ting-Lu||Leftovers|VesselofRuin|Earthquake,Ruination,Whirlwind,Spikes|Careful|252,,4,,252,|N||||,,,,,Ghost]Gholdengo||AirBalloon|GoodasGold|ThunderWave,ShadowBall,Trick,NastyPlot|Timid|,,,252,4,252|N||||,,,,,Fairy]Latios||SoulDew|Levitate|PsychicNoise,DracoMeteor,AuraSphere,CalmMind|Timid|,,4,252,,252|M||||,,,,,Steel]Slither Wing||BoosterEnergy|Protosynthesis|MorningSun,Uturn,FirstImpression,WillOWisp|Adamant|196,252,,,,60|N||||,,,,,Fighting]Ogerpon||HeavyDutyBoots|Defiant|IvyCudgel,KnockOff,Encore,PlayRough|Jolly|,252,,,4,252|F||||,Poison,,,,Grass"
+  }
+ },
+ "choices": [
+  [
+   "p1",
+   "team 123456"
+  ],
+  [
+   "p2",
+   "team 512346"
+  ]
+ ],
+ "p2_slots": {
+  "p2: Clefable": 1,
+  "p2: Ting-Lu": 2,
+  "p2: Gholdengo": 3,
+  "p2: Latios": 4,
+  "p2: Slither Wing": 5,
+  "p2: Ogerpon": 6
+ },
+ "opening": [
+  "|init|battle",
+  "|title|NHJ vs. LayaBot",
+  "",
+  "",
+  "|t:|1793200540",
+  "|gametype|singles",
+  "|player|p1|NHJ|102|",
+  "|player|p2|LayaBot|pokemonranger-gen4|",
+  "|teamsize|p1|6",
+  "|teamsize|p2|6",
+  "|gen|9",
+  "|tier|Gen 9 OU",
+  "|rule|HP Percentage Mod: HP is shown in percentages",
+  "|rule|Endless Battle Clause: Forcing endless battles is banned",
+  "|rule|Species Clause: Limit one of each Pokémon",
+  "|rule|OHKO Clause: OHKO moves are banned",
+  "|rule|Evasion Items Clause: Evasion items are banned",
+  "|rule|Evasion Moves Clause: Evasion moves are banned",
+  "|rule|Evasion Abilities Clause: Evasion abilities are banned",
+  "|rule|Sleep Moves Clause: Sleep-inducing moves are banned",
+  "|clearpoke",
+  "|poke|p1|Landorus-Therian, M|",
+  "|poke|p1|Zamazenta-*|",
+  "|poke|p1|Dragapult, M|",
+  "|poke|p1|Ogerpon-Wellspring, F|",
+  "|poke|p1|Slowking-Galar, F|",
+  "|poke|p1|Corviknight, M|",
+  "|poke|p2|Clefable, F|",
+  "|poke|p2|Ting-Lu|",
+  "|poke|p2|Gholdengo|",
+  "|poke|p2|Latios, M|",
+  "|poke|p2|Slither Wing|",
+  "|poke|p2|Ogerpon, F|",
+  "|teampreview",
+  "|request|{\"teamPreview\":true,\"side\":{\"name\":\"LayaBot\",\"id\":\"p2\",\"pokemon\":[{\"ident\":\"p2: Clefable\",\"details\":\"Clefable, F\",\"condition\":\"394/394\",\"active\":true,\"stats\":{\"atk\":158,\"def\":268,\"spa\":226,\"spd\":216,\"spe\":158},\"moves\":[\"stealthrock\",\"cosmicpower\",\"thunderwave\",\"calmmind\"],\"baseAbility\":\"magicguard\",\"item\":\"lifeorb\",\"pokeball\":\"pokeball\",\"ability\":\"magicguard\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Steel\",\"terastallized\":\"\"},{\"ident\":\"p2: Ting-Lu\",\"details\":\"Ting-Lu\",\"condition\":\"514/514\",\"active\":false,\"stats\":{\"atk\":256,\"def\":287,\"spa\":131,\"spd\":284,\"spe\":126},\"moves\":[\"earthquake\",\"ruination\",\"whirlwind\",\"spikes\"],\"baseAbility\":\"vesselofruin\",\"item\":\"leftovers\",\"pokeball\":\"pokeball\",\"ability\":\"vesselofruin\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Ghost\",\"terastallized\":\"\"},{\"ident\":\"p2: Gholdengo\",\"details\":\"Gholdengo\",\"condition\":\"315/315\",\"active\":false,\"stats\":{\"atk\":140,\"def\":226,\"spa\":365,\"spd\":219,\"spe\":293},\"moves\":[\"thunderwave\",\"shadowball\",\"trick\",\"nastyplot\"],\"baseAbility\":\"goodasgold\",\"item\":\"airballoon\",\"pokeball\":\"pokeball\",\"ability\":\"goodasgold\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Fairy\",\"terastallized\":\"\"},{\"ident\":\"p2: Latios\",\"details\":\"Latios, M\",\"condition\":\"301/301\",\"active\":false,\"stats\":{\"atk\":194,\"def\":197,\"spa\":359,\"spd\":256,\"spe\":350},\"moves\":[\"psychicnoise\",\"dracometeor\",\"aurasphere\",\"calmmind\"],\"baseAbility\":\"levitate\",\"item\":\"souldew\",\"pokeball\":\"pokeball\",\"ability\":\"levitate\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Steel\",\"terastallized\":\"\"},{\"ident\":\"p2: Slither Wing\",\"details\":\"Slither Wing\",\"condition\":\"360/360\",\"active\":false,\"stats\":{\"atk\":405,\"def\":194,\"spa\":185,\"spd\":246,\"spe\":213},\"moves\":[\"morningsun\",\"uturn\",\"firstimpression\",\"willowisp\"],\"baseAbility\":\"protosynthesis\",\"item\":\"boosterenergy\",\"pokeball\":\"pokeball\",\"ability\":\"protosynthesis\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Fighting\",\"terastallized\":\"\"},{\"ident\":\"p2: Ogerpon\",\"details\":\"Ogerpon, F\",\"condition\":\"301/301\",\"active\":false,\"stats\":{\"atk\":339,\"def\":204,\"spa\":140,\"spd\":229,\"spe\":350},\"moves\":[\"ivycudgel\",\"knockoff\",\"encore\",\"playrough\"],\"baseAbility\":\"defiant\",\"item\":\"heavydutyboots\",\"pokeball\":\"pokeball\",\"ability\":\"defiant\",\"commanding\":false,\"reviving\":false,\"teraType\":\"Grass\",\"terastallized\":\"\"}]},\"rqid\":3}",
+  "|J| test",
+  "|",
+  "|t:|1793200563",
+  "|start",
+  "|switch|p1a: Landorus|Landorus-Therian, M|100/100",
+  "|switch|p2a: Slither Wing|Slither Wing|360/360",
+  "|-ability|p1a: Landorus|Intimidate|boost",
+  "|-unboost|p2a: Slither Wing|atk|1",
+  "|-enditem|p2a: Slither Wing|Booster Energy",
+  "|-activate|p2a: Slither Wing|ability: Protosynthesis|[fromitem]",
+  "|-start|p2a: Slither Wing|protosynthesisatk",
+  "|turn|1"
+ ],
+ "request": {
+  "active": [
+   {
+    "moves": [
+     {
+      "move": "Earthquake",
+      "id": "earthquake",
+      "pp": 16,
+      "maxpp": 16,
+      "target": "allAdjacent",
+      "disabled": false
+     },
+     {
+      "move": "Ruination",
+      "id": "ruination",
+      "pp": 16,
+      "maxpp": 16,
+      "target": "normal",
+      "disabled": false
+     },
+     {
+      "move": "Whirlwind",
+      "id": "whirlwind",
+      "pp": 32,
+      "maxpp": 32,
+      "target": "normal",
+      "disabled": false
+     },
+     {
+      "move": "Spikes",
+      "id": "spikes",
+      "pp": 30,
+      "maxpp": 32,
+      "target": "foeSide",
+      "disabled": false
+     }
+    ],
+    "canTerastallize": "Ghost"
+   }
+  ],
+  "side": {
+   "name": "LayaBot",
+   "id": "p2",
+   "pokemon": [
+    {
+     "ident": "p2: Ting-Lu",
+     "details": "Ting-Lu",
+     "condition": "510/514",
+     "active": true,
+     "stats": {
+      "atk": 256,
+      "def": 287,
+      "spa": 131,
+      "spd": 284,
+      "spe": 126
+     },
+     "moves": [
+      "earthquake",
+      "ruination",
+      "whirlwind",
+      "spikes"
+     ],
+     "baseAbility": "vesselofruin",
+     "item": "leftovers",
+     "pokeball": "pokeball",
+     "ability": "vesselofruin",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Ghost",
+     "terastallized": ""
+    },
+    {
+     "ident": "p2: Slither Wing",
+     "details": "Slither Wing",
+     "condition": "360/360",
+     "active": false,
+     "stats": {
+      "atk": 405,
+      "def": 194,
+      "spa": 185,
+      "spd": 246,
+      "spe": 213
+     },
+     "moves": [
+      "morningsun",
+      "uturn",
+      "firstimpression",
+      "willowisp"
+     ],
+     "baseAbility": "protosynthesis",
+     "item": "",
+     "pokeball": "pokeball",
+     "ability": "protosynthesis",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Fighting",
+     "terastallized": ""
+    },
+    {
+     "ident": "p2: Latios",
+     "details": "Latios, M",
+     "condition": "264/301",
+     "active": false,
+     "stats": {
+      "atk": 194,
+      "def": 197,
+      "spa": 359,
+      "spd": 256,
+      "spe": 350
+     },
+     "moves": [
+      "psychicnoise",
+      "dracometeor",
+      "aurasphere",
+      "calmmind"
+     ],
+     "baseAbility": "levitate",
+     "item": "souldew",
+     "pokeball": "pokeball",
+     "ability": "levitate",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Steel",
+     "terastallized": ""
+    },
+    {
+     "ident": "p2: Clefable",
+     "details": "Clefable, F",
+     "condition": "204/394",
+     "active": false,
+     "stats": {
+      "atk": 158,
+      "def": 268,
+      "spa": 226,
+      "spd": 216,
+      "spe": 158
+     },
+     "moves": [
+      "stealthrock",
+      "cosmicpower",
+      "thunderwave",
+      "calmmind"
+     ],
+     "baseAbility": "magicguard",
+     "item": "lifeorb",
+     "pokeball": "pokeball",
+     "ability": "magicguard",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Steel",
+     "terastallized": ""
+    },
+    {
+     "ident": "p2: Gholdengo",
+     "details": "Gholdengo",
+     "condition": "0 fnt",
+     "active": false,
+     "stats": {
+      "atk": 140,
+      "def": 226,
+      "spa": 365,
+      "spd": 219,
+      "spe": 293
+     },
+     "moves": [
+      "thunderwave",
+      "shadowball",
+      "trick",
+      "nastyplot"
+     ],
+     "baseAbility": "goodasgold",
+     "item": "",
+     "pokeball": "pokeball",
+     "ability": "goodasgold",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Fairy",
+     "terastallized": ""
+    },
+    {
+     "ident": "p2: Ogerpon",
+     "details": "Ogerpon, F",
+     "condition": "301/301",
+     "active": false,
+     "stats": {
+      "atk": 339,
+      "def": 204,
+      "spa": 140,
+      "spd": 229,
+      "spe": 350
+     },
+     "moves": [
+      "ivycudgel",
+      "knockoff",
+      "encore",
+      "playrough"
+     ],
+     "baseAbility": "defiant",
+     "item": "heavydutyboots",
+     "pokeball": "pokeball",
+     "ability": "defiant",
+     "commanding": false,
+     "reviving": false,
+     "teraType": "Grass",
+     "terastallized": ""
+    }
+   ]
+  },
+  "rqid": 37
+ },
+ "state": {
+  "turn": 13,
+  "history": [
+   "|",
+   "|move|p1a: Landorus|Stealth Rock|p2a: Slither Wing",
+   "|-sidestart|p2: LayaBot|move: Stealth Rock",
+   "|move|p2a: Slither Wing|Will-O-Wisp|p1a: Landorus",
+   "|-status|p1a: Landorus|brn",
+   "|",
+   "|-damage|p1a: Landorus|94/100 brn|[from] brn",
+   "|upkeep",
+   "|turn|2",
+   "|",
+   "|move|p1a: Landorus|U-turn|p2a: Slither Wing",
+   "|-resisted|p2a: Slither Wing",
+   "|split|p2",
+   "|-damage|p2a: Slither Wing|338/360",
+   "|-damage|p2a: Slither Wing|94/100",
+   "|",
+   "|switch|p1a: Zamazenta|Zamazenta|100/100|[from] U-turn",
+   "|-ability|p1a: Zamazenta|Dauntless Shield|boost",
+   "|-boost|p1a: Zamazenta|def|1",
+   "|move|p2a: Slither Wing|U-turn|p1a: Zamazenta",
+   "|-resisted|p1a: Zamazenta",
+   "|-damage|p1a: Zamazenta|93/100",
+   "|",
+   "|-end|p2a: Slither Wing|Protosynthesis|[silent]",
+   "|split|p2",
+   "|switch|p2a: Gholdengo|Gholdengo|315/315|[from] U-turn",
+   "|switch|p2a: Gholdengo|Gholdengo|100/100|[from] U-turn",
+   "|split|p2",
+   "|-damage|p2a: Gholdengo|296/315|[from] Stealth Rock",
+   "|-damage|p2a: Gholdengo|94/100|[from] Stealth Rock",
+   "|-item|p2a: Gholdengo|Air Balloon",
+   "|",
+   "|-heal|p1a: Zamazenta|99/100|[from] item: Leftovers",
+   "|upkeep",
+   "|turn|3",
+   "|",
+   "|move|p1a: Zamazenta|Crunch|p2a: Gholdengo",
+   "|-supereffective|p2a: Gholdengo",
+   "|split|p2",
+   "|-damage|p2a: Gholdengo|148/315",
+   "|-damage|p2a: Gholdengo|47/100",
+   "|-unboost|p2a: Gholdengo|def|1",
+   "|-enditem|p2a: Gholdengo|Air Balloon",
+   "|move|p2a: Gholdengo|Thunder Wave|p1a: Zamazenta",
+   "|-status|p1a: Zamazenta|par",
+   "|",
+   "|-heal|p1a: Zamazenta|100/100 par|[from] item: Leftovers",
+   "|upkeep",
+   "|turn|4",
+   "|",
+   "|split|p2",
+   "|switch|p2a: Slither Wing|Slither Wing|338/360",
+   "|switch|p2a: Slither Wing|Slither Wing|94/100",
+   "|split|p2",
+   "|-damage|p2a: Slither Wing|293/360|[from] Stealth Rock",
+   "|-damage|p2a: Slither Wing|82/100|[from] Stealth Rock",
+   "|move|p1a: Zamazenta|Crunch|p2a: Slither Wing",
+   "|-resisted|p2a: Slither Wing",
+   "|split|p2",
+   "|-damage|p2a: Slither Wing|250/360",
+   "|-damage|p2a: Slither Wing|70/100",
+   "|",
+   "|upkeep",
+   "|turn|5",
+   "|",
+   "|move|p2a: Slither Wing|Morning Sun|p2a: Slither Wing",
+   "|split|p2",
+   "|-heal|p2a: Slither Wing|360/360",
+   "|-heal|p2a: Slither Wing|100/100",
+   "|move|p1a: Zamazenta|Iron Defense|p1a: Zamazenta",
+   "|-boost|p1a: Zamazenta|def|2",
+   "|",
+   "|upkeep",
+   "|turn|6",
+   "|",
+   "|move|p2a: Slither Wing|U-turn|p1a: Zamazenta",
+   "|-resisted|p1a: Zamazenta",
+   "|-damage|p1a: Zamazenta|94/100 par",
+   "|",
+   "|-end|p2a: Slither Wing|Protosynthesis|[silent]",
+   "|split|p2",
+   "|switch|p2a: Clefable|Clefable, F|394/394|[from] U-turn",
+   "|switch|p2a: Clefable|Clefable, F|100/100|[from] U-turn",
+   "|move|p1a: Zamazenta|Iron Defense|p1a: Zamazenta",
+   "|-boost|p1a: Zamazenta|def|2",
+   "|",
+   "|-heal|p1a: Zamazenta|100/100 par|[from] item: Leftovers",
+   "|upkeep",
+   "|turn|7",
+   "|",
+   "|move|p1a: Zamazenta|Body Press|p2a: Clefable",
+   "|-resisted|p2a: Clefable",
+   "|split|p2",
+   "|-damage|p2a: Clefable|204/394",
+   "|-damage|p2a: Clefable|52/100",
+   "|move|p2a: Clefable|Stealth Rock|p1a: Zamazenta",
+   "|-sidestart|p1: NHJ|move: Stealth Rock",
+   "|",
+   "|upkeep",
+   "|turn|8",
+   "|",
+   "|split|p2",
+   "|switch|p2a: Gholdengo|Gholdengo|148/315",
+   "|switch|p2a: Gholdengo|Gholdengo|47/100",
+   "|split|p2",
+   "|-damage|p2a: Gholdengo|129/315|[from] Stealth Rock",
+   "|-damage|p2a: Gholdengo|41/100|[from] Stealth Rock",
+   "|move|p1a: Zamazenta|Body Press|p2a: Gholdengo",
+   "|-immune|p2a: Gholdengo",
+   "|",
+   "|upkeep",
+   "|turn|9",
+   "|",
+   "|move|p2a: Gholdengo|Shadow Ball|p1a: Zamazenta",
+   "|-damage|p1a: Zamazenta|70/100 par",
+   "|move|p1a: Zamazenta|Crunch|p2a: Gholdengo",
+   "|-supereffective|p2a: Gholdengo",
+   "|-damage|p2a: Gholdengo|0 fnt",
+   "|faint|p2a: Gholdengo",
+   "|",
+   "|-heal|p1a: Zamazenta|76/100 par|[from] item: Leftovers",
+   "|upkeep",
+   "|",
+   "|split|p2",
+   "|switch|p2a: Latios|Latios, M|301/301",
+   "|switch|p2a: Latios|Latios, M|100/100",
+   "|split|p2",
+   "|-damage|p2a: Latios|264/301|[from] Stealth Rock",
+   "|-damage|p2a: Latios|88/100|[from] Stealth Rock",
+   "|turn|10",
+   "|",
+   "|switch|p1a: Slowking|Slowking-Galar, F|100/100",
+   "|move|p2a: Latios|Psychic Noise|p1a: Slowking",
+   "|-damage|p1a: Slowking|72/100",
+   "|-start|p1a: Slowking|move: Heal Block",
+   "|",
+   "|upkeep",
+   "|turn|11",
+   "|",
+   "|split|p2",
+   "|switch|p2a: Ting-Lu|Ting-Lu|514/514",
+   "|switch|p2a: Ting-Lu|Ting-Lu|100/100",
+   "|split|p2",
+   "|-damage|p2a: Ting-Lu|482/514|[from] Stealth Rock",
+   "|-damage|p2a: Ting-Lu|94/100|[from] Stealth Rock",
+   "|-ability|p2a: Ting-Lu|Vessel of Ruin",
+   "|move|p1a: Slowking|Sludge Bomb|p2a: Ting-Lu",
+   "|-resisted|p2a: Ting-Lu",
+   "|split|p2",
+   "|-damage|p2a: Ting-Lu|446/514",
+   "|-damage|p2a: Ting-Lu|87/100",
+   "|",
+   "|split|p2",
+   "|-heal|p2a: Ting-Lu|478/514|[from] item: Leftovers",
+   "|-heal|p2a: Ting-Lu|93/100|[from] item: Leftovers",
+   "|-end|p1a: Slowking|move: Heal Block",
+   "|upkeep",
+   "|turn|12",
+   "|",
+   "|switch|p1a: Corviknight|Corviknight, M|100/100",
+   "|-damage|p1a: Corviknight|88/100|[from] Stealth Rock",
+   "|-ability|p1a: Corviknight|Pressure",
+   "|move|p2a: Ting-Lu|Spikes|p1a: Corviknight",
+   "|-sidestart|p1: NHJ|Spikes",
+   "|",
+   "|-heal|p1a: Corviknight|94/100|[from] item: Leftovers",
+   "|split|p2",
+   "|-heal|p2a: Ting-Lu|510/514|[from] item: Leftovers",
+   "|-heal|p2a: Ting-Lu|99/100|[from] item: Leftovers",
+   "|upkeep"
+  ],
+  "field": {},
+  "p1": {
+   "order": [
+    "Corviknight",
+    "Landorus-Therian",
+    "Dragapult",
+    "Ogerpon-Wellspring",
+    "Zamazenta",
+    "Slowking-Galar"
+   ],
+   "mons": [
+    {
+     "species": "Landorus-Therian",
+     "fainted": false,
+     "status": "brn",
+     "boosts": {},
+     "used": {
+      "stealthrock": 1,
+      "uturn": 1
+     },
+     "pct": 94.0
+    },
+    {
+     "species": "Zamazenta",
+     "fainted": false,
+     "status": "par",
+     "boosts": {},
+     "used": {
+      "crunch": 3,
+      "irondefense": 2,
+      "bodypress": 2
+     },
+     "pct": 76.0,
+     "item": "leftovers",
+     "shieldBoost": true
+    },
+    {
+     "species": "Dragapult",
+     "fainted": false,
+     "status": "",
+     "boosts": {},
+     "used": {},
+     "pct": null,
+     "hp": "max"
+    },
+    {
+     "species": "Ogerpon-Wellspring",
+     "fainted": false,
+     "status": "",
+     "boosts": {},
+     "used": {},
+     "pct": null,
+     "hp": "max"
+    },
+    {
+     "species": "Slowking-Galar",
+     "fainted": false,
+     "status": "",
+     "boosts": {},
+     "used": {
+      "sludgebomb": 1
+     },
+     "pct": 72.0,
+     "regen": 1
+    },
+    {
+     "species": "Corviknight",
+     "fainted": false,
+     "status": "",
+     "boosts": {},
+     "used": {},
+     "pct": 94.0,
+     "item": "leftovers"
+    }
+   ],
+   "canTera": true,
+   "sideConditions": [
+    "stealthrock",
+    {
+     "id": "spikes",
+     "layers": 1
+    }
+   ]
+  },
+  "p2": {
+   "order": [
+    "Ting-Lu",
+    "Slither Wing",
+    "Latios",
+    "Clefable",
+    "Gholdengo",
+    "Ogerpon"
+   ],
+   "mons": [
+    {
+     "species": "Ting-Lu",
+     "fainted": false,
+     "hp": 510,
+     "status": "",
+     "item": "leftovers",
+     "pp": {
+      "earthquake": 16,
+      "ruination": 16,
+      "whirlwind": 32,
+      "spikes": 30
+     },
+     "boosts": {},
+     "lastMove": "spikes"
+    },
+    {
+     "species": "Slither Wing",
+     "fainted": false,
+     "hp": 360,
+     "status": "",
+     "item": "",
+     "pp": null
+    },
+    {
+     "species": "Latios",
+     "fainted": false,
+     "hp": 264,
+     "status": "",
+     "item": "souldew",
+     "pp": null
+    },
+    {
+     "species": "Clefable",
+     "fainted": false,
+     "hp": 204,
+     "status": "",
+     "item": "lifeorb",
+     "pp": null
+    },
+    {
+     "species": "Gholdengo",
+     "fainted": true,
+     "hp": 0,
+     "status": "",
+     "item": "",
+     "pp": null
+    },
+    {
+     "species": "Ogerpon",
+     "fainted": false,
+     "hp": 301,
+     "status": "",
+     "item": "heavydutyboots",
+     "pp": null
+    }
+   ],
+   "canTera": true,
+   "sideConditions": [
+    "stealthrock"
+   ]
+  }
+ }
+}

@@ -4,7 +4,7 @@
 - LayaBot's protocol lines up to that turn equal the original ones (chat, timestamps and player lines aside);
 - the person (p1) never receives LayaBot's exact HP.
 
-Usage: python check_scenario.py <stem> <exported NHJ-20261028 dir>   (stem: battle38_t46, battle34_t15, ...)
+Usage: python check_scenario.py <stem> <exported NHJ archive dir>   (stem: battle38_t46, battle126_t13, ...)
 """
 from __future__ import annotations
 import difflib
