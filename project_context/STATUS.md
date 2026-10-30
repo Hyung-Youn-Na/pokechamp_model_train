@@ -34,6 +34,8 @@
 
 [EP-220](research/policy-learning/plans/EP-220-laya-v2t-tera-decision-defence.md)(D-197, GPU1·8109)에서 같은 체크포인트·fix 입력으로 테라 합산 결정(k=1·3)과 테라 방어 문구를 재학습 없이 시험한다([EX-140](research/policy-learning/experiments/EX-140-laya-v2t-tera-decision-defence384.md), 384경기, 기준 EX-139 fix). 모델이 테라 확률은 사람만큼 매기지만 1순위 선택 때문에 거의 쓰지 않는다는 분석에 따른 것이다. EP-218(GPU0·GPU2)과 자원이 분리돼 있고, 코드 작업은 EX-136 학습 중에 끝냈다. 2026-10-27 05:28Z에 실행을 시작했다.
 
+[EP-221](research/policy-learning/plans/EP-221-laya-past-turn-input-v6.md)(D-198, GPU0·8107, GPU1·8109)에서 같은 기술 반복을 줄이기 위해 과거 턴 입력 두 가지를 동시에 학습한다. v6s는 1,024 안에 반복 표시(`streak`)를 넣고([EX-141](research/policy-learning/experiments/EX-141-laya-v6s-streaks-training.md)), v6h는 2,048토큰으로 늘려 4턴 이전까지 기록을 넣는다([EX-142](research/policy-learning/experiments/EX-142-laya-v6h-long-history-training.md), 파서 opt-in 필드 `early_history`). 2026-10-30 완료: 두 방법 모두 반복을 줄이지 못했고 배틀은 둘 다 "퇴보를 배제하지 못함"이다(EX-143 −0.023, EX-144 −0.063). v6h는 교체 결정의 사람 선택 재현만 나아졌다. [EP-222](research/policy-learning/plans/EP-222-laya-play-teams-abyssal-battle.md)(D-199, GPU2·8108)에서 laya-play 완성 팀 74개로 v5t·v6st·v6ht를 Abyssal과 다시 비교한다(EX-145, 888경기). 2026-10-30 시작.
+
 우선순위별 5종 규칙 적용 System1 자료를
 [EP-201](research/rule-learning/plans/EP-201-gen9-mechanics-system1-data.md)에서 생성·검증했다.
 Smogon 역할·다른 규칙·관측 KO·조건부 KO 자료의 범위와 산출물은
