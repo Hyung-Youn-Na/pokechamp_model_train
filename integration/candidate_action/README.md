@@ -21,7 +21,7 @@ EX-115의 동결 지시문·수집 결과 및 당시 길이 gate는 개발용 �
 - `viewer.py/html/js`: UI v1과 재구성 전 입력/적용 결과/선택·전송 확장. 재질의 원문과 최종 선택 구분.
 
 실행기는 `scripts/candidate-action-battle`이며 기존 `pokechamp/.venv/bin/python`을 쓴다.
-출력은 `/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-115` 고정이다.
+출력은 `<BACKUP_ROOT>/pokechamp-research/runs/model-training/EX-115` 고정이다.
 `mock`은 실제API0 모의2경기와 전수감사·뷰어, `prepare`는 gate 확인과 동결,
 `execute`는 새 유료32슬롯과 감사, `status`는 저장파일 조회, `export`는 새 뷰어 출력이다.
 기존 출력 덮어쓰기·본경기 자동재개·재수집·유료 사전호출은 없다.

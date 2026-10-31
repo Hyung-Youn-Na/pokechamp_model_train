@@ -2,7 +2,7 @@
 
 원본 JevK5-9B의 새 LoRA, 130149문항 전체 3epoch. 규범은 등록 EX-116이다.
 기존 EX-113/자료/서빙은 보존한다. 환경은 `/ref/kev/.venv`, 출력은
-`/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-116`이다.
+`<BACKUP_ROOT>/pokechamp-research/runs/model-training/EX-116`이다.
 
 - `scripts/jevk5-system1-train prepare-training`: 원자료 봉인·native token 전수검사와 메모리맵.
 - `prepare-evaluation --rules <검증된 새규칙 JSONL>`: 별도 리플레이/규칙 평가와 진단자료 준비.

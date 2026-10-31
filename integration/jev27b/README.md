@@ -10,7 +10,7 @@
 ```bash
 scripts/jev27b continue \
   --parent /workspace/.pokechamp-data/jev/ex082-live \
-  --directory /mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-083
+  --directory <BACKUP_ROOT>/pokechamp-research/runs/model-training/EX-083
 ```
 
 승인된 EX-082 부모만 받으며 기존 실행 출력/뷰어의 덮어쓰기·재개는 거부한다.

@@ -20,7 +20,7 @@ scripts/jev9b status
 
 모델 interpreter는 `.pokechamp-data/jev27b-runtime/.venv/bin/python`, actor는
 `pokechamp/.venv/bin/python`이다. 새 모델은 `.pokechamp-data/jev9b-runtime/model`, 출력은
-`/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-085`, 뷰어는
+`<BACKUP_ROOT>/pokechamp-research/runs/model-training/EX-085`, 뷰어는
 `exports/battle_viewers/ex085/index.html`이다. 환경 재설치·학습·양자화·offload0이다.
 
 GPU0 embedding·0–5층, GPU1 6–15층, GPU2 16–25층, GPU3 26–31층·norm/LM head/결정 head를

@@ -26,7 +26,7 @@ scripts/pokechamp-joint-q evaluate
 scripts/pokechamp-joint-q verify --phase final
 ```
 
-기본 데이터는 `/mnt/digicap/combined/hyna/backup/pokechamp/`, 산출물은
+기본 데이터는 `<BACKUP_ROOT>/pokechamp/`, 산출물은
 `.pokechamp-data/experiments/ex066-joint-q-training/`다. 새 재실행은 `--out`의 빈 경로로 구분한다.
 wrapper는 기존 EVE Python·물리 GPU1·native threads1을 지정한다. GPU2 사용 중 유휴 GPU로
 대체하라는 사용자 지시(D-106)에 따라 이번 실행을 GPU1로 고정했다. 수집 로더의 기존 회귀 검사는

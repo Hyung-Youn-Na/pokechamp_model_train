@@ -16,7 +16,7 @@
 - [현재 작업·제한](project_context/STATUS.md) · [구성](project_context/ARCHITECTURE.md)
 - [작업·새 출력·외부 자산·복원 안내](project_context/RESEARCH_WORKFLOW.md)
 
-외부 보존 루트는 `/mnt/digicap/combined/hyna/backup/pokechamp-research`다. 새 실험 출력은 승인된 새 ID와 기존 CLI의 명시적 출력 인자를
+외부 보존 루트는 `<BACKUP_ROOT>/pokechamp-research`다(`<BACKUP_ROOT>`는 연구 서버의 백업 스토리지 경로이며, 실제 값은 각 실행기의 기본 출력 경로에 있다). 새 실험 출력은 승인된 새 ID와 기존 CLI의 명시적 출력 인자를
 사용하여 그 아래 `runs/model-training/<새 실험 ID>`에 둔다. 출력 선택이 없는 과거 실행기는
 자동 재사용하지 않으며 기존 manifest·봉인·고정 경로를 수정하지 않는다.
 

@@ -20,7 +20,7 @@ scripts/pokechamp-ruleqa validate
 scripts/pokechamp-ruleqa export
 ```
 
-기본 출력은 `/mnt/digicap/combined/hyna/backup/pokechamp-research/datasets/generated/showdown-ruleqa/v1/`다.
+기본 출력은 `<BACKUP_ROOT>/pokechamp-research/datasets/generated/showdown-ruleqa/v1/`다.
 수직 검증의 1묶음/규칙 자료는 export할 수 없다. prepare 이후 source/data 변경, 기존 출력 덮어쓰기,
 미검증/불완전 분모, split 중복, 누락된 의미 검토를 거부한다. 실패 원인은 JSON 보고와 evidence에 남는다.
 

@@ -50,4 +50,4 @@ scripts/openai-decisions-retry-battle status
 
 EX110은 정상32경기/16쌍·16승16패(50%)로 완료했다. 실패/무효/미실행0이며 실제 재시도0이다.
 [결과 뷰어](../../exports/battle_viewers/ex110/index.html)와
-[최종 보고서](../../../mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-110/evidence/report.md)를 참조한다.
+최종 보고서(`<BACKUP_ROOT>/pokechamp-research/runs/model-training/EX-110/evidence/report.md`)를 참조한다.
