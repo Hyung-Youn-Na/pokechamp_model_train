@@ -31,7 +31,7 @@ flowchart LR
 
 1. LangChain/LangGraph 도구 사용 Agent (초기 저장소 `pokechamp_langchain`)
 2. API LLM(GLM 계열)의 프롬프트·하네스 개선: 튜닝 불가, 턴당 응답 지연
-3. 공개 범용 의사결정 모델 탐색·파인튜닝: Qwen3.5-4B 리플레이 모방 SFT, JevK5 규칙 QA LoRA(vLLM)
+3. 공개 LLM 탐색·파인튜닝: Qwen3.5-4B 리플레이 모방 SFT, JevK5 규칙 QA LoRA(vLLM)
 4. laya 모방 학습: 사람 리플레이 130,411결정, 1,024토큰 압축 입력
 
 ## 먼저 볼 문서
