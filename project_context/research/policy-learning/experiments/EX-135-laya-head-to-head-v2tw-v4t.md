@@ -1,6 +1,6 @@
 # EX-135 — laya v2+테라 대 승패 가중·v4+테라 직접 대결 256경기(GPU2, EX-120 일정)
 
-- 상태: Planned
+- 상태: Completed
 - 생성일: 2026-10-26
 - 책임자: Claude Code
 - 관련 exec plan: [EP-217](../plans/EP-217-laya-head-to-head-evaluation.md)
@@ -67,12 +67,30 @@ C-018과 EX-119 절차를 적용한다.
 
 | Artifact | Path | Checksum | 상태 |
 |---|---|---|---|
-| 배틀 run | `/mnt/.../runs/model-training/EX-135` | `checksums.sha256`, `report.md` | 예정 |
-| 뷰어 | `/workspace/exports/battle_viewers/ex135/index.html` | `checksums.sha256` | 예정 |
+| 배틀 run | `/mnt/.../runs/model-training/EX-135` | `checksums.sha256`, `report.md` | 완료·봉인 |
+| 뷰어 | `/workspace/exports/battle_viewers/ex135/index.html` | `checksums.sha256` | 생성·확인 통과(`exec-plans/evidence/ep217/ex135-viewer-check.json`) |
 
 ## 결과
 
-예정.
+- 2026-10-26 16:13Z EX-132·EX-130 완료 확인 뒤 prepare, execute 16:16Z~21:17Z(GPU2·8108), export 21:17Z~21:21Z. 256/256 정상, 실패·미완료·무효 0. 보고 `runs/model-training/EX-135/report.md`. 뷰어 확인 21:22Z 통과(1440·390 폭, 256경기·비교 진영 256페이지, 페이지 오류 0, `exec-plans/evidence/ep217/ex135-viewer-check.json`).
+- **판정**(laya-v2t 점수, 조합 클러스터 95%, 시드 20261031):
+
+| 비교 모델 | 정상 | v2t 승/무/패 | v2t 점수 | 95% | 교환쌍 2승/1승1패/2패 | 판정 |
+|---|---|---|---:|---|---|---|
+| laya-v2tw | 128/128 | 67/0/61 | 0.523 | [0.469, 0.578] | 9/49/6 | **구별되지 않음** |
+| laya-v4t | 128/128 | 76/0/52 | 0.594 | [0.500, 0.688] | 23/30/11 | **구별되지 않음** |
+
+- v4t 쌍의 하한은 0.500이다. 동결 규칙(하한 > 0.5)에 미치지 못한다.
+- Abyssal 비교(EX-133·EX-131 완료 뒤라 싣는다, 같은 슬롯 v2t − 비교 모델):
+
+| 비교 모델 | Abyssal 출처 | Abyssal 차이 | 95% | Abyssal 구별 | 직접 대결 구별 | 방향 일치 |
+|---|---|---:|---|---|---|---|
+| laya-v2tw | EX-125·EX-133 | +0.094 | [0.000, 0.180] | 구별되지 않음 | 구별되지 않음 | 예 |
+| laya-v4t | EX-125·EX-131 | +0.086 | [0.000, 0.172] | 구별되지 않음 | 구별되지 않음 | 예 |
+
+- 이 표의 v2tw 구간은 EX-133 판정 구간(시드 20261029, v2tw − v2t −0.0938 [−0.1797, −0.0078], 악화)과 다르다. 경계가 0에 붙어 있어 bootstrap 시드에 따라 구별 여부가 바뀐다. Abyssal 판정은 EX-133을 따른다.
+- 진영별 실패·무효 기술: v2t(대 v2tw) 337/5781(5.83%), v2t(대 v4t) 362/5869(6.17%), v2tw 415/5823(7.13%), v4t 339/5578(6.08%). 같은 기술 3회 이상 연속 실패 경기 12, 11, 15, 9.
+- 지연 p50: v2t 0.168초, v2tw 0.161초, v4t 0.169초.
 
 ## 분석 및 한계
 
@@ -80,4 +98,5 @@ C-018과 EX-119 절차를 적용한다.
 
 ## 결론 및 후속 작업
 
-예정.
+- 두 후보 모두 v2t를 직접 대결에서 이기지 못했다. 점수는 v2t 쪽으로 기울었지만(0.523, 0.594) 구별되지 않는다.
+- 방향은 Abyssal 결과([EX-133](EX-133-laya-v2t-v2tw-battle256.md) 악화, [EX-131](EX-131-laya-v2t-v4t-battle256.md) 퇴보를 배제하지 못함)와 같다. 배틀 기준 모델은 계속 v2+테라(EX-124)다.

@@ -10,12 +10,7 @@
 
 | ID | 제목 | 상태 |
 |---|---|---|
-| [EP-215](../research/policy-learning/plans/EP-215-laya-renderer-v4.md) | laya 렌더러 v4(확정 실패 표시·교체 후보 공격 피해) 학습과 배틀 비교(GPU1) | Active |
-| [EP-216](../research/policy-learning/plans/EP-216-laya-outcome-weighted-imitation.md) | laya v2+테라 승패 가중 모방 학습과 배틀 비교(GPU0) | Active |
-| [EP-217](../research/policy-learning/plans/EP-217-laya-head-to-head-evaluation.md) | laya 직접 대결 평가 하네스와 벤치마크(GPU2) | Active |
-| [EP-218](../research/policy-learning/plans/EP-218-laya-renderer-v5-item-state.md) | laya 렌더러 v5(상대 아이템 상태·상태 카운터) 학습과 배틀 비교(GPU0·GPU2) | Active |
-| [EP-220](../research/policy-learning/plans/EP-220-laya-v2t-tera-decision-defence.md) | laya v2+테라 fix 입력 테라 합산 결정·테라 방어 문구 배틀(재학습 없음, GPU1) | Active |
-| [EP-222](../research/policy-learning/plans/EP-222-laya-play-teams-abyssal-battle.md) | laya-play 완성 팀으로 v5t·v6st·v6ht 대 Abyssal 비교(GPU2) | Active |
+| [EP-229](../research/policy-learning/plans/EP-229-laya-opponent-model-search.md) | laya 상대 모델 + 한 턴 탐색(세트 표본 추정) | Active |
 
 <a id="blocked-plans"></a>
 
@@ -37,6 +32,7 @@
 | ID | 제목 | 상태 |
 |---|---|---|
 | [EP-126](../research/fixed-matchup-learning/plans/EP-126-fixed-matchup-day.md) | 하루 내 고정 대진 실험 | Paused — 사용자 요청 중지; 학습·test 미시작 |
+| [EP-226](../research/policy-learning/plans/EP-226-laya-human-teams-v7-v8-v9.md) | laya v7t·v8t·v9t 사람 팀 비교 배틀(GPU0·1·2) | Stopped |
 
 <a id="completed-plans"></a>
 
@@ -221,8 +217,20 @@
 | [EP-212](../research/policy-learning/plans/EP-212-laya-tera-knowledge.md) | laya v2 테라 지식 데이터 학습과 배틀 비교(GPU1) | Completed |
 | [EP-213](../research/policy-learning/plans/EP-213-laya-effect-knowledge.md) | laya v2+테라+효과 지식 데이터 학습과 배틀 비교(GPU2) | Completed |
 | [EP-214](../research/policy-learning/plans/EP-214-laya-renderer-v3.md) | laya 렌더러 v3(상대 세트 추론) 학습과 배틀 비교(GPU0) | Completed |
+| [EP-215](../research/policy-learning/plans/EP-215-laya-renderer-v4.md) | laya 렌더러 v4(확정 실패 표시·교체 후보 공격 피해) 학습과 배틀 비교(GPU1) | Completed |
+| [EP-216](../research/policy-learning/plans/EP-216-laya-outcome-weighted-imitation.md) | laya v2+테라 승패 가중 모방 학습과 배틀 비교(GPU0) | Completed |
+| [EP-217](../research/policy-learning/plans/EP-217-laya-head-to-head-evaluation.md) | laya 직접 대결 평가 하네스와 벤치마크(GPU2) | Completed |
+| [EP-218](../research/policy-learning/plans/EP-218-laya-renderer-v5-item-state.md) | laya 렌더러 v5(상대 아이템 상태·상태 카운터) 학습과 배틀 비교(GPU0·GPU2) | Completed |
 | [EP-219](../research/policy-learning/plans/EP-219-laya-v2t-corrected-input-battle.md) | laya v2+테라 보정 입력 배틀(재학습 없음, GPU1) | Completed |
+| [EP-220](../research/policy-learning/plans/EP-220-laya-v2t-tera-decision-defence.md) | laya v2+테라 fix 입력 테라 합산 결정·테라 방어 문구 배틀(재학습 없음, GPU1) | Completed |
 | [EP-221](../research/policy-learning/plans/EP-221-laya-past-turn-input-v6.md) | laya 과거 턴 입력 v6s·v6h 동시 학습과 배틀 비교(GPU0·GPU1) | Completed |
+| [EP-222](../research/policy-learning/plans/EP-222-laya-play-teams-abyssal-battle.md) | laya-play 완성 팀으로 v5t·v6st·v6ht 대 Abyssal 비교(GPU2) | Completed |
+| [EP-223](../research/policy-learning/plans/EP-223-laya-loop-break-opponent-sets.md) | laya 손해 루프 탈출(가중 학습·결정 규칙)과 상대 세트 추정 v7 야간 동시 실험(GPU0~3) | Completed |
+| [EP-224](../research/policy-learning/plans/EP-224-laya-engine-judge-v8.md) | laya 엔진 판정기(고정 Showdown 실패 판정)와 렌더러 v8 학습·배틀(GPU1·GPU2) | Completed |
+| [EP-225](../research/policy-learning/plans/EP-225-laya-opponent-threat-v9.md) | laya 상대 노력치 보정·최악 피해 표시 렌더러 v9 학습·배틀(GPU3) | Completed |
+| [EP-227](../research/policy-learning/plans/EP-227-laya-renderer-v10.md) | laya 렌더러 v10(정보 전부 + lock + 전략, 2,048토큰) 학습과 Abyssal 배틀 | Completed |
+| [EP-228](../research/policy-learning/plans/EP-228-laya-switch-read-and-mixing.md) | laya 교체 읽기 상대(정직함 측정)와 v8lt 교체 갈림길 섞기 배틀(재학습 없음, GPU1~3) | Completed |
+| [EP-230](../research/policy-learning/plans/EP-230-laya-ladder-r1500-v10.md) | 최근 래더(레이팅 1500 이상) 리플레이 자료와 v10 학습(GPU 4장 DDP), Abyssal 배틀 | Completed |
 
 <a id="other-plans"></a>
 

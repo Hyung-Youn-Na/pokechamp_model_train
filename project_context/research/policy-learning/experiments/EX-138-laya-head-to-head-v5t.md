@@ -1,6 +1,6 @@
 # EX-138 — laya v5+테라 대 v2+테라·v4+테라 직접 대결 256경기(GPU2, EX-120 일정)
 
-- 상태: Planned
+- 상태: Completed
 - 생성일: 2026-10-27
 - 책임자: Claude Code
 - 관련 exec plan: [EP-218](../plans/EP-218-laya-renderer-v5-item-state.md)
@@ -77,12 +77,41 @@ C-018과 EX-119 절차를 적용한다. 원본은 `diagnostics/`에 보존한다
 
 | Artifact | Path | Checksum | 상태 |
 |---|---|---|---|
-| 배틀 run | `/mnt/.../runs/model-training/EX-138` | `checksums.sha256`, `report.md` | 예정 |
-| 뷰어 | `/workspace/exports/battle_viewers/ex138/index.html` | `checksums.sha256` | 예정 |
+| 배틀 run | `/mnt/.../runs/model-training/EX-138` | `checksums.sha256`, `report.md`, `result.json` `e12ef12d…` | 봉인 |
+| 뷰어 | `/workspace/exports/battle_viewers/ex138/index.html` | `checksums.sha256` | 생성·Playwright 통과(`exec-plans/evidence/ep218/ex138-viewer-check.json`) |
 
 ## 결과
 
-진행 전.
+- **실행**: 2026-10-27 11:00:52Z mock(v5t 대 v5t 4경기, 분모 밖) 4/4 정상·감사 통과. 11:04Z prepare(서빙 v5t `bb4d8987…`, v2t `12519d98…`, v4t `55466eb4…`), 11:05:59Z ~ 16:14Z execute, 16:15Z export, 16:20Z 뷰어 Playwright 검사·봉인. GPU2·포트 8108. 결함 복구 없음. 연결 실행 로그는 `runs/model-training/EP-218-h2h.log`다.
+- **분모**: 예정 256, 정상 254, 미완료 2, 실패·무효·미실행 0. 미완료 2경기는 v2t 쌍의 `v2t-m29-s1-a`, `v2t-m32-s1-b`이고 둘 다 300턴 상한(`turn_limit`)이다. 전 경기 두 진영 감사 통과.
+
+| 비교 모델 | 정상 | laya-v5t 승/무/패 | laya-v5t 점수 | 95% | 교환쌍 2승/1승1패/2패 |
+|---|---|---|---:|---|---|
+| laya-v2t | 126/128 | 68/0/58 | 0.540 | [0.456, 0.624] | 16/35/11 |
+| laya-v4t | 128/128 | 72/0/56 | 0.562 | [0.469, 0.656] | 17/38/9 |
+
+- **판정**(동결, 쌍마다): 두 쌍 모두 정상 종료가 120 이상이라 판정을 보류하지 않는다.
+  - 대 v2t: 0.540, 95% [0.456, 0.624] → **"구별되지 않음"**
+  - 대 v4t: 0.562, 95% [0.469, 0.656] → **"구별되지 않음"**
+- **Abyssal 같은 슬롯 차이**(v5t − 비교 모델, 보고 전용):
+
+| 비교 모델 | Abyssal 출처 | 차이 | 95% | 우세/열세/같음 | 방향 일치 |
+|---|---|---:|---|---|---|
+| laya-v2t | EX-137·EX-125 | −0.016 | [−0.094, +0.062] | 12/14/102 | 아니오 |
+| laya-v4t | EX-137·EX-131 | +0.070 | [−0.023, +0.164] | 22/13/93 | 예 |
+
+- **실패·무효 기술**(진영별):
+
+| 진영 | 기술 사용 | 실패·무효 | 비율 | 3연속 실패 경기 | 많이 실패한 기술 |
+|---|---:|---:|---:|---:|---|
+| laya-v2t(대 v5t) | 5916 | 340 | 5.75% | 12 | Earthquake 50/210, Protect 29/293, Sleep Talk 26/60 |
+| laya-v4t(대 v5t) | 4667 | 244 | 5.23% | 8 | Earthquake 45/220, Toxic 32/51, Sleep Talk 25/48 |
+| laya-v5t(대 v2t) | 5952 | 319 | 5.36% | 6 | Toxic 87/113, Earthquake 51/323, Sleep Talk 26/38 |
+| laya-v5t(대 v4t) | 4829 | 249 | 5.16% | 7 | Earthquake 59/241, Toxic 22/49, Thunder Wave 20/26 |
+
+- **지연 p50**: v2t 0.177초, v4t 0.177초, v5t 0.185초.
+- **보고에 없는 지표**: 상대 아이템이 제거된 뒤 결정 수와 그때 지면 기술 무효 횟수, 진영별 Sleep Talk 실패 원인은 집계되지 않았다.
+- 산출물: `runs/model-training/EX-138/report.md`, `result.json`, 뷰어 `/workspace/exports/battle_viewers/ex138/index.html`(256경기, 35,096결정, 반대 진영 페이지 256, 1440px·390px 페이지 오류 0, `exec-plans/evidence/ep218/ex138-viewer-check.json`)
 
 ## 분석 및 한계
 
@@ -91,4 +120,6 @@ C-018과 EX-119 절차를 적용한다. 원본은 `diagnostics/`에 보존한다
 
 ## 결론 및 후속 작업
 
-진행 전.
+- 두 쌍 모두 v5t 점수가 0.5보다 높은 쪽이지만 구간이 0.5를 포함해 "구별되지 않음"이다. 직접 대결로 v5t가 v2t·v4t보다 강하다는 근거는 없다.
+- Abyssal 같은 슬롯 비교도 두 쌍 모두 구별되지 않는다. v2t 쌍은 방향도 다르다(Abyssal −0.016, 직접 대결 0.540).
+- 직접 대결에서는 세 모델 모두 Earthquake·Toxic·Sleep Talk 실패가 많다(진영별 5.2~5.8%).

@@ -135,19 +135,42 @@
 | [EX-127](../research/policy-learning/experiments/EX-127-laya-v2t-v2te-battle256.md) | laya v2+테라와 v2+테라+효과 지식 같은 실행 256경기(GPU2, EX-120 일정) | Completed |
 | [EX-128](../research/policy-learning/experiments/EX-128-laya-v3-tera-training.md) | laya 렌더러 v3(상대 세트 추론) + 테라 지식 학습(GPU0) | Completed |
 | [EX-129](../research/policy-learning/experiments/EX-129-laya-v2t-v3t-battle256.md) | laya v2+테라와 v3+테라 같은 실행 256경기(GPU0, EX-120 일정) | Completed |
-| [EX-130](../research/policy-learning/experiments/EX-130-laya-v4-tera-training.md) | laya 렌더러 v4(확정 실패 표시·교체 후보 공격 피해) + 테라 지식 학습(GPU1) | Running |
-| [EX-131](../research/policy-learning/experiments/EX-131-laya-v2t-v4t-battle256.md) | laya v2+테라와 v4+테라 같은 실행 256경기(GPU1, EX-120 일정) | Planned |
-| [EX-132](../research/policy-learning/experiments/EX-132-laya-v2t-outcome-weighted-training.md) | laya v2+테라 승패 가중 모방 학습(GPU0) | Running |
-| [EX-133](../research/policy-learning/experiments/EX-133-laya-v2t-v2tw-battle256.md) | laya v2+테라와 v2+테라 승패 가중 모방 같은 실행 256경기(GPU0, EX-120 일정) | Planned |
-| [EX-134](../research/policy-learning/experiments/EX-134-laya-head-to-head512.md) | laya v2+테라 대 v2·v1·v2+테라+효과·v3+테라 직접 대결 512경기(GPU2, EX-120 일정) | Running |
-| [EX-135](../research/policy-learning/experiments/EX-135-laya-head-to-head-v2tw-v4t.md) | laya v2+테라 대 승패 가중·v4+테라 직접 대결 256경기(GPU2, EX-120 일정) | Planned |
-| [EX-136](../research/policy-learning/experiments/EX-136-laya-v5-tera-training.md) | laya 렌더러 v5(상대 아이템 상태·상태 카운터) + 테라 지식 학습(GPU0) | Planned |
-| [EX-137](../research/policy-learning/experiments/EX-137-laya-v4t-v5t-battle256.md) | laya v4+테라와 v5+테라 같은 실행 256경기(GPU0, EX-120 일정) | Planned |
-| [EX-138](../research/policy-learning/experiments/EX-138-laya-head-to-head-v5t.md) | laya v5+테라 대 v2+테라·v4+테라 직접 대결 256경기(GPU2, EX-120 일정) | Planned |
+| [EX-130](../research/policy-learning/experiments/EX-130-laya-v4-tera-training.md) | laya 렌더러 v4(확정 실패 표시·교체 후보 공격 피해) + 테라 지식 학습(GPU1) | Completed |
+| [EX-131](../research/policy-learning/experiments/EX-131-laya-v2t-v4t-battle256.md) | laya v2+테라와 v4+테라 같은 실행 256경기(GPU1, EX-120 일정) | Completed |
+| [EX-132](../research/policy-learning/experiments/EX-132-laya-v2t-outcome-weighted-training.md) | laya v2+테라 승패 가중 모방 학습(GPU0) | Completed |
+| [EX-133](../research/policy-learning/experiments/EX-133-laya-v2t-v2tw-battle256.md) | laya v2+테라와 v2+테라 승패 가중 모방 같은 실행 256경기(GPU0, EX-120 일정) | Completed |
+| [EX-134](../research/policy-learning/experiments/EX-134-laya-head-to-head512.md) | laya v2+테라 대 v2·v1·v2+테라+효과·v3+테라 직접 대결 512경기(GPU2, EX-120 일정) | Completed |
+| [EX-135](../research/policy-learning/experiments/EX-135-laya-head-to-head-v2tw-v4t.md) | laya v2+테라 대 승패 가중·v4+테라 직접 대결 256경기(GPU2, EX-120 일정) | Completed |
+| [EX-136](../research/policy-learning/experiments/EX-136-laya-v5-tera-training.md) | laya 렌더러 v5(상대 아이템 상태·상태 카운터) + 테라 지식 학습(GPU0) | Completed |
+| [EX-137](../research/policy-learning/experiments/EX-137-laya-v4t-v5t-battle256.md) | laya v4+테라와 v5+테라 같은 실행 256경기(GPU0, EX-120 일정) | Completed |
+| [EX-138](../research/policy-learning/experiments/EX-138-laya-head-to-head-v5t.md) | laya v5+테라 대 v2+테라·v4+테라 직접 대결 256경기(GPU2, EX-120 일정) | Completed |
 | [EX-139](../research/policy-learning/experiments/EX-139-laya-v2t-corrected-input-battle256.md) | laya v2+테라(EX-124) 보정 입력 fix·info 같은 실행 256경기(GPU1, EX-120 일정) | Completed |
-| [EX-140](../research/policy-learning/experiments/EX-140-laya-v2t-tera-decision-defence384.md) | laya v2+테라(EX-124) fix 입력 테라 합산 결정(k=1·3)과 테라 방어 문구 384경기(GPU1, EX-120 일정) | Running |
+| [EX-140](../research/policy-learning/experiments/EX-140-laya-v2t-tera-decision-defence384.md) | laya v2+테라(EX-124) fix 입력 테라 합산 결정(k=1·3)과 테라 방어 문구 384경기(GPU1, EX-120 일정) | Completed |
 | [EX-141](../research/policy-learning/experiments/EX-141-laya-v6s-streaks-training.md) | laya 렌더러 v6s(같은 기술 반복 표시) + 테라 지식 학습(GPU0) | Completed |
 | [EX-142](../research/policy-learning/experiments/EX-142-laya-v6h-long-history-training.md) | laya 렌더러 v6h(긴 과거 기록, 2048토큰) + 테라 지식 학습(GPU1) | Completed |
 | [EX-143](../research/policy-learning/experiments/EX-143-laya-v5t-v6st-battle256.md) | laya v5+테라와 v6st (반복 표시) 같은 실행 256경기(GPU0, EX-120 일정) | Completed |
 | [EX-144](../research/policy-learning/experiments/EX-144-laya-v5t-v6ht-battle256.md) | laya v5+테라와 v6ht (긴 기록 2048토큰) 같은 실행 256경기(GPU1, EX-120 일정) | Completed |
-| [EX-145](../research/policy-learning/experiments/EX-145-laya-play-teams-v5t-v6st-v6ht-battle.md) | laya-play 완성 팀 74개로 v5t·v6st·v6ht 대 Abyssal(GPU2) | Planned |
+| [EX-145](../research/policy-learning/experiments/EX-145-laya-play-teams-v5t-v6st-v6ht-battle.md) | laya-play 완성 팀 74개로 v5t·v6st·v6ht 대 Abyssal(GPU2) | Completed |
+| [EX-146](../research/policy-learning/experiments/EX-146-laya-v6sl-loop-weighted-training.md) | laya v6s + 루프 탈출 행 가중 학습(v6sl, GPU1) | Completed |
+| [EX-147](../research/policy-learning/experiments/EX-147-laya-v6st-v6slt-battle256.md) | laya v6st 대 v6slt(루프 탈출 가중) 같은 실행 256경기(GPU1, EX-120 일정) | Completed |
+| [EX-148](../research/policy-learning/experiments/EX-148-laya-loop-decision-rule.md) | laya 루프 결정 규칙(재학습 없음): v6st·v6ht 정체 루프 기술 제외, EX-120 일정 대 Abyssal | Completed |
+| [EX-149](../research/policy-learning/experiments/EX-149-laya-v7-opponent-sets-training.md) | laya 렌더러 v7(v6s + 상대 세트 추정 `oppset2`, Protean 실패 표시 보정) 학습(GPU0) | Completed |
+| [EX-150](../research/policy-learning/experiments/EX-150-laya-v6st-v7t-battle256.md) | laya v6st 대 v7t(상대 세트 추정) 같은 실행 256경기(GPU0, EX-120 일정) | Completed |
+| [EX-151](../research/policy-learning/experiments/EX-151-laya-engine-judge-validation.md) | laya 엔진 판정기 구축과 실전·사람 리플레이 검증 | Completed |
+| [EX-152](../research/policy-learning/experiments/EX-152-laya-v8-engine-fails-training.md) | laya 렌더러 v8(v7 + 엔진 판정기 실패 표시) 학습(GPU1) | Completed |
+| [EX-153](../research/policy-learning/experiments/EX-153-laya-v7t-v8t-battle256.md) | laya v7t 대 v8t(엔진 실패 표시) 같은 실행 256경기(GPU1, EX-120 일정) | Completed |
+| [EX-154](../research/policy-learning/experiments/EX-154-laya-head-to-head-v8t-v7t.md) | laya v8t 대 v7t 직접 대결 128경기(GPU2, EX-120 일정) | Stopped |
+| [EX-155](../research/policy-learning/experiments/EX-155-laya-v8l-likely-fails-training.md) | laya 렌더러 v8l(v8 + `likely fails` 표시) 학습(GPU2) | Completed |
+| [EX-156](../research/policy-learning/experiments/EX-156-laya-v8t-v8lt-battle256.md) | laya v8t 대 v8lt(`likely fails` 표시) 같은 실행 256경기(GPU1, EX-120 일정) | Completed |
+| [EX-157](../research/policy-learning/experiments/EX-157-laya-v9-opponent-threat-training.md) | laya 렌더러 v9(v7 + 상대 노력치 보정·최악 피해 표시) 학습(GPU3) | Completed |
+| [EX-158](../research/policy-learning/experiments/EX-158-laya-v7t-v9t-battle256.md) | laya v7t 대 v9t(상대 위협 표시) 같은 실행 256경기(GPU3, EX-120 일정) | Completed |
+| [EX-159](../research/policy-learning/experiments/EX-159-laya-human-teams-v7t-v8t-v9t.md) | laya v7t·v8t·v9t 사람이 짠 완성 팀 123개 대 Abyssal(GPU0·1·2) | Stopped |
+| [EX-160](../research/policy-learning/experiments/EX-160-laya-human-teams-v8lt.md) | laya v8lt 사람이 짠 완성 팀 123개 대 Abyssal(EX-159 일정, GPU3) | Stopped |
+| [EX-161](../research/policy-learning/experiments/EX-161-laya-v10-all-info-training.md) | laya 렌더러 v10(정보 전부 + lock + 전략, 2,048토큰) 학습(GPU0) | Completed |
+| [EX-162](../research/policy-learning/experiments/EX-162-laya-v7t-v10t-battle256.md) | laya v7t 대 v10t(정보 전부 + lock + 전략) 같은 실행 256경기(GPU0, EX-120 일정) | Completed |
+| [EX-163](../research/policy-learning/experiments/EX-163-laya-v8lt-vs-switch-reader.md) | laya v8lt argmax 대 교체 읽기 상대(abyssal-read), EX-120 일정 128경기(GPU1) | Completed |
+| [EX-164](../research/policy-learning/experiments/EX-164-laya-v8lt-switch-mixing.md) | laya v8lt 교체 갈림길 섞기(재학습 없음): 대 Abyssal·대 교체 읽기 상대, 각 128경기(GPU2·GPU3) | Completed |
+| [EX-165](../research/policy-learning/experiments/EX-165-laya-opponent-prediction-scenes.md) | laya 상대 시점 예측(세트 표본) 장면 검증: 사람 test 4경기, v8lt(CPU) | Completed |
+| [EX-166](../research/policy-learning/experiments/EX-166-laya-ladder-r1500-data.md) | 최근 래더(레이팅 1500 이상) 리플레이의 v10 학습 자료(CPU) | Completed |
+| [EX-167](../research/policy-learning/experiments/EX-167-laya-v10-ladder-training.md) | laya v10 + 최근 래더 자료 학습(GPU 4장 DDP, 약 24시간) | Completed |
+| [EX-168](../research/policy-learning/experiments/EX-168-laya-v10t-v10rt-battle256.md) | laya v10t 대 v10rt(최근 래더 자료 추가) 같은 실행 256경기(GPU0, EX-120 일정) | Completed |

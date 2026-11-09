@@ -1,6 +1,6 @@
 # EP-218 — laya 렌더러 v5(상대 아이템 상태·상태 카운터) 학습과 배틀 비교(GPU0·GPU2)
 
-- 상태: Active
+- 상태: Completed
 - 생성일: 2026-10-27
 - 책임자: Claude Code
 - 승인 근거·범위: 사용자 지시(2026-10-27)와 [D-195](../decisions/D-195-laya-item-state-renderer-v5.md). 사용자가 계획을 승인하면 구현, GPU 학습, 배틀을 별도 승인 없이 이어서 진행한다. 오프라인 결과로 배틀을 거르지 않는다([D-191](../decisions/D-191-no-offline-battle-gate.md)).
@@ -51,10 +51,11 @@
   - EX-131 Sleep Talk 실패 사례의 `slp t<n> rest` 표시
   - 형식 동결
 - [x] v5 정보 캐시, `v5-all` 자료(제외 ≤ 0.005), parity, 봉인
-- [ ] EX-136 학습(GPU0), 선택, 지식 held-out, 잠긴 test, EX-130·EX-124 쌍비교, 사람 대전 국면 재추론, 보고, 봉인
-- [ ] EX-137 mock 후 256경기(GPU0·8107), 보고, 뷰어, 봉인
-- [ ] EX-138 mock 후 256경기(GPU2·8108), 보고, 뷰어, 봉인, 자원 반환
-- [ ] POKEMON_EXPERIMENTS, STATUS, catalog build/check, 뷰어 변경일지
+- [x] EX-136 학습(GPU0), 선택, 지식 held-out, 잠긴 test, EX-130·EX-124 쌍비교, 사람 대전 국면 재추론, 보고, 봉인
+- [x] EX-137 mock 후 256경기(GPU0·8107), 보고, 뷰어, 봉인
+- [x] EX-138 mock 후 256경기(GPU2·8108), 보고, 뷰어, 봉인, 자원 반환
+  - 자원 반환은 로그에 따로 기록되지 않았다. 연결 실행은 16:20:43Z에 종료됐다.
+- [x] STATUS, catalog build/check, 뷰어 변경일지(`#ex137-laya-v1`) (POKEMON_EXPERIMENTS는 미기록)
 
 ## 검증
 
@@ -74,6 +75,11 @@
 - 2026-10-27 — 구현 중 같은 부류의 누락을 하나 더 확인해 `item_state`에 넣었다. `[from] item: X`로 효과가 공개된 아이템(Leftovers 등)도 기존 `item` 필드에서는 미공개였다(D-195 결함 1b).
 - 2026-10-27 — 재파싱 완료(146초, 2,344 리플레이). train 상대 활성 아이템: 들고 있음 33,547행(그중 기존 필드에서 가려졌던 29,933행), 제거 25,983행(Knock Off 14,392, 풍선 2,653, 소모 8,778, 기타 160).
 - 2026-10-27 — v5 자료 생성(정보 캐시 75초), 제외 85행(0.064%), parity 512/512. EX-137 mock 통과. 연결 실행 `scripts/laya-imitation-ep218`을 시작했다.
+- 2026-10-27 01:27Z — 연결 실행 학습 단계 시작(GPU0). 사전검사 loss 2.1601 → 2.0120, 재로딩 logit 차이 0.0.
+- 2026-10-27 10:56Z — EX-136 학습 완료(01:28Z~, 선택 epoch 2). 평가 10:56~11:00Z, 보고·봉인.
+- 2026-10-27 11:00Z — EX-137 prepare(서빙 v4t `55466eb4…`, v5t `bb4d8987…`), 11:01Z execute 시작(GPU0·8107). 같은 시각 EX-138 mock 4/4 정상·감사 통과, 11:04Z prepare, 11:05:59Z execute 시작(GPU2·8108, 로그 `runs/model-training/EP-218-h2h.log`).
+- 2026-10-27 13:52Z — EX-137 execute 종료(256/256 정상, 감사 전부 통과). 13:53Z export, 13:55Z 뷰어 Playwright 검사(1440px·390px, 페이지 오류 0)·봉인.
+- 2026-10-27 16:14Z — EX-138 execute 종료(정상 254, 미완료 2는 300턴 상한, 감사 전부 통과). 16:15Z export, 16:20Z 뷰어 Playwright 검사(페이지 오류 0)·봉인, 16:20:43Z 연결 실행 종료.
 
 ## 차단·중단
 
@@ -81,4 +87,9 @@
 
 ## 결과 및 증거
 
-- 진행 전
+- [EX-136](../experiments/EX-136-laya-v5-tera-training.md): 잠긴 test NLL 1.4358(EX-130 1.4229, EX-124 1.4506). EX-136 − EX-130 +0.0130 [−0.0099, +0.0350], 일치율 −2.44%p. 공개된 풍선 상대 행(12) NLL −0.2634 [−0.4106, −0.1212], 미공개 아이템 행(528) +0.0417 [+0.0109, +0.0720]. 사람 대전 풍선 Gholdengo 앞 지면 1위 v2t 9, v4t 0, v5t 1.
+- [EX-137](../experiments/EX-137-laya-v4t-v5t-battle256.md): v4t 100승 28패, v5t 109승 19패, 차이 +0.0703 [−0.0312, +0.1719] → **비퇴보**. 실패·무효 기술 2.92 → 2.03%, Sleep Talk 실패 43 → 0, 테라 경기 17 → 32.
+- [EX-138](../experiments/EX-138-laya-head-to-head-v5t.md): 대 v2t 68승 58패(정상 126/128) 0.540 [0.456, 0.624], 대 v4t 72승 56패 0.562 [0.469, 0.656] → 둘 다 **구별되지 않음**.
+- 보고에 없는 지표: 아이템 제거 뒤 결정 수·지면 무효, Sleep Talk 실패 원인 분리, EX-131 v4t 결정성 일치 수는 집계되지 않았다(각 EX 결과 절).
+- 증거: `runs/model-training/EX-136/`·`EX-137/`·`EX-138/`(`report.md`, `result.json`, `checksums.sha256`), 연결 실행 로그 `runs/model-training/EP-218-chain.log`·`EP-218-h2h.log`, 뷰어 `/workspace/exports/battle_viewers/ex137/`·`ex138/`, 뷰어 검사 `exec-plans/evidence/ep218/`.
+- 결론: v5 입력은 풍선·실패 선택지 장면을 고쳤고 Abyssal 성적은 v4t 대비 비퇴보(점수는 높은 쪽)지만, 사람 선택 재현은 나아지지 않았고 직접 대결에서는 v2t·v4t와 구별되지 않는다.

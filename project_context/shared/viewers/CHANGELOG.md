@@ -267,3 +267,56 @@ D-183/EP-208 승인으로 `laya-imitation-researcher-v1`(`integration/laya_imita
 - 구분: 규격 내 적용(새 실험 아님). UI 규격은 battle-viewer-ui-v1과 `laya-imitation-researcher-v1` 그대로다.
 - 원본 `/workspace/data/NHJ-20261027/NHJ-20261027`(경기별 `events.jsonl` 해시를 원본 manifest와 대조)을 뷰어 run 구조로 옮겨 `viewer.export`로 생성했다. 압축 입력 탭은 서빙 때와 같은 v2 렌더러다(`laya-v2t`, EX-124 `12519d98…`).
 - 기록은 LayaBot 쪽뿐이며 사람의 선택 요청은 없다. 출력 `/workspace/exports/battle_viewers/nhj-20261027/`(4경기, 132결정), Playwright 1440·390 페이지 오류 0.
+
+<a id="ex148-laya-v1"></a>
+
+## 2026-10-31 — EX-147·EX-148·EX-150 laya 루프 결정 규칙·루프 탈출 가중·v7 상대 세트 추정 압축 입력·확률 탭
+
+- 구분: 규격 내 확장. UI 규격은 battle-viewer-ui-v1과 `laya-imitation-researcher-v1` 그대로다.
+- D-200/EP-223 승인으로 압축 입력 탭이 모델별 실전 렌더러로 복원한다. `laya-v6st-lp`·`laya-v6slt`는 `v6s`, `laya-v6ht-lp`는 `v6h`, `laya-v7t`는 `v7`(`opp set:`·`opp watch:` 줄, 벤치 ` | likely …`, Protean·Libero 행의 압정 `; fails`)이다.
+- `-lp` 경기에서 규칙이 작동한 결정의 선택지 확률 탭은 결정 분포(반복 기술 0, 재정규화)다. 모델 분포는 응답 원문 탭의 `model_probabilities`, 작동 여부는 `loop_rule`에 있다. 서빙 identity에 `decision`(규칙·임계)이 있다.
+- 직접 대결(EX-148-H1·H2)은 `ex134-laya-h2h-v1` 확장 그대로다.
+- 적용: EX-147·EX-150(`comparison.export`), EX-148(`loop_battle.export`, `headtohead.export`).
+
+<a id="ex158-laya-v1"></a>
+
+## 2026-11-02 — EX-158 laya v9 상대 위협 표시 압축 입력
+
+- 구분: 규격 내 확장. UI 규격은 battle-viewer-ui-v1과 `laya-imitation-researcher-v1` 그대로이고, 생성기는 `laya_imitation.viewer.export`(EX-153과 같은 판본)다.
+- D-202/EP-225 승인으로 v9 경기(`laya-v9t`)의 압축 입력 탭을 `integration/laya_threat` 실시간 v9 렌더러로 복원한다. v7 문구에 상대 노력치 보정이 반영된 `dmg`·`hit`·`out`, 교체 선택지 `; risk a-b% <기술>`, `opp threat: …` 줄이 더해진다. v7 경기는 `v7` 그대로다.
+- 적용: EX-158(`integration.laya_threat.battle_v9.export`, `comparison.export`와 같은 구성에 렌더러 표만 다르다).
+
+<a id="ex159-laya-v1"></a>
+
+## 2026-11-02 — EX-159 laya 사람 팀 v7·v8·v9 세 모델 뷰어
+
+- 구분: 규격 내 확장. UI 규격은 battle-viewer-ui-v1과 `laya-imitation-researcher-v1` 그대로이고, 생성기는 `laya_imitation.viewer.export`(EX-158과 같은 판본)다.
+- D-203/EP-226 승인으로 세 모델 경기를 한 뷰어에 둔다. 압축 입력 탭은 `v7`, `v8`, `laya_threat` 실시간 `v9` 렌더러로 모델별 복원한다. 목록 열에 `팀 묶음`(smogon/blim/trained)과 `GPU`(묶음 g0~g2)를 더한다. 경기 원본은 묶음 디렉터리에 있고 `EX-159/games/`는 링크다.
+- 적용: EX-159(`integration.laya_teamset.battle.export`).
+
+<a id="ex160-laya-v1"></a>
+
+## 2026-11-03 — EX-160 laya 사람 팀 v8lt 뷰어
+
+- 구분: 규격 내 확장. battle-viewer-ui-v1, `laya-imitation-researcher-v1`, 생성기 `laya_imitation.viewer.export`(EX-159와 같은 판본).
+- v8lt 경기만 담는다. 압축 입력 탭은 `v8l` 렌더러로 복원하고, 목록 열에 `팀 묶음`을 더한다.
+- 적용: EX-160(`integration.laya_teamset_v8l.battle.export`).
+
+<a id="ex163-laya-v1"></a>
+
+## 2026-11-03 — EX-163·EX-164 laya v8lt 교체 읽기 상대·교체 갈림길 섞기 뷰어
+
+- 구분: 규격 내 확장. battle-viewer-ui-v1, `laya-imitation-researcher-v1`, 생성기 `laya_imitation.viewer.export`(EX-160과 같은 판본).
+- 실행마다 한 모델 128경기를 담는다(`ex163`, `ex164-abyssal`, `ex164-reader`). 압축 입력 탭은 `v8l` 렌더러로 복원한다.
+- 섞기 모델(`laya-v8lt-mix`)에서 규칙이 작동한 결정의 확률 탭은 추첨된 결정(1)이다. 추첨 전 비율(`mix_rule.mixed`)과 정책 출력(`model_probabilities`)은 응답 원문 탭에 있다.
+- 읽기 상대(`abyssal-read`)의 읽기 사건은 경기 폴더의 `opponent-events.jsonl`에 있고 뷰어에는 표시하지 않는다.
+- 적용: EX-163·EX-164(`integration.laya_mindgame.battle.export`).
+
+<a id="ex162-laya-v1"></a>
+
+## 2026-11-03 — EX-162·EX-168 laya v10 압축 입력 탭
+
+- 구분: 규격 내 확장. battle-viewer-ui-v1, `laya-imitation-researcher-v1`, 생성기 `laya_imitation.viewer.export`(EX-160과 같은 판본).
+- D-204/EP-227 승인으로 v10 경기의 압축 입력 탭을 `integration/laya_v10` 실시간 v10 렌더러(`data_v10.live_renderer`, 엔진 판정기 포함)로 복원한다. 2,048토큰 입력이며 lock 표시(`; locks`, `locked`, `locked?`)와 전략 줄(`board:`, `duel:`, `answer`, `wincon:`, `; opp wall` 등)이 더해진다. EX-162의 v7 경기는 `v7` 그대로다.
+- EX-168(D-208/EP-230)은 두 모델(`laya-v10t`, `laya-v10rt`)이 모두 v10이라 같은 렌더러로 복원한다.
+- 적용: EX-162(`integration.laya_v10.battle_v10.export`), EX-168(`integration.laya_ladder.battle.export`). 두 실행의 기록된 변경일지 링크는 실행 전에 동결된 `#ex148-laya-v1`이다.

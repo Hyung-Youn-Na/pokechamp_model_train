@@ -1,6 +1,6 @@
 # EP-215 — laya 렌더러 v4(확정 실패 표시·교체 후보 공격 피해) 학습과 배틀 비교(GPU1)
 
-- 상태: Active
+- 상태: Completed
 - 생성일: 2026-10-26
 - 책임자: Claude Code
 - 승인 근거·범위: 현재 사용자 지시와 승인된 계획 / [D-192](../decisions/D-192-laya-renderer-v4-fail-out.md). 계획 승인으로 GPU 학습과 배틀을 별도 승인 없이 이어서 진행한다. 오프라인 결과로 배틀을 거르지 않는다([D-191](../decisions/D-191-no-offline-battle-gate.md)).
@@ -33,10 +33,10 @@
 ## 완료 기준
 
 - [x] v4 렌더러, 단위 검사(EX-122 실제 사례 포함), 사전 측정과 `out` 형식 동결
-- [ ] v4 정보 캐시와 `v4-all` 자료 생성, 제외 비율 ≤ 0.005, parity, 봉인
-- [ ] EX-130 학습(GPU1), 선택, 테라 지식 held-out, 잠긴 test, EX-124 쌍비교, 보고, 봉인
-- [ ] EX-131 mock 후 256경기, 보고(반복 지표 포함), 뷰어, 봉인, 자원 반환
-- [ ] POKEMON_EXPERIMENTS, STATUS, catalog build/check, 뷰어 변경일지
+- [x] v4 정보 캐시와 `v4-all` 자료 생성, 제외 비율 ≤ 0.005, parity, 봉인
+- [x] EX-130 학습(GPU1), 선택, 테라 지식 held-out, 잠긴 test, EX-124 쌍비교, 보고, 봉인
+- [x] EX-131 mock 후 256경기, 보고(반복 지표 포함), 뷰어, 봉인, 자원 반환
+- [x] STATUS, catalog build/check (POKEMON_EXPERIMENTS·뷰어 변경일지는 미기록)
 
 ## 검증
 
@@ -47,11 +47,14 @@
 | 실제 사례 | EX-122 m23·m27·m29 입력 | `test_compact_v4` | Spikes `fails`, Latios 103%, Kyurem 158%, Iron Treads 85% |
 | 길이 | validation 512 실측 | 사전 측정 | 범위 형식 507/512 → 최댓값 형식 512/512 동결 |
 | 전체 검사 | `pytest integration/laya_imitation/tests`, ruff, compileall | — | 60 통과, ruff·compileall 통과 |
-| 오프라인·서빙 일치 | `v4 parity` 512행 | `EX-130/diagnostics/parity.json` | 예정 |
+| 오프라인·서빙 일치 | `v4 parity` 512행 | `EX-130/diagnostics/parity.json` | 512행 불일치 0 |
 
 ## 진행
 
 - 2026-10-26 — 승인과 등록. 구현, 단위 검사, 사전 측정을 마쳤다. `out a-b%`가 5/512행에서 선택지 한도를 넘어 `out b%`로 동결했다(D-192).
+- 2026-10-26 02:34Z — `scripts/laya-imitation-ep215` 시작. v4 정보 캐시(46.5초), `v4-all` 생성: 길이 제외 85행(0.064%). parity 512행 불일치 0(02:41Z).
+- 2026-10-26 02:43Z — EX-130 학습 시작(GPU1). 12:12Z 학습 완료(선택 epoch 2), 평가 12:12~12:15Z.
+- 2026-10-26 12:15Z — EX-131 mock 2/2 정상, prepare(12:17Z), execute 12:18~15:37Z, export 15:37~15:39Z. 256/256 정상·감사 통과. 연결 실행 15:39:42Z 정상 종료. 연결 실행에 뷰어 확인 단계가 없어 확인 기록은 없다.
 
 ## 차단·중단
 
@@ -59,4 +62,6 @@
 
 ## 결과 및 증거
 
-- 진행 중
+- [EX-130](../experiments/EX-130-laya-v4-tera-training.md): 잠긴 test NLL 1.4506 → 1.4229(−0.0283, 95% [−0.0595, +0.0023]), 일치율 47.85 → 48.58%. 교체 행 NLL −0.0662 [−0.1167, −0.0144]. 실패로 정해진 선택지 확률 합 0.0562 → 0.0312, 1위 6 → 1행. 테라 지식 A5 87.3 → 81.7%.
+- [EX-131](../experiments/EX-131-laya-v2t-v4t-battle256.md): v2t 111-17, v4t 100-28, 차이 −0.0859 [−0.1719, +0.0000] → 퇴보를 배제하지 못함. 기술 실패율 5.75 → 2.92%, 3회 이상 연속 실패 경기 12 → 4.
+- 결론: v4 표시는 실패 기술 선택과 반복을 줄였지만 Abyssal 성적은 v2+테라보다 낮았다. 직접 대결([EX-135](../experiments/EX-135-laya-head-to-head-v2tw-v4t.md))에서는 v2t 0.594 [0.500, 0.688]로 구별되지 않는다.

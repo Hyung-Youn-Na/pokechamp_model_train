@@ -205,3 +205,12 @@
 | [D-197](../research/policy-learning/decisions/D-197-laya-v2t-tera-decision-defence.md) | laya v2+테라(EX-124) fix 입력에서 테라 합산 결정과 테라 방어 문구 배틀(재학습 없음, GPU1) | Accepted |
 | [D-198](../research/policy-learning/decisions/D-198-laya-past-turn-input-v6.md) | laya 과거 턴 입력 두 가지(v6s 반복 표시·v6h 긴 기록 2048토큰) 동시 학습과 배틀 | Accepted |
 | [D-199](../research/policy-learning/decisions/D-199-laya-play-teams-abyssal-battle.md) | laya-play 완성 팀(Smogon 샘플·Blim)으로 v5t·v6st·v6ht 대 Abyssal 비교 | Accepted |
+| [D-200](../research/policy-learning/decisions/D-200-laya-loop-break-opponent-sets.md) | laya 손해 루프 탈출(학습 가중·결정 규칙)과 상대 세트 추정 v7 야간 동시 실험 | Accepted |
+| [D-201](../research/policy-learning/decisions/D-201-laya-engine-judge-v8.md) | laya 실패 표시를 고정 Showdown 엔진 판정기로 바꾼 렌더러 v8 | Accepted |
+| [D-202](../research/policy-learning/decisions/D-202-laya-opponent-threat-v9.md) | laya 상대 가정 세트 노력치 보정과 최악 피해 표시(렌더러 v9) | Accepted |
+| [D-203](../research/policy-learning/decisions/D-203-laya-human-teams-v7-v8-v9.md) | laya v7t·v8t·v9t를 사람이 짠 완성 팀으로 Abyssal과 비교(GPU0·1·2) | Accepted |
+| [D-204](../research/policy-learning/decisions/D-204-laya-renderer-v10-all-info.md) | laya 렌더러 v10: 지금까지의 정보 전부 + lock + 전략 정보, 2,048토큰 | Accepted |
+| [D-205](../research/policy-learning/decisions/D-205-laya-switch-read-and-mixing.md) | laya 교체 읽기 상대(정직함 측정)와 교체 갈림길 섞기(재학습 없음) | Accepted |
+| [D-206](../research/policy-learning/decisions/D-206-laya-opponent-model-search.md) | laya 상대 모델 + 한 턴 탐색(세트 표본 추정), 재학습 없음 | Accepted |
+| [D-207](../shared/datasets/decisions/D-207-lift-reviewed108-species-limit.md) | 108종 제한 해제 | Accepted |
+| [D-208](../research/policy-learning/decisions/D-208-laya-ladder-r1500-v10.md) | 최근 래더(레이팅 1500 이상) 리플레이를 더한 v10 학습(GPU 4장 DDP, 24시간) | Accepted |

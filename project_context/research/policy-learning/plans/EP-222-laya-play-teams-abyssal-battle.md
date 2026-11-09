@@ -1,6 +1,6 @@
 # EP-222 — laya-play 완성 팀으로 v5t·v6st·v6ht 대 Abyssal 비교(GPU2)
 
-- 상태: Active
+- 상태: Completed
 - 생성일: 2026-10-30
 - 책임자: Claude Code
 - 승인 근거·범위: 사용자 지시(2026-10-30, laya-play 봇 완성 팀으로 Abyssal 테스트)와 [D-199](../decisions/D-199-laya-play-teams-abyssal-battle.md). 구현, mock, 배틀을 별도 승인 없이 이어서 진행한다.
@@ -27,8 +27,8 @@ EX-120 재구성 팀 대신 사람이 짠 완성 팀으로 두었을 때, v6st·
 
 - [x] 팀 수집·검증·일정 생성과 봉인(`EX-145/collection`): 74팀 모두 검증 통과(smogon 11, blim 63), 유형 weather 12·offense 20·defense 4·balance 38, 학습 노출 서명 24, 원형 이웃 공유 종족 최대 4
 - [x] mock(기반 체크포인트 v6ht-initial, CPU, 2경기): 2/2 정상·감사 통과
-- [ ] EX-145 prepare·execute(888슬롯)·export, 보고, 뷰어, 봉인
-- [ ] POKEMON_EXPERIMENTS, STATUS, catalog build/check
+- [x] EX-145 prepare·execute(888슬롯)·export(1회 재시도), 보고, 뷰어, 봉인
+- [x] STATUS, catalog build/check (POKEMON_EXPERIMENTS는 미기록)
 
 ## 검증
 
@@ -48,4 +48,5 @@ EX-120 재구성 팀 대신 사람이 짠 완성 팀으로 두었을 때, v6st·
 
 ## 결과 및 증거
 
-- 진행 전
+- 2026-11-02 — 완료. v6st − v5t 0.000 [−0.047, +0.047] 비퇴보, v6ht − v5t −0.007 [−0.054, +0.041] 퇴보를 배제하지 못함. v6ht 실패 기술 4.57%(v5t 1.95%), Sleep Talk 실패 96/293. 상세는 [EX-145](../experiments/EX-145-laya-play-teams-v5t-v6st-v6ht-battle.md).
+- 첫 export는 뷰어 메타 `pairs` 미설정으로 멈춰 `diagnostics/`에 보존하고 export만 다시 했다.

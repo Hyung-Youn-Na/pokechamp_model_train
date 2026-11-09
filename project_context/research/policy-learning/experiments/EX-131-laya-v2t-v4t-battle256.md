@@ -1,6 +1,6 @@
 # EX-131 — laya v2+테라와 v4+테라 같은 실행 256경기(GPU1, EX-120 일정)
 
-- 상태: Planned
+- 상태: Completed
 - 생성일: 2026-10-26
 - 책임자: Claude Code
 - 관련 exec plan: [EP-215](../plans/EP-215-laya-renderer-v4.md)
@@ -78,12 +78,31 @@ C-018과 EX-119 절차를 적용한다. 도구 결함으로 오염된 슬롯만 
 
 | Artifact | Path | Checksum | 상태 |
 |---|---|---|---|
-| 배틀 run | `/mnt/.../runs/model-training/EX-131` | `checksums.sha256`, `report.md` | 예정 |
-| 뷰어 | `/workspace/exports/battle_viewers/ex131/index.html` | `checksums.sha256` | 예정 |
+| 배틀 run | `/mnt/.../runs/model-training/EX-131` | `checksums.sha256`, `report.md` | 완료·봉인 |
+| 뷰어 | `/workspace/exports/battle_viewers/ex131/index.html` | `checksums.sha256` | 생성(256경기), 확인 기록 없음 |
 
 ## 결과
 
-예정.
+- 2026-10-26 mock 2/2 정상·감사 통과(12:15Z). prepare 12:17Z, execute 12:18Z~15:37Z(GPU1·8109), export 15:37Z~15:39Z. 256/256 정상 종료·감사 통과, 실패·미완료·무효 0. 보고 `runs/model-training/EX-131/report.md`.
+- 뷰어 `/workspace/exports/battle_viewers/ex131/`(256경기, 결정 11,339). 뷰어 확인 기록은 없다(연결 실행에 확인 단계가 없고 `exec-plans/evidence/`에 파일이 없다). 변경일지 항목도 없다.
+- **판정**: 같은 슬롯 차이(v4t − v2t) −0.0859, 95% [−0.1719, +0.0000] → **퇴보를 배제하지 못함**. v4t 우세 11, v2t 우세 22, 같음 95.
+
+| 모델 | 승/무/패 | 평균 점수 | 95% | 기술 실패·무효 | 테라 사용 경기 | 지연 p50 |
+|---|---|---:|---|---:|---:|---:|
+| laya-v2t | 111/0/17 | 0.867 | [0.805, 0.922] | 240/4177 (5.75%) | 22/128 | 0.177초 |
+| laya-v4t | 100/0/28 | 0.781 | [0.711, 0.852] | 105/3599 (2.92%) | 17/128 | 0.185초 |
+
+- 반복 지표:
+
+| 모델 | 실패가 나온 경기 | 3회 이상 연속 실패 경기 | 그 경기 승/패 | 최장 연속 |
+|---|---:|---:|---|---|
+| laya-v2t | 53 | 12 | 10/2 | Whirlwind 32회 (v2t-m22-s2-b) |
+| laya-v4t | 32 | 4 | 2/2 | Sleep Talk 16회 (v4t-m29-s2-b) |
+
+- 많이 실패한 기술: v2t Sleep Talk 43/100, Whirlwind 39/81, Seismic Toss 27/70, Wish 24/56. v4t Sleep Talk 43/64, Protect 8/107, Rest 7/27, Spikes 6/111.
+- 테라 사용 경기 승/패: v2t 21/1, v4t 11/6.
+- 팀 유형별 점수는 네 유형 모두 v4t가 낮다. 공격형 차이가 가장 크다(0.844 → 0.656).
+- v2t 재현: 보고서에 재현 항목이 없다(`result.json` `replication` null). 보고서 경기별 표를 대조하면 v2t 128슬롯의 결과·턴 수가 EX-125·EX-127·EX-129와 128/128 같다.
 
 ## 분석 및 한계
 
@@ -92,4 +111,7 @@ C-018과 EX-119 절차를 적용한다. 도구 결함으로 오염된 슬롯만 
 
 ## 결론 및 후속 작업
 
-예정.
+- v4 입력은 Abyssal 상대 실패·무효 기술 비율을 5.75 → 2.92%로, 3회 이상 연속 실패 경기를 12 → 4로 줄였다.
+- 그러나 성적은 11경기 낮았다(0.867 → 0.781). 하한 −0.1719가 −0.05보다 낮아 "퇴보를 배제하지 못함"이다. 실패 반복을 줄여도 Abyssal 성적은 오르지 않았다.
+- Sleep Talk 실패는 43회로 v2t와 같았다. 이 사례는 후속 [EP-218](../plans/EP-218-laya-renderer-v5-item-state.md)이 다룬다.
+- 직접 대결은 [EX-135](EX-135-laya-head-to-head-v2tw-v4t.md)에 있다(v2t 0.594 [0.500, 0.688], 구별되지 않음).

@@ -8,6 +8,7 @@
 |---|---|---|
 | [D-090](decisions/D-090-team-corpus-role-expansion.md) | 팀 데이터 기반 열람 역할 DB 확장 | Accepted |
 | [D-091](decisions/D-091-reviewed-species-team-list.md) | 검토 완료108종으로 팀 후보 제한 | Accepted |
+| [D-207](decisions/D-207-lift-reviewed108-species-limit.md) | 108종 제한 해제 | Accepted |
 | [EP-083](plans/EP-083-team-role-export.md) | 팀 풀 44종 역할 DB 내보내기 | Completed |
 | [EP-084](plans/EP-084-role-export-readable.md) | 역할 DB 열람본 정리 | Completed |
 | [EP-085](plans/EP-085-role-export-no-ev.md) | 열람본 노력치 정보 제거 | Completed |

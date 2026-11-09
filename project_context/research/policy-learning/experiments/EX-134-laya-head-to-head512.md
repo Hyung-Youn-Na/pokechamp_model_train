@@ -1,6 +1,6 @@
 # EX-134 — laya v2+테라 대 v2·v1·v2+테라+효과·v3+테라 직접 대결 512경기(GPU2, EX-120 일정)
 
-- 상태: Running
+- 상태: Completed
 - 생성일: 2026-10-26
 - 책임자: Claude Code
 - 관련 exec plan: [EP-217](../plans/EP-217-laya-head-to-head-evaluation.md)
@@ -99,12 +99,33 @@ C-018과 EX-119 절차를 적용한다. 도구 결함으로 오염된 슬롯만 
 | Artifact | Path | Checksum | 상태 |
 |---|---|---|---|
 | mock | `/mnt/.../runs/model-training/EX-134/mock` | — | 4/4 정상, 두 진영 감사 통과 |
-| 배틀 run | `/mnt/.../runs/model-training/EX-134` | `checksums.sha256`, `report.md` | 예정 |
-| 뷰어 | `/workspace/exports/battle_viewers/ex134/index.html` | `checksums.sha256` | 예정 |
+| 배틀 run | `/mnt/.../runs/model-training/EX-134` | `checksums.sha256`, `report.md` | 완료·봉인 |
+| 뷰어 | `/workspace/exports/battle_viewers/ex134/index.html` | `checksums.sha256` | 생성·확인 통과(`exec-plans/evidence/ep217/ex134-viewer-check.json`) |
 
 ## 결과
 
-진행 중.
+- 2026-10-26 prepare 05:25Z, execute 05:27Z~15:58Z(GPU2·8108), export 15:58Z~16:10Z. 보고 `runs/model-training/EX-134/report.md`. 뷰어 확인 16:13Z 통과(1440·390 폭, 512경기·비교 진영 512페이지, 페이지 오류 0, `exec-plans/evidence/ep217/ex134-viewer-check.json`).
+- 분모: 예정 512, 정상 507, 미완료 5, 실패·무효·미실행 0. 미완료는 모두 300턴 상한이다(v2-m29-s2-b, v2te-m30-s2-a, v2te-m32-s1-b, v2te-m32-s2-b, v3t-m32-s1-a). 모든 쌍이 정상 120/128 이상이라 판정한다.
+- **판정**(laya-v2t 점수, 조합 클러스터 95%):
+
+| 비교 모델 | 정상 | v2t 승/무/패 | v2t 점수 | 95% | 교환쌍 2승/1승1패/2패 | 판정 |
+|---|---|---|---:|---|---|---|
+| laya-v1 | 128/128 | 83/0/45 | 0.648 | [0.570, 0.727] | 27/29/8 | **laya-v2t 우세** |
+| laya-v2 | 127/128 | 63/0/64 | 0.496 | [0.421, 0.571] | 11/40/12 | **구별되지 않음** |
+| laya-v2te | 125/128 | 60/0/65 | 0.480 | [0.394, 0.569] | 11/38/12 | **구별되지 않음** |
+| laya-v3t | 127/128 | 65/0/62 | 0.512 | [0.438, 0.583] | 10/44/9 | **구별되지 않음** |
+
+- Abyssal 비교(같은 슬롯 v2t − 비교 모델):
+
+| 비교 모델 | Abyssal 출처 | Abyssal 차이 | 95% | Abyssal 구별 | 직접 대결 구별 | 방향 일치 |
+|---|---|---:|---|---|---|---|
+| laya-v1 | EX-125·EX-120 | +0.172 | [0.094, 0.250] | v2t 우세 | v2t 우세 | 예 |
+| laya-v2 | EX-125·EX-125 | +0.070 | [0.000, 0.141] | 구별되지 않음 | 구별되지 않음 | 아니오 |
+| laya-v2te | EX-125·EX-127 | +0.070 | [−0.008, 0.148] | 구별되지 않음 | 구별되지 않음 | 아니오 |
+| laya-v3t | EX-125·EX-129 | +0.055 | [−0.008, 0.125] | 구별되지 않음 | 구별되지 않음 | 예 |
+
+- 진영별 실패·무효 기술: 비교 진영 v1 256/5937(4.31%), v2 400/5950(6.72%), v2te 374/6088(6.14%), v3t 384/5671(6.77%). v2t 진영은 쌍별 5.62~6.61%. 같은 기술 3회 이상 연속 실패 경기는 진영별 8~16이다.
+- 지연 p50: v1 0.160초, v2 0.168초, v2t 0.168초, v2te 0.168초, v3t 0.176초.
 
 ## 분석 및 한계
 
@@ -114,4 +135,6 @@ C-018과 EX-119 절차를 적용한다. 도구 결함으로 오염된 슬롯만 
 
 ## 결론 및 후속 작업
 
-진행 중.
+- 직접 대결은 Abyssal에서 이미 구별된 v1만 구별했다(v2t 0.648). Abyssal에서 구별되지 않던 v2·v2te·v3t는 직접 대결에서도 구별되지 않았다.
+- v2·v2te는 방향도 Abyssal과 반대다(v2t 점수 0.496, 0.480). 직접 대결이 Abyssal 천장 문제를 풀지 못했다.
+- 하네스와 뷰어 확장은 [EX-135](EX-135-laya-head-to-head-v2tw-v4t.md)·[EX-138](EX-138-laya-head-to-head-v5t.md)에서 그대로 쓴다.

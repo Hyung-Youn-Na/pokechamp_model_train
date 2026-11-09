@@ -1,6 +1,6 @@
 # EP-220 — laya v2+테라 fix 입력 테라 합산 결정·테라 방어 문구 배틀(재학습 없음, GPU1)
 
-- 상태: Active
+- 상태: Completed
 - 생성일: 2026-10-27
 - 책임자: Claude Code
 - 승인 근거·범위: 사용자 지시(2026-10-27). 결정 규칙 실험(1안)에 입력은 EX-139 fix로, 테라 방어 문구 간이 시험(A안)을 같은 실험 조건으로 추가한다. 구현, mock, 배틀, export를 이어서 진행한다. 커밋은 하지 않는다. 오프라인 결과로 배틀을 거르지 않는다([D-191](../decisions/D-191-no-offline-battle-gate.md)).
@@ -43,8 +43,9 @@ v2t가 테라를 꺼리는 원인 분석(D-197 맥락)에 따라, 재학습 없�
   - pytest `integration/laya_imitation/tests` 99 통과(새 검사 9)
   - ruff(`--select=E9,F63,F7,F82,F401,F811 --line-length=120`)와 compileall 통과
 - [x] mock(CPU 2경기, tp3, 분모 밖): 2/2 정상·감사 통과(둘 다 패배, 기본 체크포인트)
-- [ ] EX-140 prepare·execute(384경기)·export, 뷰어 Playwright 검사, 봉인, 자원 반환
-- [ ] STATUS, 뷰어 변경일지, catalog build/check
+- [x] EX-140 prepare·execute(384경기)·export, 뷰어 Playwright 검사, 봉인, 자원 반환
+  - 자원 반환은 로그에 따로 기록되지 않았다. 연결 실행은 09:24:20Z에 종료됐다.
+- [x] STATUS, 뷰어 변경일지(`#ex140-laya-v1`), catalog build/check
 
 ## 검증
 
@@ -63,6 +64,7 @@ v2t가 테라를 꺼리는 원인 분석(D-197 맥락)에 따라, 재학습 없�
 - 2026-10-27 05:20Z — EX-139 연결 실행 종료(GPU1 반환). EX-136 `training` 확인 후 코드 반영과 검사를 마쳤다.
 - 2026-10-27 05:28Z — mock(분모 밖) 2/2 정상 종료·감사 통과. 서빙 identity `decision` k=3, 경기마다 규칙이 1순위를 1회 테라로 바꿨고 플레이어 검사를 통과했다.
 - 2026-10-27 05:28Z — prepare(384슬롯, 서빙 셋 모두 `12519d98…`, EX-139 `result.json` `58d449ec…` 동결) 후 execute를 시작했다. 연결 실행 로그는 `runs/model-training/EP-220-chain.log`다. 이후 `integration/laya_imitation`은 수정하지 않는다.
+- 2026-10-27 09:19Z — execute 종료(384/384 정상, 감사 전부 통과). 09:20Z export, 09:24Z 뷰어 Playwright 검사(1440px·390px, 384경기, 페이지 오류 0)·봉인, 09:24:20Z 연결 실행 종료.
 
 ## 차단·중단
 
@@ -70,4 +72,11 @@ v2t가 테라를 꺼리는 원인 분석(D-197 맥락)에 따라, 재학습 없�
 
 ## 결과 및 증거
 
-- 진행 전
+- [EX-140](../experiments/EX-140-laya-v2t-tera-decision-defence384.md) 판정(EX-139 fix 110승 18패 같은 슬롯):
+  - tp1 104승 24패, −0.0469 [−0.0938, −0.0078] → **악화**
+  - tp3 101승 27패, −0.0703 [−0.1328, −0.0078] → **악화**
+  - tdef 101승 27패, −0.0703 [−0.1484, +0.0078] → **구별되지 않음**
+- 테라 경기 기준 24 → tp1 47, tp3 95(사전 계산과 같음), tdef 5. 실패·무효 기술 5.54 → 5.26·5.18·6.37%.
+- 규칙이 작동하지 않은 tp 슬롯은 기준과 결과·턴 수가 같다(tp1 99/99, tp3 44/44).
+- 증거: `runs/model-training/EX-140/`(`report.md`, `result.json` `b3be1c1c…`, `tera-choices.json`, `checksums.sha256`), 연결 실행 로그 `runs/model-training/EP-220-chain.log`, 뷰어 `/workspace/exports/battle_viewers/ex140/index.html`, 뷰어 검사 `exec-plans/evidence/ep220/ex140-viewer-check.json`.
+- 결론: 테라 합산 결정은 테라 사용을 늘렸지만 Abyssal 성적을 낮췄고, 테라 방어 문구는 테라를 줄였으며 성적은 기준과 구별되지 않았다.

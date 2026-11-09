@@ -2257,6 +2257,28 @@
         "decisions/D-091-reviewed-species-team-list.md"
       ]
     },
+    "D-207": {
+      "path": "shared/datasets/decisions/D-207-lift-reviewed108-species-limit.md",
+      "topic": "shared/datasets",
+      "methods": {},
+      "models": [],
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-091"
+        },
+        {
+          "type": "references",
+          "target": "D-090"
+        },
+        {
+          "type": "references",
+          "target": "EP-100"
+        }
+      ],
+      "legacy_paths": []
+    },
     "D-092": {
       "path": "research/input-and-memory/decisions/D-092-jev-offline-input.md",
       "topic": "research/input-and-memory",
@@ -17239,6 +17261,1876 @@
         {
           "type": "compares",
           "target": "EX-144"
+        }
+      ]
+    },
+    "D-200": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-200-laya-loop-break-opponent-sets.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형",
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-223"
+        },
+        {
+          "type": "references",
+          "target": "EX-146"
+        },
+        {
+          "type": "references",
+          "target": "EX-147"
+        },
+        {
+          "type": "references",
+          "target": "EX-148"
+        },
+        {
+          "type": "references",
+          "target": "EX-149"
+        },
+        {
+          "type": "references",
+          "target": "EX-150"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "D-198"
+        },
+        {
+          "type": "references",
+          "target": "D-189"
+        },
+        {
+          "type": "references",
+          "target": "EX-145"
+        }
+      ]
+    },
+    "EP-223": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-223-laya-loop-break-opponent-sets.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형",
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-200"
+        },
+        {
+          "type": "references",
+          "target": "EX-146"
+        },
+        {
+          "type": "references",
+          "target": "EX-147"
+        },
+        {
+          "type": "references",
+          "target": "EX-148"
+        },
+        {
+          "type": "references",
+          "target": "EX-149"
+        },
+        {
+          "type": "references",
+          "target": "EX-150"
+        },
+        {
+          "type": "references",
+          "target": "EP-221"
+        }
+      ]
+    },
+    "EX-146": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-146-laya-v6sl-loop-weighted-training.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-200"
+        },
+        {
+          "type": "references",
+          "target": "EP-223"
+        },
+        {
+          "type": "compares",
+          "target": "EX-141"
+        },
+        {
+          "type": "uses",
+          "target": "EX-071"
+        }
+      ]
+    },
+    "EX-147": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-147-laya-v6st-v6slt-battle256.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-200"
+        },
+        {
+          "type": "references",
+          "target": "EP-223"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-146"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-141"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        },
+        {
+          "type": "compares",
+          "target": "EX-143"
+        }
+      ]
+    },
+    "EX-148": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-148-laya-loop-decision-rule.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-200"
+        },
+        {
+          "type": "references",
+          "target": "EP-223"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-141"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-142"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        },
+        {
+          "type": "compares",
+          "target": "EX-143"
+        },
+        {
+          "type": "compares",
+          "target": "EX-144"
+        }
+      ]
+    },
+    "EX-149": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-149-laya-v7-opponent-sets-training.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-200"
+        },
+        {
+          "type": "references",
+          "target": "EP-223"
+        },
+        {
+          "type": "compares",
+          "target": "EX-141"
+        },
+        {
+          "type": "uses",
+          "target": "EX-071"
+        },
+        {
+          "type": "references",
+          "target": "EX-128"
+        }
+      ]
+    },
+    "EX-150": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-150-laya-v6st-v7t-battle256.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-200"
+        },
+        {
+          "type": "references",
+          "target": "EP-223"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-149"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-141"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        },
+        {
+          "type": "compares",
+          "target": "EX-143"
+        }
+      ]
+    },
+    "D-201": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-201-laya-engine-judge-v8.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형",
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge",
+        "laya-engine-judge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-224"
+        },
+        {
+          "type": "references",
+          "target": "EX-151"
+        },
+        {
+          "type": "references",
+          "target": "EX-152"
+        },
+        {
+          "type": "references",
+          "target": "EX-153"
+        },
+        {
+          "type": "references",
+          "target": "EX-154"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "D-200"
+        },
+        {
+          "type": "references",
+          "target": "EX-149"
+        },
+        {
+          "type": "references",
+          "target": "EX-150"
+        },
+        {
+          "type": "references",
+          "target": "EX-155"
+        },
+        {
+          "type": "references",
+          "target": "EX-156"
+        }
+      ]
+    },
+    "EP-224": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-224-laya-engine-judge-v8.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형",
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge",
+        "laya-engine-judge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-201"
+        },
+        {
+          "type": "references",
+          "target": "EX-151"
+        },
+        {
+          "type": "references",
+          "target": "EX-152"
+        },
+        {
+          "type": "references",
+          "target": "EX-153"
+        },
+        {
+          "type": "references",
+          "target": "EX-154"
+        },
+        {
+          "type": "references",
+          "target": "EP-223"
+        },
+        {
+          "type": "references",
+          "target": "EX-155"
+        },
+        {
+          "type": "references",
+          "target": "EX-156"
+        }
+      ]
+    },
+    "EX-151": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-151-laya-engine-judge-validation.md",
+      "methods": {
+        "평가": [
+          "독립 선택형",
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-engine-judge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-201"
+        },
+        {
+          "type": "references",
+          "target": "EP-224"
+        },
+        {
+          "type": "uses",
+          "target": "EX-071"
+        },
+        {
+          "type": "uses",
+          "target": "EX-150"
+        },
+        {
+          "type": "uses",
+          "target": "EX-145"
+        }
+      ]
+    },
+    "EX-152": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-152-laya-v8-engine-fails-training.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge",
+        "laya-engine-judge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-201"
+        },
+        {
+          "type": "references",
+          "target": "EP-224"
+        },
+        {
+          "type": "compares",
+          "target": "EX-149"
+        },
+        {
+          "type": "uses",
+          "target": "EX-071"
+        },
+        {
+          "type": "uses",
+          "target": "EX-151"
+        }
+      ]
+    },
+    "EX-153": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-153-laya-v7t-v8t-battle256.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-201"
+        },
+        {
+          "type": "references",
+          "target": "EP-224"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-152"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-149"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        },
+        {
+          "type": "compares",
+          "target": "EX-150"
+        }
+      ]
+    },
+    "EX-154": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-154-laya-head-to-head-v8t-v7t.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-201"
+        },
+        {
+          "type": "references",
+          "target": "EP-224"
+        },
+        {
+          "type": "references",
+          "target": "D-194"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-152"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-149"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        },
+        {
+          "type": "compares",
+          "target": "EX-153"
+        }
+      ]
+    },
+    "EX-155": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-155-laya-v8l-likely-fails-training.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge",
+        "laya-engine-judge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-201"
+        },
+        {
+          "type": "references",
+          "target": "EP-224"
+        },
+        {
+          "type": "compares",
+          "target": "EX-152"
+        },
+        {
+          "type": "compares",
+          "target": "EX-149"
+        },
+        {
+          "type": "uses",
+          "target": "EX-071"
+        },
+        {
+          "type": "uses",
+          "target": "EX-151"
+        },
+        {
+          "type": "references",
+          "target": "EX-156"
+        }
+      ]
+    },
+    "EX-156": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-156-laya-v8t-v8lt-battle256.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-201"
+        },
+        {
+          "type": "references",
+          "target": "EP-224"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-155"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-152"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        },
+        {
+          "type": "compares",
+          "target": "EX-153"
+        }
+      ]
+    },
+    "D-202": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-202-laya-opponent-threat-v9.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형",
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-225"
+        },
+        {
+          "type": "references",
+          "target": "EX-157"
+        },
+        {
+          "type": "references",
+          "target": "EX-158"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "D-200"
+        },
+        {
+          "type": "references",
+          "target": "EX-149"
+        },
+        {
+          "type": "references",
+          "target": "EP-224"
+        }
+      ]
+    },
+    "EP-225": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-225-laya-opponent-threat-v9.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형",
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-202"
+        },
+        {
+          "type": "references",
+          "target": "EX-157"
+        },
+        {
+          "type": "references",
+          "target": "EX-158"
+        },
+        {
+          "type": "references",
+          "target": "EP-224"
+        },
+        {
+          "type": "references",
+          "target": "EX-149"
+        },
+        {
+          "type": "references",
+          "target": "EX-150"
+        }
+      ]
+    },
+    "EX-157": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-157-laya-v9-opponent-threat-training.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-202"
+        },
+        {
+          "type": "references",
+          "target": "EP-225"
+        },
+        {
+          "type": "compares",
+          "target": "EX-149"
+        },
+        {
+          "type": "uses",
+          "target": "EX-071"
+        },
+        {
+          "type": "references",
+          "target": "EX-158"
+        }
+      ]
+    },
+    "EX-158": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-158-laya-v7t-v9t-battle256.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-202"
+        },
+        {
+          "type": "references",
+          "target": "EP-225"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-157"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-149"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        },
+        {
+          "type": "compares",
+          "target": "EX-150"
+        }
+      ]
+    },
+    "D-203": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-203-laya-human-teams-v7-v8-v9.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-226"
+        },
+        {
+          "type": "references",
+          "target": "EX-159"
+        },
+        {
+          "type": "references",
+          "target": "D-199"
+        },
+        {
+          "type": "references",
+          "target": "EX-145"
+        },
+        {
+          "type": "references",
+          "target": "EX-153"
+        },
+        {
+          "type": "references",
+          "target": "EX-158"
+        },
+        {
+          "type": "references",
+          "target": "EX-120"
+        },
+        {
+          "type": "references",
+          "target": "EX-160"
+        }
+      ]
+    },
+    "EP-226": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-226-laya-human-teams-v7-v8-v9.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-203"
+        },
+        {
+          "type": "references",
+          "target": "EX-159"
+        },
+        {
+          "type": "references",
+          "target": "EX-145"
+        },
+        {
+          "type": "references",
+          "target": "EP-224"
+        },
+        {
+          "type": "references",
+          "target": "EP-225"
+        },
+        {
+          "type": "references",
+          "target": "EX-160"
+        }
+      ]
+    },
+    "EX-159": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-159-laya-human-teams-v7t-v8t-v9t.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-203"
+        },
+        {
+          "type": "references",
+          "target": "EP-226"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-149"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-152"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-157"
+        },
+        {
+          "type": "compares",
+          "target": "EX-153"
+        },
+        {
+          "type": "compares",
+          "target": "EX-158"
+        },
+        {
+          "type": "compares",
+          "target": "EX-145"
+        }
+      ]
+    },
+    "EX-160": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-160-laya-human-teams-v8lt.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-203"
+        },
+        {
+          "type": "references",
+          "target": "EP-226"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-155"
+        },
+        {
+          "type": "uses",
+          "target": "EX-159"
+        },
+        {
+          "type": "compares",
+          "target": "EX-159"
+        },
+        {
+          "type": "compares",
+          "target": "EX-156"
+        }
+      ]
+    },
+    "D-204": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-204-laya-renderer-v10-all-info.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형",
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-227"
+        },
+        {
+          "type": "references",
+          "target": "EX-161"
+        },
+        {
+          "type": "references",
+          "target": "EX-162"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "D-201"
+        },
+        {
+          "type": "references",
+          "target": "D-202"
+        },
+        {
+          "type": "references",
+          "target": "D-200"
+        },
+        {
+          "type": "references",
+          "target": "EX-149"
+        },
+        {
+          "type": "references",
+          "target": "EX-142"
+        },
+        {
+          "type": "references",
+          "target": "EX-159"
+        },
+        {
+          "type": "references",
+          "target": "EX-160"
+        }
+      ]
+    },
+    "EP-227": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-227-laya-renderer-v10.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형",
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-204"
+        },
+        {
+          "type": "references",
+          "target": "EX-161"
+        },
+        {
+          "type": "references",
+          "target": "EX-162"
+        },
+        {
+          "type": "references",
+          "target": "EX-149"
+        },
+        {
+          "type": "references",
+          "target": "EX-152"
+        },
+        {
+          "type": "references",
+          "target": "EX-155"
+        },
+        {
+          "type": "references",
+          "target": "EX-157"
+        },
+        {
+          "type": "references",
+          "target": "EX-142"
+        }
+      ]
+    },
+    "EX-161": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-161-laya-v10-all-info-training.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-204"
+        },
+        {
+          "type": "references",
+          "target": "EP-227"
+        },
+        {
+          "type": "compares",
+          "target": "EX-149"
+        },
+        {
+          "type": "uses",
+          "target": "EX-071"
+        },
+        {
+          "type": "references",
+          "target": "EX-162"
+        }
+      ]
+    },
+    "EX-162": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-162-laya-v7t-v10t-battle256.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-204"
+        },
+        {
+          "type": "references",
+          "target": "EP-227"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-161"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-149"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        },
+        {
+          "type": "compares",
+          "target": "EX-150"
+        }
+      ]
+    },
+    "D-205": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-205-laya-switch-read-and-mixing.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-228"
+        },
+        {
+          "type": "references",
+          "target": "EX-163"
+        },
+        {
+          "type": "references",
+          "target": "EX-164"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "D-204"
+        },
+        {
+          "type": "references",
+          "target": "EX-156"
+        },
+        {
+          "type": "references",
+          "target": "EX-155"
+        }
+      ]
+    },
+    "EP-228": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-228-laya-switch-read-and-mixing.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-205"
+        },
+        {
+          "type": "references",
+          "target": "EX-163"
+        },
+        {
+          "type": "references",
+          "target": "EX-164"
+        },
+        {
+          "type": "references",
+          "target": "EX-155"
+        },
+        {
+          "type": "references",
+          "target": "EX-156"
+        }
+      ]
+    },
+    "EX-163": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-163-laya-v8lt-vs-switch-reader.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-205"
+        },
+        {
+          "type": "references",
+          "target": "EP-228"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-155"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        },
+        {
+          "type": "compares",
+          "target": "EX-156"
+        }
+      ]
+    },
+    "EX-164": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-164-laya-v8lt-switch-mixing.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-205"
+        },
+        {
+          "type": "references",
+          "target": "EP-228"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-155"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        },
+        {
+          "type": "compares",
+          "target": "EX-156"
+        },
+        {
+          "type": "compares",
+          "target": "EX-163"
+        }
+      ]
+    },
+    "D-206": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "datasets": [],
+      "path": "research/policy-learning/decisions/D-206-laya-opponent-model-search.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-229"
+        },
+        {
+          "type": "references",
+          "target": "EX-165"
+        },
+        {
+          "type": "references",
+          "target": "D-205"
+        },
+        {
+          "type": "references",
+          "target": "EX-163"
+        },
+        {
+          "type": "references",
+          "target": "EX-164"
+        }
+      ]
+    },
+    "EP-229": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "datasets": [],
+      "path": "research/policy-learning/plans/EP-229-laya-opponent-model-search.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-206"
+        },
+        {
+          "type": "references",
+          "target": "EX-165"
+        },
+        {
+          "type": "references",
+          "target": "EP-228"
+        }
+      ]
+    },
+    "EX-165": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "datasets": [],
+      "path": "research/policy-learning/experiments/EX-165-laya-opponent-prediction-scenes.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ]
+      },
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-206"
+        },
+        {
+          "type": "references",
+          "target": "EP-229"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-155"
+        }
+      ]
+    },
+    "D-208": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-208-laya-ladder-r1500-v10.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-207"
+        },
+        {
+          "type": "references",
+          "target": "EP-230"
+        },
+        {
+          "type": "references",
+          "target": "EX-166"
+        },
+        {
+          "type": "references",
+          "target": "EX-167"
+        },
+        {
+          "type": "references",
+          "target": "EX-168"
+        },
+        {
+          "type": "references",
+          "target": "D-204"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        }
+      ]
+    },
+    "EP-230": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-230-laya-ladder-r1500-v10.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형",
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-208"
+        },
+        {
+          "type": "references",
+          "target": "D-207"
+        },
+        {
+          "type": "references",
+          "target": "EX-166"
+        },
+        {
+          "type": "references",
+          "target": "EX-167"
+        },
+        {
+          "type": "references",
+          "target": "EX-168"
+        },
+        {
+          "type": "references",
+          "target": "EX-161"
+        },
+        {
+          "type": "references",
+          "target": "EX-162"
+        }
+      ]
+    },
+    "EX-166": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-166-laya-ladder-r1500-data.md",
+      "methods": {
+        "자료": [
+          "리플레이 복원"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-208"
+        },
+        {
+          "type": "references",
+          "target": "EP-230"
+        },
+        {
+          "type": "uses",
+          "target": "EX-071"
+        },
+        {
+          "type": "references",
+          "target": "EX-167"
+        }
+      ]
+    },
+    "EX-167": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-167-laya-v10-ladder-training.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-208"
+        },
+        {
+          "type": "references",
+          "target": "EP-230"
+        },
+        {
+          "type": "compares",
+          "target": "EX-161"
+        },
+        {
+          "type": "uses",
+          "target": "EX-166"
+        },
+        {
+          "type": "uses",
+          "target": "EX-071"
+        },
+        {
+          "type": "references",
+          "target": "EX-168"
+        }
+      ]
+    },
+    "EX-168": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-168-laya-v10t-v10rt-battle256.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "고정 대진",
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-208"
+        },
+        {
+          "type": "references",
+          "target": "EP-230"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-167"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-161"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        },
+        {
+          "type": "compares",
+          "target": "EX-162"
         }
       ]
     }

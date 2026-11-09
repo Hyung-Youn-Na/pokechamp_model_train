@@ -1,6 +1,6 @@
 # EX-133 — laya v2+테라와 v2+테라 승패 가중 모방 같은 실행 256경기(GPU0, EX-120 일정)
 
-- 상태: Planned
+- 상태: Completed
 - 생성일: 2026-10-26
 - 책임자: Claude Code
 - 관련 exec plan: [EP-216](../plans/EP-216-laya-outcome-weighted-imitation.md)
@@ -80,12 +80,31 @@ C-018과 EX-119 절차를 적용한다. 도구 결함으로 오염된 슬롯만 
 
 | Artifact | Path | Checksum | 상태 |
 |---|---|---|---|
-| 배틀 run | `/mnt/.../runs/model-training/EX-133` | `checksums.sha256`, `report.md` | 예정 |
-| 뷰어 | `/workspace/exports/battle_viewers/ex133/index.html` | `checksums.sha256` | 예정 |
+| 배틀 run | `/mnt/.../runs/model-training/EX-133` | `checksums.sha256`, `report.md` | 완료·봉인 |
+| 뷰어 | `/workspace/exports/battle_viewers/ex133/index.html` | `checksums.sha256` | 생성(256경기), 확인 기록 없음 |
 
 ## 결과
 
-예정.
+- 2026-10-26 mock 2/2 정상·감사 통과(14:15Z). prepare 14:18Z, execute 14:19Z~17:38Z(GPU0·8107), export 17:38Z~17:39Z. 256/256 정상 종료·감사 통과, 실패·미완료·무효 0. 보고 `runs/model-training/EX-133/report.md`.
+- 뷰어 `/workspace/exports/battle_viewers/ex133/`(256경기, 결정 11,495). 뷰어 확인 기록은 없다(연결 실행에 확인 단계가 없고 `exec-plans/evidence/`에 파일이 없다). 변경일지 항목도 없다.
+- **판정**: 같은 슬롯 차이(v2tw − v2t) −0.0938, 95% [−0.1797, −0.0078] → **악화**. v2tw 우세 11, v2t 우세 23, 같음 94.
+
+| 모델 | 승/무/패 | 평균 점수 | 95% | 기술 실패·무효 | 테라 사용 경기 | 지연 p50 |
+|---|---|---:|---|---:|---:|---:|
+| laya-v2t | 111/0/17 | 0.867 | [0.805, 0.922] | 240/4177 (5.75%) | 22/128 | 0.177초 |
+| laya-v2tw | 99/0/29 | 0.773 | [0.711, 0.836] | 379/3852 (9.84%) | 22/128 | 0.177초 |
+
+- 반복 지표:
+
+| 모델 | 실패가 나온 경기 | 3회 이상 연속 실패 경기 | 그 경기 승/패 | 최장 연속 |
+|---|---:|---:|---|---|
+| laya-v2t | 53 | 12 | 10/2 | Whirlwind 32회 (v2t-m22-s2-b) |
+| laya-v2tw | 57 | 18 | 13/5 | Whirlwind 32회 (v2tw-m22-s2-b) |
+
+- v2tw가 많이 실패한 기술: Spikes 110/167, Sleep Talk 94/113, Will-O-Wisp 45/74, Whirlwind 32/37.
+- 테라 사용 경기 승/패: v2t 21/1, v2tw 17/5.
+- 팀 유형별 점수는 밸런스만 v2tw가 높다(0.844 → 0.875).
+- v2t 재현: 보고서에 재현 항목이 없다(`result.json` `replication` null). 보고서 경기별 표를 대조하면 v2t 128슬롯의 결과·턴 수가 EX-125·EX-127·EX-129와 128/128 같다.
 
 ## 분석 및 한계
 
@@ -94,4 +113,7 @@ C-018과 EX-119 절차를 적용한다. 도구 결함으로 오염된 슬롯만 
 
 ## 결론 및 후속 작업
 
-예정.
+- 승패 가중 모델은 Abyssal 상대로 12경기 더 졌다(0.867 → 0.773). 상한 −0.0078 < 0이라 동결 규칙상 "악화"다. 상한은 0에 가깝다.
+- 실패·무효 기술 비율이 5.75 → 9.84%로 늘었다. Spikes와 Sleep Talk 실패가 많다.
+- [EX-135](EX-135-laya-head-to-head-v2tw-v4t.md)가 다른 시드(20261031)로 다시 낸 같은 슬롯 Abyssal 차이(v2t − v2tw)는 +0.094 [0.000, 0.180]로, 구별되지 않음이다. 판정은 이 문서의 동결 시드(20261029) 값을 따른다.
+- 직접 대결(EX-135)에서는 v2t 0.523 [0.469, 0.578]로 구별되지 않는다.
