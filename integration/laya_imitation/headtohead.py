@@ -32,12 +32,20 @@ RESULT_FLIP = {'win': 'loss', 'loss': 'win', 'draw': 'draw', None: None}
 RUNS = {'laya-v1': ('EX-118', c.RUN_TRAINING), 'laya-v2': ('EX-121', c.RUN_V2_TRAINING),
         'laya-v2t': ('EX-124', c.RUN_TERA_TRAINING), 'laya-v2te': ('EX-126', c.RUN_EFFECT_TRAINING),
         'laya-v3t': ('EX-128', c.RUN_V3_TRAINING), 'laya-v4t': ('EX-130', c.RUN_V4_TRAINING),
-        'laya-v2tw': ('EX-132', c.RUN_WEIGHTED_TRAINING), 'laya-v5t': ('EX-136', c.RUN_V5_TRAINING)}
+        'laya-v2tw': ('EX-132', c.RUN_WEIGHTED_TRAINING), 'laya-v5t': ('EX-136', c.RUN_V5_TRAINING),
+        'laya-v6st': ('EX-141', c.RUN_V6S_TRAINING), 'laya-v6st-lp': ('EX-141', c.RUN_V6S_TRAINING),
+        'laya-v6ht': ('EX-142', c.RUN_V6H_TRAINING), 'laya-v6ht-lp': ('EX-142', c.RUN_V6H_TRAINING),
+        'laya-v6slt': ('EX-146', c.RUN_V6SL_TRAINING), 'laya-v7t': ('EX-149', c.RUN_V7_TRAINING),
+        'laya-v8t': ('EX-152', c.RUN_V8_TRAINING)}
 # The same model's Abyssal games on the same EX-120 slots: (run, slot prefix or None for EX-120's own ids).
 ABYSSAL = {'laya-v1': ('EX-120', c.RUN_GENERAL, None), 'laya-v2': ('EX-125', c.RUN_COMPARE2, 'v2'),
            'laya-v2t': ('EX-125', c.RUN_COMPARE2, 'v2t'), 'laya-v2te': ('EX-127', c.RUN_COMPARE3, 'v2te'),
            'laya-v3t': ('EX-129', c.RUN_COMPARE4, 'v3t'), 'laya-v4t': ('EX-131', c.RUN_COMPARE5, 'v4t'),
-           'laya-v2tw': ('EX-133', c.RUN_COMPARE6, 'v2tw'), 'laya-v5t': ('EX-137', c.RUN_COMPARE7, 'v5t')}
+           'laya-v2tw': ('EX-133', c.RUN_COMPARE6, 'v2tw'), 'laya-v5t': ('EX-137', c.RUN_COMPARE7, 'v5t'),
+           'laya-v6st': ('EX-143', c.RUN_COMPARE10, 'v6st'), 'laya-v6ht': ('EX-144', c.RUN_COMPARE11, 'v6ht'),
+           'laya-v6st-lp': ('EX-148', c.RUN_LOOP_RULE, 'v6st-lp'), 'laya-v6ht-lp': ('EX-148', c.RUN_LOOP_RULE, 'v6ht-lp'),
+           'laya-v6slt': ('EX-147', c.RUN_COMPARE12, 'v6slt'), 'laya-v7t': ('EX-150', c.RUN_COMPARE13, 'v7t'),
+           'laya-v8t': ('EX-153', c.RUN_COMPARE14, 'v8t')}
 
 EX134 = Study(
     experiment='EX-134', plan='EP-217', seed=20261030, base='laya-v2t',
@@ -67,7 +75,55 @@ EX138 = Study(
               intro='EX-120 일정(새 팀 32개, 128슬롯)의 각 슬롯에서 v5+테라가 model 진영, 비교 모델이 반대 진영을 맡았습니다. '
                     '두 진영 모두 laya 서빙(GPU2)의 argmax 선택이며 확률은 행동 선택 확률이고 승률이 아닙니다.',
               changelog='project_context/shared/viewers/CHANGELOG.md#ex134-laya-h2h-v1'))
-STUDIES = {'EX-134': EX134, 'EX-135': EX135, 'EX-138': EX138}
+# EX-148 (D-200) laya-vs-laya part: the loop rule against the same checkpoint with plain argmax, GPU3 / port 8106.
+_H2H_INTRO = ('EX-120 일정(새 팀 32개, 128슬롯)의 각 슬롯에서 루프 결정 규칙을 켠 모델이 model 진영, 같은 체크포인트의 '
+              'argmax가 반대 진영을 맡았습니다. 규칙이 작동하기 전까지 두 진영의 선택은 같은 정책입니다. 확률은 행동 선택 '
+              '확률이며 승률이 아닙니다.')
+EX148H1 = Study(
+    experiment='EX-148', plan='EP-223', seed=20261042, base='laya-v6st-lp', others=('laya-v6st',),
+    out=c.SHARED / 'runs/model-training/EX-148-h2h-v6st', viewer=c.ROOT / 'exports/battle_viewers/ex148-h2h-v6st',
+    gpu=(c.GPU3_INDEX, c.GPU3_UUID), port=c.PORT4, hours=c.H2H_HOURS,
+    meta=dict(experiment='EX-148', plan='EP-223', slug='ex148-h2h-v6st', title='EX-148 · v6st 루프 규칙 직접 대결 128경기',
+              heading='EX-148 · laya v6st+루프 규칙 대 v6st(EX-141) 직접 대결 · EX-120 일정', intro=_H2H_INTRO,
+              changelog='project_context/shared/viewers/CHANGELOG.md#ex134-laya-h2h-v1'))
+EX148H2 = Study(
+    experiment='EX-148', plan='EP-223', seed=20261043, base='laya-v6ht-lp', others=('laya-v6ht',),
+    out=c.SHARED / 'runs/model-training/EX-148-h2h-v6ht', viewer=c.ROOT / 'exports/battle_viewers/ex148-h2h-v6ht',
+    gpu=(c.GPU3_INDEX, c.GPU3_UUID), port=c.PORT4, hours=c.H2H_HOURS,
+    meta=dict(experiment='EX-148', plan='EP-223', slug='ex148-h2h-v6ht', title='EX-148 · v6ht 루프 규칙 직접 대결 128경기',
+              heading='EX-148 · laya v6ht+루프 규칙 대 v6ht(EX-142) 직접 대결 · EX-120 일정', intro=_H2H_INTRO,
+              changelog='project_context/shared/viewers/CHANGELOG.md#ex134-laya-h2h-v1'))
+# EX-147 / EX-150 (D-200) laya-vs-laya part: each new model against v6st, after its training run is sealed.
+EX147H = Study(
+    experiment='EX-147', plan='EP-223', seed=20261044, base='laya-v6slt', others=('laya-v6st',),
+    out=c.SHARED / 'runs/model-training/EX-147-h2h', viewer=c.ROOT / 'exports/battle_viewers/ex147-h2h',
+    gpu=(c.GPU2_INDEX, c.GPU2_UUID), port=c.PORT3, hours=c.H2H_HOURS,
+    meta=dict(experiment='EX-147', plan='EP-223', slug='ex147-h2h', title='EX-147 · v6s 루프 탈출 가중 대 v6s 직접 대결 128경기',
+              heading='EX-147 · laya v6s 루프 탈출 가중(EX-146) 대 v6s+테라(EX-141) 직접 대결 · EX-120 일정',
+              intro='EX-120 일정(새 팀 32개, 128슬롯)의 각 슬롯에서 루프 탈출 가중 모델이 model 진영, v6s+테라가 반대 진영을 '
+                    '맡았습니다. 두 진영 모두 laya 서빙의 argmax 선택이며 확률은 행동 선택 확률이고 승률이 아닙니다.',
+              changelog='project_context/shared/viewers/CHANGELOG.md#ex134-laya-h2h-v1'))
+EX150H = Study(
+    experiment='EX-150', plan='EP-223', seed=20261045, base='laya-v7t', others=('laya-v6st',),
+    out=c.SHARED / 'runs/model-training/EX-150-h2h', viewer=c.ROOT / 'exports/battle_viewers/ex150-h2h',
+    gpu=(c.GPU3_INDEX, c.GPU3_UUID), port=c.PORT4, hours=c.H2H_HOURS,
+    meta=dict(experiment='EX-150', plan='EP-223', slug='ex150-h2h', title='EX-150 · v7 상대 세트 추정 대 v6s 직접 대결 128경기',
+              heading='EX-150 · laya v7 상대 세트 추정(EX-149) 대 v6s+테라(EX-141) 직접 대결 · EX-120 일정',
+              intro='EX-120 일정(새 팀 32개, 128슬롯)의 각 슬롯에서 v7 모델이 model 진영, v6s+테라가 반대 진영을 맡았습니다. '
+                    '두 진영 모두 laya 서빙의 argmax 선택이며 확률은 행동 선택 확률이고 승률이 아닙니다.',
+              changelog='project_context/shared/viewers/CHANGELOG.md#ex134-laya-h2h-v1'))
+# EX-154 (D-201): v8t (engine-judge failure marks) on the model side against v7t, GPU2 / 8108.
+EX154 = Study(
+    experiment='EX-154', plan='EP-224', seed=20261048, base='laya-v8t', others=('laya-v7t',),
+    out=c.SHARED / 'runs/model-training/EX-154', viewer=c.ROOT / 'exports/battle_viewers/ex154',
+    gpu=(c.GPU2_INDEX, c.GPU2_UUID), port=c.PORT3, hours=c.H2H_HOURS,
+    meta=dict(experiment='EX-154', plan='EP-224', slug='ex154', title='EX-154 · v8 엔진 실패 표시 대 v7 직접 대결 128경기',
+              heading='EX-154 · laya v8 엔진 실패 표시(EX-152) 대 v7(EX-149) 직접 대결 · EX-120 일정',
+              intro='EX-120 일정(새 팀 32개, 128슬롯)의 각 슬롯에서 v8 모델이 model 진영, v7이 반대 진영을 맡았습니다. '
+                    '두 진영 모두 laya 서빙의 argmax 선택이며 확률은 행동 선택 확률이고 승률이 아닙니다.',
+              changelog='project_context/shared/viewers/CHANGELOG.md#ex134-laya-h2h-v1'))
+STUDIES = {'EX-134': EX134, 'EX-135': EX135, 'EX-138': EX138, 'EX-148-H1': EX148H1, 'EX-148-H2': EX148H2,
+           'EX-147-H': EX147H, 'EX-150-H': EX150H, 'EX-154': EX154}
 
 
 def _prefix(model):
@@ -139,13 +195,27 @@ def audit_both(directory, outcome):
 def worker(attempt, role):
     """EX-071 model worker for either side: own request (main or mirrored), own Session directory."""
     from integration.pokechamp.imitation import player as p
+    from .battle import EARLY_HISTORY_MODELS
     p.MAX_TURNS = c.TURN_LIMIT
+    main = json.loads((Path(attempt) / 'request.json').read_text())
+    own = main if role == main['slot']['model_side'] else json.loads((Path(attempt) / 'opponent/request.json').read_text())
+    early = own['slot']['model'] in EARLY_HISTORY_MODELS   # D-198: v6h models get `early_history` (EX-148)
 
     class LimitedSession(p.Session):
         async def evaluate(self, value, decision):
             if self.calls >= c.DECISION_LIMIT:
                 raise p.BattleLimit('decision_limit')
             return await super().evaluate(value, decision)
+
+        def generate(self, official, prefix, actions, *, actor):
+            if not early:
+                return super().generate(official, prefix, actions, actor=actor)
+            if self.bridge is None:
+                from integration.pokechamp.imitation.metamon_bridge import BridgeClient
+                self.bridge = BridgeClient()
+            snapshot = self.bridge.snapshot(p.public_prefix(prefix), self.own_sets, actor,
+                                            p.decision_kind(official['request']), early_history=True)
+            return p.from_snapshot(snapshot, actions), snapshot
 
     result = asyncio.run(_play(p, LimitedSession, Path(attempt), role))
     print(p.compact(result))
@@ -542,6 +612,16 @@ def export_viewer(run, study=EX134):
     with Calc() as calc:
         renderers = dict(v1=v1_render, v2=v2_renderer(calc), v3=v3_renderer(calc), v4=v4_renderer(calc),
                          v5=v5_renderer(calc))
+        used = {RENDER[r[k]] for r in manifest['schedule'] for k in ('model', 'opponent_model')}
+        for name in used & {'v6s', 'v6h'}:   # EX-148 / EX-147 / EX-150 (D-200)
+            from .serving import v6_renderer
+            renderers[name] = v6_renderer(name)(calc)
+        if 'v7' in used:
+            from .serving import v7_renderer
+            renderers['v7'] = v7_renderer(calc)
+        if 'v8' in used:   # EX-154 (D-201)
+            from .serving import v8_renderer
+            renderers['v8'] = v8_renderer(calc)
         for number, row in enumerate(manifest['schedule'], 1):
             cells = ''.join('<td>%s</td>' % html.escape(str(v)) for v in (
                 number, row['slot_id'], row['opponent_model'], row['matchup_id'], row['model_side']))

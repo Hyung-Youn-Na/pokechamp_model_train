@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+# EP-224 (D-201) lanes: renderer v8 (engine-judge failure marks) training and battles. Stops at the first failing stage;
+# nothing is re-run automatically.
+#   gpu1  GPU1 / 8109: EX-152 data -> parity -> train -> evaluate -> EX-153 (v7t vs v8t, Abyssal) mock/prepare/execute/export
+#   gpu2  GPU2 / 8108: wait EX-152 completed -> EX-154 (v8t vs v7t head to head) mock/prepare/execute/export
+# Each battle writes `.pokechamp-data/battle-window/<experiment>` (start time, GPU) right before prepare and removes it
+# after export, so other sessions know not to edit `integration/laya_imitation` meanwhile.
+set -euo pipefail
+cd /workspace
+RUN=/workspace/scripts/laya-imitation
+RUNS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep224
+CHECK_PY=/tmp/ep037/tools/bin/python
+WINDOW=/workspace/.pokechamp-data/battle-window
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+completed() {   # completed <run dir>: status.json says completed
+  [ -f "$1/status.json" ] && grep -q '"stage": *"completed"' "$1/status.json"
+}
+mock_ok() {     # mock_ok <run dir>: every mock game completed with a passed audit
+  PYTHONPATH=/workspace python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+print('mock', [(o['slot_id'], o['status'], o.get('result'), o.get('audit_passed')) for o in d['outcomes']], d['phase_error'])
+sys.exit(0 if ok else 1)" "$1"
+}
+viewer_check() {
+  mkdir -p "$EVIDENCE"
+  if [ -x "$CHECK_PY" ]; then
+    PYTHONPATH=/workspace PYTHONDONTWRITEBYTECODE=1 "$CHECK_PY" -m integration.laya_imitation.browser_check \
+      "/workspace/exports/battle_viewers/$1" "$EVIDENCE/$1-viewer-check.json" $2 \
+      || stage "viewer check failed for $1 (battles unaffected; recorded)"
+  else
+    stage "no Playwright interpreter at $CHECK_PY; viewer check for $1 left to a manual run"
+  fi
+}
+SHOWDOWN_STATE="config/chat-plugins/mafia-logs.json config/chat-plugins/seasons.json"
+showdown_clean() {
+  local dirty
+  dirty=$(git -C /workspace/pokemon-showdown status --porcelain | awk '{print $2}' | sort)
+  [ -z "$dirty" ] && return 0
+  if [ -z "$(comm -23 <(echo "$dirty") <(tr ' ' '\n' <<<"$SHOWDOWN_STATE" | sort))" ]; then
+    stage "restoring Showdown chat-plugin state files: $(echo $dirty)"
+    git -C /workspace/pokemon-showdown checkout -- $SHOWDOWN_STATE
+  else
+    stage "pokemon-showdown has other uncommitted changes: $(echo $dirty)"; return 1
+  fi
+}
+battle() {   # battle <experiment> <gpu> <run dir> <cli command...>
+  local id=$1 gpu=$2 dir=$3 s
+  shift 3
+  showdown_clean
+  stage "$* mock"; "$RUN" "$@" mock
+  mock_ok "$dir" || { stage "$id mock failed; stopping before prepare"; return 1; }
+  mkdir -p "$WINDOW"
+  printf 'started %s\ngpu %s\nsession EP-224\n' "$(date -u +%FT%TZ)" "$gpu" > "$WINDOW/$id"
+  stage "battle-window marker $WINDOW/$id"
+  for s in prepare execute export; do
+    showdown_clean
+    stage "$* $s"; "$RUN" "$@" "$s"
+  done
+  rm -f "$WINDOW/$id"
+  stage "battle-window marker removed: $id"
+}
+
+case "${1:-}" in
+  gpu1)
+    stage "EX-152 data";     "$RUN" v8 data
+    stage "EX-152 parity";   "$RUN" v8 parity
+    stage "EX-152 train";    "$RUN" v8 train
+    stage "EX-152 evaluate"; "$RUN" v8 evaluate
+    battle EX-153 1 "$RUNS/EX-153" compare14
+    viewer_check ex153 "" ;;
+  gpu2)
+    until completed "$RUNS/EX-152"; do sleep 300; done
+    stage "EX-152 completed"
+    battle EX-154 2 "$RUNS/EX-154" h2h --study EX-154
+    viewer_check ex154 h2h ;;
+  *) echo "usage: $0 gpu1|gpu2" >&2; exit 2 ;;
+esac
+stage "EP-224 lane $1 finished"

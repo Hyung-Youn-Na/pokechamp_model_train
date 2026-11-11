@@ -290,7 +290,9 @@ def export():
     out = STUDY.out
     result = read(out / 'result.json')
     verdicts = ', '.join('%s %s' % (k.replace('laya-', ''), v['verdict']) for k, v in result['pairs'].items())
-    meta = dict(STUDY.meta, intro=STUDY.meta['intro'] + ' 판정(v5t 대비): ' + verdicts + '.')
+    # The viewer's summary line divides completed pairs by `pairs` (diagnostics/export-v1: it was left None).
+    pairs = len({r['pair_id'] for r in read(out / 'manifest.json')['schedule']})
+    meta = dict(STUDY.meta, pairs=pairs, intro=STUDY.meta['intro'] + ' 판정(v5t 대비): ' + verdicts + '.')
     with Calc() as calc:
         renderers = dict(v1=v1_render, v5=v5_renderer(calc), v6s=v6_renderer('v6s')(calc), v6h=v6_renderer('v6h')(calc))
         export_viewer(out, STUDY.viewer, meta=meta, columns=cmp._columns,

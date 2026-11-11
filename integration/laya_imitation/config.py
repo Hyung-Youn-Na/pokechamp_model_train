@@ -96,6 +96,34 @@ VIEWER_COMPARE11 = ROOT / 'exports/battle_viewers/ex144'
 RUN_EX145 = SHARED / 'runs/model-training/EX-145'
 VIEWER_EX145 = ROOT / 'exports/battle_viewers/ex145'
 EX145_HOURS = 16.0   # 888 games with three servings
+# EP-223 (D-200): loop-break weights (EX-146/147, GPU1 / 8109), loop decision rule (EX-148, GPU2 / 8108 and
+# GPU3 / 8106), renderer v7 opponent sets (EX-149/150, GPU0 / 8107).
+GPU3_INDEX = 3
+GPU3_UUID = 'GPU-fd337c1e-b087-b26d-4dc0-a195c2b3a8d6'
+PORT4 = 8106
+LOOP_WEIGHTS = SHARED / 'datasets/generated/laya-loop-weights/v1'
+RUN_V6SL_TRAINING = SHARED / 'runs/model-training/EX-146'
+RUN_COMPARE12 = SHARED / 'runs/model-training/EX-147'      # v6st vs v6slt, GPU1 / 8109
+VIEWER_COMPARE12 = ROOT / 'exports/battle_viewers/ex147'
+RUN_LOOP_RULE = SHARED / 'runs/model-training/EX-148'      # one subdirectory per rule model
+VIEWER_LOOP_RULE = ROOT / 'exports/battle_viewers/ex148'
+V7_FEATURES = SHARED / 'datasets/generated/laya-compact-features/v7'
+V7_DATASET = SHARED / 'datasets/generated/laya-compact-imitation/v7-all'
+RUN_V7_TRAINING = SHARED / 'runs/model-training/EX-149'
+RUN_COMPARE13 = SHARED / 'runs/model-training/EX-150'      # v6st vs v7t, GPU0 / 8107
+VIEWER_COMPARE13 = ROOT / 'exports/battle_viewers/ex150'
+# EP-224 (D-201): engine judge (`integration/laya_engine`, EX-151), renderer v8 (EX-152, GPU1), v7t vs v8t
+# (EX-153, GPU1 / 8109), v8t vs v7t head to head (EX-154, GPU2 / 8108).
+ENGINE_JUDGE = SHARED / 'datasets/generated/laya-engine-judge/v1'
+V8_DATASET = SHARED / 'datasets/generated/laya-compact-imitation/v8-all'
+RUN_V8_TRAINING = SHARED / 'runs/model-training/EX-152'
+RUN_COMPARE14 = SHARED / 'runs/model-training/EX-153'      # v7t vs v8t, GPU1 / 8109
+VIEWER_COMPARE14 = ROOT / 'exports/battle_viewers/ex153'
+# EX-155 (user instruction 2026-11-02): v8 plus `; likely fails` marks, trained on GPU2 before EX-154.
+V8L_DATASET = SHARED / 'datasets/generated/laya-compact-imitation/v8l-all'
+RUN_V8L_TRAINING = SHARED / 'runs/model-training/EX-155'
+RUN_COMPARE15 = SHARED / 'runs/model-training/EX-156'      # v8t vs v8lt, GPU1 / 8109 (after EX-153)
+VIEWER_COMPARE15 = ROOT / 'exports/battle_viewers/ex156'
 
 MODEL_ID = 'convaiinnovations/laya-typed-decisions'
 MODEL_REVISION = 'e929ae5cf69bc34259cd2f95c9e91145b818b1f0'

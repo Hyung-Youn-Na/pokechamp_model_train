@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+# EP-223 follow-up lanes (D-200): laya-vs-laya games of each new model against v6st, once its training run is sealed and
+# the GPU's EX-148 lane is done. A separate file so the running `laya-imitation-ep223` lanes are never edited.
+#   h2h147  GPU2 / 8108: wait EX-148 (Abyssal) completed + EX-146 completed -> EX-147-H mock/prepare/execute/export
+#   h2h150  GPU3 / 8106: wait EX-148-H2 completed + EX-149 completed     -> EX-150-H mock/prepare/execute/export
+# Each lane stops at its first failing stage; nothing is re-run automatically.
+set -euo pipefail
+cd /workspace
+RUN=/workspace/scripts/laya-imitation
+RUNS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep223
+CHECK_PY=/tmp/ep037/tools/bin/python
+FREEZE=/workspace/.pokechamp-data/ep223-code-frozen
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+completed() {   # completed <run dir>: status.json says completed
+  [ -f "$1/status.json" ] && grep -q '"stage": *"completed"' "$1/status.json"
+}
+wait_for() {    # wait_for <run dir>...
+  local d
+  for d in "$@"; do
+    until completed "$d"; do sleep 300; done
+    stage "$(basename "$d") completed"
+  done
+}
+viewer_check() {
+  mkdir -p "$EVIDENCE"
+  if [ -x "$CHECK_PY" ]; then
+    PYTHONPATH=/workspace PYTHONDONTWRITEBYTECODE=1 "$CHECK_PY" -m integration.laya_imitation.browser_check \
+      "/workspace/exports/battle_viewers/$1" "$EVIDENCE/$1-viewer-check.json" \
+      || stage "viewer check failed for $1 (battles unaffected; check by hand)"
+  else
+    stage "no Playwright interpreter at $CHECK_PY; viewer check for $1 left to a manual run"
+  fi
+}
+SHOWDOWN_STATE="config/chat-plugins/mafia-logs.json config/chat-plugins/seasons.json"
+showdown_clean() {
+  local dirty
+  dirty=$(git -C /workspace/pokemon-showdown status --porcelain | awk '{print $2}' | sort)
+  [ -z "$dirty" ] && return 0
+  if [ -z "$(comm -23 <(echo "$dirty") <(tr ' ' '\n' <<<"$SHOWDOWN_STATE" | sort))" ]; then
+    stage "restoring Showdown chat-plugin state files: $(echo $dirty)"
+    git -C /workspace/pokemon-showdown checkout -- $SHOWDOWN_STATE
+  else
+    stage "pokemon-showdown has other uncommitted changes: $(echo $dirty)"; return 1
+  fi
+}
+h2h() {   # h2h <study> : mock/prepare/execute/export
+  local s
+  for s in mock prepare execute export; do
+    showdown_clean
+    stage "h2h $1 $s"; "$RUN" h2h --study "$1" "$s"
+  done
+}
+
+until [ -f "$FREEZE" ]; do sleep 300; done
+case "${1:-}" in
+  h2h147)
+    wait_for "$RUNS/EX-148" "$RUNS/EX-146"
+    h2h EX-147-H
+    viewer_check ex147-h2h ;;
+  h2h150)
+    wait_for "$RUNS/EX-148-h2h-v6ht" "$RUNS/EX-149"
+    h2h EX-150-H
+    viewer_check ex150-h2h ;;
+  *) echo "usage: $0 h2h147|h2h150" >&2; exit 2 ;;
+esac
+stage "EP-223 follow-up lane $1 finished"

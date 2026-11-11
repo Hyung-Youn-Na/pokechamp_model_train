@@ -16,7 +16,7 @@ from integration.pokechamp.imitation.schema import ImitationInput
 from integration.pokechamp.imitation.serving import CheckpointIdentityMismatch, _unique_pairs
 
 from . import config as c
-from . import input_variants, tera_decision
+from . import input_variants, loop_decision, tera_decision
 from .storage import digest, read, sha
 
 MAX_BODY_BYTES = 4 * 1024 * 1024
@@ -25,7 +25,9 @@ MODELS = ('laya-selected', 'laya-initial', 'laya-v1', 'laya-v2', 'laya-v2-initia
           'laya-v2tw', 'laya-v2tw-initial', 'laya-v5t', 'laya-v5t-initial',
           'laya-v2t-fix', 'laya-v2t-info', 'laya-v2t-info-initial',
           'laya-v2t-fix-tp1', 'laya-v2t-fix-tp3', 'laya-v2t-fix-tp3-initial', 'laya-v2t-fix-tdef',
-          'laya-v6st', 'laya-v6st-initial', 'laya-v6ht', 'laya-v6ht-initial')
+          'laya-v6st', 'laya-v6st-initial', 'laya-v6ht', 'laya-v6ht-initial',
+          'laya-v6st-lp', 'laya-v6st-lp-initial', 'laya-v6ht-lp', 'laya-v6slt', 'laya-v6slt-initial',
+          'laya-v7t', 'laya-v7t-initial', 'laya-v8t', 'laya-v8t-initial', 'laya-v8lt', 'laya-v8lt-initial')
 
 
 def checkpoint_identity(path):
@@ -43,11 +45,18 @@ V4_RENDER_FILES = V2_RENDER_FILES + ('compact_v4.py', 'features_v4.py', 'effect_
                                      'dex_gen9_effects.json')
 V5_RENDER_FILES = V4_RENDER_FILES + ('compact_v5.py', 'features_v5.py')
 V6_RENDER_FILES = V5_RENDER_FILES + ('compact_v6.py', 'data_v6.py')
+V7_RENDER_FILES = V6_RENDER_FILES + ('features_v3.py', 'usage_sets_v3.json', 'features_v7.py', 'compact_v7.py',
+                                     'data_v7.py')
+# D-201: paths under `integration/`; v8 is v7 plus the engine judge (`laya_engine`, its node worker included).
+V8_RENDER_FILES = tuple('laya_imitation/' + n for n in V7_RENDER_FILES) + tuple(
+    'laya_engine/' + n for n in ('judge.cjs', 'judge.py', 'state.py', 'render_v8.py', 'data_v8.py'))
+V8L_RENDER_FILES = V8_RENDER_FILES + ('laya_engine/render_v8l.py', 'laya_engine/data_v8l.py')   # EX-155
 
 
 def _dataset(render):
     return {'v1': c.DATASET, 'v2': c.V2_DATASET, 'v3': c.V3_DATASET, 'v4': c.V4_DATASET, 'v5': c.V5_DATASET,
-            'v6s': c.V6S_DATASET, 'v6h': c.V6H_DATASET,
+            'v6s': c.V6S_DATASET, 'v6h': c.V6H_DATASET, 'v7': c.V7_DATASET, 'v8': c.V8_DATASET,
+            'v8l': c.V8L_DATASET,
             'v2fix': c.V2_DATASET, 'v2info': c.V2_DATASET, 'v2fixtd': c.V2_DATASET}[render]
 
 
@@ -55,8 +64,12 @@ def renderer_matches_dataset(render='v1'):
     if render in input_variants.RENDERS or render == tera_decision.RENDER:   # EX-139/140: v2-trained, v5 renderer files
         return input_variants.matches()
     dataset = _dataset(render)
+    if render in ('v8', 'v8l'):
+        names = V8_RENDER_FILES if render == 'v8' else V8L_RENDER_FILES
+        return all(sha(dataset / 'generator-source' / n) == sha(c.ROOT / 'integration' / n) for n in names)
     names = {'v1': ('compact.py', 'dex.py', 'dex_gen9.json'), 'v2': V2_RENDER_FILES, 'v3': V3_RENDER_FILES,
-             'v4': V4_RENDER_FILES, 'v5': V5_RENDER_FILES, 'v6s': V6_RENDER_FILES, 'v6h': V6_RENDER_FILES}[render]
+             'v4': V4_RENDER_FILES, 'v5': V5_RENDER_FILES, 'v6s': V6_RENDER_FILES, 'v6h': V6_RENDER_FILES,
+             'v7': V7_RENDER_FILES}[render]
     generator = dataset / 'generator-source'
     package = c.ROOT / 'integration/laya_imitation'
     return all(sha(generator / name) == sha(package / name) for name in names)
@@ -91,6 +104,24 @@ def v6_renderer(variant):
     return factory
 
 
+def v7_renderer(calc):
+    """D-200: v6s text plus `oppset2` (EX-149)."""
+    from . import data_v7
+    return data_v7.live_renderer(calc)
+
+
+def v8_renderer(calc):
+    """D-201: v7 text with the engine judge's failure marks (EX-152); the judge worker lives as long as the server."""
+    from integration.laya_engine import data_v8, judge
+    return data_v8.live_renderer(calc, judge.Judge())
+
+
+def v8l_renderer(calc):
+    """EX-155: v8 text plus `; likely fails` marks."""
+    from integration.laya_engine import data_v8l, judge
+    return data_v8l.live_renderer(calc, judge.Judge())
+
+
 def variant_renderer(render):
     """EX-139 (D-196): `v2fix` / `v2info` live renderer factory for the v2-trained EX-124 checkpoint."""
     return lambda calc: input_variants.renderer(render, calc)
@@ -112,7 +143,9 @@ def create_server(checkpoint, model_name, port=0, policy=None, device='cuda', re
             calc = Calc()
             renderer = dict(v2=v2_renderer, v3=v3_renderer, v4=v4_renderer, v5=v5_renderer,
                             v2fix=variant_renderer('v2fix'), v2info=variant_renderer('v2info'),
-                            v2fixtd=tera_decision.renderer, v6s=v6_renderer('v6s'), v6h=v6_renderer('v6h'))[render](calc)
+                            v2fixtd=tera_decision.renderer, v6s=v6_renderer('v6s'), v6h=v6_renderer('v6h'),
+                            v7=v7_renderer, v8=v8_renderer,
+                            v8l=v8l_renderer)[render](calc)
             policy = Policy(checkpoint, device=device, head_limit=c.V2_HEAD_LIMIT, renderer=renderer,
                             token_limit=c.V6H_TOKEN_LIMIT if render == 'v6h' else c.TOKEN_LIMIT)
     identity = dict(ready=True, model=model_name, checkpoint=str(Path(checkpoint).resolve()),
@@ -129,6 +162,9 @@ def create_server(checkpoint, model_name, port=0, policy=None, device='cuda', re
     if model_name in tera_decision.FACTORS:   # EX-140: Tera-pooled decision distribution
         identity['decision'] = tera_decision.decision_identity(model_name)
         predict = tera_decision.decide(policy, tera_decision.FACTORS[model_name])
+    if model_name in loop_decision.MODELS:   # EX-148: stalled-loop rule
+        identity['decision'] = loop_decision.decision_identity(model_name)
+        predict = loop_decision.decide(policy)
     lock = threading.Lock()
 
     class Handler(BaseHTTPRequestHandler):

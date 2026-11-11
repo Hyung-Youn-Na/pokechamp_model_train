@@ -27,7 +27,10 @@ RENDER = {'laya-v1': 'v1', 'laya-v2': 'v2', 'laya-v2-initial': 'v2', 'laya-v2t':
           'laya-v2t-fix': 'v2fix', 'laya-v2t-info': 'v2info', 'laya-v2t-info-initial': 'v2info',
           'laya-v2t-fix-tp1': 'v2fix', 'laya-v2t-fix-tp3': 'v2fix', 'laya-v2t-fix-tp3-initial': 'v2fix',
           'laya-v2t-fix-tdef': 'v2fixtd',
-          'laya-v6st': 'v6s', 'laya-v6st-initial': 'v6s', 'laya-v6ht': 'v6h', 'laya-v6ht-initial': 'v6h'}
+          'laya-v6st': 'v6s', 'laya-v6st-initial': 'v6s', 'laya-v6ht': 'v6h', 'laya-v6ht-initial': 'v6h',
+          'laya-v6st-lp': 'v6s', 'laya-v6st-lp-initial': 'v6s', 'laya-v6ht-lp': 'v6h',
+          'laya-v6slt': 'v6s', 'laya-v6slt-initial': 'v6s', 'laya-v7t': 'v7', 'laya-v7t-initial': 'v7',
+          'laya-v8t': 'v8', 'laya-v8t-initial': 'v8', 'laya-v8lt': 'v8l', 'laya-v8lt-initial': 'v8l'}
 
 
 class Study:
@@ -150,6 +153,32 @@ EX144 = Study(
                     '차이는 v6h의 과거 턴 기록(2048토큰 안에서 4턴 이전까지)입니다. 확률은 행동 선택 확률이고 승률이 아닙니다.',
               changelog='project_context/shared/viewers/CHANGELOG.md#ex144-laya-v1'))
 
+
+# EX-147 / EX-150 (D-200): v6s+Tera (EX-141) against the loop-weighted v6s (EX-146) / the v7 opponent-set renderer (EX-149).
+EX147 = Study(
+    experiment='EX-147', plan='EP-223', seed=20261039, models=('laya-v6st', 'laya-v6slt'), out=c.RUN_COMPARE12,
+    viewer=c.VIEWER_COMPARE12, gpu=(c.GPU1_INDEX, c.GPU1_UUID), port=c.PORT2, hours=c.COMPARE_HOURS,
+    runs={'laya-v6st': ('EX-141', c.RUN_V6S_TRAINING), 'laya-v6slt': ('EX-146', c.RUN_V6SL_TRAINING)},
+    mock_model='laya-v6slt-initial', replicate=None, margin=0.05,
+    verdicts=('루프 탈출 가중이 배틀 성적을 개선', '퇴보를 배제하지 못함', '비퇴보'),
+    meta=dict(experiment='EX-147', plan='EP-223', slug='ex147', pairs=128, title='EX-147 · laya v6s·v6s 루프 탈출 가중 256경기',
+              heading='EX-147 · laya v6s+테라(EX-141)와 루프 탈출 가중(EX-146) · EX-120 일정 대 Abyssal',
+              intro='같은 일정(새 팀 32개, 128슬롯)을 두 모델이 번갈아 진행했습니다. 두 모델 모두 v6s 입력이며 차이는 학습 때 '
+                    '정체 루프에서 사람이 수를 바꾼 행에 준 가중치입니다. 확률은 행동 선택 확률이고 승률이 아닙니다.',
+              changelog='project_context/shared/viewers/CHANGELOG.md#ex148-laya-v1'))
+
+EX150 = Study(
+    experiment='EX-150', plan='EP-223', seed=20261041, models=('laya-v6st', 'laya-v7t'), out=c.RUN_COMPARE13,
+    viewer=c.VIEWER_COMPARE13, gpu=(c.GPU_INDEX, c.GPU_UUID), port=c.PORT, hours=c.COMPARE_HOURS,
+    runs={'laya-v6st': ('EX-141', c.RUN_V6S_TRAINING), 'laya-v7t': ('EX-149', c.RUN_V7_TRAINING)},
+    mock_model='laya-v7t-initial', replicate=None, margin=0.05,
+    verdicts=('v7이 배틀 성적을 개선', '퇴보를 배제하지 못함', '비퇴보'),
+    meta=dict(experiment='EX-150', plan='EP-223', slug='ex150', pairs=128, title='EX-150 · laya v6s·v7 상대 세트 추정 256경기',
+              heading='EX-150 · laya v6s+테라(EX-141)와 v7 상대 세트 추정(EX-149) · EX-120 일정 대 Abyssal',
+              intro='같은 일정(새 팀 32개, 128슬롯)을 두 모델이 번갈아 진행했습니다. 차이는 v7 입력의 상대 세트 추정(활성 상대 '
+                    '미공개 칸, 판을 뒤집는 요소, 벤치 요약)과 Protean·Libero 행의 압정 실패 표시입니다. 확률은 행동 선택 '
+                    '확률이고 승률이 아닙니다.',
+              changelog='project_context/shared/viewers/CHANGELOG.md#ex148-laya-v1'))
 
 def make_schedule(base, study=EX122):
     """EX-120 rows -> 256 rows; per EX-120 pair, both models' pairs consecutively, first model by digest."""
@@ -374,6 +403,33 @@ def _run(directory, rows, servings, device, hours, study=EX122):
 
 # ----------------------------------------------------------------------------- stages
 
+EX153 = Study(
+    experiment='EX-153', plan='EP-224', seed=20261047, models=('laya-v7t', 'laya-v8t'), out=c.RUN_COMPARE14,
+    viewer=c.VIEWER_COMPARE14, gpu=(c.GPU1_INDEX, c.GPU1_UUID), port=c.PORT2, hours=c.COMPARE_HOURS,
+    runs={'laya-v7t': ('EX-149', c.RUN_V7_TRAINING), 'laya-v8t': ('EX-152', c.RUN_V8_TRAINING)},
+    mock_model='laya-v8t-initial', replicate=None, margin=0.05,
+    verdicts=('v8이 배틀 성적을 개선', '퇴보를 배제하지 못함', '비퇴보'),
+    meta=dict(experiment='EX-153', plan='EP-224', slug='ex153', pairs=128, title='EX-153 · laya v7·v8 엔진 실패 표시 256경기',
+              heading='EX-153 · laya v7(EX-149)과 v8 엔진 실패 표시(EX-152) · EX-120 일정 대 Abyssal',
+              intro='같은 일정(새 팀 32개, 128슬롯)을 두 모델이 번갈아 진행했습니다. 차이는 v8 입력의 선택지 실패 표시를 '
+                    '고정 Showdown 엔진 판정기로 정한 것입니다. 확률은 행동 선택 확률이고 승률이 아닙니다.',
+              changelog='project_context/shared/viewers/CHANGELOG.md#ex148-laya-v1'))
+
+EX156 = Study(
+    experiment='EX-156', plan='EP-224', seed=20261050, models=('laya-v8t', 'laya-v8lt'), out=c.RUN_COMPARE15,
+    viewer=c.VIEWER_COMPARE15, gpu=(c.GPU1_INDEX, c.GPU1_UUID), port=c.PORT2, hours=c.COMPARE_HOURS,
+    runs={'laya-v8t': ('EX-152', c.RUN_V8_TRAINING), 'laya-v8lt': ('EX-155', c.RUN_V8L_TRAINING)},
+    mock_model='laya-v8lt-initial', replicate=None, margin=0.05,
+    verdicts=('v8l이 배틀 성적을 개선', '퇴보를 배제하지 못함', '비퇴보'),
+    meta=dict(experiment='EX-156', plan='EP-224', slug='ex156', pairs=128,
+              title='EX-156 · laya v8·v8l likely fails 표시 256경기',
+              heading='EX-156 · laya v8(EX-152)과 v8l likely fails 표시(EX-155) · EX-120 일정 대 Abyssal',
+              intro='같은 일정(새 팀 32개, 128슬롯)을 두 모델이 번갈아 진행했습니다. 차이는 v8l 입력이 확률 실패(Protect 연속, '
+                    '깨어날 확률이 높은 Sleep Talk·Snore)에 `; likely fails`를 붙인 것입니다. 확률은 행동 선택 확률이고 '
+                    '승률이 아닙니다.',
+              changelog='project_context/shared/viewers/CHANGELOG.md#ex148-laya-v1'))
+
+
 def _base_schedule():
     if verify_seal(COLLECTION):
         raise RuntimeError('EX-120 collection seal failed')
@@ -474,6 +530,15 @@ def export(study=EX122):
                          v5=v5_renderer(calc))
         for name in {RENDER[m] for m in study.models} & {'v6s', 'v6h'}:
             renderers[name] = v6_renderer(name)(calc)
+        if 'v7' in {RENDER[m] for m in study.models}:
+            from .serving import v7_renderer
+            renderers['v7'] = v7_renderer(calc)
+        if 'v8' in {RENDER[m] for m in study.models}:
+            from .serving import v8_renderer
+            renderers['v8'] = v8_renderer(calc)
+        if 'v8l' in {RENDER[m] for m in study.models}:   # EX-156
+            from .serving import v8l_renderer
+            renderers['v8l'] = v8l_renderer(calc)
         viewer = export_viewer(out, study.viewer, meta=meta, columns=_columns,
                                renderer_for=lambda row: renderers[RENDER[row['model']]])
     compare_report(out, result, viewer, study)
@@ -614,3 +679,67 @@ def execute11():
 
 def export11():
     export(EX144)
+
+
+def mock12():
+    mock(EX147)
+
+
+def prepare12():
+    prepare(EX147)
+
+
+def execute12():
+    execute(EX147)
+
+
+def export12():
+    export(EX147)
+
+
+def mock13():
+    mock(EX150)
+
+
+def prepare13():
+    prepare(EX150)
+
+
+def execute13():
+    execute(EX150)
+
+
+def export13():
+    export(EX150)
+
+
+def mock14():
+    mock(EX153)
+
+
+def prepare14():
+    prepare(EX153)
+
+
+def execute14():
+    execute(EX153)
+
+
+def export14():
+    export(EX153)
+
+
+def mock15():
+    mock(EX156)
+
+
+def prepare15():
+    prepare(EX156)
+
+
+def execute15():
+    execute(EX156)
+
+
+def export15():
+    export(EX156)

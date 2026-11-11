@@ -59,6 +59,19 @@ EX141 = Spec('EX-141', c.V6S_DATASET, c.RUN_V6S_TRAINING, c.V2_HEAD_LIMIT, 'ex14
 EX142 = Spec('EX-142', c.V6H_DATASET, c.RUN_V6H_TRAINING, c.V2_HEAD_LIMIT, 'ex142', max_exclusion_rate=0.005,
              extra_train=c.TERA_KNOWLEDGE / 'train.jsonl', gpu=(c.GPU1_INDEX, c.GPU1_UUID), hours=None,
              max_len=c.V6H_TOKEN_LIMIT)
+# EX-146 (D-200): EX-141's rows, split and settings; stalled-loop rows where the human changed move weighted, on GPU1.
+EX146 = Spec('EX-146', c.V6S_DATASET, c.RUN_V6SL_TRAINING, c.V2_HEAD_LIMIT, 'ex146', max_exclusion_rate=0.005,
+             extra_train=c.TERA_KNOWLEDGE / 'train.jsonl', gpu=(c.GPU1_INDEX, c.GPU1_UUID), hours=None,
+             weights=c.LOOP_WEIGHTS, same_split_as=c.RUN_V6S_TRAINING)
+# EX-149 (D-200): EX-141's settings with the action rows rendered by v7 (opponent sets), on GPU0.
+EX149 = Spec('EX-149', c.V7_DATASET, c.RUN_V7_TRAINING, c.V2_HEAD_LIMIT, 'ex149', max_exclusion_rate=0.005,
+             extra_train=c.TERA_KNOWLEDGE / 'train.jsonl', hours=None)
+# EX-152 (D-201): EX-149's settings with the action rows rendered by v8 (engine-judge failure marks), on GPU1.
+EX152 = Spec('EX-152', c.V8_DATASET, c.RUN_V8_TRAINING, c.V2_HEAD_LIMIT, 'ex152', max_exclusion_rate=0.005,
+             extra_train=c.TERA_KNOWLEDGE / 'train.jsonl', gpu=(c.GPU1_INDEX, c.GPU1_UUID), hours=None)
+# EX-155: EX-152's settings with `; likely fails` marks too (v8l), on GPU2 (user instruction 2026-11-02).
+EX155 = Spec('EX-155', c.V8L_DATASET, c.RUN_V8L_TRAINING, c.V2_HEAD_LIMIT, 'ex155', max_exclusion_rate=0.005,
+             extra_train=c.TERA_KNOWLEDGE / 'train.jsonl', gpu=(c.GPU2_INDEX, c.GPU2_UUID), hours=None)
 # EX-132: EX-124's rows, split and settings; imitation train rows weighted by the replay outcome (D-193), on GPU0.
 EX132 = Spec('EX-132', c.V2_DATASET, c.RUN_WEIGHTED_TRAINING, c.V2_HEAD_LIMIT, 'ex132', max_exclusion_rate=0.005,
              extra_train=c.TERA_KNOWLEDGE / 'train.jsonl', hours=c.WEIGHTED_TRAINING_HOURS,

@@ -57,7 +57,7 @@ def main(argv=None):
     p.add_argument('--ready-file')
     p.add_argument('--device', default='cuda', choices=('cuda', 'cpu'))
     p.add_argument('--render', default='v1', choices=('v1', 'v2', 'v3', 'v4', 'v5', 'v2fix', 'v2info', 'v2fixtd',
-                                                      'v6s', 'v6h'))
+                                                      'v6s', 'v6h', 'v7', 'v8', 'v8l'))
     p = sub.add_parser('battle', help='EX-119 stages')
     p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
     p = sub.add_parser('general', help='EX-120 stages (new-team generalization)')
@@ -83,6 +83,26 @@ def main(argv=None):
     p = sub.add_parser('v6', help='EX-141 v6s (repetition streaks, GPU0) / EX-142 v6h (long history, 2048, GPU1)')
     p.add_argument('stage', choices=('reparse', 'measure', 'data', 'parity', 'train', 'evaluate'))
     p.add_argument('--variant', choices=('v6s', 'v6h'))
+    p.add_argument('--preflight-only', action='store_true')
+    p = sub.add_parser('v7', help='EX-149 renderer v7 (v6s + opponent sets) + Tera knowledge stages (GPU0)')
+    p.add_argument('stage', choices=('measure', 'features', 'data', 'parity', 'train', 'evaluate'))
+    p.add_argument('--preflight-only', action='store_true')
+    p = sub.add_parser('v8', help='EX-152 renderer v8 (v7 + engine-judge failure marks) + Tera knowledge stages (GPU1)')
+    p.add_argument('stage', choices=('measure', 'data', 'parity', 'train', 'evaluate'))
+    p.add_argument('--preflight-only', action='store_true')
+    p = sub.add_parser('v8l', help='EX-155 renderer v8l (v8 + likely-fails marks) + Tera knowledge stages (GPU2)')
+    p.add_argument('stage', choices=('measure', 'data', 'parity', 'train', 'evaluate'))
+    p.add_argument('--preflight-only', action='store_true')
+    p = sub.add_parser('compare14', help='EX-153 v7 vs v8 engine-judge marks battle stages (GPU1, port 8109)')
+    p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
+    p = sub.add_parser('compare15', help='EX-156 v8 vs v8l likely-fails marks battle stages (GPU1, port 8109)')
+    p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
+    p = sub.add_parser('compare12', help='EX-147 v6s+Tera vs v6s loop-weighted battle stages (GPU1, port 8109)')
+    p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
+    p = sub.add_parser('compare13', help='EX-150 v6s+Tera vs v7 opponent sets battle stages (GPU0, port 8107)')
+    p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
+    p = sub.add_parser('v6sl', help='EX-146 v6s + loop-break row weights stages (GPU1)')
+    p.add_argument('stage', choices=('weights', 'train', 'evaluate'))
     p.add_argument('--preflight-only', action='store_true')
     p = sub.add_parser('weighted', help='EX-132 outcome-weighted imitation (v2 + Tera knowledge) stages (GPU0)')
     p.add_argument('stage', choices=('weights', 'train', 'evaluate'))
@@ -111,9 +131,12 @@ def main(argv=None):
     p.add_argument('stage', choices=('collect', 'mock', 'prepare', 'execute', 'export'))
     p = sub.add_parser('compare9', help='EX-140 EX-124 on v2fix: Tera-pooled k=1/3, Tera defence text (GPU1, 8109)')
     p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
+    p = sub.add_parser('loop', help='EX-148 stalled-loop serving rule on v6st / v6ht vs Abyssal (GPU2, port 8108)')
+    p.add_argument('stage', choices=('offline', 'mock', 'prepare', 'execute', 'export'))
     p = sub.add_parser('h2h', help='EX-134 / EX-135 / EX-138 laya-vs-laya battle stages (GPU2, port 8108)')
     p.add_argument('stage', choices=('mock', 'prepare', 'execute', 'export'))
-    p.add_argument('--study', default='EX-134', choices=('EX-134', 'EX-135', 'EX-138'))
+    p.add_argument('--study', default='EX-134', choices=('EX-134', 'EX-135', 'EX-138', 'EX-148-H1', 'EX-148-H2',
+                                                           'EX-147-H', 'EX-150-H'))
     p = sub.add_parser('regression', help='NHJ-20261028 fixed-decision regression set: build once, score a served model')
     p.add_argument('stage', choices=('build', 'baseline', 'score'))
     p.add_argument('--endpoint', help='http://127.0.0.1:PORT of a running serve (score)')
@@ -218,6 +241,51 @@ def main(argv=None):
         else:
             from .evaluation_v6 import run
             run(args.variant)
+    elif args.command == 'v7':
+        if args.stage in ('measure', 'features'):
+            # `features`: v7 facts need no store of their own (snapshot + pinned usage file); the chain's features stage
+            # is the frozen pre-measurement of the validation 512 lengths.
+            from .data_v7 import measure
+            measure()
+        elif args.stage in ('data', 'parity'):
+            from . import data_v7
+            {'data': data_v7.build, 'parity': data_v7.parity}[args.stage]()
+        elif args.stage == 'train':
+            from .training import EX149, run
+            run(preflight_only=args.preflight_only, spec=EX149)
+        else:
+            from .evaluation_loop import run
+            run('v7')
+    elif args.command == 'v8':
+        if args.stage in ('measure', 'data', 'parity'):
+            from integration.laya_engine import data_v8
+            {'measure': data_v8.measure, 'data': data_v8.build, 'parity': data_v8.parity}[args.stage]()
+        elif args.stage == 'train':
+            from .training import EX152, run
+            run(preflight_only=args.preflight_only, spec=EX152)
+        else:
+            from integration.laya_engine.evaluation_v8 import run
+            run()
+    elif args.command == 'v8l':
+        if args.stage in ('measure', 'data', 'parity'):
+            from integration.laya_engine import data_v8l
+            {'measure': data_v8l.measure, 'data': data_v8l.build, 'parity': data_v8l.parity}[args.stage]()
+        elif args.stage == 'train':
+            from .training import EX155, run
+            run(preflight_only=args.preflight_only, spec=EX155)
+        else:
+            from integration.laya_engine.evaluation_v8l import run
+            run()
+    elif args.command == 'v6sl':
+        if args.stage == 'weights':
+            from .loop_weights import build
+            build()
+        elif args.stage == 'train':
+            from .training import EX146, run
+            run(preflight_only=args.preflight_only, spec=EX146)
+        else:
+            from .evaluation_loop import run
+            run('v6sl')
     elif args.command == 'weighted':
         if args.stage == 'weights':
             from .outcome_weights import build
@@ -255,7 +323,7 @@ def main(argv=None):
     elif args.command == 'teamset':
         from . import teamset_battle
         getattr(teamset_battle, args.stage)()
-    elif args.command in ('compare10', 'compare11'):
+    elif args.command in ('compare10', 'compare11', 'compare12', 'compare13', 'compare14', 'compare15'):
         from . import comparison
         getattr(comparison, args.stage + args.command[len('compare'):])()
     elif args.command == 'compare9':
@@ -272,6 +340,9 @@ def main(argv=None):
             if not args.endpoint or not args.out:
                 parser.error('regression score needs --endpoint and --out')
             print(regression.table(regression.score(args.endpoint, args.out)))
+    elif args.command == 'loop':
+        from . import loop_battle
+        getattr(loop_battle, args.stage)()
     elif args.command == 'h2h':
         from . import headtohead
         getattr(headtohead, args.stage)(headtohead.STUDIES[args.study])

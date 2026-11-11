@@ -384,7 +384,7 @@ def export():
 # ----------------------------------------------------------------------------- worker
 
 # D-198: models trained on `early_history` get it in their live inputs; every other model's input is unchanged.
-EARLY_HISTORY_MODELS = ('laya-v6ht', 'laya-v6ht-initial')
+EARLY_HISTORY_MODELS = ('laya-v6ht', 'laya-v6ht-initial', 'laya-v6ht-lp')
 
 
 def worker(attempt, role):

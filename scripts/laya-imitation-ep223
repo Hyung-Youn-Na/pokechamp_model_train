@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+# EP-223 chain (D-200; user instruction 2026-10-31: run as many experiments as the free GPUs allow, no approvals).
+# One lane per call: `scripts/laya-imitation-ep223 <lane>`.
+#   v6sl    GPU1 / 8109: EX-146 train -> evaluate -> [code freeze] -> EX-147 prepare/execute/export
+#   v7      GPU0 / 8107: EX-149 features -> data -> parity -> train -> evaluate -> [code freeze] -> EX-150
+#   lp      GPU2 / 8108: [code freeze] -> EX-148 laya-v6st-lp / laya-v6ht-lp vs Abyssal
+#   lp-h2h  GPU3 / 8106: [code freeze] -> EX-148-H1 (v6st-lp vs v6st) -> EX-148-H2 (v6ht-lp vs v6ht)
+# Battles run regardless of the offline numbers (D-191). Battle stages wait for the code-freeze marker: every battle
+# checks that integration/laya_imitation is unchanged since its prepare, so all code is finished before any battle.
+# Each lane stops at its first failing stage; nothing is re-run automatically.
+set -euo pipefail
+cd /workspace
+RUN=/workspace/scripts/laya-imitation
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep223
+CHECK_PY=/tmp/ep037/tools/bin/python
+FREEZE=/workspace/.pokechamp-data/ep223-code-frozen
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+viewer_check() {
+  mkdir -p "$EVIDENCE"
+  if [ -x "$CHECK_PY" ]; then
+    PYTHONPATH=/workspace PYTHONDONTWRITEBYTECODE=1 "$CHECK_PY" -m integration.laya_imitation.browser_check \
+      "/workspace/exports/battle_viewers/$1" "$EVIDENCE/$1-viewer-check.json" \
+      || stage "viewer check failed for $1 (battles unaffected; check by hand)"
+  else
+    stage "no Playwright interpreter at $CHECK_PY; viewer check for $1 left to a manual run"
+  fi
+}
+wait_freeze() {
+  until [ -f "$FREEZE" ]; do sleep 300; done
+  stage "code freeze marker present ($(cat "$FREEZE"))"
+}
+
+# Same guard as EP-221/222: restore only the two chat-plugin state files a local Showdown server rewrites.
+SHOWDOWN_STATE="config/chat-plugins/mafia-logs.json config/chat-plugins/seasons.json"
+showdown_clean() {
+  local dirty
+  dirty=$(git -C /workspace/pokemon-showdown status --porcelain | awk '{print $2}' | sort)
+  [ -z "$dirty" ] && return 0
+  if [ -z "$(comm -23 <(echo "$dirty") <(tr ' ' '\n' <<<"$SHOWDOWN_STATE" | sort))" ]; then
+    stage "restoring Showdown chat-plugin state files: $(echo $dirty)"
+    git -C /workspace/pokemon-showdown checkout -- $SHOWDOWN_STATE
+  else
+    stage "pokemon-showdown has other uncommitted changes: $(echo $dirty)"; return 1
+  fi
+}
+
+battle() {   # battle <cli command...> ; prepare/execute/export (mocks are run and audited before the code freeze)
+  local s
+  for s in prepare execute export; do
+    showdown_clean
+    stage "$* $s"; "$RUN" "$@" "$s"
+  done
+}
+
+case "${1:-}" in
+  v6sl)
+    stage "EX-146 train";    "$RUN" v6sl train
+    stage "EX-146 evaluate"; "$RUN" v6sl evaluate
+    wait_freeze
+    battle compare12
+    viewer_check ex147 ;;
+  v7)
+    stage "EX-149 features"; "$RUN" v7 features
+    stage "EX-149 data";     "$RUN" v7 data
+    stage "EX-149 parity";   "$RUN" v7 parity
+    stage "EX-149 train";    "$RUN" v7 train
+    stage "EX-149 evaluate"; "$RUN" v7 evaluate
+    wait_freeze
+    battle compare13
+    viewer_check ex150 ;;
+  lp)
+    wait_freeze
+    battle loop
+    viewer_check ex148 ;;
+  lp-h2h)
+    wait_freeze
+    battle h2h --study EX-148-H1
+    viewer_check ex148-h2h-v6st
+    battle h2h --study EX-148-H2
+    viewer_check ex148-h2h-v6ht ;;
+  *) echo "usage: $0 v6sl|v7|lp|lp-h2h" >&2; exit 2 ;;
+esac
+stage "EP-223 lane $1 finished"
