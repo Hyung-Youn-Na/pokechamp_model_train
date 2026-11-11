@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+# EP-226 (D-203) lane: v7t / v8t / v9t vs Abyssal on laya-play's human-written teams, GPU0·8107, GPU1·8109, GPU2·8108.
+#   run: EX-159 collect (if missing) -> mock (CPU, if missing) -> prepare -> execute g0/g1/g2 at once -> combine
+#        -> export -> viewer check
+# Stops at the first failing stage; nothing is re-run automatically. A failing shard does not stop the others, but
+# combine waits for all three and is skipped if any failed. `.pokechamp-data/battle-window/EX-159` marks the battle.
+set -euo pipefail
+cd /workspace
+export PYTHONPATH=/workspace:/workspace/pokechamp
+export PYTHONDONTWRITEBYTECODE=1
+export TOKENIZERS_PARALLELISM=false
+export HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+RUN=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-159
+LOGS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep226
+CHECK_PY=/tmp/ep037/tools/bin/python
+WINDOW=/workspace/.pokechamp-data/battle-window
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+run() { "$LAYA" -m integration.laya_teamset.battle "$@"; }
+mock_ok() {
+  python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+print('mock', [(o['slot_id'], o['status'], o.get('result'), o.get('audit_passed')) for o in d['outcomes']], d['phase_error'])
+sys.exit(0 if ok else 1)" "$1"
+}
+SHOWDOWN_STATE="config/chat-plugins/mafia-logs.json config/chat-plugins/seasons.json"
+showdown_clean() {
+  local dirty
+  dirty=$(git -C /workspace/pokemon-showdown status --porcelain | awk '{print $2}' | sort)
+  [ -z "$dirty" ] && return 0
+  if [ -z "$(comm -23 <(echo "$dirty") <(tr ' ' '\n' <<<"$SHOWDOWN_STATE" | sort))" ]; then
+    stage "restoring Showdown chat-plugin state files: $(echo $dirty)"
+    git -C /workspace/pokemon-showdown checkout -- $SHOWDOWN_STATE
+  else
+    stage "pokemon-showdown has other uncommitted changes: $(echo $dirty)"; return 1
+  fi
+}
+
+case "${1:-}" in
+  run)
+    [ -f "$RUN/collection/manifest.json" ] || { stage "EX-159 collect"; run collect; }
+    if [ ! -f "$RUN/mock/result.json" ]; then
+      showdown_clean
+      stage "EX-159 mock"; run mock
+    fi
+    mock_ok "$RUN" || { stage "EX-159 mock failed; stopping before the battle"; exit 1; }
+    mkdir -p "$WINDOW"
+    printf 'started %s\ngpu 0,1,2\nsession EP-226\n' "$(date -u +%FT%TZ)" > "$WINDOW/EX-159"
+    stage "battle-window marker $WINDOW/EX-159"
+    showdown_clean
+    stage "EX-159 prepare"; run prepare
+    pids=()
+    for s in g0 g1 g2; do
+      stage "EX-159 execute $s (log $LOGS/EP-226-$s.log)"
+      run execute "$s" >> "$LOGS/EP-226-$s.log" 2>&1 &
+      pids+=($!)
+    done
+    failed=0
+    for i in 0 1 2; do
+      if wait "${pids[$i]}"; then stage "EX-159 execute g$i finished"; else stage "EX-159 execute g$i failed"; failed=1; fi
+    done
+    [ "$failed" = 0 ] || { stage "a shard failed; combine skipped (marker kept)"; exit 1; }
+    showdown_clean
+    stage "EX-159 combine"; run combine
+    stage "EX-159 export"; run export
+    rm -f "$WINDOW/EX-159"
+    stage "battle-window marker removed: EX-159"
+    mkdir -p "$EVIDENCE"
+    if [ -x "$CHECK_PY" ]; then
+      PYTHONPATH=/workspace "$CHECK_PY" -m integration.laya_imitation.browser_check \
+        /workspace/exports/battle_viewers/ex159 "$EVIDENCE/ex159-viewer-check.json" \
+        || stage "viewer check failed for ex159 (battles unaffected; recorded)"
+    else
+      stage "no Playwright interpreter at $CHECK_PY; viewer check for ex159 left to a manual run"
+    fi ;;
+  *) echo "usage: $0 run" >&2; exit 2 ;;
+esac
+stage "EP-226 lane $1 finished"

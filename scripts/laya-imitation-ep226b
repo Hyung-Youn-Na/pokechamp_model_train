@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# EP-226 addendum (D-203) lane: EX-160, laya-v8lt on the EX-159 human-team schedule, GPU3 / 8106.
+#   gpu3: mock (CPU, if missing) -> prepare -> execute -> wait for EX-159's combined result -> compare -> export
+#         -> viewer check
+# Stops at the first failing stage; nothing is re-run automatically. `.pokechamp-data/battle-window/EX-160` marks the
+# battle from prepare until execute ends.
+set -euo pipefail
+cd /workspace
+export PYTHONPATH=/workspace:/workspace/pokechamp
+export PYTHONDONTWRITEBYTECODE=1
+export TOKENIZERS_PARALLELISM=false
+export HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+RUNS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+RUN=$RUNS/EX-160
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep226
+CHECK_PY=/tmp/ep037/tools/bin/python
+WINDOW=/workspace/.pokechamp-data/battle-window
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+run() { "$LAYA" -m integration.laya_teamset_v8l.battle "$@"; }
+mock_ok() {
+  python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+print('mock', [(o['slot_id'], o['status'], o.get('result'), o.get('audit_passed')) for o in d['outcomes']], d['phase_error'])
+sys.exit(0 if ok else 1)" "$1"
+}
+
+case "${1:-}" in
+  gpu3)
+    [ -f "$RUN/mock/result.json" ] || { stage "EX-160 mock"; run mock; }
+    mock_ok "$RUN" || { stage "EX-160 mock failed; stopping before the battle"; exit 1; }
+    mkdir -p "$WINDOW"
+    printf 'started %s\ngpu 3\nsession EP-226\n' "$(date -u +%FT%TZ)" > "$WINDOW/EX-160"
+    stage "battle-window marker $WINDOW/EX-160"
+    stage "EX-160 prepare"; run prepare
+    stage "EX-160 execute"; run execute
+    rm -f "$WINDOW/EX-160"
+    stage "battle-window marker removed: EX-160"
+    stage "waiting for EX-159 result.json"
+    while [ ! -f "$RUNS/EX-159/result.json" ]; do
+      if ! pgrep -f "[l]aya-imitation-ep226 run" >/dev/null && [ ! -f "$RUNS/EX-159/result.json" ]; then
+        stage "EX-159 lane ended without a combined result; compare skipped"; exit 1
+      fi
+      sleep 120
+    done
+    stage "EX-160 compare"; run compare
+    stage "EX-160 export"; run export
+    mkdir -p "$EVIDENCE"
+    if [ -x "$CHECK_PY" ]; then
+      PYTHONPATH=/workspace "$CHECK_PY" -m integration.laya_imitation.browser_check \
+        /workspace/exports/battle_viewers/ex160 "$EVIDENCE/ex160-viewer-check.json" \
+        || stage "viewer check failed for ex160 (battles unaffected; recorded)"
+    fi ;;
+  *) echo "usage: $0 gpu3" >&2; exit 2 ;;
+esac
+stage "EP-226b lane $1 finished"
