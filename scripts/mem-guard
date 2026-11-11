@@ -1,0 +1,102 @@
+#!/usr/bin/env python3
+"""Run a command in its own session with a total memory ceiling (PSS of every process in that session).
+
+usage: mem-guard <limit GB> <usage log> -- <command ...>
+
+The container's memory cgroup is read-only (Docker, cgroup v1, no CAP_SYS_ADMIN), so a kernel limit cannot be set
+from inside; this is the user-space substitute. Every process in the session gets `oom_score_adj` 1000, so if the
+kernel OOM killer still runs it takes these first, not the host's sshd. Every `INTERVAL` seconds the PSS of the
+command's process tree and session is summed (`/proc/<pid>/smaps_rollup`); above the limit all of them get SIGKILL
+and the guard exits with 137. One usage line per minute (and the peak) goes to the usage log. Exit code is the command's otherwise.
+"""
+import os
+import signal
+import subprocess
+import sys
+import time
+
+INTERVAL = 2.0
+
+
+def guarded_pids(root):
+    """The root, its descendants (by parent pid) and anything else in its session (orphans keep the session id;
+    a child that called setsid keeps its parent)."""
+    parent, session = {}, {}
+    for name in os.listdir('/proc'):
+        if not name.isdigit():
+            continue
+        try:
+            with open('/proc/%s/stat' % name) as f:
+                fields = f.read().rsplit(')', 1)[1].split()
+        except OSError:
+            continue
+        parent[int(name)], session[int(name)] = int(fields[1]), int(fields[3])
+    children = {}
+    for pid, ppid in parent.items():
+        children.setdefault(ppid, []).append(pid)
+    out, stack = set(), [root]
+    while stack:
+        pid = stack.pop()
+        if pid in parent and pid not in out:
+            out.add(pid)
+            stack.extend(children.get(pid, ()))
+    return sorted(out | {pid for pid, sid in session.items() if sid == root})
+
+
+def pss_kb(pid):
+    try:
+        with open('/proc/%d/smaps_rollup' % pid) as f:
+            for line in f:
+                if line.startswith('Pss:'):
+                    return int(line.split()[1])
+    except OSError:
+        pass
+    return 0
+
+
+def main(argv):
+    if len(argv) < 4 or argv[2] != '--':
+        sys.exit(__doc__)
+    limit_kb = int(float(argv[0]) * 1024 * 1024)
+    log = open(argv[1], 'a', buffering=1)
+    stamp = lambda: time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())
+
+    def adj():
+        os.setsid()
+        with open('/proc/self/oom_score_adj', 'w') as f:
+            f.write('1000')
+
+    child = subprocess.Popen(argv[3:], preexec_fn=adj)
+    sid = child.pid
+    log.write('[%s] start pid %d limit %.0f GB: %s\n' % (stamp(), sid, limit_kb / 2**20, ' '.join(argv[3:])))
+    peak, last = 0, 0.0
+    while child.poll() is None:
+        pids = guarded_pids(sid)
+        total = sum(pss_kb(p) for p in pids)
+        peak = max(peak, total)
+        if total > limit_kb:
+            log.write('[%s] LIMIT: %.1f GB > %.0f GB over %d processes; killing session %d\n'
+                      % (stamp(), total / 2**20, limit_kb / 2**20, len(pids), sid))
+            for pid in [sid] + [p for p in pids if p != sid]:
+                try:
+                    os.kill(pid, signal.SIGSTOP)   # stop first so nothing forks or reparents mid-kill
+                except ProcessLookupError:
+                    pass
+            for pid in pids:
+                try:
+                    os.kill(pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            child.wait()
+            log.write('[%s] killed; peak %.1f GB\n' % (stamp(), peak / 2**20))
+            return 137
+        if time.time() - last >= 60:
+            log.write('[%s] %.1f GB (%d processes), peak %.1f GB\n' % (stamp(), total / 2**20, len(pids), peak / 2**20))
+            last = time.time()
+        time.sleep(INTERVAL)
+    log.write('[%s] exit %d; peak %.1f GB\n' % (stamp(), child.returncode, peak / 2**20))
+    return child.returncode
+
+
+if __name__ == '__main__':
+    sys.exit(main(sys.argv[1:]))

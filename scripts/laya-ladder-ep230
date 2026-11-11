@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+# EP-230 (D-208) lane: recent ladder replays (rating >= 1500) -> v10 rows -> GPU0-3 DDP training -> Abyssal battle.
+#   run: wait for the first download -> extend to the newest 30,000 games -> EX-166 source (Kev env) -> stores (laya
+#        env) -> merge (24-hour budget) -> EX-167 train (DDP) -> evaluate -> EX-168 mock -> prepare -> execute ->
+#        export -> viewer check
+# Each stage is skipped when its output already exists; nothing is re-run automatically, and the lane stops at the
+# first failing stage. Offline results never decide whether the battle runs (D-191). `.pokechamp-data/battle-window/
+# EX-168` marks the battle.
+set -euo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+KEV=/ref/kev/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+SHARED=/mnt/digicap/combined/hyna/backup/pokechamp-research
+RAW=/workspace/data/showdown-replays/ladder-recent/gen9ou-r1500-newest
+INDEX=/workspace/data/showdown-replays/ladder-index/gen9ou-20260504-20261104/rows.jsonl.gz
+DATA=$SHARED/runs/model-training/EX-166
+TRAIN=$SHARED/runs/model-training/EX-167
+RUN=$SHARED/runs/model-training/EX-168
+SOURCE=$SHARED/datasets/generated/laya-ladder-source/v1
+ROWS=$SHARED/datasets/generated/laya-compact-imitation/v10-ladder
+MERGED=$SHARED/datasets/generated/laya-compact-imitation/v10-ladder-merged
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep230
+CHECK_PY=/tmp/ep037/tools/bin/python
+WINDOW=/workspace/.pokechamp-data/battle-window
+COUNT=30000
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+laya() { PYTHONPATH=$LAYA_PATH "$LAYA" "$@"; }
+stage_is() { python3 -c "import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))['stage'] == sys.argv[2] else 1)" "$1" "$2"; }
+mock_ok() {
+  python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+print('mock', [(o['slot_id'], o['status'], o.get('result'), o.get('audit_passed')) for o in d['outcomes']], d['phase_error'])
+sys.exit(0 if ok else 1)" "$1"
+}
+SHOWDOWN_STATE="config/chat-plugins/mafia-logs.json config/chat-plugins/seasons.json"
+showdown_clean() {
+  local dirty
+  dirty=$(git -C /workspace/pokemon-showdown status --porcelain | awk '{print $2}' | sort)
+  [ -z "$dirty" ] && return 0
+  if [ -z "$(comm -23 <(echo "$dirty") <(tr ' ' '\n' <<<"$SHOWDOWN_STATE" | sort))" ]; then
+    stage "restoring Showdown chat-plugin state files: $(echo $dirty)"
+    git -C /workspace/pokemon-showdown checkout -- $SHOWDOWN_STATE
+  else
+    stage "pokemon-showdown has other uncommitted changes: $(echo $dirty)"; return 1
+  fi
+}
+
+case "${1:-}" in
+  run)
+    if [ ! -f "$DATA/select/kept.jsonl" ]; then
+      while pgrep -f 'fetch_newest.py' >/dev/null; do sleep 60; done
+      stage "download: extend to the newest $COUNT games"
+      (cd "$RAW" && python3 fetch_newest.py "$INDEX" . "$COUNT" >> fetch.log 2>&1)
+      tail -1 "$RAW/fetch.log"
+    fi
+    [ -f "$SOURCE/prepared/manifest.json" ] || { stage "EX-166 source"; PYTHONPATH=/workspace:/workspace/pokechamp "$KEV" -m integration.laya_ladder.cli source; }
+    [ -f "$DATA/diagnostics/parity.json" ] || { stage "EX-166 stores"; laya -m integration.laya_ladder.cli stores; }
+    [ -f "$MERGED/manifest.json" ] || { stage "EX-167 merge"; laya -m integration.laya_ladder.cli merge; }
+    if [ ! -f "$TRAIN/status.json" ]; then
+      stage "EX-167 train (GPU0-3 DDP)"
+      laya -m integration.laya_ladder.train_ddp train --dataset "$MERGED" --checkpointing 0
+    fi
+    stage_is "$TRAIN/status.json" trained || stage_is "$TRAIN/status.json" completed || { stage "EX-167 not trained"; exit 1; }
+    stage_is "$TRAIN/status.json" completed || { stage "EX-167 evaluate"; laya -c 'from integration.laya_ladder import evaluation; evaluation.run()'; }
+    if [ ! -f "$RUN/mock/result.json" ]; then
+      showdown_clean
+      stage "EX-168 mock"; laya -m integration.laya_ladder.battle mock
+    fi
+    mock_ok "$RUN" || { stage "EX-168 mock failed; stopping before the battle"; exit 1; }
+    mkdir -p "$WINDOW"
+    printf 'started %s\ngpu 0\nsession EP-230\n' "$(date -u +%FT%TZ)" > "$WINDOW/EX-168"
+    stage "battle-window marker $WINDOW/EX-168"
+    showdown_clean
+    [ -f "$RUN/manifest.json" ] || { stage "EX-168 prepare"; laya -m integration.laya_ladder.battle prepare; }
+    stage "EX-168 execute"; laya -m integration.laya_ladder.battle execute
+    showdown_clean
+    stage "EX-168 export"; laya -m integration.laya_ladder.battle export
+    rm -f "$WINDOW/EX-168"
+    stage "battle-window marker removed: EX-168"
+    mkdir -p "$EVIDENCE"
+    if [ -x "$CHECK_PY" ]; then
+      PYTHONPATH=/workspace "$CHECK_PY" -m integration.laya_imitation.browser_check \
+        /workspace/exports/battle_viewers/ex168 "$EVIDENCE/ex168-viewer-check.json" \
+        || stage "viewer check failed for ex168 (battles unaffected; recorded)"
+    else
+      stage "no Playwright interpreter at $CHECK_PY; viewer check for ex168 left to a manual run"
+    fi
+    stage "EP-230 lane run finished" ;;
+  *) echo "usage: $0 run" >&2; exit 2 ;;
+esac
