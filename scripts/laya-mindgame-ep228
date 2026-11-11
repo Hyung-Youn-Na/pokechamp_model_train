@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+# EP-228 (D-205) lanes: switch-read opponent and switch-dilemma mixing for v8lt, no retraining. Stops at the first
+# failing stage; nothing is re-run automatically.
+#   ex163   GPU1 / 8109: v8lt (argmax) vs abyssal-read                  mock/prepare/execute/export
+#   ex164a  GPU2 / 8108: laya-v8lt-mix vs Abyssal                        mock/prepare/execute/export
+#   ex164r  GPU3 / 8106: laya-v8lt-mix vs abyssal-read                   mock/prepare/execute, export after EX-163 executed
+# Each battle writes `.pokechamp-data/battle-window/<experiment>` (start time, GPU) right before prepare and removes it
+# after export. Do not edit `integration/laya_mindgame` while a lane runs (workers import it per game; execute checks
+# the frozen package hashes).
+set -euo pipefail
+cd /workspace
+RUNS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep228
+CHECK_PY=/tmp/ep037/tools/bin/python
+WINDOW=/workspace/.pokechamp-data/battle-window
+PY=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+run() {   # same environment as `scripts/laya-imitation` compare stages (laya venv, pokechamp on the path)
+  PYTHONPATH=/workspace:/workspace/pokechamp PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1 \
+    "$PY" -m integration.laya_mindgame.battle "$@"
+}
+mock_ok() {     # mock_ok <run dir>: every mock game completed with a passed audit
+  PYTHONPATH=/workspace python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+print('mock', [(o['slot_id'], o['status'], o.get('result'), o.get('audit_passed')) for o in d['outcomes']], d['phase_error'], d.get('totals'))
+sys.exit(0 if ok else 1)" "$1"
+}
+viewer_check() {
+  mkdir -p "$EVIDENCE"
+  if [ -x "$CHECK_PY" ]; then
+    PYTHONPATH=/workspace PYTHONDONTWRITEBYTECODE=1 "$CHECK_PY" -m integration.laya_imitation.browser_check \
+      "/workspace/exports/battle_viewers/$1" "$EVIDENCE/$1-viewer-check.json" \
+      || stage "viewer check failed for $1 (battles unaffected; recorded)"
+  else
+    stage "no Playwright interpreter at $CHECK_PY; viewer check for $1 left to a manual run"
+  fi
+}
+battle() {   # battle <marker> <gpu> <run dir> <study>
+  local id=$1 gpu=$2 dir=$3 study=$4
+  stage "$study mock"; run mock --study "$study"
+  mock_ok "$dir" || { stage "$study mock failed; stopping before prepare"; return 1; }
+  mkdir -p "$WINDOW"
+  printf 'started %s\ngpu %s\nsession EP-228\n' "$(date -u +%FT%TZ)" "$gpu" > "$WINDOW/$id"
+  stage "battle-window marker $WINDOW/$id"
+  stage "$study prepare"; run prepare --study "$study"
+  stage "$study execute"; run execute --study "$study"
+  if [ "$study" = ex164r ]; then
+    until [ -f "$RUNS/EX-163/result.json" ]; do sleep 300; done
+    stage "EX-163 executed; comparing"
+  fi
+  stage "$study export"; run export --study "$study"
+  rm -f "$WINDOW/$id"
+  stage "battle-window marker removed: $id"
+}
+
+case "${1:-}" in
+  ex163)  battle EX-163 1 "$RUNS/EX-163" ex163; viewer_check ex163 ;;
+  ex164a) battle EX-164-abyssal 2 "$RUNS/EX-164/abyssal" ex164a; viewer_check ex164-abyssal ;;
+  ex164r) battle EX-164-reader 3 "$RUNS/EX-164/reader" ex164r; viewer_check ex164-reader ;;
+  *) echo "usage: $0 ex163|ex164a|ex164r" >&2; exit 2 ;;
+esac
+stage "EP-228 lane $1 finished"
