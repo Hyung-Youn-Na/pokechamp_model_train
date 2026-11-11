@@ -1,0 +1,82 @@
+#!/usr/bin/env bash
+# EP-227 (D-204) lane: renderer v10 (all v1-v9 information but `longhist`, lock and strategy facts, 2,048 tokens),
+# GPU0·8107.
+#   run: EX-161 measure -> data -> parity -> train -> evaluate -> EX-162 mock (CPU) -> prepare -> execute -> export
+#        -> viewer check
+# Each stage is skipped when its output already exists; nothing is re-run automatically, and the lane stops at the
+# first failing stage. Offline results never decide whether the battle runs (D-191). laya with `option_max_len`
+# (`.tools/laya-0.4.13/worktrees/pokemon-v10`) comes first on PYTHONPATH. `.pokechamp-data/battle-window/EX-162`
+# marks the battle.
+set -euo pipefail
+cd /workspace
+export PYTHONPATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+export PYTHONDONTWRITEBYTECODE=1
+export TOKENIZERS_PARALLELISM=false
+export HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+SHARED=/mnt/digicap/combined/hyna/backup/pokechamp-research
+TRAIN=$SHARED/runs/model-training/EX-161
+RUN=$SHARED/runs/model-training/EX-162
+DATA=$SHARED/datasets/generated/laya-compact-imitation/v10-all
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep227
+CHECK_PY=/tmp/ep037/tools/bin/python
+WINDOW=/workspace/.pokechamp-data/battle-window
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+run() { "$LAYA" -m integration.laya_v10.cli "$@"; }
+mock_ok() {
+  python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+print('mock', [(o['slot_id'], o['status'], o.get('result'), o.get('audit_passed')) for o in d['outcomes']], d['phase_error'])
+sys.exit(0 if ok else 1)" "$1"
+}
+stage_is() { python3 -c "import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))['stage'] == sys.argv[2] else 1)" "$1" "$2"; }
+SHOWDOWN_STATE="config/chat-plugins/mafia-logs.json config/chat-plugins/seasons.json"
+showdown_clean() {
+  local dirty
+  dirty=$(git -C /workspace/pokemon-showdown status --porcelain | awk '{print $2}' | sort)
+  [ -z "$dirty" ] && return 0
+  if [ -z "$(comm -23 <(echo "$dirty") <(tr ' ' '\n' <<<"$SHOWDOWN_STATE" | sort))" ]; then
+    stage "restoring Showdown chat-plugin state files: $(echo $dirty)"
+    git -C /workspace/pokemon-showdown checkout -- $SHOWDOWN_STATE
+  else
+    stage "pokemon-showdown has other uncommitted changes: $(echo $dirty)"; return 1
+  fi
+}
+
+case "${1:-}" in
+  run)
+    ls "$TRAIN"/diagnostics/measure/measure-*.json >/dev/null 2>&1 || { stage "EX-161 measure"; run measure; }
+    [ -f "$DATA/manifest.json" ] || { stage "EX-161 data"; run data; }
+    [ -f "$TRAIN/diagnostics/parity.json" ] || { stage "EX-161 parity"; run parity; }
+    if ! { [ -f "$TRAIN/status.json" ] && { stage_is "$TRAIN/status.json" trained || stage_is "$TRAIN/status.json" completed; }; }; then
+      stage "EX-161 train"; run train
+    fi
+    stage_is "$TRAIN/status.json" completed || { stage "EX-161 evaluate"; run evaluate; }
+    if [ ! -f "$RUN/mock/result.json" ]; then
+      showdown_clean
+      stage "EX-162 mock"; run mock
+    fi
+    mock_ok "$RUN" || { stage "EX-162 mock failed; stopping before the battle"; exit 1; }
+    mkdir -p "$WINDOW"
+    printf 'started %s\ngpu 0\nsession EP-227\n' "$(date -u +%FT%TZ)" > "$WINDOW/EX-162"
+    stage "battle-window marker $WINDOW/EX-162"
+    showdown_clean
+    [ -f "$RUN/manifest.json" ] || { stage "EX-162 prepare"; run prepare; }
+    stage "EX-162 execute"; run execute
+    showdown_clean
+    stage "EX-162 export"; run export
+    rm -f "$WINDOW/EX-162"
+    stage "battle-window marker removed: EX-162"
+    mkdir -p "$EVIDENCE"
+    if [ -x "$CHECK_PY" ]; then
+      PYTHONPATH=/workspace "$CHECK_PY" -m integration.laya_imitation.browser_check \
+        /workspace/exports/battle_viewers/ex162 "$EVIDENCE/ex162-viewer-check.json" \
+        || stage "viewer check failed for ex162 (battles unaffected; recorded)"
+    else
+      stage "no Playwright interpreter at $CHECK_PY; viewer check for ex162 left to a manual run"
+    fi ;;
+  *) echo "usage: $0 run" >&2; exit 2 ;;
+esac
+stage "EP-227 lane $1 finished"
