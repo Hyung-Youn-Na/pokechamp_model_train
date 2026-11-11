@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+# EP-225 (D-202) lane: renderer v9 (foe spread fix + worst plausible incoming damage) training and battle, GPU3 / 8106.
+#   gpu3: EX-157 data -> parity -> EX-158 mock (CPU, initial checkpoint) -> EX-157 train -> evaluate
+#         -> EX-158 (v7t vs v9t, Abyssal) prepare/execute/export -> viewer check
+# A stage whose output already exists (dataset manifest, parity file, mock result) is not run again; everything else
+# stops at the first failing stage and nothing is re-run automatically. The battle writes
+# `.pokechamp-data/battle-window/EX-158` right before prepare and removes it after export.
+set -euo pipefail
+cd /workspace
+export PYTHONPATH=/workspace:/workspace/pokechamp
+export PYTHONDONTWRITEBYTECODE=1
+export TOKENIZERS_PARALLELISM=false
+export HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+RUNS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+DATA=/mnt/digicap/combined/hyna/backup/pokechamp-research/datasets/generated/laya-compact-imitation/v9-all
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep225
+CHECK_PY=/tmp/ep037/tools/bin/python
+WINDOW=/workspace/.pokechamp-data/battle-window
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+run() { "$LAYA" -m integration.laya_threat.cli "$@"; }
+mock_ok() {
+  python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+print('mock', [(o['slot_id'], o['status'], o.get('result'), o.get('audit_passed')) for o in d['outcomes']], d['phase_error'])
+sys.exit(0 if ok else 1)" "$1"
+}
+SHOWDOWN_STATE="config/chat-plugins/mafia-logs.json config/chat-plugins/seasons.json"
+showdown_clean() {
+  local dirty
+  dirty=$(git -C /workspace/pokemon-showdown status --porcelain | awk '{print $2}' | sort)
+  [ -z "$dirty" ] && return 0
+  if [ -z "$(comm -23 <(echo "$dirty") <(tr ' ' '\n' <<<"$SHOWDOWN_STATE" | sort))" ]; then
+    stage "restoring Showdown chat-plugin state files: $(echo $dirty)"
+    git -C /workspace/pokemon-showdown checkout -- $SHOWDOWN_STATE
+  else
+    stage "pokemon-showdown has other uncommitted changes: $(echo $dirty)"; return 1
+  fi
+}
+
+case "${1:-}" in
+  gpu3)
+    [ -f "$DATA/manifest.json" ] || { stage "EX-157 data"; run data; }
+    [ -f "$RUNS/EX-157/diagnostics/parity.json" ] || { stage "EX-157 parity"; run parity; }
+    if [ ! -f "$RUNS/EX-158/mock/result.json" ]; then
+      showdown_clean
+      stage "EX-158 mock"; run mock
+    fi
+    mock_ok "$RUNS/EX-158" || { stage "EX-158 mock failed; stopping before training"; exit 1; }
+    stage "EX-157 train";    run train
+    stage "EX-157 evaluate"; run evaluate
+    mkdir -p "$WINDOW"
+    printf 'started %s\ngpu 3\nsession EP-225\n' "$(date -u +%FT%TZ)" > "$WINDOW/EX-158"
+    stage "battle-window marker $WINDOW/EX-158"
+    for s in prepare execute export; do
+      showdown_clean
+      stage "EX-158 $s"; run "$s"
+    done
+    rm -f "$WINDOW/EX-158"
+    stage "battle-window marker removed: EX-158"
+    mkdir -p "$EVIDENCE"
+    if [ -x "$CHECK_PY" ]; then
+      PYTHONPATH=/workspace "$CHECK_PY" -m integration.laya_imitation.browser_check \
+        /workspace/exports/battle_viewers/ex158 "$EVIDENCE/ex158-viewer-check.json" \
+        || stage "viewer check failed for ex158 (battles unaffected; recorded)"
+    else
+      stage "no Playwright interpreter at $CHECK_PY; viewer check for ex158 left to a manual run"
+    fi ;;
+  *) echo "usage: $0 gpu3" >&2; exit 2 ;;
+esac
+stage "EP-225 lane $1 finished"
