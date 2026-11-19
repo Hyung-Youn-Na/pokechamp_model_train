@@ -5,6 +5,18 @@ D-170에 따라 중앙 문서의 관련 절을 이전한 편집 원문이다. �
 다른 주제의 기록을 인용하더라도 해당 원문의 소유권·범위를 이전하지 않는다.
 
 
+<a id="foulplay-primary-ladder-final"></a>
+
+### 현재 평가 기준 — foul-play 점수로 개발하고 공식 래더로 최종 확인 (D-214, 2026-11-19)
+
+[D-214](decisions/D-214-laya-foulplay-primary-ladder-final.md)에 따라 새로 등록하는 laya 배틀 정책 계획은 다음을 따른다.
+
+- **개발 목표**: foul-play 상대 점수를 높인다. 기본 조건은 [EX-174](experiments/EX-174-laya-v10rt-vs-foulplay-blim128.md)의 Blim 일정 128슬롯이고, 같은 슬롯에서 v10rt와의 차이를 보고한다.
+- **최종 실험**: foul-play 결과로 고른 후보를 공식 Showdown gen9ou 래더에서 확인한다. 모델·팀·정책·서빙·시작·종료 시각을 실행 전에 기록하고, 판 수·승패·레이팅 변화·레이팅 기대 대비 초과 승수·상대 평균 레이팅을 보고한다. 실행·후보 선택·종료는 사용자 지시를 따른다.
+- **판정**: 실험마다 사전 등록한다. foul-play 점수는 래더로 가는 자동 진행 조건이 아니다. [D-191](decisions/D-191-no-offline-battle-gate.md)은 유지한다.
+- **Abyssal**: 포화된 상대라 주 비교에서 뺀다. 결함·퇴보 확인용으로만 등록한다.
+- foul-play와 래더의 관계는 사용자 관찰과 모델 네 개의 약한 근거에 기댄다. 어긋나는 근거가 쌓이면 새 Decision으로 바꾼다.
+
 <a id="pokemon-training-objective"></a>
 
 <a id="주-연구-목표--포켓몬-전용-모델-학습정책-개선독립-평가"></a>

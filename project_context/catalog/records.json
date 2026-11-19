@@ -19133,6 +19133,1073 @@
           "target": "EX-162"
         }
       ]
+    },
+    "D-209": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-209-laya-ladder-postmortem-v11.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형",
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-208"
+        },
+        {
+          "type": "references",
+          "target": "D-204"
+        },
+        {
+          "type": "references",
+          "target": "D-200"
+        },
+        {
+          "type": "references",
+          "target": "D-193"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "EP-231"
+        },
+        {
+          "type": "references",
+          "target": "EX-169"
+        },
+        {
+          "type": "references",
+          "target": "EX-170"
+        },
+        {
+          "type": "references",
+          "target": "EX-171"
+        },
+        {
+          "type": "references",
+          "target": "EX-172"
+        },
+        {
+          "type": "references",
+          "target": "EX-167"
+        },
+        {
+          "type": "references",
+          "target": "EX-168"
+        },
+        {
+          "type": "references",
+          "target": "EP-229"
+        }
+      ]
+    },
+    "EP-231": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-231-laya-ladder-postmortem-v11.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-209"
+        },
+        {
+          "type": "references",
+          "target": "D-208"
+        },
+        {
+          "type": "references",
+          "target": "D-204"
+        },
+        {
+          "type": "references",
+          "target": "EX-169"
+        },
+        {
+          "type": "references",
+          "target": "EX-170"
+        },
+        {
+          "type": "references",
+          "target": "EX-171"
+        },
+        {
+          "type": "references",
+          "target": "EX-172"
+        },
+        {
+          "type": "references",
+          "target": "EX-167"
+        }
+      ]
+    },
+    "EX-169": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-169-laya-v10rt-ladder-loss-analysis.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-209"
+        },
+        {
+          "type": "references",
+          "target": "EP-231"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-167"
+        },
+        {
+          "type": "uses",
+          "target": "EX-166"
+        },
+        {
+          "type": "references",
+          "target": "EX-170"
+        }
+      ]
+    },
+    "EX-170": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-170-laya-v11-data.md",
+      "methods": {
+        "자료": [
+          "리플레이 복원"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-209"
+        },
+        {
+          "type": "references",
+          "target": "EP-231"
+        },
+        {
+          "type": "uses",
+          "target": "EX-169"
+        },
+        {
+          "type": "uses",
+          "target": "EX-166"
+        },
+        {
+          "type": "uses",
+          "target": "EX-071"
+        },
+        {
+          "type": "compares",
+          "target": "EX-161"
+        },
+        {
+          "type": "references",
+          "target": "EX-171"
+        },
+        {
+          "type": "references",
+          "target": "EX-172"
+        }
+      ]
+    },
+    "EX-171": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-171-laya-v11rt-training.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-209"
+        },
+        {
+          "type": "references",
+          "target": "EP-231"
+        },
+        {
+          "type": "continues",
+          "target": "EX-167"
+        },
+        {
+          "type": "compares",
+          "target": "EX-167"
+        },
+        {
+          "type": "uses",
+          "target": "EX-170"
+        },
+        {
+          "type": "uses",
+          "target": "EX-169"
+        },
+        {
+          "type": "references",
+          "target": "EX-172"
+        }
+      ]
+    },
+    "EX-172": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-172-laya-v11rtc-training.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation",
+        "laya-tera-knowledge"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-209"
+        },
+        {
+          "type": "references",
+          "target": "EP-231"
+        },
+        {
+          "type": "continues",
+          "target": "EX-167"
+        },
+        {
+          "type": "compares",
+          "target": "EX-171"
+        },
+        {
+          "type": "compares",
+          "target": "EX-167"
+        },
+        {
+          "type": "uses",
+          "target": "EX-170"
+        },
+        {
+          "type": "uses",
+          "target": "EX-169"
+        }
+      ]
+    },
+    "D-210": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-210-laya-v11rtc-policy-correction-values.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-209"
+        },
+        {
+          "type": "references",
+          "target": "EX-169"
+        },
+        {
+          "type": "references",
+          "target": "EX-170"
+        },
+        {
+          "type": "references",
+          "target": "EX-172"
+        },
+        {
+          "type": "references",
+          "target": "EX-146"
+        }
+      ]
+    },
+    "D-211": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-211-laya-foulplay-opponent.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EX-162"
+        },
+        {
+          "type": "references",
+          "target": "EX-168"
+        },
+        {
+          "type": "references",
+          "target": "EP-232"
+        },
+        {
+          "type": "references",
+          "target": "EX-173"
+        }
+      ]
+    },
+    "EP-232": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-232-laya-foulplay-v10rt.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "EX-173"
+        },
+        {
+          "type": "references",
+          "target": "EX-168"
+        },
+        {
+          "type": "references",
+          "target": "EX-167"
+        },
+        {
+          "type": "references",
+          "target": "D-212"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        }
+      ]
+    },
+    "EX-173": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-173-laya-v10rt-vs-foulplay128.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "EP-232"
+        },
+        {
+          "type": "compares",
+          "target": "EX-168"
+        },
+        {
+          "type": "uses",
+          "target": "EX-167"
+        },
+        {
+          "type": "uses",
+          "target": "EX-120"
+        }
+      ]
+    },
+    "D-212": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-212-laya-foulplay-blim-teams.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "EP-232"
+        },
+        {
+          "type": "references",
+          "target": "EX-173"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        },
+        {
+          "type": "references",
+          "target": "EX-145"
+        }
+      ]
+    },
+    "EX-174": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-174-laya-v10rt-vs-foulplay-blim128.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-212"
+        },
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "EP-232"
+        },
+        {
+          "type": "uses",
+          "target": "EX-167"
+        },
+        {
+          "type": "references",
+          "target": "EX-145"
+        }
+      ]
+    },
+    "EP-233": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "path": "research/policy-learning/plans/EP-233-laya-foulplay-v11.md",
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "D-212"
+        },
+        {
+          "type": "references",
+          "target": "EP-232"
+        },
+        {
+          "type": "references",
+          "target": "EP-231"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        },
+        {
+          "type": "references",
+          "target": "EX-175"
+        },
+        {
+          "type": "references",
+          "target": "EX-176"
+        },
+        {
+          "type": "references",
+          "target": "EX-171"
+        },
+        {
+          "type": "references",
+          "target": "EX-172"
+        }
+      ]
+    },
+    "EX-175": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "path": "research/policy-learning/experiments/EX-175-laya-v11rt-vs-foulplay-blim128.md",
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-212"
+        },
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "EP-233"
+        },
+        {
+          "type": "compares",
+          "target": "EX-174"
+        },
+        {
+          "type": "uses",
+          "target": "EX-171"
+        }
+      ]
+    },
+    "EX-176": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "path": "research/policy-learning/experiments/EX-176-laya-v11rtc-vs-foulplay-blim128.md",
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-212"
+        },
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "EP-233"
+        },
+        {
+          "type": "compares",
+          "target": "EX-174"
+        },
+        {
+          "type": "compares",
+          "target": "EX-175"
+        },
+        {
+          "type": "uses",
+          "target": "EX-172"
+        }
+      ]
+    },
+    "D-213": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-213-laya-fp1-foulplay-input.md",
+      "methods": {
+        "자료": [
+          "리플레이 복원"
+        ],
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "EP-234"
+        },
+        {
+          "type": "references",
+          "target": "EX-167"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        },
+        {
+          "type": "references",
+          "target": "EX-177"
+        },
+        {
+          "type": "references",
+          "target": "EX-178"
+        },
+        {
+          "type": "references",
+          "target": "EX-179"
+        }
+      ]
+    },
+    "EP-234": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-234-laya-fp1-foulplay-input.md",
+      "methods": {
+        "자료": [
+          "리플레이 복원"
+        ],
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-213"
+        },
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "EP-231"
+        },
+        {
+          "type": "references",
+          "target": "EP-229"
+        },
+        {
+          "type": "references",
+          "target": "EX-167"
+        },
+        {
+          "type": "references",
+          "target": "EX-170"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        },
+        {
+          "type": "references",
+          "target": "EX-177"
+        },
+        {
+          "type": "references",
+          "target": "EX-178"
+        },
+        {
+          "type": "references",
+          "target": "EX-179"
+        }
+      ]
+    },
+    "EX-177": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-177-laya-fp1-data.md",
+      "methods": {
+        "자료": [
+          "리플레이 복원"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-213"
+        },
+        {
+          "type": "references",
+          "target": "EP-234"
+        },
+        {
+          "type": "uses",
+          "target": "EX-170"
+        },
+        {
+          "type": "uses",
+          "target": "EX-166"
+        },
+        {
+          "type": "uses",
+          "target": "EX-071"
+        },
+        {
+          "type": "compares",
+          "target": "EX-170"
+        },
+        {
+          "type": "references",
+          "target": "EX-178"
+        }
+      ]
+    },
+    "EX-178": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-178-laya-fp1-training.md",
+      "methods": {
+        "학습": [
+          "모방",
+          "laya",
+          "soft-CE"
+        ],
+        "평가": [
+          "독립 선택형"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-213"
+        },
+        {
+          "type": "references",
+          "target": "EP-234"
+        },
+        {
+          "type": "compares",
+          "target": "EX-167"
+        },
+        {
+          "type": "uses",
+          "target": "EX-177"
+        },
+        {
+          "type": "references",
+          "target": "EX-179"
+        }
+      ]
+    },
+    "EX-179": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-179-laya-fp1-vs-foulplay-blim128.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-213"
+        },
+        {
+          "type": "references",
+          "target": "D-212"
+        },
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "EP-234"
+        },
+        {
+          "type": "compares",
+          "target": "EX-174"
+        },
+        {
+          "type": "compares",
+          "target": "EX-175"
+        },
+        {
+          "type": "uses",
+          "target": "EX-178"
+        }
+      ]
+    },
+    "EX-180": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-180-laya-fp1e2-vs-foulplay-blim128.md",
+      "methods": {
+        "추론": [
+          "laya"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-213"
+        },
+        {
+          "type": "references",
+          "target": "D-212"
+        },
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "EP-234"
+        },
+        {
+          "type": "compares",
+          "target": "EX-174"
+        },
+        {
+          "type": "compares",
+          "target": "EX-179"
+        },
+        {
+          "type": "uses",
+          "target": "EX-178"
+        }
+      ]
+    },
+    "D-214": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-214-laya-foulplay-primary-ladder-final.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "D-212"
+        },
+        {
+          "type": "references",
+          "target": "EP-234"
+        },
+        {
+          "type": "references",
+          "target": "EX-162"
+        },
+        {
+          "type": "references",
+          "target": "EX-168"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        },
+        {
+          "type": "references",
+          "target": "EX-175"
+        },
+        {
+          "type": "references",
+          "target": "EX-176"
+        },
+        {
+          "type": "references",
+          "target": "EX-180"
+        }
+      ]
     }
   },
   "authorities": [

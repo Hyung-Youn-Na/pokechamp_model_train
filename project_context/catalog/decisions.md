@@ -214,3 +214,9 @@
 | [D-206](../research/policy-learning/decisions/D-206-laya-opponent-model-search.md) | laya 상대 모델 + 한 턴 탐색(세트 표본 추정), 재학습 없음 | Accepted |
 | [D-207](../shared/datasets/decisions/D-207-lift-reviewed108-species-limit.md) | 108종 제한 해제 | Accepted |
 | [D-208](../research/policy-learning/decisions/D-208-laya-ladder-r1500-v10.md) | 최근 래더(레이팅 1500 이상) 리플레이를 더한 v10 학습(GPU 4장 DDP, 24시간) | Accepted |
+| [D-209](../research/policy-learning/decisions/D-209-laya-ladder-postmortem-v11.md) | laya v10rt 공식 래더 패배 원인 추가 분석과 재학습 v11(입력 수정·정책 교정) 설계 | Accepted |
+| [D-210](../research/policy-learning/decisions/D-210-laya-v11rtc-policy-correction-values.md) | v11rtc 정책 교정 수단 확정(EX-169 결과 적용)과 가중 배수 보정 | Accepted |
+| [D-211](../research/policy-learning/decisions/D-211-laya-foulplay-opponent.md) | foul-play(탐색 봇)를 laya의 고정 상대로 도입하고 v10rt와 EX-120 일정으로 대전 | Accepted |
+| [D-212](../research/policy-learning/decisions/D-212-laya-foulplay-blim-teams.md) | foul-play 대전을 Blim 팀 일정으로 바꾸고 EX-173을 중지 | Accepted |
+| [D-213](../research/policy-learning/decisions/D-213-laya-fp1-foulplay-input.md) | laya 입력을 foul-play 추적·poke-engine 계산으로 전부 바꾼 렌더러 fp1과 처음부터 전체 학습 | Accepted |
+| [D-214](../research/policy-learning/decisions/D-214-laya-foulplay-primary-ladder-final.md) | laya 정책 개선의 개발 목표를 foul-play 상대 점수로, 최종 실험을 공식 래더 대전으로 둔다 | Accepted |

@@ -1,6 +1,6 @@
 # 프로젝트 상태
 
-- 기준일: 2026-11-09
+- 기준일: 2026-11-18
 - 연구선·checkout: `research/model-training` · `/workspace`
 - 목표: 포켓몬 모델 학습·정책 개선·독립 평가. [CHARTER](CHARTER.md)
 
@@ -15,11 +15,16 @@
 
 ## 현재 작업
 
-2026-11-09 기준으로 실행 중인 학습·배틀은 없다. GPU0~3과 포트 8106~8109는 비어 있고, battle-window 표시 파일도 없다.
+2026-11-18 기준: [EP-231](research/policy-learning/plans/EP-231-laya-ladder-postmortem-v11.md) 공식 래더는 사용자 지시로 v11rtc 단일·CPU 서빙·팀 `t9ff547d715`(17:30 KST에 `te76a9c3ec1`에서 교체)로 돌았고 11-18 22:59 KST에 종료됐다(run 159). 11-19 08:46 KST부터 사용자 지시로 팀 `t9f05bb6c11`을 v11rtc CPU 서빙으로 시험했고, 10:29 KST부터 모델을 fp1 epoch-2(EX-180 체크포인트 복사본, CPU)로 바꿨다가 10:39 KST 사용자 지시로 멈췄다(진행 중인 판만 끝까지 둠). 10:59 KST부터 사용자 지시로 v10t(팀 `t95bfb45561`, CPU)를 18:00 KST까지 돌린다. 11:23 KST부터 사용자 지시로 레이팅이 1150 밑으로 떨어지면 판 경계에서 v10rt(laya-play 서빙 pid 350990, 같은 팀·종료 시각)로 바꾸는 감시(`exports/laya-play/runtime/switch_v10rt_below1150.sh`)가 돈다(시작 시 1195). [EX-180](research/policy-learning/experiments/EX-180-laya-fp1e2-vs-foulplay-blim128.md)(fp1 epoch-2 대 foul-play 128경기, CPU)이 함께 돈다. [EP-234](research/policy-learning/plans/EP-234-laya-fp1-foulplay-input.md) EX-178 학습이 GPU 0~3에서 돈다(11-19 17:00 KST 무렵 종료 예상). battle-window 표시 파일은 없다.
 
 ### laya 배틀 정책(policy-learning)
 
+- **진행 중**: [EP-234](research/policy-learning/plans/EP-234-laya-fp1-foulplay-input.md)(D-213, 2026-11-18). 입력을 foul-play 추적·표본과 poke-engine 계산으로 전부 바꾼 렌더러 fp1([EX-177](research/policy-learning/experiments/EX-177-laya-fp1-data.md))로, EX-167과 같은 출발점에서 처음부터 학습한다([EX-178](research/policy-learning/experiments/EX-178-laya-fp1-training.md)). 그다음 foul-play Blim 128경기([EX-179](research/policy-learning/experiments/EX-179-laya-fp1-vs-foulplay-blim128.md))로 v10rt와 같은 슬롯에서 비교한다. 기록 문장과 테라 지식 행은 뺀다. 2026-11-18: EX-177 완료(train 1,241,896행, 제외 0.023%, 서빙 일치 518/518), EX-178 학습 중(약 24.4시간).
+
+- **진행 중**: [EP-231](research/policy-learning/plans/EP-231-laya-ladder-postmortem-v11.md)(D-209, 2026-11-16). v10rt를 공식 Showdown 래더에 올린 83판(48승 35패, 레이팅 1042 → 1288)의 패배 원인을 더 분석하고([EX-169](research/policy-learning/experiments/EX-169-laya-v10rt-ladder-loss-analysis.md)), 입력 수정 렌더러 v11로 `v11rt`(입력 수정만)와 `v11rtc`(입력 수정 + 정책 교정)를 v10rt에서 1 epoch 이어 학습한다([EX-170](research/policy-learning/experiments/EX-170-laya-v11-data.md)~[EX-172](research/policy-learning/experiments/EX-172-laya-v11rtc-training.md)). 메모리는 `scripts/mem-guard 100` 아래에서 100 GB를 넘지 않게 한다. 공식 래더 비교는 사용자 지시를 기다린다. 2026-11-18 기준: EX-169~172 완료. 남은 것은 laya-play 모델 등록과 공식 래더 비교(지시 대기)다.
 - **최근 완료**:
+  - [EP-233](research/policy-learning/plans/EP-233-laya-foulplay-v11.md)(2026-11-18, 사용자 지시로 중지): v11rt([EX-175](research/policy-learning/experiments/EX-175-laya-v11rt-vs-foulplay-blim128.md))·v11rtc([EX-176](research/policy-learning/experiments/EX-176-laya-v11rtc-vs-foulplay-blim128.md))를 EX-174 Blim 일정으로 foul-play와 붙였다. 중지 시점 v11rt 15승 44패(0.254), v11rtc 12승 39패(0.235). EX-174 v10rt 대비 같은 슬롯 차이 −0.05·−0.06, 구간이 0을 포함한다(판정 보류).
+  - [EP-232](research/policy-learning/plans/EP-232-laya-foulplay-v10rt.md)(D-211·D-212, 2026-11-17): 탐색 봇 foul-play(MCTS, 결정당 약 7초)를 고정 상대로 붙였다. Blim 팀 64개 128경기([EX-174](research/policy-learning/experiments/EX-174-laya-v10rt-vs-foulplay-blim128.md))에서 v10rt 42승 85패(정상 127), 점수 0.331 [0.250, 0.414]. Abyssal과 달리 포화되지 않는다. EX-120 팀 일정 EX-173은 경기 없이 중지했다.
   - [EP-230](research/policy-learning/plans/EP-230-laya-ladder-r1500-v10.md)(D-208, 2026-11-07): 최근 래더(레이팅 1500 이상) 경기를 더해 v10을 GPU 4장 DDP로 학습했다.
     - 자료([EX-166](research/policy-learning/experiments/EX-166-laya-ladder-r1500-data.md))는 30,000경기 중 25,296경기를 골랐고, 학습에는 최신 17,510경기 1,111,776행을 썼다.
     - 학습([EX-167](research/policy-learning/experiments/EX-167-laya-v10-ladder-training.md)): 잠긴 test NLL이 대회 −0.038, 래더 −0.099로 둘 다 나아졌다. 테라 지식 held-out은 A 96.2 → 79.3%로 떨어졌다.
@@ -27,7 +32,7 @@
   - [EP-227](research/policy-learning/plans/EP-227-laya-renderer-v10.md)(D-204, 2026-11-03): v1~v9 정보와 lock·전략 정보를 모두 넣은 2,048토큰 v10이다.
     - 학습([EX-161](research/policy-learning/experiments/EX-161-laya-v10-all-info-training.md)): 잠긴 test NLL 1.4332 → 1.3686.
     - 배틀([EX-162](research/policy-learning/experiments/EX-162-laya-v7t-v10t-battle256.md)): v7t 112-16, v10t 111-17로 퇴보를 배제하지 못했다. 기술 실패율은 5.17 → 1.91%다.
-- **해석**: v7t 이후 Abyssal 상대 점수는 0.86~0.88에 모여 판본끼리 구별되지 않는다(포화). 잠긴 test 개선이 배틀 성적으로 확인되지 않으므로, 판별은 사람 대전과 직접 대결로 한다. 흐름은 [배틀 정책 학습·개선](research/policy-learning/INDEX.md)에 정리했다.
+- **해석**: v7t 이후 Abyssal 상대 점수는 0.86~0.88에 모여 판본끼리 구별되지 않는다(포화). 잠긴 test 개선이 배틀 성적으로 확인되지 않으므로, 판별은 사람 대전과 직접 대결로 한다. 2026-11-19 [D-214](research/policy-learning/decisions/D-214-laya-foulplay-primary-ladder-final.md)부터 새 laya 배틀 정책 계획은 foul-play 상대 점수(EX-174 Blim 일정)를 개발 목표로 두고, 최종 실험은 공식 래더 대전으로 한다. 흐름은 [배틀 정책 학습·개선](research/policy-learning/INDEX.md)에 정리했다.
 - **대기**: [EP-229](research/policy-learning/plans/EP-229-laya-opponent-model-search.md)(D-206, 상대 모델 + 한 턴 탐색). 1단계 [EX-165](research/policy-learning/experiments/EX-165-laya-opponent-prediction-scenes.md)는 완료했다. 모방 모델만으로는 읽는 상대를 예측하지 못한다. 2단계 등록은 사용자 확인을 기다린다.
 - **배포**: laya-play v1.10.0(2026-11-07, `Hyung-Youn-Na/laya-play` 태그 `v1.10.0`)에서 v7t·v8t·v8lt·v9t·v10t·v10rt를 `--model`로 고를 수 있다. 사람 테스트 실행기(`.artifacts/laya-v7test`)는 11-05 재부팅 뒤 꺼져 있다.
 - **이전 완료 계획**(결과는 각 EP 결과 절):

@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+# EP-231 (D-209): v10rt official-ladder loss analysis (EX-169) and the v11 retraining (EX-170..172).
+#   laya <args>      run python in the laya env (v10 laya first on the path)
+#   guard <log> ...  run a command under scripts/mem-guard with the 100 GB ceiling
+#   data | localplay | corrections | train-a | train-b   the EX-170 / EX-171 / EX-172 stages, each waiting for what
+#                    it needs
+# A finished stage is skipped, a started training is never re-run, and a lane stops at its first failing stage.
+# Memory ceilings of stages that run together add up to 80 GB or less (the host shares its 125 GB): training 50,
+# local games 30. The whole script is one function, so editing this file does not disturb a running lane.
+main() {
+set -euo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+SHARED=/mnt/digicap/combined/hyna/backup/pokechamp-research
+RUNS=$SHARED/runs/model-training
+GEN=$SHARED/datasets/generated
+MERGED=$GEN/laya-compact-imitation/v11-ladder-merged
+laya() { PYTHONPATH=$LAYA_PATH "$LAYA" "$@"; }
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+guard() { local limit=$1 log=$2; shift 2; PYTHONPATH=$LAYA_PATH scripts/mem-guard "$limit" "$log" -- "$@"; }
+wait_for() { while [ ! -e "$1" ]; do sleep 30; done; }
+# Stop instead of starting when the host has too little memory left (other containers use about 30 GB of it).
+need_free() {
+  local avail; avail=$(free -g | awk 'NR==2{print $7}')
+  [ "$avail" -ge "$1" ] || { stage "host has ${avail} GB available, $1 GB needed for $2; stopping"; exit 3; }
+  stage "host has ${avail} GB available before $2"
+}
+stage_is() { python3 -c "import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))['stage'] == sys.argv[2] else 1)" "$1" "$2"; }
+gpus_idle() { [ "$(nvidia-smi --query-gpu=index,memory.used --format=csv,noheader,nounits | awk -F, '$1==2||$1==3{s+=$2}END{print s}')" -lt 200 ]; }
+train() {   # train <EX>: measure, train (GPU 2+3, one model at a time), score, report
+  local ex=$1 run=$RUNS/$1
+  if [ ! -f "$run/status.json" ]; then
+    while ! gpus_idle; do sleep 30; done
+    need_free 55 "$ex measure"
+    stage "$ex measure"; guard 50 "$RUNS/$ex-memory.log" "$LAYA" -m integration.laya_v11.train_v11 measure --experiment "$ex" --gpus 2,3
+    python3 - "$run" <<'PY' || { stage "$ex measure check failed; stopping before training"; exit 4; }
+import glob, json, sys
+m = json.load(open(sorted(glob.glob(sys.argv[1] + '/measure/measure-*.json'))[-1]))
+need = m['predicted_host_gb']['two_processes_per_model']
+print('measure: %.4f s/row, %.1f h, GPU peak %.1f GiB, predicted host %.1f GB, reload diff %.2e, loss %.4f -> %.4f'
+      % (m['seconds_per_row'], m['expected_hours'], m['peak_gpu_gib'], need, m['reload_max_abs_logit_diff'],
+         m['loss_first_half'], m['loss_second_half']))
+sys.exit(0 if m['reload_ok'] and need <= 45 else 1)
+PY
+    need_free 55 "$ex train"
+    stage "$ex train (GPU 2+3)"; guard 50 "$RUNS/$ex-memory.log" "$LAYA" -m integration.laya_v11.train_v11 train --experiment "$ex" --gpus 2,3
+  fi
+  stage_is "$run/status.json" trained || stage_is "$run/status.json" scored || stage_is "$run/status.json" completed || { stage "$ex not trained"; exit 1; }
+  if stage_is "$run/status.json" trained; then
+    need_free 40 "$ex score"
+    stage "$ex score"; guard 40 "$RUNS/$ex-memory.log" "$LAYA" -m integration.laya_v11.evaluation_v11 score "$ex" --gpu 3
+  fi
+  stage_is "$run/status.json" completed || { stage "$ex report"; laya -m integration.laya_v11.evaluation_v11 report "$ex"; }
+}
+case "${1:-}" in
+  laya) shift; laya "$@" ;;
+  guard) shift; log=$1; shift; PYTHONPATH=$LAYA_PATH exec scripts/mem-guard 100 "$log" -- "$@" ;;
+  data)   # v11 rows of the ladder source -> merged -> diff -> weights (CPU). The judge store is built separately.
+    wait_for "$GEN/laya-ladder-engine-judge/v2/manifest.json"
+    if [ ! -f "$GEN/laya-compact-imitation/v11-ladder/manifest.json" ]; then
+      need_free 45 "v11 ladder rows"
+      stage "v11 ladder rows"; guard 40 "$RUNS/EX-170-memory.log" "$LAYA" -c "from integration.laya_v11 import data_v11; data_v11.rows('ladder', workers=48)"
+    fi
+    [ -f "$MERGED/manifest.json" ] || { stage "merge"; laya -m integration.laya_v11.data_v11 merge; }
+    [ -f "$RUNS/EX-170/diff-v10-v11.json" ] || { stage "diff"; laya -m integration.laya_v11.data_v11 diff; }
+    [ -f "$GEN/laya-v11-policy-weights/v1/manifest.json" ] || { need_free 35 "weights"; stage "weights"; guard 30 "$RUNS/EX-170-memory.log" "$LAYA" -m integration.laya_v11.policy weights; }
+    stage "data done" ;;
+  localplay)   # local bot-vs-bot games on CPU serving, in batches, until 512 games are recorded
+    while [ ! -f "$RUNS/EX-170/localplay/summary.json" ]; do
+      need_free 35 "a local play batch"
+      stage "local play batch (CPU serving)"
+      PYTHONPATH=/workspace scripts/mem-guard 30 "$RUNS/EX-170-memory-localplay.log" -- python3 -m integration.laya_v11.localplay \
+        --device cpu --gpus 0,1,2 --per-gpu 1 --pairs 6 --games 10 --target 512 --showdown-port 8210 --hours 3
+    done
+    stage "local play done" ;;
+  corrections)   # after the local games: the bot-state correction rows (CPU)
+    wait_for "$RUNS/EX-170/localplay/summary.json"
+    [ -f "$GEN/laya-v11-corrections/v1/manifest.json" ] || { need_free 30 "corrections"; stage "corrections"; guard 25 "$RUNS/EX-170-memory-corrections.log" "$LAYA" -m integration.laya_v11.policy corrections; }
+    stage "corrections done" ;;
+  train-a)   # EX-171 once the merged rows exist
+    wait_for "$MERGED/manifest.json"
+    train EX-171; stage "EX-171 done" ;;
+  train-b)   # EX-172 after EX-171, with the weights and the correction rows
+    wait_for "$RUNS/EX-171/evaluation/report.json"
+    wait_for "$GEN/laya-v11-policy-weights/v1/manifest.json"; wait_for "$GEN/laya-v11-corrections/v1/manifest.json"
+    train EX-172; stage "EX-172 done" ;;
+  *) sed -n 2,9p "$0"; exit 2 ;;
+esac
+}
+main "$@"; exit $?

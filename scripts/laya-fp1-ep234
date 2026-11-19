@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# EP-234 (D-213): the fp1 input (foul-play tracking + set sampling + poke-engine) — data (EX-177), training (EX-178),
+# foul-play battle (EX-179).
+#   fp <args>        run python in the foul-play env (repo root + foul-play source on the path, PYTHONHASHSEED=0)
+#   laya <args>      run python in the laya env
+#   data             EX-177: render (foul-play env, under mem-guard 40 GB) -> order -> token measurement
+# A finished stage is skipped. The whole script is one function, so editing this file does not disturb a running lane.
+main() {
+set -euo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+FP=/workspace/.tools/foul-play/.venv/bin/python
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+SHARED=/mnt/digicap/combined/hyna/backup/pokechamp-research
+RUNS=$SHARED/runs/model-training
+GEN=$SHARED/datasets/generated
+fp() { PYTHONHASHSEED=0 PYTHONPATH=/workspace:/workspace/.tools/foul-play/src "$FP" "$@"; }
+laya() { PYTHONPATH=$LAYA_PATH "$LAYA" "$@"; }
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+need_free() {
+  local avail; avail=$(free -g | awk 'NR==2{print $7}')
+  [ "$avail" -ge "$1" ] || { stage "host has ${avail} GB available, $1 GB needed for $2; stopping"; exit 3; }
+  stage "host has ${avail} GB available before $2"
+}
+case "${1:-}" in
+  fp) shift; fp "$@" ;;
+  laya) shift; laya "$@" ;;
+  data)
+    local workers=${2:-40}
+    mkdir -p "$RUNS/EX-177"
+    if [ ! -f "$RUNS/EX-177/render.done" ]; then
+      need_free 50 "EX-177 render"
+      stage "EX-177 render ($workers workers)"
+      PYTHONHASHSEED=0 PYTHONPATH=/workspace:/workspace/.tools/foul-play/src \
+        scripts/mem-guard 40 "$RUNS/EX-177-memory.log" -- "$FP" -m integration.laya_fp1.data_fp1 render --workers "$workers"
+      touch "$RUNS/EX-177/render.done"
+    fi
+    if [ ! -f "$RUNS/EX-177/order.json" ]; then
+      stage "EX-177 order"; fp -m integration.laya_fp1.data_fp1 order
+    fi
+    stage "EX-177 tokens"
+    for f in "$GEN/laya-compact-imitation/fp1-ladder-merged/validation.jsonl" \
+             "$GEN/laya-compact-imitation/fp1-test/tour/test.jsonl" "$GEN/laya-compact-imitation/fp1-test/ladder/test.jsonl"; do
+      laya -m integration.laya_fp1.tokens_fp1 "$f" | tee -a "$RUNS/EX-177/tokens.jsonl"
+    done
+    laya -m integration.laya_fp1.tokens_fp1 "$GEN/laya-compact-imitation/fp1-ladder-merged/train.jsonl" --sample 20000 \
+      | tee -a "$RUNS/EX-177/tokens.jsonl"
+    ;;
+  battle)
+    # EX-179 (EX-178 selected) / EX-180 (EX-178 epoch-2 copy): mock -> prepare -> execute -> export, CPU only.
+    # A finished stage is skipped; the lane stops at the first failing stage (no automatic re-run).
+    local ex=${2:?usage: battle EX-179|EX-180}
+    case "$ex" in EX-179|EX-180) ;; *) echo "unknown study $ex" >&2; exit 2 ;; esac
+    local run=$RUNS/$ex window=/workspace/.pokechamp-data/battle-window
+    local m="integration.laya_fp1.battle_fp1"
+    need_free 30 "$ex battle"
+    mkdir -p "$window"
+    if [ ! -f "$run/mock/result.json" ]; then stage "$ex mock"; laya -m $m mock "$ex"; fi
+    python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+sys.exit(0 if ok else 1)" "$run" || { stage "$ex mock did not pass; stopping"; exit 1; }
+    [ -n "${MOCK_ONLY:-}" ] && { stage "$ex mock passed (MOCK_ONLY)"; exit 0; }
+    [ -f "$run/manifest.json" ] || { stage "$ex prepare"; laya -m $m prepare "$ex"; }
+    if [ ! -f "$run/result.json" ]; then
+      echo "$ex $(date -u +%FT%TZ) CPU ports 8100-8103" > "$window/$ex"
+      stage "$ex execute"; laya -m $m execute "$ex"
+      rm -f "$window/$ex"
+    fi
+    python3 -c "import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))['stage']=='completed' else 1)" "$run/status.json" \
+      || { stage "$ex export"; laya -m $m export "$ex"; }
+    stage "$ex battle lane finished"
+    ;;
+  *) echo "usage: $0 fp|laya|data|battle EX" >&2; exit 2 ;;
+esac
+}
+main "$@"

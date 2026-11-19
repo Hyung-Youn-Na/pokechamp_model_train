@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+"""Live record of a running foul-play battle study (EX-174..EX-180) from its ledger, read-only.
+
+    scripts/foulplay-progress EX-180            # record so far + same-slot difference vs EX-174 v10rt
+"""
+import json
+import sys
+import time
+from pathlib import Path
+
+RUNS = Path('/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training')
+import re
+m = re.search(r'EX-?(\d+)', sys.argv[1] if len(sys.argv) > 1 else 'EX-180', re.I)
+ex = 'EX-%s' % m.group(1) if m else None
+run = RUNS / str(ex)
+if not ex or not (run / 'ledger.jsonl').exists():
+    sys.exit('no running foul-play study for %r (e.g. scripts/foulplay-progress EX-180)' % ' '.join(sys.argv[1:]))
+done = [json.loads(l)['outcome'] for l in (run / 'ledger.jsonl').read_text().splitlines()
+        if l and json.loads(l)['type'] == 'slot_finished']
+total = len(json.loads((run / 'manifest.json').read_text())['schedule'])
+base = {o['slot_id']: o for o in json.loads((RUNS / 'EX-174/result.json').read_text())['outcomes']}
+score = {'win': 1.0, 'draw': 0.5, 'loss': 0.0}
+ok = [o for o in done if o['status'] == 'completed']
+w = sum(o['result'] == 'win' for o in ok); d = sum(o['result'] == 'draw' for o in ok); l = sum(o['result'] == 'loss' for o in ok)
+print(f'{ex}: {len(done)}/{total} finished, {len(ok)} completed, {len(done) - len(ok)} invalid/failed')
+if ok:
+    print(f'  laya  {w}W {d}D {l}L  score {(w + d / 2) / len(ok):.3f}')
+pairs = [(score[o['result']], score[base[o['slot_id']]['result']]) for o in ok
+         if o['slot_id'] in base and base[o['slot_id']]['status'] == 'completed']
+if pairs:
+    a = sum(p[0] for p in pairs) / len(pairs); b = sum(p[1] for p in pairs) / len(pairs)
+    better = sum(p[0] > p[1] for p in pairs); worse = sum(p[0] < p[1] for p in pairs)
+    print(f'  same {len(pairs)} slots: {ex} {a:.3f} vs EX-174 v10rt {b:.3f}  diff {a - b:+.3f}'
+          f'  (better {better}, worse {worse}, same {len(pairs) - better - worse})')
+start = json.loads((run / 'clock.json').read_text())['first_started']
+if done:
+    rate = (time.time() - start) / len(done)
+    eta = time.time() + rate * (total - len(done))
+    print(f'  {rate / 60:.1f} min/game, ETA {time.strftime("%H:%M", time.gmtime(eta + 9 * 3600))} KST')

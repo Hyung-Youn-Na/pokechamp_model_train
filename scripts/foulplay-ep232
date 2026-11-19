@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# EP-232 (D-211, D-212) lane: laya v10rt vs foul-play, CPU only. `run EX-173` (EX-120 teams) or `run EX-174` (Blim).
+# EP-233: `run EX-175` (v11rt, ports 8100-8103) / `run EX-176` (v11rtc, ports 8104-8107) on EX-174's Blim schedule.
+#   run: mock -> prepare -> execute -> export -> viewer check
+# Each stage is skipped when its output already exists; nothing is re-run automatically, and the lane stops at the
+# first failing stage. The whole lane runs under `scripts/mem-guard 25`. `.pokechamp-data/battle-window/$EX`
+# marks the battle while it runs.
+main() {
+set -euo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+SHARED=/mnt/digicap/combined/hyna/backup/pokechamp-research
+EX=${2:-EX-174}
+case "$EX" in EX-173|EX-174|EX-175|EX-176) ;; *) echo "unknown study $EX" >&2; exit 2 ;; esac
+SLUG=$(echo "$EX" | tr -d - | tr A-Z a-z)
+RUN=$SHARED/runs/model-training/$EX
+EVIDENCE=/workspace/project_context/exec-plans/evidence/ep232
+CHECK_PY=/tmp/ep037/tools/bin/python
+WINDOW=/workspace/.pokechamp-data/battle-window
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+laya() { PYTHONPATH=$LAYA_PATH "$LAYA" "$@"; }
+stage_is() { python3 -c "import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))['stage'] == sys.argv[2] else 1)" "$1" "$2"; }
+mock_ok() {
+  python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+sys.exit(0 if ok else 1)" "$RUN"
+}
+case "${1:-}" in
+  run)
+    free -g | sed -n 2p
+    mkdir -p "$WINDOW"
+    if [ ! -f "$RUN/mock/result.json" ]; then stage "$EX mock"; laya -m integration.foulplay.battle mock "$EX"; fi
+    mock_ok || { stage "$EX mock did not pass; stopping"; exit 1; }
+    [ -f "$RUN/manifest.json" ] || { stage "$EX prepare"; laya -m integration.foulplay.battle prepare "$EX"; }
+    if [ ! -f "$RUN/result.json" ]; then
+      case "$EX" in EX-176) PORTS=8104-8107 ;; *) PORTS=8100-8103 ;; esac
+      echo "$EX $(date -u +%FT%TZ) CPU ports $PORTS" > "$WINDOW/$EX"
+      stage "battle-window marker: $EX"
+      stage "$EX execute"; laya -m integration.foulplay.battle execute "$EX"
+      rm -f "$WINDOW/$EX"; stage "battle-window marker removed: $EX"
+    fi
+    stage_is "$RUN/status.json" completed || { stage "$EX export"; laya -m integration.foulplay.battle export "$EX"; }
+    mkdir -p "$EVIDENCE"
+    if [ -x "$CHECK_PY" ]; then
+      PYTHONPATH=/workspace "$CHECK_PY" -m integration.laya_imitation.browser_check \
+        /workspace/exports/battle_viewers/$SLUG "$EVIDENCE/$SLUG-viewer-check.json" \
+        || stage "viewer check failed for $SLUG (battles unaffected; recorded)"
+    else
+      stage "no Playwright interpreter at $CHECK_PY; viewer check for $SLUG left to a manual run"
+    fi
+    stage "EP-232 lane run finished" ;;
+  *) echo "usage: $0 run [EX-173|EX-174|EX-175|EX-176]" >&2; exit 2 ;;
+esac
+}
+main "$@"; exit $?
