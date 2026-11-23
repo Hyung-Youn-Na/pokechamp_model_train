@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# EP-238: EX-195 data (waits for a running build) -> EX-196 measure -> train (GPU 0-3) -> evaluation sample/score/report.
+# A finished stage is skipped; the lane stops at the first failure (no automatic re-run).
+main() {
+set -euo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+SH=/mnt/digicap/combined/hyna/backup/pokechamp-research
+FOE=$SH/datasets/generated/laya-foe/v1
+T=$SH/runs/model-training/EX-196
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+laya() { PYTHONPATH=$LAYA_PATH "$LAYA" "$@"; }
+while pgrep -f "integration.laya_foe.data_foe build" >/dev/null; do sleep 60; done
+[ -f "$FOE/manifest.json" ] || { stage "EX-195 build did not finish; stopping"; exit 1; }
+stage "EX-195 done: $(python3 -c "import json;print(json.dumps(json.load(open('$FOE/manifest.json'))['counts']))")"
+mkdir -p "$T"
+ls "$T"/measure-*.json >/dev/null 2>&1 || { stage "EX-196 measure"; laya -m integration.laya_foe.train_foe measure 2>&1 | tail -5 | tee "$T/measure.log"; }
+if [ ! -f "$T/status.json" ]; then
+  a=$(free -g | awk 'NR==2{print $7}'); [ "$a" -ge 70 ] || { stage "only ${a} GB available; stopping"; exit 3; }
+  stage "EX-196 train (GPU 0-3)"
+  scripts/mem-guard 90 "$SH/runs/model-training/EX-196-memory.log" -- env PYTHONPATH=$LAYA_PATH "$LAYA" -m integration.laya_foe.train_foe train > "$T/train.log" 2>&1 || true
+fi
+python3 -c "import json,sys;sys.exit(0 if json.load(open('$T/status.json'))['stage'] in ('trained','scored','completed') else 1)" \
+  || { stage "EX-196 not trained: $(cat $T/status.json | cut -c1-400)"; exit 1; }
+stage "EX-196 evaluation"
+laya -m integration.laya_foe.evaluation_foe sample
+python3 -c "import json,sys;sys.exit(0 if json.load(open('$T/status.json'))['stage'] in ('scored','completed') else 1)" \
+  || laya -m integration.laya_foe.evaluation_foe score --gpu 0 > "$T/evaluation-score.log" 2>&1
+laya -m integration.laya_foe.evaluation_foe report
+stage "EX-196 finished"
+}
+main "$@"; exit $?

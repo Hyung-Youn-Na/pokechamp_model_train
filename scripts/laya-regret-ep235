@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# EP-235 / EX-181: v10rt decisions of EX-174 compared with foul-play's own search from the same seat.
+# CPU only, every process at nice 19 / ionice idle; no GPU, no network, EX-174 read only.
+#   scripts/laya-regret-ep235 prepare               replay + foul-play sampling, one process (mem-guard 10 GB)
+#   scripts/laya-regret-ep235 search [--wait] [--until UTC]
+#       MCTS pool (mem-guard 20 GB). Waits for (--wait), refuses or pauses on any foul-play battle process;
+#       needs >= 30 GB available memory; submits nothing after --until.
+#   scripts/laya-regret-ep235 report                registered metrics (report.md, result.json, rows.jsonl)
+#   scripts/laya-regret-ep235 posthoc               post-hoc analyses outside the registered metrics (posthoc.json)
+set -euo pipefail
+
+main() {
+  cd /workspace
+  local run=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-181
+  mkdir -p "$run"
+  local py=(env PYTHONHASHSEED=0 PYTHONPATH=.:.tools/foul-play/src nice -n 19 ionice -c3
+            .tools/foul-play/.venv/bin/python -m integration.laya_regret.run)
+  case "${1:-}" in
+    prepare)
+      python3 scripts/mem-guard 10 "$run/prepare-memory.log" -- "${py[@]}" prepare ;;
+    search)
+      shift
+      # the >= 30 GB available-memory check runs in Python right before the pool starts (after any --wait)
+      python3 scripts/mem-guard 20 "$run/search-memory.log" -- "${py[@]}" search "$@" ;;
+    report)
+      "${py[@]}" report ;;
+    posthoc)
+      env PYTHONHASHSEED=0 PYTHONPATH=.:.tools/foul-play/src nice -n 19 ionice -c3 \
+        .tools/foul-play/.venv/bin/python -m integration.laya_regret.posthoc ;;
+    *)
+      echo "usage: $0 prepare|search [--wait] [--until UTC]|report|posthoc" >&2; exit 2 ;;
+  esac
+}
+
+main "$@"

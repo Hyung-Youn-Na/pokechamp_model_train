@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# EP-237 (EX-191): v12 datasets. rows tour -> rows ladder -> merge (laya env, 64 workers, mem-guard 60).
+# `train` also runs EX-192 (check -> measure -> train, GPU 0-3). A finished stage is skipped; the lane stops at the
+# first failure.
+main() {
+set -euo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+G=/mnt/digicap/combined/hyna/backup/pokechamp-research/datasets/generated/laya-compact-imitation
+RUN=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-191
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+need_free() { local a; a=$(free -g | awk 'NR==2{print $7}'); [ "$a" -ge "$1" ] || { stage "only ${a} GB available"; exit 3; }; }
+for src in tour ladder; do
+  d=$G/v12-$([ $src = tour ] && echo all || echo ladder)
+  if [ ! -f "$d/manifest.json" ]; then
+    need_free 70; stage "EX-191 rows $src"
+    scripts/mem-guard 60 "$RUN/memory-$src.log" -- env PYTHONPATH=$LAYA_PATH nice -n 10 "$LAYA" -m integration.laya_v12.data_v12 rows $src 64
+  fi
+done
+[ -f "$G/v12-ladder-merged/manifest.json" ] || { stage "EX-191 merge"; PYTHONPATH=$LAYA_PATH "$LAYA" -m integration.laya_v12.data_v12 merge; }
+stage "EX-191 finished"
+[ "${1:-}" = train ] || exit 0
+# EX-192: from laya-typed-decisions@e929ae5c, 3 epochs on v12-ladder-merged (+ tera knowledge), GPU 0-3 (EX-167 / EX-178 path)
+T=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-192
+mkdir -p "$T"
+m=integration.laya_v12.train_v12
+[ -f "$T/check.log" ] && grep -q '"passed": true' "$T/check.log" || { stage "EX-192 check"; PYTHONPATH=$LAYA_PATH "$LAYA" -m $m check 2>&1 | tee "$T/check.log"; }
+grep -q '"passed": true' "$T/check.log" || { stage "EX-192 DDP check did not pass; stopping"; exit 1; }
+[ -n "$(ls "$T/measure" 2>/dev/null)" ] || { stage "EX-192 measure"; PYTHONPATH=$LAYA_PATH "$LAYA" -m $m measure --checkpointing 0 2>&1 | tee "$T/measure.log"; }
+if [ ! -f "$T/status.json" ]; then
+  need_free 100; stage "EX-192 train (GPU 0-3, checkpointing 0)"
+  scripts/mem-guard 100 "$T/../EX-192-memory.log" -- env PYTHONPATH=$LAYA_PATH "$LAYA" -m $m train --checkpointing 0 > "$T/train.log" 2>&1
+fi
+stage "EX-192 train finished: $(cat "$T/status.json" 2>/dev/null)"
+}
+main "$@"; exit $?

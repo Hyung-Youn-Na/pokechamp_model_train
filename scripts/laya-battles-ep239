@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# EP-239 battle lanes (CPU, every limit lifted: integration.laya_value.battle_value).
+#   laya-battles-ep239 EX-202          the EX-196 control now (ports 8104-8107)
+#   laya-battles-ep239 EX-201          EX-200 (ports 8100-8103); export waits for EX-202 (its same-slot baseline)
+# mock -> prepare -> execute -> export; a finished stage is skipped; stops at the first failure.
+set -uo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+RUNS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+window=/workspace/.pokechamp-data/battle-window
+ex=$1; run=$RUNS/$ex; m=integration.laya_value.battle_value
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+stage_is() { python3 -c "import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))['stage'] == sys.argv[2] else 1)" "$1" "$2" 2>/dev/null; }
+bat() { scripts/mem-guard 25 "$RUNS/$ex-memory.log" -- env PYTHONPATH=$LAYA_PATH "$LAYA" -m $m "$1" "$ex"; }
+mkdir -p "$run" "$window"
+if [ ! -f "$run/mock/result.json" ]; then stage "$ex mock"; bat mock || { stage "$ex mock failed"; exit 1; }; fi
+python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+sys.exit(0 if ok else 1)" "$run" || { stage "$ex mock did not pass; stopping"; exit 1; }
+[ -f "$run/manifest.json" ] || { stage "$ex prepare"; bat prepare || { stage "$ex prepare failed"; exit 1; }; }
+if [ ! -f "$run/result.json" ]; then
+  echo "$ex $(date -u +%FT%TZ) CPU (no limits)" > "$window/$ex"
+  stage "$ex execute"; bat execute; rc=$?
+  rm -f "$window/$ex"
+  [ $rc = 0 ] || { stage "$ex execute exited $rc"; exit 1; }
+fi
+python3 -c "import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))['phase_error'] is None else 1)" "$run/result.json" \
+  || { stage "$ex execute halted (phase_error in result.json); not exported"; exit 1; }
+if [ "$ex" = EX-201 ]; then
+  until stage_is "$RUNS/EX-202/status.json" completed; do
+    pgrep -f "laya-battles-ep239 EX-202" >/dev/null || stage_is "$RUNS/EX-202/status.json" completed || { stage "EX-202 lane gone before completion; stopping"; exit 1; }
+    sleep 120
+  done
+fi
+stage_is "$run/status.json" completed || { stage "$ex export"; bat export || { stage "$ex export failed"; exit 1; }; }
+stage "$ex battle lane finished"

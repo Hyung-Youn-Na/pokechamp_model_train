@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# EP-237 EX-193: laya v12 (EX-192 selected) vs foul-play, EX-174's Blim 128 slots.
+# mock -> prepare -> execute -> export (CPU, mem-guard 25). A finished stage is skipped; stops at the first failure.
+main() {
+set -euo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+RUNS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+ex=EX-193 run=$RUNS/EX-193 window=/workspace/.pokechamp-data/battle-window
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+stage_is() { python3 -c "import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))['stage'] == sys.argv[2] else 1)" "$1" "$2"; }
+bat() { scripts/mem-guard 25 "$RUNS/$ex-memory.log" -- env PYTHONPATH=$LAYA_PATH "$LAYA" -m integration.laya_v12.battle_v12 "$1" "$ex"; }
+a=$(free -g | awk 'NR==2{print $7}'); [ "$a" -ge 30 ] || { stage "only ${a} GB available"; exit 3; }
+mkdir -p "$window" "$run"
+if [ ! -f "$run/mock/result.json" ]; then stage "$ex mock"; bat mock; fi
+python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+sys.exit(0 if ok else 1)" "$run" || { stage "$ex mock did not pass; stopping"; exit 1; }
+[ -f "$run/manifest.json" ] || { stage "$ex prepare"; bat prepare; }
+if [ ! -f "$run/result.json" ]; then
+  echo "$ex $(date -u +%FT%TZ) CPU ports 8100-8103" > "$window/$ex"
+  stage "$ex execute"; bat execute
+  rm -f "$window/$ex"
+fi
+stage_is "$run/status.json" completed || { stage "$ex export"; bat export; }
+stage "$ex battle lane finished"
+}
+main "$@"; exit $?

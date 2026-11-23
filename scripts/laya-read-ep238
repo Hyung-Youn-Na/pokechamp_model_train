@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# EP-238: after EX-196 is completed, EX-197 (one-turn read, ports 8100-8103) and EX-198 (EX-196 argmax, ports
+# 8104-8107) in parallel: mock -> prepare -> execute -> export each (CPU, mem-guard 25 each). Stops a lane at its first
+# failure; the other lane continues.
+set -uo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+RUNS=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training
+window=/workspace/.pokechamp-data/battle-window
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+stage_is() { python3 -c "import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))['stage'] == sys.argv[2] else 1)" "$1" "$2" 2>/dev/null; }
+until stage_is "$RUNS/EX-196/status.json" completed; do
+  if stage_is "$RUNS/EX-196/status.json" failed || ! pgrep -f "laya-foe-ep238" >/dev/null && ! stage_is "$RUNS/EX-196/status.json" completed; then
+    stage "EX-196 lane ended without a completed EX-196 ($(cut -c1-200 $RUNS/EX-196/status.json 2>/dev/null)); stopping"; exit 1
+  fi
+  sleep 120
+done
+stage "EX-196 completed"
+lane() {   # ex module ports
+  local ex=$1 m=$2 ports=$3 run=$RUNS/$1
+  bat() { scripts/mem-guard 25 "$RUNS/$ex-memory.log" -- env PYTHONPATH=$LAYA_PATH "$LAYA" -m $m "$1" "$ex"; }
+  mkdir -p "$run"
+  if [ ! -f "$run/mock/result.json" ]; then stage "$ex mock"; bat mock || { stage "$ex mock failed"; return 1; }; fi
+  python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+sys.exit(0 if ok else 1)" "$run" || { stage "$ex mock did not pass; stopping"; return 1; }
+  [ -f "$run/manifest.json" ] || { stage "$ex prepare"; bat prepare || { stage "$ex prepare failed"; return 1; }; }
+  if [ ! -f "$run/result.json" ]; then
+    echo "$ex $(date -u +%FT%TZ) CPU ports $ports" > "$window/$ex"
+    stage "$ex execute"; bat execute; rc=$?
+    rm -f "$window/$ex"
+    [ $rc = 0 ] || { stage "$ex execute exited $rc"; return 1; }
+  fi
+  stage_is "$run/status.json" completed || { stage "$ex export"; bat export || { stage "$ex export failed"; return 1; }; }
+  stage "$ex battle lane finished"
+}
+mkdir -p "$window"
+lane EX-197 integration.laya_foe.battle_read 8100-8103 > "$RUNS/EX-197-lane.log" 2>&1 &
+sleep 60
+lane EX-198 integration.laya_v12.battle_v12 8104-8107 > "$RUNS/EX-198-lane.log" 2>&1 &
+wait
+stage "EP-238 battles finished"

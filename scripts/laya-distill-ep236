@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+# EP-236 (D-215): v11rtc + foul-play search distillation, then reinforcement learning against foul-play.
+#   teacher          EX-182: select -> qualification (50 games, two searches) -> label -> build (CPU, mem-guard 40)
+#   train            EX-183: measure -> train (GPU 0-3, mem-guard 60) -> evaluate
+#   battle EX        EX-184 | EX-185 | EX-187: mock -> prepare -> execute -> export (CPU, mem-guard 25)
+# A finished stage is skipped; a lane stops at its first failing stage (no automatic re-run). Foul-play searches
+# (teacher) never start while a foul-play battle runs. The whole script is one function, so editing this file does
+# not disturb a running lane.
+main() {
+set -euo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+FP=/workspace/.tools/foul-play/.venv/bin/python
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+SHARED=/mnt/digicap/combined/hyna/backup/pokechamp-research
+RUNS=$SHARED/runs/model-training
+DATA=$SHARED/datasets/generated/laya-distill/v1
+fp() { PYTHONHASHSEED=0 PYTHONPATH=/workspace:/workspace/.tools/foul-play/src "$FP" "$@"; }
+laya() { PYTHONPATH=$LAYA_PATH "$LAYA" "$@"; }
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+battles() { pgrep -f 'integration\.foulplay\.actor|battle_fp1 |battle_distill |foulplay\.battle |foulplay-ep232' >/dev/null; }
+need_free() {
+  local avail; avail=$(free -g | awk 'NR==2{print $7}')
+  [ "$avail" -ge "$1" ] || { stage "host has ${avail} GB available, $1 GB needed for $2; stopping"; exit 3; }
+  stage "host has ${avail} GB available before $2"
+}
+passed() { python3 -c "import json,sys; sys.exit(0 if json.load(open(sys.argv[1])).get('passed') else 1)" "$1"; }
+stage_is() { python3 -c "import json,sys; sys.exit(0 if json.load(open(sys.argv[1]))['stage'] == sys.argv[2] else 1)" "$1" "$2"; }
+case "${1:-}" in
+  teacher)
+    mkdir -p "$RUNS/EX-182"
+    [ -f "$RUNS/EX-182/selection.json" ] || { stage "EX-182 select"; fp -m integration.laya_distill.data_distill select; }
+    if battles; then stage "a foul-play battle is running; the teacher search waits for it"; while battles; do sleep 60; done; fi
+    if [ ! -f "$RUNS/EX-182/qualification.json" ]; then
+      need_free 50 "EX-182 qualification"
+      stage "EX-182 qualification"
+      PYTHONHASHSEED=0 PYTHONPATH=/workspace:/workspace/.tools/foul-play/src nice -n 19 \
+        scripts/mem-guard 40 "$RUNS/EX-182-memory.log" -- "$FP" -m integration.laya_distill.data_distill label --qual
+    fi
+    passed "$RUNS/EX-182/qualification.json" || { stage "EX-182 qualification did not pass; stopping"; exit 1; }
+    if [ ! -f "$RUNS/EX-182/label.done" ]; then
+      need_free 50 "EX-182 label"
+      stage "EX-182 label"
+      PYTHONHASHSEED=0 PYTHONPATH=/workspace:/workspace/.tools/foul-play/src nice -n 19 \
+        scripts/mem-guard 40 "$RUNS/EX-182-memory.log" -- "$FP" -m integration.laya_distill.data_distill label
+      touch "$RUNS/EX-182/label.done"
+    fi
+    [ -f "$DATA/manifest.json" ] || { stage "EX-182 build"; python3 -m integration.laya_distill.data_distill build; }
+    stage "EX-182 finished" ;;
+  train)
+    [ -f "$DATA/manifest.json" ] || { stage "EX-182 data missing"; exit 1; }
+    mkdir -p "$RUNS/EX-183"
+    if [ -z "$(ls "$RUNS/EX-183/measure" 2>/dev/null)" ]; then
+      stage "EX-183 measure"; laya -m integration.laya_distill.train_distill measure | tee "$RUNS/EX-183/measure.log"
+    fi
+    if [ ! -f "$RUNS/EX-183/status.json" ]; then
+      need_free 70 "EX-183 train"
+      stage "EX-183 train (GPU 0-3)"
+      scripts/mem-guard 60 "$RUNS/EX-183-memory.log" -- env PYTHONPATH=$LAYA_PATH "$LAYA" -m integration.laya_distill.train_distill train
+    fi
+    stage_is "$RUNS/EX-183/status.json" trained || stage_is "$RUNS/EX-183/status.json" completed \
+      || { stage "EX-183 not trained"; exit 1; }
+    stage_is "$RUNS/EX-183/status.json" completed || { stage "EX-183 evaluate"; laya -m integration.laya_distill.evaluation_distill; }
+    stage "EX-183 finished" ;;
+  battle)
+    local ex=${2:?usage: battle EX-184|EX-185|EX-187}
+    case "$ex" in EX-184|EX-185|EX-187) ;; *) echo "unknown study $ex" >&2; exit 2 ;; esac
+    local run=$RUNS/$ex window=/workspace/.pokechamp-data/battle-window m=integration.laya_distill.battle_distill
+    bat() { scripts/mem-guard 25 "$RUNS/$ex-memory.log" -- env PYTHONPATH=$LAYA_PATH "$LAYA" -m $m "$1" "$ex"; }
+    need_free 30 "$ex battle"
+    mkdir -p "$window"
+    if [ ! -f "$run/mock/result.json" ]; then stage "$ex mock"; bat mock; fi
+    python3 -c "
+import json, sys
+d = json.load(open(sys.argv[1] + '/mock/result.json'))
+ok = d['phase_error'] is None and d['outcomes'] and all(o['status'] == 'completed' and o.get('audit_passed') for o in d['outcomes'])
+sys.exit(0 if ok else 1)" "$run" || { stage "$ex mock did not pass; stopping"; exit 1; }
+    [ -f "$run/manifest.json" ] || { stage "$ex prepare"; bat prepare; }
+    if [ ! -f "$run/result.json" ]; then
+      echo "$ex $(date -u +%FT%TZ) CPU ports 8100-8103" > "$window/$ex"
+      stage "$ex execute"; bat execute
+      rm -f "$window/$ex"
+    fi
+    stage_is "$run/status.json" completed || { stage "$ex export"; bat export; }
+    stage "$ex battle lane finished" ;;
+  *) sed -n 2,8p "$0"; exit 2 ;;
+esac
+}
+main "$@"; exit $?

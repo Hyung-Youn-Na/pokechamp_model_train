@@ -158,6 +158,57 @@ def _install_audit():
 _install_audit()
 
 
+_original_export = B.export
+
+
+def _fp1_inputs(run):
+    """input_sha256 -> (state, question) as served: the `fp1_state` / `fp1_criteria` of each recorded response."""
+    from integration.laya_imitation.storage import jsonl
+    from integration.laya_fp1.serve_fp1 import INSTRUCTIONS
+    out = {}
+    for events in sorted((run / 'games').glob('*/events.jsonl')):
+        for e in jsonl(events):
+            if e.get('type') != 'http_response' or e.get('status_code') != 200:
+                continue
+            body = json.loads(e['raw_body'])
+            if 'fp1_state' in body:
+                out[body['input_sha256']] = (body['fp1_state'], dict(type='choice', instructions=INSTRUCTIONS,
+                                                                     criteria=body['fp1_criteria']))
+    return out
+
+
+def export(study):
+    """B.export with the viewer showing the fp1 input the model was served (not a v10 re-render)."""
+    if study.render != 'fp1':
+        return _original_export(study)
+    from integration.laya_imitation import viewer
+    from integration.laya_v10 import data_v10
+    served = _fp1_inputs(study.run)
+
+    def render(value):
+        if value.sha256 in served:
+            return served[value.sha256]
+        ids = list(value.action_ids)            # a single legal action: taken without a serving call
+        return ('(서빙 호출 없음: 선택지 %d개, 자동 선택)' % len(ids),
+                dict(type='choice', instructions='', criteria={k: '' for k in ids}))
+
+    saved = data_v10.live_renderer, viewer.export
+    data_v10.live_renderer = lambda calc, judge: render
+
+    def export_viewer(run, output, meta, **kw):
+        meta = dict(meta, plan='EP-234', intro=meta['intro'] + ' 입력은 서빙이 기록한 fp1 입력입니다.')
+        return saved[1](run, output, meta=meta, **kw)
+
+    viewer.export = export_viewer
+    try:
+        return _original_export(study)
+    finally:
+        data_v10.live_renderer, viewer.export = saved
+
+
+B.export = export
+
+
 def install_session():
     """`player.Session` with the fp1 member on every request input (game workers of the model side)."""
     from integration.pokechamp.imitation import player as p
@@ -216,4 +267,4 @@ if __name__ == '__main__':
     if sys.argv[1] == 'worker':
         sys.exit(worker(sys.argv[1:]))
     study = B.STUDIES[sys.argv[2] if len(sys.argv) > 2 else 'EX-179']
-    {'mock': B.mock, 'prepare': B.prepare, 'execute': B.execute, 'export': B.export}[sys.argv[1]](study)
+    {'mock': B.mock, 'prepare': B.prepare, 'execute': B.execute, 'export': export}[sys.argv[1]](study)

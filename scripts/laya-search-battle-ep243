@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# EP-243 / D-219: 2-A online multi-turn search (GPU 0 only) vs foul-play Blim 128 games (no limits).
+# Usage: scripts/laya-search-battle-ep243 [EX-206] [mock|prepare|execute|export|all]
+STUDY="${1:-EX-206}"
+MODE="${2:-all}"
+ROOT=/workspace
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+RUN="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/$STUDY"
+export PYTHONPATH="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10:$ROOT:$ROOT/pokechamp"
+export PYTHONDONTWRITEBYTECODE=1
+export HF_HUB_OFFLINE=1
+export TOKENIZERS_PARALLELISM=false
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export CUDA_DEVICE_ORDER=PCI_BUS_ID
+export CUDA_VISIBLE_DEVICES=GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4
+
+run_stage() {
+  local st="$1"
+  echo "[ep243] $(date -u +%FT%TZ) $STUDY $st"
+  exec_cmd=("$ROOT/scripts/mem-guard" 40 "$RUN-memory.log" -- nice -n 10 "$LAYA_PY" -m integration.laya_search.battle_search "$st" "$STUDY")
+  "${exec_cmd[@]}"
+}
+
+if [[ "$MODE" == "all" ]]; then
+  for st in mock prepare execute export; do
+    run_stage "$st"
+  done
+else
+  run_stage "$MODE"
+fi

@@ -220,3 +220,8 @@
 | [D-212](../research/policy-learning/decisions/D-212-laya-foulplay-blim-teams.md) | foul-play 대전을 Blim 팀 일정으로 바꾸고 EX-173을 중지 | Accepted |
 | [D-213](../research/policy-learning/decisions/D-213-laya-fp1-foulplay-input.md) | laya 입력을 foul-play 추적·poke-engine 계산으로 전부 바꾼 렌더러 fp1과 처음부터 전체 학습 | Accepted |
 | [D-214](../research/policy-learning/decisions/D-214-laya-foulplay-primary-ladder-final.md) | laya 정책 개선의 개발 목표를 foul-play 상대 점수로, 최종 실험을 공식 래더 대전으로 둔다 | Accepted |
+| [D-215](../research/policy-learning/decisions/D-215-laya-foulplay-distill-then-rl.md) | v11rtc에 foul-play 탐색을 증류한 뒤, foul-play 상대 강화학습으로 다듬는다 | Accepted |
+| [D-216](../research/policy-learning/decisions/D-216-laya-opponent-prediction-one-turn-read.md) | laya 상대 행동 예측 학습과 한 턴 읽기 | Accepted |
+| [D-217](../research/policy-learning/decisions/D-217-laya-engine-value-rerank-training.md) | foul-play 엔진 평가로 laya 후보 순위를 다시 매긴 target 학습 | Accepted |
+| [D-218](../research/policy-learning/decisions/D-218-laya-v13-input-bugfixes.md) | laya 렌더러 v13 입력 결함 수정(폼 스펙·테라 방어 재계산·선공 Roost 지면화·Ivy Cudgel 타입) | Accepted |
+| [D-219](../research/policy-learning/decisions/D-219-laya-multiturn-search-and-value.md) | 1턴 시야·정적 가치 편향 극복을 위한 다중턴 탐색(2-A)·신경망 상태가치(2-B)·경량 MCTS-Q 재정렬 학습(1-B) (GPU 0·1 전용) | Accepted |

@@ -223,3 +223,17 @@ references는 원문에 명시된 연결이다. baseline/evaluates/continues/cor
 | [EX-180](../research/policy-learning/experiments/EX-180-laya-fp1e2-vs-foulplay-blim128.md) | compares | [EX-174](../research/policy-learning/experiments/EX-174-laya-v10rt-vs-foulplay-blim128.md) |
 | [EX-180](../research/policy-learning/experiments/EX-180-laya-fp1e2-vs-foulplay-blim128.md) | compares | [EX-179](../research/policy-learning/experiments/EX-179-laya-fp1-vs-foulplay-blim128.md) |
 | [EX-180](../research/policy-learning/experiments/EX-180-laya-fp1e2-vs-foulplay-blim128.md) | uses | [EX-178](../research/policy-learning/experiments/EX-178-laya-fp1-training.md) |
+| [EX-181](../research/policy-learning/experiments/EX-181-laya-v10rt-foulplay-search-regret.md) | uses | [EX-174](../research/policy-learning/experiments/EX-174-laya-v10rt-vs-foulplay-blim128.md) |
+| [EX-181](../research/policy-learning/experiments/EX-181-laya-v10rt-foulplay-search-regret.md) | evaluates | [EX-167](../research/policy-learning/experiments/EX-167-laya-v10-ladder-training.md) |
+| [EX-182](../research/policy-learning/experiments/EX-182-laya-distill-teacher-labels.md) | uses | [EX-177](../research/policy-learning/experiments/EX-177-laya-fp1-data.md) |
+| [EX-183](../research/policy-learning/experiments/EX-183-laya-v11rtc-distill-training.md) | uses | [EX-182](../research/policy-learning/experiments/EX-182-laya-distill-teacher-labels.md) |
+| [EX-183](../research/policy-learning/experiments/EX-183-laya-v11rtc-distill-training.md) | uses | [EX-172](../research/policy-learning/experiments/EX-172-laya-v11rtc-training.md) |
+| [EX-184](../research/policy-learning/experiments/EX-184-laya-v11rtc-vs-foulplay-blim128.md) | evaluates | [EX-172](../research/policy-learning/experiments/EX-172-laya-v11rtc-training.md) |
+| [EX-185](../research/policy-learning/experiments/EX-185-laya-distill-vs-foulplay-blim128.md) | evaluates | [EX-183](../research/policy-learning/experiments/EX-183-laya-v11rtc-distill-training.md) |
+| [EX-186](../research/policy-learning/experiments/EX-186-laya-distill-foulplay-rl.md) | uses | [EX-183](../research/policy-learning/experiments/EX-183-laya-v11rtc-distill-training.md) |
+| [EX-187](../research/policy-learning/experiments/EX-187-laya-distill-rl-vs-foulplay-blim128.md) | evaluates | [EX-186](../research/policy-learning/experiments/EX-186-laya-distill-foulplay-rl.md) |
+| [EX-188](../research/policy-learning/experiments/EX-188-laya-distill-ladder-final.md) | evaluates | [EX-185](../research/policy-learning/experiments/EX-185-laya-distill-vs-foulplay-blim128.md) |
+| [EX-188](../research/policy-learning/experiments/EX-188-laya-distill-ladder-final.md) | evaluates | [EX-187](../research/policy-learning/experiments/EX-187-laya-distill-rl-vs-foulplay-blim128.md) |
+| [EX-189](../research/policy-learning/experiments/EX-189-laya-v11d-ladder-interim.md) | evaluates | [EX-183](../research/policy-learning/experiments/EX-183-laya-v11rtc-distill-training.md) |
+| [EX-193](../research/policy-learning/experiments/EX-193-laya-v12-vs-foulplay-blim128.md) | evaluates | [EX-192](../research/policy-learning/experiments/EX-192-laya-v12-training.md) |
+| [EX-194](../research/policy-learning/experiments/EX-194-laya-v12-ladder.md) | evaluates | [EX-192](../research/policy-learning/experiments/EX-192-laya-v12-training.md) |

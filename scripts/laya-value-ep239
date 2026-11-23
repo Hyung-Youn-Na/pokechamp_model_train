@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# EP-239: EX-199 infer (GPU 0-3, parallel) -> values (CPU, foul-play venv) -> targets.
+# A finished stage is skipped; the lane stops at the first failure.
+main() {
+set -euo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+FP=/workspace/.tools/foul-play/.venv/bin/python
+SH=/mnt/digicap/combined/hyna/backup/pokechamp-research
+R=$SH/runs/model-training/EX-199
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+mkdir -p "$R"
+if [ ! -f "$R/infer.done" ]; then
+  stage "EX-199 infer (GPU 0-3)"
+  pids=()
+  for r in 0 1 2 3; do
+    PYTHONPATH=$LAYA_PATH "$LAYA" -m integration.laya_value.data_value infer --rank $r --world 4 > "$R/infer-$r.log" 2>&1 &
+    pids+=($!)
+  done
+  ok=1; for p in "${pids[@]}"; do wait "$p" || ok=0; done
+  [ "$ok" = 1 ] || { stage "infer failed"; exit 1; }
+  touch "$R/infer.done"
+fi
+if [ ! -f "$R/values.done" ]; then
+  stage "EX-199 values (48 workers)"
+  scripts/mem-guard 60 "$SH/runs/model-training/EX-199-memory.log" -- env PYTHONHASHSEED=0 PYTHONPATH=.:.tools/foul-play/src \
+    "$FP" -m integration.laya_value.data_value values --workers 48 > "$R/values.log" 2>&1
+  touch "$R/values.done"
+fi
+stage "EX-199 targets"
+python3 -m integration.laya_value.data_value targets > "$R/targets.log" 2>&1
+stage "EX-199 finished: $(tail -c 1500 "$R/targets.log")"
+}
+main "$@"; exit $?

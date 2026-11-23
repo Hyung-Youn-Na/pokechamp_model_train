@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# EP-243 / D-219 (EX-209 -> EX-210, 1-B): GPU 0·1 ONLY infer + CPU 48-worker MCTS-5k Q + GPU 0·1 DDP train + Blim 128.
+# Usage: scripts/laya-mcts-1b-ep243 [infer|mcts|targets|prepare|measure|train|battle|all] [workers]
+MODE="${1:-all}"
+WORKERS="${2:-48}"
+ROOT=/workspace
+FP_PY="$ROOT/.tools/foul-play/.venv/bin/python"
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+RUN="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-209"
+RUN_B="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-210"
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+mkdir -p "$RUN"
+
+do_infer() {
+  echo "[ex209] $(date -u +%FT%TZ) pre-select games & infer on GPU 0 & GPU 1"
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" PYTHONDONTWRITEBYTECODE=1 \
+    "$LAYA_PY" -c "from integration.laya_search.data_mcts_1b import selected_games; s=selected_games(); print('selected:', len(s['train']), 'train,', len(s['heldout']), 'heldout')"
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+    "$ROOT/scripts/mem-guard" 20 "$RUN/infer-0-memory.log" -- \
+    "$LAYA_PY" -m integration.laya_search.data_mcts_1b infer --rank 0 --world 2 > "$RUN/infer-0.log" 2>&1 &
+  P0=$!
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+    "$ROOT/scripts/mem-guard" 20 "$RUN/infer-1-memory.log" -- \
+    "$LAYA_PY" -m integration.laya_search.data_mcts_1b infer --rank 1 --world 2 > "$RUN/infer-1.log" 2>&1 &
+  P1=$!
+  wait "$P0" "$P1"
+}
+
+do_mcts() {
+  local cap=45
+  if (( WORKERS <= 24 )); then cap=30; fi
+  echo "[ex209] $(date -u +%FT%TZ) mcts 5k (workers=$WORKERS, mem-guard=$cap)"
+  PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' \
+    PYTHONPATH="$ROOT:$ROOT/.tools/foul-play/src" \
+    "$ROOT/scripts/mem-guard" "$cap" "$RUN/mcts-memory.log" -- \
+    nice -n 19 "$FP_PY" -m integration.laya_search.data_mcts_1b mcts --workers "$WORKERS"
+}
+
+do_targets() {
+  echo "[ex209] $(date -u +%FT%TZ) targets"
+  PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$ROOT" "$LAYA_PY" -m integration.laya_search.data_mcts_1b targets
+}
+
+do_prepare() {
+  echo "[ex209] $(date -u +%FT%TZ) prepare anchors"
+  PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$ROOT" "$LAYA_PY" -m integration.laya_search.train_mcts_1b prepare
+}
+
+do_train() {
+  echo "[ex209] $(date -u +%FT%TZ) train DDP on GPU 0 & GPU 1"
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+    "$ROOT/scripts/mem-guard" 55 "$RUN/train-memory.log" -- \
+    "$LAYA_PY" -m integration.laya_search.train_mcts_1b train
+}
+
+do_battle() {
+  for st in mock prepare execute export; do
+    echo "[ex210] $(date -u +%FT%TZ) $st"
+    PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+      CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4 \
+      "$ROOT/scripts/mem-guard" 40 "$RUN_B-memory.log" -- \
+      nice -n 10 "$LAYA_PY" -m integration.laya_search.battle_1b "$st" EX-210
+  done
+}
+
+case "$MODE" in
+  infer)   do_infer ;;
+  mcts)    do_mcts ;;
+  targets) do_targets ;;
+  prepare) do_prepare ;;
+  train)   do_train ;;
+  battle)  do_battle ;;
+  all)     do_infer && do_mcts && do_targets && do_prepare && do_train && do_battle ;;
+  *)       echo "Usage: $0 [infer|mcts|targets|prepare|train|battle|all] [workers]"; exit 2 ;;
+esac

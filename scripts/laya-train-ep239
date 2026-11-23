@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# EP-239: waits for EX-199 -> EX-200 prepare / measure / train (GPU 0-3) / evaluation -> EX-201 battle lane.
+# A finished stage is skipped; the lane stops at the first failure (no automatic re-run).
+main() {
+set -euo pipefail
+cd /workspace
+export PYTHONDONTWRITEBYTECODE=1 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+LAYA=/workspace/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python
+LAYA_PATH=/workspace/.tools/laya-0.4.13/worktrees/pokemon-v10:/workspace:/workspace/pokechamp
+SH=/mnt/digicap/combined/hyna/backup/pokechamp-research
+VALUE=$SH/datasets/generated/laya-value/v1
+T=$SH/runs/model-training/EX-200
+stage() { echo "[$(date -u +%FT%TZ)] $*"; }
+laya() { PYTHONPATH=$LAYA_PATH "$LAYA" "$@"; }
+while pgrep -f "scripts/laya-value-ep239" >/dev/null; do sleep 60; done
+[ -f "$VALUE/manifest.json" ] || { stage "EX-199 did not finish; stopping"; exit 1; }
+stage "EX-199 done: $(python3 -c "import json;print(json.dumps(json.load(open('$VALUE/manifest.json'))['counts']))")"
+python3 -m integration.laya_value.train_value prepare
+mkdir -p "$T"
+ls "$T"/measure-*.json >/dev/null 2>&1 || { stage "EX-200 measure"; laya -m integration.laya_value.train_value measure 2>&1 | tail -5 | tee "$T/measure.log"; }
+if [ ! -f "$T/status.json" ]; then
+  a=$(free -g | awk 'NR==2{print $7}'); [ "$a" -ge 70 ] || { stage "only ${a} GB available; stopping"; exit 3; }
+  stage "EX-200 train (GPU 0-3)"
+  scripts/mem-guard 90 "$SH/runs/model-training/EX-200-memory.log" -- env PYTHONPATH=$LAYA_PATH "$LAYA" -m integration.laya_value.train_value train > "$T/train.log" 2>&1 || true
+fi
+python3 -c "import json,sys;sys.exit(0 if json.load(open('$T/status.json'))['stage'] in ('trained','scored','completed') else 1)" \
+  || { stage "EX-200 not trained: $(cut -c1-400 $T/status.json)"; exit 1; }
+stage "EX-200 evaluation"
+python3 -m integration.laya_value.evaluation_value sample
+python3 -c "import json,sys;sys.exit(0 if json.load(open('$T/status.json'))['stage'] in ('scored','completed') else 1)" \
+  || laya -m integration.laya_value.evaluation_value score --gpu 0 > "$T/evaluation-score.log" 2>&1
+laya -m integration.laya_value.evaluation_value report
+stage "EX-200 finished"
+stage "EX-201 battle lane"
+bash scripts/laya-battles-ep239 EX-201 > "$SH/runs/model-training/EX-201-lane.log" 2>&1
+stage "EP-239 finished"
+}
+main "$@"; exit $?

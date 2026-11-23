@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# EP-243 / D-219 (EX-207): Extract replay state-value dataset (48 CPU workers, nice 19) & train StateValueNet on GPU 0 only.
+# Usage: scripts/laya-value-2b-ep243 [extract|build|train|all] [workers=16] [gpu_index=1]
+MODE="${1:-all}"
+WORKERS="${2:-16}"
+GPU_IDX="${3:-1}"
+ROOT=/workspace
+FP_PY="$ROOT/.tools/foul-play/.venv/bin/python"
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+RUN="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-207"
+mkdir -p "$RUN"
+
+case "$GPU_IDX" in
+  0) GPU_UUID="GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4" ;;
+  1) GPU_UUID="GPU-c7e2d577-573f-0412-1ed6-ad6648efa454" ;;
+  *) echo "Refusing GPU index $GPU_IDX: EP-243 allows GPU 0 or 1 only"; exit 2 ;;
+esac
+
+MEM_CAP=40
+if (( WORKERS <= 24 )); then
+  MEM_CAP=25
+fi
+
+do_extract() {
+  echo "[ex207] $(date -u +%FT%TZ) extract (workers=$WORKERS, mem-guard=$MEM_CAP)"
+  PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' \
+    PYTHONPATH="$ROOT:$ROOT/.tools/foul-play/src" \
+    "$ROOT/scripts/mem-guard" "$MEM_CAP" "$RUN/extract-memory.log" -- \
+    nice -n 19 "$FP_PY" -m integration.laya_search.data_value_2b extract --workers "$WORKERS"
+}
+
+do_build() {
+  echo "[ex207] $(date -u +%FT%TZ) build"
+  PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$ROOT" \
+    "$ROOT/scripts/mem-guard" "$MEM_CAP" "$RUN/build-memory.log" -- \
+    "$LAYA_PY" -m integration.laya_search.data_value_2b build
+}
+
+do_train() {
+  echo "[ex207] $(date -u +%FT%TZ) train (GPU $GPU_IDX only: $GPU_UUID)"
+  PYTHONDONTWRITEBYTECODE=1 OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 CUDA_DEVICE_ORDER=PCI_BUS_ID \
+    CUDA_VISIBLE_DEVICES="$GPU_UUID" \
+    PYTHONPATH="$ROOT:$ROOT/pokechamp" \
+    "$ROOT/scripts/mem-guard" "$MEM_CAP" "$RUN/train-memory.log" -- \
+    "$LAYA_PY" -m integration.laya_search.train_value_2b --epochs 16 --batch-size 512 --samples-per-epoch 40000 --lr 5e-4 --device cuda
+}
+
+case "$MODE" in
+  extract) do_extract ;;
+  build)   do_build ;;
+  train)   do_train ;;
+  all)     do_extract && do_build && do_train ;;
+  *)       echo "Usage: $0 [extract|build|train|all] [workers]"; exit 2 ;;
+esac

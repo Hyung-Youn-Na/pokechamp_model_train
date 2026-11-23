@@ -20200,6 +20200,1632 @@
           "target": "EX-180"
         }
       ]
+    },
+    "EP-235": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-235-laya-v10rt-search-regret.md",
+      "methods": {
+        "추론": [
+          "laya",
+          "MCTS"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-214"
+        },
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "D-206"
+        },
+        {
+          "type": "references",
+          "target": "EP-234"
+        },
+        {
+          "type": "references",
+          "target": "EP-231"
+        },
+        {
+          "type": "references",
+          "target": "EP-229"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        },
+        {
+          "type": "references",
+          "target": "EX-165"
+        },
+        {
+          "type": "references",
+          "target": "EX-181"
+        }
+      ]
+    },
+    "EX-181": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-181-laya-v10rt-foulplay-search-regret.md",
+      "methods": {
+        "추론": [
+          "laya",
+          "MCTS"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-214"
+        },
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "D-206"
+        },
+        {
+          "type": "references",
+          "target": "EP-235"
+        },
+        {
+          "type": "uses",
+          "target": "EX-174"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-167"
+        },
+        {
+          "type": "references",
+          "target": "EX-165"
+        }
+      ]
+    },
+    "D-215": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-215-laya-foulplay-distill-then-rl.md",
+      "methods": {
+        "학습": [
+          "laya",
+          "증류",
+          "강화학습"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-214"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "EX-172"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        },
+        {
+          "type": "references",
+          "target": "EX-176"
+        },
+        {
+          "type": "references",
+          "target": "EX-180"
+        },
+        {
+          "type": "references",
+          "target": "EX-181"
+        },
+        {
+          "type": "references",
+          "target": "EP-236"
+        }
+      ]
+    },
+    "EP-236": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-236-laya-v11rtc-foulplay-distill-rl.md",
+      "methods": {
+        "학습": [
+          "laya",
+          "증류",
+          "강화학습"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-215"
+        },
+        {
+          "type": "references",
+          "target": "D-214"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "D-211"
+        },
+        {
+          "type": "references",
+          "target": "D-212"
+        },
+        {
+          "type": "references",
+          "target": "EP-234"
+        },
+        {
+          "type": "references",
+          "target": "EP-235"
+        },
+        {
+          "type": "references",
+          "target": "EP-231"
+        },
+        {
+          "type": "references",
+          "target": "EP-229"
+        },
+        {
+          "type": "references",
+          "target": "EX-172"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        },
+        {
+          "type": "references",
+          "target": "EX-176"
+        },
+        {
+          "type": "references",
+          "target": "EX-177"
+        },
+        {
+          "type": "references",
+          "target": "EX-181"
+        },
+        {
+          "type": "references",
+          "target": "EX-182"
+        },
+        {
+          "type": "references",
+          "target": "EX-183"
+        },
+        {
+          "type": "references",
+          "target": "EX-184"
+        },
+        {
+          "type": "references",
+          "target": "EX-185"
+        },
+        {
+          "type": "references",
+          "target": "EX-186"
+        },
+        {
+          "type": "references",
+          "target": "EX-187"
+        },
+        {
+          "type": "references",
+          "target": "EX-188"
+        }
+      ]
+    },
+    "EX-182": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-182-laya-distill-teacher-labels.md",
+      "methods": {
+        "자료": [
+          "MCTS"
+        ],
+        "학습": [
+          "증류"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-215"
+        },
+        {
+          "type": "references",
+          "target": "EP-236"
+        },
+        {
+          "type": "references",
+          "target": "EX-181"
+        },
+        {
+          "type": "uses",
+          "target": "EX-177"
+        }
+      ]
+    },
+    "EX-183": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-183-laya-v11rtc-distill-training.md",
+      "methods": {
+        "학습": [
+          "laya",
+          "증류"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-215"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "EP-236"
+        },
+        {
+          "type": "uses",
+          "target": "EX-182"
+        },
+        {
+          "type": "uses",
+          "target": "EX-172"
+        }
+      ]
+    },
+    "EX-184": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-184-laya-v11rtc-vs-foulplay-blim128.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-214"
+        },
+        {
+          "type": "references",
+          "target": "D-215"
+        },
+        {
+          "type": "references",
+          "target": "EP-236"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-172"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        },
+        {
+          "type": "references",
+          "target": "EX-176"
+        }
+      ]
+    },
+    "EX-185": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-185-laya-distill-vs-foulplay-blim128.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-214"
+        },
+        {
+          "type": "references",
+          "target": "EP-236"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-183"
+        },
+        {
+          "type": "references",
+          "target": "EX-184"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        }
+      ]
+    },
+    "EX-186": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-186-laya-distill-foulplay-rl.md",
+      "methods": {
+        "학습": [
+          "laya",
+          "강화학습"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-215"
+        },
+        {
+          "type": "references",
+          "target": "EP-236"
+        },
+        {
+          "type": "uses",
+          "target": "EX-183"
+        }
+      ]
+    },
+    "EX-187": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-187-laya-distill-rl-vs-foulplay-blim128.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-214"
+        },
+        {
+          "type": "references",
+          "target": "EP-236"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-186"
+        },
+        {
+          "type": "references",
+          "target": "EX-185"
+        },
+        {
+          "type": "references",
+          "target": "EX-184"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        }
+      ]
+    },
+    "EX-188": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-188-laya-distill-ladder-final.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-214"
+        },
+        {
+          "type": "references",
+          "target": "EP-236"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-185"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-187"
+        }
+      ]
+    },
+    "EX-189": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-189-laya-v11d-ladder-interim.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-214"
+        },
+        {
+          "type": "references",
+          "target": "EP-236"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-183"
+        }
+      ]
+    },
+    "EP-237": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-237-laya-observed-public-info-input.md",
+      "methods": {
+        "입력": [
+          "렌더러"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-236"
+        },
+        {
+          "type": "references",
+          "target": "EX-189"
+        },
+        {
+          "type": "references",
+          "target": "D-214"
+        }
+      ]
+    },
+    "EX-190": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-190-laya-obsinfo-frequency.md",
+      "methods": {
+        "진단": [
+          "입력"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-237"
+        },
+        {
+          "type": "references",
+          "target": "EX-184"
+        },
+        {
+          "type": "references",
+          "target": "EX-185"
+        }
+      ]
+    },
+    "EX-191": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-191-laya-v12-data.md",
+      "methods": {
+        "자료": [
+          "렌더러"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-237"
+        },
+        {
+          "type": "references",
+          "target": "EX-170"
+        }
+      ]
+    },
+    "EX-192": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-192-laya-v12-training.md",
+      "methods": {
+        "학습": [
+          "모방"
+        ]
+      },
+      "datasets": [
+        "laya-compact-imitation"
+      ],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-237"
+        },
+        {
+          "type": "references",
+          "target": "EX-191"
+        },
+        {
+          "type": "references",
+          "target": "EX-167"
+        }
+      ]
+    },
+    "EX-193": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-193-laya-v12-vs-foulplay-blim128.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-237"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-192"
+        },
+        {
+          "type": "references",
+          "target": "D-214"
+        }
+      ]
+    },
+    "EX-194": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-194-laya-v12-ladder.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-237"
+        },
+        {
+          "type": "evaluates",
+          "target": "EX-192"
+        },
+        {
+          "type": "references",
+          "target": "D-214"
+        }
+      ]
+    },
+    "D-216": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-216-laya-opponent-prediction-one-turn-read.md",
+      "methods": {
+        "학습": [
+          "laya",
+          "상대 모델"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-206"
+        },
+        {
+          "type": "references",
+          "target": "EX-165"
+        },
+        {
+          "type": "references",
+          "target": "EX-192"
+        },
+        {
+          "type": "references",
+          "target": "EX-193"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        }
+      ]
+    },
+    "EP-238": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-238-laya-opponent-prediction-one-turn-read.md",
+      "methods": {
+        "학습": [
+          "laya",
+          "상대 모델"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-216"
+        },
+        {
+          "type": "references",
+          "target": "EP-229"
+        },
+        {
+          "type": "references",
+          "target": "EP-237"
+        }
+      ]
+    },
+    "EX-195": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-195-laya-foe-prediction-data.md",
+      "methods": {
+        "자료": [
+          "상대 모델"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-238"
+        },
+        {
+          "type": "references",
+          "target": "D-216"
+        },
+        {
+          "type": "references",
+          "target": "EX-191"
+        }
+      ]
+    },
+    "EX-196": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-196-laya-v12-foe-training.md",
+      "methods": {
+        "학습": [
+          "laya",
+          "상대 모델"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-238"
+        },
+        {
+          "type": "references",
+          "target": "D-216"
+        },
+        {
+          "type": "references",
+          "target": "EX-195"
+        },
+        {
+          "type": "references",
+          "target": "EX-192"
+        }
+      ]
+    },
+    "EX-197": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-197-laya-one-turn-read-vs-foulplay.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-238"
+        },
+        {
+          "type": "references",
+          "target": "D-216"
+        },
+        {
+          "type": "references",
+          "target": "EX-196"
+        },
+        {
+          "type": "references",
+          "target": "EX-193"
+        }
+      ]
+    },
+    "EX-198": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-198-laya-v12-foe-argmax-vs-foulplay.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-238"
+        },
+        {
+          "type": "references",
+          "target": "D-216"
+        },
+        {
+          "type": "references",
+          "target": "EX-196"
+        },
+        {
+          "type": "references",
+          "target": "EX-193"
+        }
+      ]
+    },
+    "D-217": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-217-laya-engine-value-rerank-training.md",
+      "methods": {
+        "학습": [
+          "laya"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-216"
+        },
+        {
+          "type": "references",
+          "target": "EX-196"
+        },
+        {
+          "type": "references",
+          "target": "EX-197"
+        },
+        {
+          "type": "references",
+          "target": "EX-198"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        }
+      ]
+    },
+    "EP-239": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-239-laya-engine-value-rerank-training.md",
+      "methods": {
+        "학습": [
+          "laya"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-217"
+        },
+        {
+          "type": "references",
+          "target": "EP-238"
+        },
+        {
+          "type": "references",
+          "target": "EP-236"
+        }
+      ]
+    },
+    "EX-199": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-199-laya-engine-value-targets.md",
+      "methods": {
+        "학습": [
+          "laya"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-239"
+        },
+        {
+          "type": "references",
+          "target": "D-217"
+        }
+      ]
+    },
+    "EX-200": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-200-laya-engine-value-training.md",
+      "methods": {
+        "학습": [
+          "laya"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-239"
+        },
+        {
+          "type": "references",
+          "target": "D-217"
+        },
+        {
+          "type": "references",
+          "target": "EX-199"
+        },
+        {
+          "type": "references",
+          "target": "EX-196"
+        }
+      ]
+    },
+    "EX-201": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-201-laya-engine-value-vs-foulplay-unlimited.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-239"
+        },
+        {
+          "type": "references",
+          "target": "D-217"
+        },
+        {
+          "type": "references",
+          "target": "EX-200"
+        },
+        {
+          "type": "references",
+          "target": "EX-202"
+        }
+      ]
+    },
+    "EX-202": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-202-laya-v12-foe-vs-foulplay-unlimited.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-239"
+        },
+        {
+          "type": "references",
+          "target": "D-217"
+        },
+        {
+          "type": "references",
+          "target": "EX-196"
+        },
+        {
+          "type": "references",
+          "target": "EX-198"
+        }
+      ]
+    },
+    "EX-203": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-203-laya-engine-value-ladder.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-239"
+        },
+        {
+          "type": "references",
+          "target": "D-217"
+        },
+        {
+          "type": "references",
+          "target": "EX-200"
+        },
+        {
+          "type": "references",
+          "target": "EX-194"
+        }
+      ]
+    },
+    "EX-204": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-204-laya-engine-value-ladder-loss-analysis.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-239"
+        },
+        {
+          "type": "references",
+          "target": "EX-203"
+        },
+        {
+          "type": "references",
+          "target": "EX-169"
+        }
+      ]
+    },
+    "D-218": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-218-laya-v13-input-bugfixes.md",
+      "methods": {
+        "입력": [
+          "렌더러"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-240"
+        },
+        {
+          "type": "references",
+          "target": "EP-237"
+        },
+        {
+          "type": "references",
+          "target": "EX-203"
+        },
+        {
+          "type": "references",
+          "target": "EX-204"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        }
+      ]
+    },
+    "EP-240": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-240-laya-v13-input-bugfixes.md",
+      "methods": {
+        "입력": [
+          "렌더러"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-218"
+        },
+        {
+          "type": "references",
+          "target": "EP-237"
+        },
+        {
+          "type": "references",
+          "target": "EX-203"
+        },
+        {
+          "type": "references",
+          "target": "EX-204"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        }
+      ]
+    },
+    "EP-241": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-241-laya-v13-zeroshot-vs-foulplay.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ],
+        "입력": [
+          "렌더러"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-218"
+        },
+        {
+          "type": "references",
+          "target": "EP-240"
+        },
+        {
+          "type": "references",
+          "target": "EX-201"
+        },
+        {
+          "type": "references",
+          "target": "EX-205"
+        }
+      ]
+    },
+    "EX-205": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-205-laya-v13-zeroshot-vs-foulplay-unlimited.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ],
+        "입력": [
+          "렌더러"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-241"
+        },
+        {
+          "type": "references",
+          "target": "D-218"
+        },
+        {
+          "type": "references",
+          "target": "EX-200"
+        },
+        {
+          "type": "references",
+          "target": "EX-201"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        }
+      ]
+    },
+    "EP-242": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-242-laya-lead-matchup-2b.md",
+      "methods": {
+        "추론": [
+          "선봉"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-218"
+        },
+        {
+          "type": "references",
+          "target": "EP-240"
+        },
+        {
+          "type": "references",
+          "target": "EP-241"
+        },
+        {
+          "type": "references",
+          "target": "EX-203"
+        },
+        {
+          "type": "references",
+          "target": "EX-204"
+        }
+      ]
+    },
+    "D-219": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/decisions/D-219-laya-multiturn-search-and-value.md",
+      "methods": {
+        "탐색": [
+          "MCTS"
+        ],
+        "학습": [
+          "가치함수",
+          "증류"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-243"
+        },
+        {
+          "type": "references",
+          "target": "D-218"
+        },
+        {
+          "type": "references",
+          "target": "D-217"
+        },
+        {
+          "type": "references",
+          "target": "D-215"
+        },
+        {
+          "type": "references",
+          "target": "D-214"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        },
+        {
+          "type": "references",
+          "target": "EX-203"
+        },
+        {
+          "type": "references",
+          "target": "EX-204"
+        },
+        {
+          "type": "references",
+          "target": "EX-205"
+        }
+      ]
+    },
+    "EP-243": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/plans/EP-243-laya-multiturn-search-value-distill.md",
+      "methods": {
+        "탐색": [
+          "MCTS"
+        ],
+        "학습": [
+          "가치함수",
+          "증류"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "D-219"
+        },
+        {
+          "type": "references",
+          "target": "D-218"
+        },
+        {
+          "type": "references",
+          "target": "EX-205"
+        },
+        {
+          "type": "references",
+          "target": "EX-206"
+        },
+        {
+          "type": "references",
+          "target": "EX-207"
+        },
+        {
+          "type": "references",
+          "target": "EX-208"
+        },
+        {
+          "type": "references",
+          "target": "EX-209"
+        },
+        {
+          "type": "references",
+          "target": "EX-210"
+        }
+      ]
+    },
+    "EX-206": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-206-laya-search-2a-vs-foulplay-unlimited.md",
+      "methods": {
+        "탐색": [
+          "MCTS"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-243"
+        },
+        {
+          "type": "references",
+          "target": "D-219"
+        },
+        {
+          "type": "references",
+          "target": "EX-200"
+        },
+        {
+          "type": "references",
+          "target": "EX-205"
+        },
+        {
+          "type": "references",
+          "target": "EX-201"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        }
+      ]
+    },
+    "EX-207": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-207-laya-state-value-2b-train.md",
+      "methods": {
+        "학습": [
+          "가치함수"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-243"
+        },
+        {
+          "type": "references",
+          "target": "D-219"
+        },
+        {
+          "type": "references",
+          "target": "D-191"
+        }
+      ]
+    },
+    "EX-208": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-208-laya-search-2b-vs-foulplay-unlimited.md",
+      "methods": {
+        "탐색": [
+          "MCTS"
+        ],
+        "학습": [
+          "가치함수"
+        ],
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-243"
+        },
+        {
+          "type": "references",
+          "target": "D-219"
+        },
+        {
+          "type": "references",
+          "target": "EX-206"
+        },
+        {
+          "type": "references",
+          "target": "EX-207"
+        },
+        {
+          "type": "references",
+          "target": "EX-205"
+        },
+        {
+          "type": "references",
+          "target": "EX-201"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        }
+      ]
+    },
+    "EX-209": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-209-laya-mcts5k-q-rerank-1b-train.md",
+      "methods": {
+        "탐색": [
+          "MCTS"
+        ],
+        "학습": [
+          "증류"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-243"
+        },
+        {
+          "type": "references",
+          "target": "D-219"
+        },
+        {
+          "type": "references",
+          "target": "D-218"
+        },
+        {
+          "type": "references",
+          "target": "D-217"
+        },
+        {
+          "type": "references",
+          "target": "EX-210"
+        }
+      ]
+    },
+    "EX-210": {
+      "topic": "research/policy-learning",
+      "models": [
+        "laya"
+      ],
+      "legacy_paths": [],
+      "path": "research/policy-learning/experiments/EX-210-laya-mcts5k-q-rerank-1b-vs-foulplay-unlimited.md",
+      "methods": {
+        "평가": [
+          "배틀"
+        ]
+      },
+      "datasets": [],
+      "relations": [
+        {
+          "type": "references",
+          "target": "EP-243"
+        },
+        {
+          "type": "references",
+          "target": "D-219"
+        },
+        {
+          "type": "references",
+          "target": "EX-209"
+        },
+        {
+          "type": "references",
+          "target": "EX-205"
+        },
+        {
+          "type": "references",
+          "target": "EX-201"
+        },
+        {
+          "type": "references",
+          "target": "EX-174"
+        }
+      ]
     }
   },
   "authorities": [

@@ -13,6 +13,8 @@
 | [EP-229](../research/policy-learning/plans/EP-229-laya-opponent-model-search.md) | laya 상대 모델 + 한 턴 탐색(세트 표본 추정) | Active |
 | [EP-231](../research/policy-learning/plans/EP-231-laya-ladder-postmortem-v11.md) | laya v10rt 공식 래더 패배 원인 추가 분석과 재학습 v11(v11rt·v11rtc) | Active |
 | [EP-234](../research/policy-learning/plans/EP-234-laya-fp1-foulplay-input.md) | laya fp1 렌더러(foul-play 기반 입력) 자료·처음부터 전체 학습·foul-play 배틀 | Active |
+| [EP-237](../research/policy-learning/plans/EP-237-laya-observed-public-info-input.md) | laya 입력에 foul-play의 경기 중 추론 전부 반영(렌더러 v12) | Active |
+| [EP-243](../research/policy-learning/plans/EP-243-laya-multiturn-search-value-distill.md) | 다중턴 온라인 탐색(2-A)·신경망 상태가치(2-B)·경량 MCTS-Q 재정렬 학습(1-B) (GPU 0·1 전용) | Active |
 
 <a id="blocked-plans"></a>
 
@@ -36,6 +38,7 @@
 | [EP-126](../research/fixed-matchup-learning/plans/EP-126-fixed-matchup-day.md) | 하루 내 고정 대진 실험 | Paused — 사용자 요청 중지; 학습·test 미시작 |
 | [EP-226](../research/policy-learning/plans/EP-226-laya-human-teams-v7-v8-v9.md) | laya v7t·v8t·v9t 사람 팀 비교 배틀(GPU0·1·2) | Stopped |
 | [EP-233](../research/policy-learning/plans/EP-233-laya-foulplay-v11.md) | foul-play 대 laya v11rt·v11rtc, EX-174 Blim 일정 128경기씩(CPU) | Stopped |
+| [EP-236](../research/policy-learning/plans/EP-236-laya-v11rtc-foulplay-distill-rl.md) | v11rtc에 foul-play 탐색 증류 → foul-play 상대 강화학습 → foul-play·공식 래더 평가 | Paused |
 
 <a id="completed-plans"></a>
 
@@ -235,6 +238,12 @@
 | [EP-228](../research/policy-learning/plans/EP-228-laya-switch-read-and-mixing.md) | laya 교체 읽기 상대(정직함 측정)와 v8lt 교체 갈림길 섞기 배틀(재학습 없음, GPU1~3) | Completed |
 | [EP-230](../research/policy-learning/plans/EP-230-laya-ladder-r1500-v10.md) | 최근 래더(레이팅 1500 이상) 리플레이 자료와 v10 학습(GPU 4장 DDP), Abyssal 배틀 | Completed |
 | [EP-232](../research/policy-learning/plans/EP-232-laya-foulplay-v10rt.md) | foul-play(탐색 봇) 대 laya v10rt 128경기(CPU; EX-173 EX-120 팀 → 중지, EX-174 Blim 팀) | Completed |
+| [EP-235](../research/policy-learning/plans/EP-235-laya-v10rt-search-regret.md) | laya v10rt 결정과 foul-play 탐색의 대조 진단(EX-174 기록, CPU) | Completed |
+| [EP-238](../research/policy-learning/plans/EP-238-laya-opponent-prediction-one-turn-read.md) | laya 상대 행동 예측 학습 → 한 턴 읽기 선택 → 입력 통합 | Completed |
+| [EP-239](../research/policy-learning/plans/EP-239-laya-engine-value-rerank-training.md) | foul-play 엔진 평가 target 학습과 시간 제한 없는 foul-play 평가 | Completed |
+| [EP-240](../research/policy-learning/plans/EP-240-laya-v13-input-bugfixes.md) | laya 렌더러 v13 입력 결함 수정(폼 스펙·테라 방어·선공 Roost·Ivy Cudgel)과 검증 | Completed |
+| [EP-241](../research/policy-learning/plans/EP-241-laya-v13-zeroshot-vs-foulplay.md) | laya v13 입력 교정(무재학습 EX-200) 대 foul-play Blim 128경기(시간 제한 없음) | Completed |
+| [EP-242](../research/policy-learning/plans/EP-242-laya-lead-matchup-2b.md) | laya 2b 선봉 선택 모듈(`lead_policy.py`, 상대 선봉 추정 × 6×6 매치업 기대값 + 모델 사전확률 재가중) 구현 | Completed |
 
 <a id="other-plans"></a>
 

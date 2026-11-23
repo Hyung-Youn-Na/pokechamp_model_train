@@ -16,7 +16,7 @@
 | [gen9-type-system1-v1](#gen9-type-system1-v1) | 1 |
 | [gen9-weather-terrain-system1-v1](#gen9-weather-terrain-system1-v1) | 1 |
 | [joint-q](#joint-q) | 16 |
-| [laya-compact-imitation](#laya-compact-imitation) | 57 |
+| [laya-compact-imitation](#laya-compact-imitation) | 59 |
 | [laya-effect-knowledge](#laya-effect-knowledge) | 3 |
 | [laya-engine-judge](#laya-engine-judge) | 5 |
 | [laya-outcome-weights](#laya-outcome-weights) | 3 |
@@ -191,7 +191,9 @@
 | [EX-171](../research/policy-learning/experiments/EX-171-laya-v11rt-training.md) | laya v11rt 학습(v10rt + 입력 수정, 1 epoch) | Completed |
 | [EX-172](../research/policy-learning/experiments/EX-172-laya-v11rtc-training.md) | laya v11rtc 학습(v10rt + 입력 수정 + 정책 교정, 1 epoch) | Completed |
 | [EX-177](../research/policy-learning/experiments/EX-177-laya-fp1-data.md) | laya fp1 학습 자료(foul-play 추적·표본·poke-engine 재렌더, CPU) | Completed |
-| [EX-178](../research/policy-learning/experiments/EX-178-laya-fp1-training.md) | laya fp1 처음부터 전체 학습(GPU 4장 DDP, 약 24시간) | Running |
+| [EX-178](../research/policy-learning/experiments/EX-178-laya-fp1-training.md) | laya fp1 처음부터 전체 학습(GPU 4장 DDP, 약 24시간) | Completed |
+| [EX-191](../research/policy-learning/experiments/EX-191-laya-v12-data.md) | laya v12 학습 자료(렌더러 v12로 v11 행 재렌더) | Completed |
+| [EX-192](../research/policy-learning/experiments/EX-192-laya-v12-training.md) | laya v12 처음부터 학습(GPU 4장 DDP, 3 epoch, 약 24시간) | Completed |
 
 ## laya-effect-knowledge
 

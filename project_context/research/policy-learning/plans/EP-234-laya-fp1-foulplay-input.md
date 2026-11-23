@@ -38,7 +38,7 @@ laya 입력을 foul-play 추적·표본과 poke-engine 계산으로 전부 바�
 - [x] D-213·EP-234·EX-177~179 등록, catalog build/check
 - [ ] 추적기 어댑터·fp1 렌더러·서빙 구현, 단위 검사
 - [x] EX-177 qualification 통과, 자료 생성·봉인
-- [ ] EX-178 DDP 검사·사전 측정·3 epoch 학습·선택·잠긴 test 평가
+- [x] EX-178 DDP 검사·사전 측정·3 epoch 학습·선택·잠긴 test 평가
 - [ ] EX-179 mock 2/2 → execute 128 → export(뷰어·보고·봉인), 뷰어 브라우저 확인
 - [ ] 결과를 EX·STATUS·catalog에 기록하고 보고
 
@@ -87,6 +87,13 @@ laya 입력을 foul-play 추적·표본과 poke-engine 계산으로 전부 바�
 - 2026-11-19 10:59 KST — 사용자 지시("v10t 모델 레더 대전", 팀 `t95bfb45561`, 18:00 KST까지)로 공식 래더를 v10t로 돌린다. 옛날 모델 래더 성능 확인용이다(D-214의 foul-play 선행 없이 사용자 지시로 실행). 서빙은 laya-play 등록 경로 그대로 `integration.laya_v10.serve_v10`(`models/v10t`, EX-161 selected, sha256 `d440b0f1…`, CPU 스레드 8, `runtime/serving-v10t.ready.json`, pid 2957061), argmax·guard 없음·usage extension 없음. 루프는 `runtime/ladder_fp1e2_cpu.sh`(READY·LABEL 인자)를 `LABEL=v10t`로 띄웠고 run 185부터다. v10rt의 같은 팀 기록(11-17, 79판 42승 37패)과 비교한다.
 
 - 2026-11-18 — EX-177 완료(06:38Z 렌더 끝, Greninja 별칭 수정·138판 재렌더, 제외 0.023%, qualification 7 518/518). EX-178 DDP 검사·사전 측정 통과, 07:2xZ 3 epoch 학습 시작(약 24.4시간).
+- 2026-11-19 — EX-178 완료(07:04Z). 선택 epoch 2(validation NLL 1.3806). 잠긴 test는 EX-167 대비 NLL +0.037·+0.024(구간 0 포함), 일치율 −0.027·−0.030. 기술 선택은 같거나 약간 낫고 교체 결정이 나쁘다. 평가 코드 `integration/laya_fp1/evaluation_fp1.py`. 다음은 EX-179 mock.
+- 2026-11-19 — 사용자 요청으로 fp1 epoch-2의 이상 판단(최대 랭크에서 랭크업 반복, 면역 상대에게 공격)을 분석했다(분석만, 코드·자료 변경 없음).
+  - 실패 기술 비율(모델 쪽 기술 사용 대비, 프로토콜 기준): EX-174 v10rt 랭크 최대 5.37%·면역 3.23%·실패 2.63% / EX-180 fp1e2 3.31%·3.37%·3.93%. 랭크 최대 반복은 v10rt에도 있었다(Iron Defense 126회).
+  - 입력: 효과 없음을 "표시 생략"으로만 나타낸다. 빈 기술 선택지(피해·효과 줄 없음)는 잠긴 test 결정의 35~37%에 있고 사람이 14~15% 고른다. 대부분 정상 기술(Roost·Recover 등 회복은 HP 변화를 효과로 적지 않음, Sucker Punch)이라 "빈칸 = 무의미"를 배울 수 없다. run 183 턴 38의 +6 Dragon Dance와 대 Corviknight Earthquake는 글자까지 같은 선택지였다.
+  - `solo opp`는 현재 HP와 0.5%p 이상 다르면 붙어(턴 끝 회복·독·반올림) 변화 기술 선택지의 31.7%에 나온다. 피해 신호로 쓸 수 없다(렌더러 결함).
+  - EX-180 면역 180회 중 138회는 그 턴 상대 교체로 생겼다(입력은 피해를 표시). fp1 선택지에는 상대 교체 시나리오가 없다. 랭크 최대 177회 중 145회는 입력이 빈 선택지로 맞게 보였는데 골랐다(선택 확률 중앙값 0.61).
+  - 사람 자료: 해당 능력치가 +6일 때 Swords Dance 29.0%(822/2,834), Iron Defense 18.7%(592/3,158), Nasty Plot 22.9%를 골랐다. 예: `smogtours-gen9ou-787895` Gliscor 미러 PP 싸움에서 +6 Swords Dance를 연속 사용(의도된 턴 넘기기). 모방 학습이 이 행동을 그대로 배운다.
 
 ## 결과 및 증거
 
