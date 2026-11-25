@@ -1,0 +1,136 @@
+#!/usr/bin/env bash
+# EX-231 (EP-250 / D-226): Official Showdown gen9ou ladder with EX-226 (Way B: calc-duel-free + 5-tier matchup:
+# + eval: mcts || vphi3 2-ply prompt injection, 100% Laya standalone final decision), OFFENSE teams ONLY
+# (4 genuine offense teams; mislabeled full-stall teams td061dd6180 & t71230b7e95 excluded).
+# Pinned to physical GPU 0 ONLY (GPUs 1, 2, 3 never touched). Stops cleanly at game boundary at 2026-11-26 13:30 KST.
+main() {
+set -u
+ROOT=/workspace
+PKG=/workspace/exports/laya-play
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+TEAMS_FILE=${TEAMS_FILE:-$PKG/app/laya_play/teams.json}
+TEAM=${TEAM:-rotate}
+ROT_STATE="$PKG/runtime/ex231-offense-rotation.json"
+TEAM_OVERRIDE="$PKG/runtime/team-ex231.override"
+STOP_FILE="$PKG/runtime/stop-ex231"
+CKPT=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-226/checkpoints/selected
+VAL_CKPT=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-221/checkpoints/selected
+GPU0_UUID="GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4"
+READY=$PKG/runtime/serving-ex226-wayb-gpu0.ready.json
+END_EPOCH=${END_EPOCH:-1795667400}   # 2026-11-26 13:30:00 KST (2026-11-26 04:30:00 UTC)
+kst() { TZ=UTC-9 date '+%H:%M:%S KST'; }
+
+next_team_info() {
+  python3 - "$TEAMS_FILE" "$ROT_STATE" "$1" <<'PY'
+import json, sys
+from pathlib import Path
+
+teams_path, state_path, mode = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3].strip()
+teams = json.loads(teams_path.read_text())
+EXCLUDE_STALL = {'tfd69993f31', 't9e3f9bd84a', 'td061dd6180', 't71230b7e95'}
+by_id = {(t.get('id') or t.get('team_id')): t for t in teams}
+offense_ids = [
+    (t.get('id') or t.get('team_id'))
+    for t in teams
+    if t.get('archetype') == 'offense' and (t.get('id') or t.get('team_id')) not in EXCLUDE_STALL
+]
+# Preferred deterministic order starting with ta199a565dc
+pref = ['ta199a565dc', 't04995ad0de', 'tef21addf17', 't94a0e30d55']
+order_canonical = [tid for tid in pref if tid in offense_ids] + [tid for tid in offense_ids if tid not in pref]
+
+if mode != 'rotate' and mode in by_id:
+    t = by_id[mode]
+    print(f"{mode}\t{t.get('archetype','?')}\t{', '.join(t.get('species',[]))}\tfixed")
+    sys.exit(0)
+
+if state_path.exists():
+    st = json.loads(state_path.read_text())
+    order = [tid for tid in st.get('order', []) if tid in order_canonical]
+    idx = int(st.get('next', 0))
+else:
+    order, idx = [], 0
+
+if len(order) != len(order_canonical):
+    order = order_canonical
+    idx = 0
+
+pos = idx % len(order)
+tid = order[pos]
+t = by_id[tid]
+state_path.write_text(json.dumps({'order': order, 'next': pos + 1, 'round': (idx // len(order)) + 1}, indent=2))
+print(f"{tid}\t{t.get('archetype','?')}\t{', '.join(t.get('species',[]))}\t{pos+1}/{len(order)}")
+PY
+}
+
+cd "$PKG"
+mkdir -p "$PKG/runtime/logs"
+rm -f "$STOP_FILE"
+pgrep -f "laya_play.bot .*--name nhy_test1629" >/dev/null && { echo "[loop] $(kst) the account is in use; stopping"; exit 1; }
+rm -f "$READY"
+
+CUDA_DEVICE_ORDER=PCI_BUS_ID \
+  CUDA_VISIBLE_DEVICES="$GPU0_UUID" \
+  OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 \
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+  PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+  "$LAYA_PY" -m integration.laya_search.serve_search \
+  --checkpoint "$CKPT" --value-checkpoint "$VAL_CKPT" \
+  --v14 --way-b --two-ply --walled-duel --no-calc-duel --iterations 50000 \
+  --model laya-ex226-wayb --device cuda --workers 4 \
+  --ready-file "$READY" >> "$PKG/runtime/logs/serving-ex226-wayb-gpu0.log" 2>&1 < /dev/null &
+SERVING_PID=$!
+SERVICE=$PKG/runtime/serving.ready.json
+[ -f "$SERVICE" ] && cp -p "$SERVICE" "$SERVICE.before-ex231"
+trap 'kill "$SERVING_PID" 2>/dev/null; wait "$SERVING_PID" 2>/dev/null || true; [ -f "$SERVICE.before-ex231" ] && mv -f "$SERVICE.before-ex231" "$SERVICE"' EXIT
+
+for i in $(seq 300); do
+  [ -f "$READY" ] && break
+  kill -0 "$SERVING_PID" 2>/dev/null || { echo "[loop] $(kst) serving died"; exit 1; }
+  sleep 1
+done
+[ -f "$READY" ] || { echo "[loop] $(kst) serving not ready"; exit 1; }
+cp -f "$READY" "$SERVICE"
+echo "[loop] $(kst) EX-231 laya-ex226-wayb OFFENSE-ONLY (EX-226 Way B, GPU 0 cuda, workers=4) pid $SERVING_PID ready; loop until 2026-11-26 13:30 KST (epoch $END_EPOCH), team mode=$TEAM"
+
+fails=0 n=0
+while :; do
+  if [ -f "$STOP_FILE" ]; then
+    echo "[loop] $(kst) stop file detected after run $n -> stopping cleanly!"
+    rm -f "$STOP_FILE"
+    break
+  fi
+  now_ts=$(date -u +%s)
+  if (( now_ts >= END_EPOCH )); then
+    echo "[loop] $(kst) deadline 13:30 KST reached after run $n -> stopping cleanly!"
+    break
+  fi
+  kill -0 "$SERVING_PID" 2>/dev/null || { echo "[loop] $(kst) serving exited; stopping"; break; }
+
+  mode="$TEAM"
+  if [ -f "$TEAM_OVERRIDE" ]; then
+    ov=$(tr -d ' \r\n' < "$TEAM_OVERRIDE")
+    [ -n "$ov" ] && mode="$ov"
+  fi
+  IFS=$'\t' read -r cur_team cur_arch cur_sp cur_slot <<< "$(next_team_info "$mode")"
+
+  n=$((n + 1))
+  echo "[loop] $(kst) run $n: laya-ex226-wayb (EX-226 Way B, GPU 0), team $cur_team [$cur_slot] ($cur_arch: $cur_sp)"
+  LADDER=yes SEARCH_MINUTES=30 ./official.sh --games-limit 1 --teams "$TEAMS_FILE" --team "$cur_team" --serving "$READY" 2>&1 \
+      | grep -viE --line-buffered "password|assertion" \
+      | grep -E --line-buffered "^\[bot\]|^\[official\] error|Traceback|Error"
+  rc=${PIPESTATUS[0]}
+  if (( rc != 0 )); then
+    fails=$((fails + 1)); echo "[loop] $(kst) run $n exited $rc (consecutive failures $fails)"
+    (( fails >= 3 )) && { echo "[loop] $(kst) stopping after 3 consecutive failures"; break; }
+    sleep 30
+  else
+    fails=0
+  fi
+  PYTHONPATH=app PYTHONDONTWRITEBYTECODE=1 python3 -m laya_play.ladder_replays --user nhy_test1629 2>&1 | tail -1
+  sleep 5
+done
+PYTHONPATH=app PYTHONDONTWRITEBYTECODE=1 python3 -m laya_play.ladder_replays --user nhy_test1629 --search 2>&1 | tail -1
+echo "[loop] $(kst) EX-231 offense ladder done"
+}
+main "$@"; exit $?

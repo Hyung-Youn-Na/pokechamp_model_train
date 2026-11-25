@@ -7,6 +7,7 @@
 | 분류 | 기록 수 |
 |---|---|
 | [입력 / 렌더러](#입력--렌더러) | 5 |
+| [입력·표현 / 렌더러](#입력표현--렌더러) | 9 |
 | [자료 / MCTS](#자료--mcts) | 1 |
 | [자료 / 렌더러](#자료--렌더러) | 1 |
 | [자료 / 리플레이 복원](#자료--리플레이-복원) | 5 |
@@ -21,23 +22,27 @@
 | [추론 / 입력 표현](#추론--입력-표현) | 8 |
 | [추론 / 전략 planner](#추론--전략-planner) | 30 |
 | [추론 / 행렬 탐색](#추론--행렬-탐색) | 1 |
-| [탐색 / MCTS](#탐색--mcts) | 5 |
+| [탐색 / MCTS](#탐색--mcts) | 35 |
 | [평가 / System1](#평가--system1) | 3 |
-| [평가 / 고정 대진](#평가--고정-대진) | 127 |
+| [평가 / foul-play](#평가--foul-play) | 1 |
+| [평가 / 고정 대진](#평가--고정-대진) | 132 |
 | [평가 / 고정대진32경기](#평가--고정대진32경기) | 2 |
 | [평가 / 독립 선택형](#평가--독립-선택형) | 56 |
-| [평가 / 배틀](#평가--배틀) | 99 |
+| [평가 / 래더](#평가--래더) | 12 |
+| [평가 / 배틀](#평가--배틀) | 103 |
 | [평가 / 배틀32](#평가--배틀32) | 1 |
 | [평가 / 서빙 기술 검증](#평가--서빙-기술-검증) | 1 |
 | [평가 / 오프라인 QA](#평가--오프라인-qa) | 5 |
+| [평가 / 오프라인 진단](#평가--오프라인-진단) | 1 |
 | [평가 / 정보 제거](#평가--정보-제거) | 9 |
 | [학습 / LoRA](#학습--lora) | 20 |
 | [학습 / RLCD](#학습--rlcd) | 7 |
-| [학습 / SFT](#학습--sft) | 1 |
+| [학습 / SFT](#학습--sft) | 4 |
 | [학습 / System1](#학습--system1) | 3 |
 | [학습 / laya](#학습--laya) | 66 |
 | [학습 / soft-CE](#학습--soft-ce) | 52 |
-| [학습 / 가치함수](#학습--가치함수) | 4 |
+| [학습 / 가치망](#학습--가치망) | 3 |
+| [학습 / 가치함수](#학습--가치함수) | 7 |
 | [학습 / 강화학습](#학습--강화학습) | 3 |
 | [학습 / 공동 q](#학습--공동-q) | 1 |
 | [학습 / 규칙 데이터 생성](#학습--규칙-데이터-생성) | 3 |
@@ -51,7 +56,8 @@
 | [학습 / 자기대국](#학습--자기대국) | 18 |
 | [학습 / 정책 강화학습](#학습--정책-강화학습) | 3 |
 | [학습 / 조건부 KO 판정](#학습--조건부-ko-판정) | 2 |
-| [학습 / 증류](#학습--증류) | 7 |
+| [학습 / 증류](#학습--증류) | 11 |
+| [학습 / 증류·재정렬](#학습--증류재정렬) | 5 |
 | [학습 / 학습 데이터 생성](#학습--학습-데이터-생성) | 2 |
 | [학습 / 합성 규칙 자료](#학습--합성-규칙-자료) | 2 |
 | [학습 / 행동가치](#학습--행동가치) | 10 |
@@ -65,6 +71,20 @@
 | [EP-240](../research/policy-learning/plans/EP-240-laya-v13-input-bugfixes.md) | laya 렌더러 v13 입력 결함 수정(폼 스펙·테라 방어·선공 Roost·Ivy Cudgel)과 검증 | Completed |
 | [EP-241](../research/policy-learning/plans/EP-241-laya-v13-zeroshot-vs-foulplay.md) | laya v13 입력 교정(무재학습 EX-200) 대 foul-play Blim 128경기(시간 제한 없음) | Completed |
 | [EX-205](../research/policy-learning/experiments/EX-205-laya-v13-zeroshot-vs-foulplay-unlimited.md) | laya v13 입력 교정(무재학습 EX-200) argmax 대 foul-play, Blim 128경기, 시간 제한 없음(CPU) | Completed |
+
+## 입력·표현 / 렌더러
+
+| ID | 제목 | 상태 |
+|---|---|---|
+| [D-220](../research/policy-learning/decisions/D-220-laya-recovery-matchup-2bv2-and-v14.md) | 상대 회복·흡수 기반 대면 불리 대응: 2-B v2 탐색 개선(CPU 서빙) 및 v14 입력·재학습 병행 | Accepted |
+| [D-221](../research/policy-learning/decisions/D-221-laya-main-waya-mcts50k-vphi-v2.md) | Laya 메인 합의형 블런더 가드(방식 A), MCTS 50k 심화, 상성·도구·특성·기술 반영 가치망 V_phi v2 및 렌더러 무효 대면 보완 | Accepted |
+| [D-222](../research/policy-learning/decisions/D-222-laya-way-c1-v14-walled-teacher50k.md) | 방식 C-1: v14+walled_duel 입력 및 Hard-Example MCTS 50k + EX-216 V_phi v2 교사 증류 학습 | Accepted |
+| [EP-244](../research/policy-learning/plans/EP-244-laya-search-2bv2-and-v14-training.md) | 상대 회복·흡수 대면 대응: 2-B v2 탐색 개선(CPU 서빙) 및 v14 입력·MCTS-5k Q 재학습 병행 (GPU 0·1 전용) | Paused |
+| [EP-245](../research/policy-learning/plans/EP-245-laya-main-blunder-veto-mcts50k-vphi-v2.md) | Laya 메인 합의형 블런더 가드(방식 A): 상성·도구·특성·기술 반영 V_phi v2 보강 및 MCTS 50k 결합 (GPU 0·1 전용) | Completed |
+| [EP-246](../research/policy-learning/plans/EP-246-laya-way-c1-v14-walled-teacher50k-distill.md) | 방식 C-1: v14+walled_duel 입력 및 Hard-Example MCTS 50k + EX-216 V_phi v2 교사 증류 학습 (GPU 0·1 전용) | Paused |
+| [EX-213](../research/policy-learning/experiments/EX-213-laya-v14-data-and-mcts5k-training.md) | v14 회복·흡수 인지 입력 렌더러 데이터 생성 및 MCTS-5k Q 단일 모델 DDP 학습(GPU 0·1) | Stopped |
+| [EX-216](../research/policy-learning/experiments/EX-216-laya-state-value-v2-matchup-train.md) | 상성·도구·특성·기술 기계적 매치업 피처 반영 상태가치망 V_phi v2 학습 및 검증 (GPU 0) | Completed |
+| [EX-218](../research/policy-learning/experiments/EX-218-laya-way-c1-v14-walled-teacher50k-train.md) | 방식 C-1: v14+walled_duel 데이터·Hard-Example MCTS 50k + EX-216 V_phi v2 교사 타깃 생성 및 DDP 학습 (GPU 0·1) | Stopped |
 
 ## 자료 / MCTS
 
@@ -392,10 +412,40 @@
 | ID | 제목 | 상태 |
 |---|---|---|
 | [D-219](../research/policy-learning/decisions/D-219-laya-multiturn-search-and-value.md) | 1턴 시야·정적 가치 편향 극복을 위한 다중턴 탐색(2-A)·신경망 상태가치(2-B)·경량 MCTS-Q 재정렬 학습(1-B) (GPU 0·1 전용) | Accepted |
+| [D-220](../research/policy-learning/decisions/D-220-laya-recovery-matchup-2bv2-and-v14.md) | 상대 회복·흡수 기반 대면 불리 대응: 2-B v2 탐색 개선(CPU 서빙) 및 v14 입력·재학습 병행 | Accepted |
+| [D-221](../research/policy-learning/decisions/D-221-laya-main-waya-mcts50k-vphi-v2.md) | Laya 메인 합의형 블런더 가드(방식 A), MCTS 50k 심화, 상성·도구·특성·기술 반영 가치망 V_phi v2 및 렌더러 무효 대면 보완 | Accepted |
+| [D-222](../research/policy-learning/decisions/D-222-laya-way-c1-v14-walled-teacher50k.md) | 방식 C-1: v14+walled_duel 입력 및 Hard-Example MCTS 50k + EX-216 V_phi v2 교사 증류 학습 | Accepted |
+| [D-223](../research/policy-learning/decisions/D-223-vphi-v3-future-horizon-and-multiturn-search.md) | 미래 영향력 반영 상태가치망 V_phi v3 및 다수 턴 2-ply 탐색 · Way A v2 가드레일 | Accepted |
+| [D-224](../research/policy-learning/decisions/D-224-batch-b-waya-v2-ladder-wayc1-clean-wayb.md) | 배치 B 병행 실행: EX-223 방식 A v2 공식 래더(EX-224) + 정화 교사 방식 C-1(EX-225) → 프롬프트 도구 주입 방식 B(EX-226) DDP 자동 연쇄 | Accepted |
+| [D-225](../research/policy-learning/decisions/D-225-ep249-ex226-wayb-ex225-c1clean-blim128-ladder.md) | EP-249: EX-226(방식 B) · EX-225(방식 C-1 정화판) Blim 128 병렬 배틀 평가 및 EX-226 공식 래더 병행 | Accepted |
+| [D-226](../research/policy-learning/decisions/D-226-ep250-ex226-wayb-offense-ladder.md) | EP-250: EX-226 방식 B Offense 전용 공식 Showdown 래더 대전 (13:30 KST까지) | Accepted |
 | [EP-243](../research/policy-learning/plans/EP-243-laya-multiturn-search-value-distill.md) | 다중턴 온라인 탐색(2-A)·신경망 상태가치(2-B)·경량 MCTS-Q 재정렬 학습(1-B) (GPU 0·1 전용) | Active |
+| [EP-244](../research/policy-learning/plans/EP-244-laya-search-2bv2-and-v14-training.md) | 상대 회복·흡수 대면 대응: 2-B v2 탐색 개선(CPU 서빙) 및 v14 입력·MCTS-5k Q 재학습 병행 (GPU 0·1 전용) | Paused |
+| [EP-245](../research/policy-learning/plans/EP-245-laya-main-blunder-veto-mcts50k-vphi-v2.md) | Laya 메인 합의형 블런더 가드(방식 A): 상성·도구·특성·기술 반영 V_phi v2 보강 및 MCTS 50k 결합 (GPU 0·1 전용) | Completed |
+| [EP-246](../research/policy-learning/plans/EP-246-laya-way-c1-v14-walled-teacher50k-distill.md) | 방식 C-1: v14+walled_duel 입력 및 Hard-Example MCTS 50k + EX-216 V_phi v2 교사 증류 학습 (GPU 0·1 전용) | Paused |
+| [EP-247](../research/policy-learning/plans/EP-247-vphi-v3-future-horizon-and-multiturn-search.md) | 미래 영향력 반영 가치함수 V_phi v3 및 2-ply 다수 턴 탐색 · Way A v2 검증 (GPU 0·1 전용) | Completed |
+| [EP-248](../research/policy-learning/plans/EP-248-batch-b-waya-v2-ladder-wayc1-clean-wayb.md) | 배치 B: EX-223 방식 A v2 공식 래더 병행 + 정화 방식 C-1 → 방식 B GPU 0·1 DDP 자동 연쇄 | Completed |
+| [EP-249](../research/policy-learning/plans/EP-249-ex226-wayb-and-ex225-c1clean-blim128-and-ladder.md) | EX-226(방식 B) · EX-225(방식 C-1 정화판) Blim 128 병렬 배틀 평가 및 EX-226 공식 래더 병행 | Completed |
+| [EP-250](../research/policy-learning/plans/EP-250-ex226-wayb-offense-ladder.md) | EX-226 방식 B Offense 전용 공식 Showdown gen9ou 래더 (13:30 KST까지) | Active |
 | [EX-206](../research/policy-learning/experiments/EX-206-laya-search-2a-vs-foulplay-unlimited.md) | 2-A 온라인 다중턴 탐색(EX-200 + v13 + GPU 0 서빙 + MCTS 5k 사전확률 융합) 대 foul-play, Blim 128경기(시간 제한 없음) | Completed |
-| [EX-208](../research/policy-learning/experiments/EX-208-laya-search-2b-vs-foulplay-unlimited.md) | 2-B 온라인 다중턴 탐색 + 신경망 상태가치 V_phi 결합 대 foul-play, Blim 128경기(시간 제한 없음) | Running |
-| [EX-209](../research/policy-learning/experiments/EX-209-laya-mcts5k-q-rerank-1b-train.md) | 1-B 오프라인 경량 MCTS-5k 루트 Q 후보 재정렬 타깃 생성 및 v13 단일 모델 학습(GPU 0·1) | Running |
+| [EX-208](../research/policy-learning/experiments/EX-208-laya-search-2b-vs-foulplay-unlimited.md) | 2-B 온라인 다중턴 탐색 + 신경망 상태가치 V_phi 결합 대 foul-play, Blim 128경기(시간 제한 없음) | Completed |
+| [EX-209](../research/policy-learning/experiments/EX-209-laya-mcts5k-q-rerank-1b-train.md) | 1-B 오프라인 경량 MCTS-5k 루트 Q 후보 재정렬 타깃 생성 및 v13 단일 모델 학습(GPU 0·1) | Completed |
+| [EX-211](../research/policy-learning/experiments/EX-211-laya-search2b-ladder.md) | 2-B 온라인 다중턴 탐색 + 상태가치 V_phi(EX-208) 공식 Showdown gen9ou 래더 대전(GPU 1 서빙, 2026-11-24 13:00 KST까지) | Stopped |
+| [EX-212](../research/policy-learning/experiments/EX-212-laya-search-2bv2-vs-foulplay-unlimited.md) | 2-B v2 탐색 개선(foe PP 파싱 수정·스케일 정규화·duel lose 완화·Taunt 흡수 보정, CPU 서빙) 대 foul-play, Blim 128경기 | Stopped |
+| [EX-214](../research/policy-learning/experiments/EX-214-laya-v14-search2bv2-vs-foulplay-unlimited.md) | v14 학습 모델(EX-213) + 2-B v2 온라인 탐색 결합 대 foul-play, Blim 128경기 | Planned |
+| [EX-215](../research/policy-learning/experiments/EX-215-laya-search2bv2-ladder.md) | 2-B v2 탐색 개선(EX-212 동일 설정, CPU 서빙) 공식 Showdown gen9ou 래더 대전(2026-11-24 13:00 KST까지) | Stopped |
+| [EX-217](../research/policy-learning/experiments/EX-217-laya-main-waya-mcts50k-vphiv2-vs-foulplay.md) | 방식 A(Laya 메인 합의형 블런더 가드 + MCTS 50k + V_phi v2 + 렌더러 무효 대면 수정) 대 foul-play, Blim 128경기 | Completed |
+| [EX-218](../research/policy-learning/experiments/EX-218-laya-way-c1-v14-walled-teacher50k-train.md) | 방식 C-1: v14+walled_duel 데이터·Hard-Example MCTS 50k + EX-216 V_phi v2 교사 타깃 생성 및 DDP 학습 (GPU 0·1) | Stopped |
+| [EX-220](../research/policy-learning/experiments/EX-220-laya-waya-mcts50k-ladder.md) | EX-217 방식 A(Laya 메인 + MCTS 50k + EX-216 V_phi v2 + walled_duel, CPU 서빙) 공식 Showdown gen9ou 래더 대전 (EX-218 학습 완료까지) | Stopped |
+| [EX-222](../research/policy-learning/experiments/EX-222-multiturn-2ply-waya-v2-ab.md) | 다수 턴 2-ply Top-K 탐색기 + Way A v2 가드레일 오프라인 A/B 진단 | Completed |
+| [EX-223](../research/policy-learning/experiments/EX-223-laya-waya-v2-vphiv3-2ply-vs-foulplay.md) | 방식 A v2(미래인지 V_phi v3 + 2-ply Top-K + MCTS 50k + 회복/Protect 가드레일) 대 foul-play, Blim 128경기 | Completed |
+| [EX-224](../research/policy-learning/experiments/EX-224-laya-waya-v2-vphiv3-2ply-ladder.md) | EX-223 방식 A v2(V_phi v3 + 2-ply + MCTS 50k + 회복/Protect 가드레일, CPU 서빙) 공식 Showdown gen9ou 래더 대전 | Stopped |
+| [EX-225](../research/policy-learning/experiments/EX-225-laya-way-c1-clean-vphiv3-2ply-train.md) | 방식 C-1 오염 제거판: EX-221 V_phi v3 + 2-ply 정화 교사 증류 학습 (GPU 0·1 DDP) | Completed |
+| [EX-226](../research/policy-learning/experiments/EX-226-laya-way-b-tool-inject-train.md) | 방식 B: calc-duel-free + MCTS50k/V_phi v3 5단계 matchup & eval 프롬프트 주입 + 35% Tool Dropout + 인간 앵커 보존 학습 (GPU 0·1 DDP) | Completed |
+| [EX-227](../research/policy-learning/experiments/EX-227-laya-ex226-wayb-vs-foulplay-blim128.md) | EX-226 방식 B(calc-duel-free + 5단계 matchup & eval 프롬프트 주입, Laya 단독 최종결정) 대 foul-play Blim 128 (GPU 0) | Completed |
+| [EX-229](../research/policy-learning/experiments/EX-229-laya-ex225-waya-v2-noduel-vs-foulplay-blim128.md) | EX-225 방식 C-1 정화판 + Way A v2(calc-duel-free + MCTS 50k + V_phi v3 2-ply) 대 foul-play Blim 128 (GPU 1) | Completed |
+| [EX-230](../research/policy-learning/experiments/EX-230-laya-ex226-wayb-ladder.md) | EX-226 방식 B(calc-duel-free + 5단계 matchup & eval 프롬프트 주입, CPU 서빙) 공식 Showdown gen9ou 래더 대전 | Completed |
+| [EX-231](../research/policy-learning/experiments/EX-231-laya-ex226-wayb-offense-ladder.md) | EX-226 방식 B Offense 전용(4팀 순환, GPU 0 서빙) 공식 Showdown gen9ou 래더 대전 | Running |
 
 ## 평가 / System1
 
@@ -404,6 +454,12 @@
 | [D-186](../research/rule-learning/decisions/D-186-jevk5-system1-battle32.md) | System One JevK5 선택 어댑터 실전32 | Accepted |
 | [EP-211](../research/rule-learning/plans/EP-211-jevk5-system1-battle32.md) | System One JevK5 선택 어댑터 실전32 | Completed |
 | [EX-123](../research/rule-learning/experiments/EX-123-jevk5-system1-battle32.md) | System One JevK5 선택 어댑터 실전32 | Completed |
+
+## 평가 / foul-play
+
+| ID | 제목 | 상태 |
+|---|---|---|
+| [EX-223](../research/policy-learning/experiments/EX-223-laya-waya-v2-vphiv3-2ply-vs-foulplay.md) | 방식 A v2(미래인지 V_phi v3 + 2-ply Top-K + MCTS 50k + 회복/Protect 가드레일) 대 foul-play, Blim 128경기 | Completed |
 
 ## 평가 / 고정 대진
 
@@ -448,6 +504,7 @@
 | [D-203](../research/policy-learning/decisions/D-203-laya-human-teams-v7-v8-v9.md) | laya v7t·v8t·v9t를 사람이 짠 완성 팀으로 Abyssal과 비교(GPU0·1·2) | Accepted |
 | [D-204](../research/policy-learning/decisions/D-204-laya-renderer-v10-all-info.md) | laya 렌더러 v10: 지금까지의 정보 전부 + lock + 전략 정보, 2,048토큰 | Accepted |
 | [D-205](../research/policy-learning/decisions/D-205-laya-switch-read-and-mixing.md) | laya 교체 읽기 상대(정직함 측정)와 교체 갈림길 섞기(재학습 없음) | Accepted |
+| [D-225](../research/policy-learning/decisions/D-225-ep249-ex226-wayb-ex225-c1clean-blim128-ladder.md) | EP-249: EX-226(방식 B) · EX-225(방식 C-1 정화판) Blim 128 병렬 배틀 평가 및 EX-226 공식 래더 병행 | Accepted |
 | [EP-022](../research/input-and-memory/plans/EP-022-calculator-entry-calcfix32.md) | 계산기 등장 특성 교정 및 동일32판 | Completed — 사용자 중단 대안 포함 완료; 성능 비교 미완료 |
 | [EP-027](../research/input-and-memory/plans/EP-027-external-memory-repeat32.md) | 외부 메모리 장애 후 동일 조건32판 재실험 | Completed |
 | [EP-075](../research/input-and-memory/plans/EP-075-jev-v3-abyssal32.md) | JEV v3 동일32경기와 v2 전후 비교 | Blocked |
@@ -485,6 +542,7 @@
 | [EP-227](../research/policy-learning/plans/EP-227-laya-renderer-v10.md) | laya 렌더러 v10(정보 전부 + lock + 전략, 2,048토큰) 학습과 Abyssal 배틀 | Completed |
 | [EP-228](../research/policy-learning/plans/EP-228-laya-switch-read-and-mixing.md) | laya 교체 읽기 상대(정직함 측정)와 v8lt 교체 갈림길 섞기 배틀(재학습 없음, GPU1~3) | Completed |
 | [EP-230](../research/policy-learning/plans/EP-230-laya-ladder-r1500-v10.md) | 최근 래더(레이팅 1500 이상) 리플레이 자료와 v10 학습(GPU 4장 DDP), Abyssal 배틀 | Completed |
+| [EP-249](../research/policy-learning/plans/EP-249-ex226-wayb-and-ex225-c1clean-blim128-and-ladder.md) | EX-226(방식 B) · EX-225(방식 C-1 정화판) Blim 128 병렬 배틀 평가 및 EX-226 공식 래더 병행 | Completed |
 | [EX-033](../research/input-and-memory/experiments/EX-033-external-memory-repeat32.md) | 외부 메모리 장애 후 동일 조건32판 | Completed |
 | [EX-046](../research/lead-policy/experiments/EX-046-async-official-lead.md) | 비동기 교정본 공식 관측 B2 선봉 본실험 | Completed |
 | [EX-054](../research/input-and-memory/experiments/EX-054-jev-v3-retry32.md) | 재시도3회 적용 JEV v3 동일32경기 | Incomplete |
@@ -536,6 +594,9 @@
 | [EX-163](../research/policy-learning/experiments/EX-163-laya-v8lt-vs-switch-reader.md) | laya v8lt argmax 대 교체 읽기 상대(abyssal-read), EX-120 일정 128경기(GPU1) | Completed |
 | [EX-164](../research/policy-learning/experiments/EX-164-laya-v8lt-switch-mixing.md) | laya v8lt 교체 갈림길 섞기(재학습 없음): 대 Abyssal·대 교체 읽기 상대, 각 128경기(GPU2·GPU3) | Completed |
 | [EX-168](../research/policy-learning/experiments/EX-168-laya-v10t-v10rt-battle256.md) | laya v10t 대 v10rt(최근 래더 자료 추가) 같은 실행 256경기(GPU0, EX-120 일정) | Completed |
+| [EX-227](../research/policy-learning/experiments/EX-227-laya-ex226-wayb-vs-foulplay-blim128.md) | EX-226 방식 B(calc-duel-free + 5단계 matchup & eval 프롬프트 주입, Laya 단독 최종결정) 대 foul-play Blim 128 (GPU 0) | Completed |
+| [EX-228](../research/policy-learning/experiments/EX-228-laya-ex225-c1clean-standalone-vs-foulplay-blim128.md) | EX-225 방식 C-1 정화판 단독 무탐색(v14+walled_duel) 대 foul-play Blim 128 (GPU 1) | Completed |
+| [EX-229](../research/policy-learning/experiments/EX-229-laya-ex225-waya-v2-noduel-vs-foulplay-blim128.md) | EX-225 방식 C-1 정화판 + Way A v2(calc-duel-free + MCTS 50k + V_phi v3 2-ply) 대 foul-play Blim 128 (GPU 1) | Completed |
 
 ## 평가 / 고정대진32경기
 
@@ -604,6 +665,23 @@
 | [EX-171](../research/policy-learning/experiments/EX-171-laya-v11rt-training.md) | laya v11rt 학습(v10rt + 입력 수정, 1 epoch) | Completed |
 | [EX-172](../research/policy-learning/experiments/EX-172-laya-v11rtc-training.md) | laya v11rtc 학습(v10rt + 입력 수정 + 정책 교정, 1 epoch) | Completed |
 | [EX-178](../research/policy-learning/experiments/EX-178-laya-fp1-training.md) | laya fp1 처음부터 전체 학습(GPU 4장 DDP, 약 24시간) | Completed |
+
+## 평가 / 래더
+
+| ID | 제목 | 상태 |
+|---|---|---|
+| [D-224](../research/policy-learning/decisions/D-224-batch-b-waya-v2-ladder-wayc1-clean-wayb.md) | 배치 B 병행 실행: EX-223 방식 A v2 공식 래더(EX-224) + 정화 교사 방식 C-1(EX-225) → 프롬프트 도구 주입 방식 B(EX-226) DDP 자동 연쇄 | Accepted |
+| [D-225](../research/policy-learning/decisions/D-225-ep249-ex226-wayb-ex225-c1clean-blim128-ladder.md) | EP-249: EX-226(방식 B) · EX-225(방식 C-1 정화판) Blim 128 병렬 배틀 평가 및 EX-226 공식 래더 병행 | Accepted |
+| [D-226](../research/policy-learning/decisions/D-226-ep250-ex226-wayb-offense-ladder.md) | EP-250: EX-226 방식 B Offense 전용 공식 Showdown 래더 대전 (13:30 KST까지) | Accepted |
+| [EP-248](../research/policy-learning/plans/EP-248-batch-b-waya-v2-ladder-wayc1-clean-wayb.md) | 배치 B: EX-223 방식 A v2 공식 래더 병행 + 정화 방식 C-1 → 방식 B GPU 0·1 DDP 자동 연쇄 | Completed |
+| [EP-249](../research/policy-learning/plans/EP-249-ex226-wayb-and-ex225-c1clean-blim128-and-ladder.md) | EX-226(방식 B) · EX-225(방식 C-1 정화판) Blim 128 병렬 배틀 평가 및 EX-226 공식 래더 병행 | Completed |
+| [EP-250](../research/policy-learning/plans/EP-250-ex226-wayb-offense-ladder.md) | EX-226 방식 B Offense 전용 공식 Showdown gen9ou 래더 (13:30 KST까지) | Active |
+| [EX-211](../research/policy-learning/experiments/EX-211-laya-search2b-ladder.md) | 2-B 온라인 다중턴 탐색 + 상태가치 V_phi(EX-208) 공식 Showdown gen9ou 래더 대전(GPU 1 서빙, 2026-11-24 13:00 KST까지) | Stopped |
+| [EX-215](../research/policy-learning/experiments/EX-215-laya-search2bv2-ladder.md) | 2-B v2 탐색 개선(EX-212 동일 설정, CPU 서빙) 공식 Showdown gen9ou 래더 대전(2026-11-24 13:00 KST까지) | Stopped |
+| [EX-220](../research/policy-learning/experiments/EX-220-laya-waya-mcts50k-ladder.md) | EX-217 방식 A(Laya 메인 + MCTS 50k + EX-216 V_phi v2 + walled_duel, CPU 서빙) 공식 Showdown gen9ou 래더 대전 (EX-218 학습 완료까지) | Stopped |
+| [EX-224](../research/policy-learning/experiments/EX-224-laya-waya-v2-vphiv3-2ply-ladder.md) | EX-223 방식 A v2(V_phi v3 + 2-ply + MCTS 50k + 회복/Protect 가드레일, CPU 서빙) 공식 Showdown gen9ou 래더 대전 | Stopped |
+| [EX-230](../research/policy-learning/experiments/EX-230-laya-ex226-wayb-ladder.md) | EX-226 방식 B(calc-duel-free + 5단계 matchup & eval 프롬프트 주입, CPU 서빙) 공식 Showdown gen9ou 래더 대전 | Completed |
+| [EX-231](../research/policy-learning/experiments/EX-231-laya-ex226-wayb-offense-ladder.md) | EX-226 방식 B Offense 전용(4팀 순환, GPU 0 서빙) 공식 Showdown gen9ou 래더 대전 | Running |
 
 ## 평가 / 배틀
 
@@ -706,8 +784,12 @@
 | [EX-204](../research/policy-learning/experiments/EX-204-laya-engine-value-ladder-loss-analysis.md) | EX-203 래더 고레이팅(1500 이상) 패배 원인 분석(CPU) | Completed |
 | [EX-205](../research/policy-learning/experiments/EX-205-laya-v13-zeroshot-vs-foulplay-unlimited.md) | laya v13 입력 교정(무재학습 EX-200) argmax 대 foul-play, Blim 128경기, 시간 제한 없음(CPU) | Completed |
 | [EX-206](../research/policy-learning/experiments/EX-206-laya-search-2a-vs-foulplay-unlimited.md) | 2-A 온라인 다중턴 탐색(EX-200 + v13 + GPU 0 서빙 + MCTS 5k 사전확률 융합) 대 foul-play, Blim 128경기(시간 제한 없음) | Completed |
-| [EX-208](../research/policy-learning/experiments/EX-208-laya-search-2b-vs-foulplay-unlimited.md) | 2-B 온라인 다중턴 탐색 + 신경망 상태가치 V_phi 결합 대 foul-play, Blim 128경기(시간 제한 없음) | Running |
-| [EX-210](../research/policy-learning/experiments/EX-210-laya-mcts5k-q-rerank-1b-vs-foulplay-unlimited.md) | 1-B 오프라인 MCTS-5k Q 재정렬 학습 모델(EX-209, v13 단일 forward) 대 foul-play, Blim 128경기(시간 제한 없음) | Planned |
+| [EX-208](../research/policy-learning/experiments/EX-208-laya-search-2b-vs-foulplay-unlimited.md) | 2-B 온라인 다중턴 탐색 + 신경망 상태가치 V_phi 결합 대 foul-play, Blim 128경기(시간 제한 없음) | Completed |
+| [EX-210](../research/policy-learning/experiments/EX-210-laya-mcts5k-q-rerank-1b-vs-foulplay-unlimited.md) | 1-B 오프라인 MCTS-5k Q 재정렬 학습 모델(EX-209, v13 단일 forward) 대 foul-play, Blim 128경기(시간 제한 없음) | Completed |
+| [EX-212](../research/policy-learning/experiments/EX-212-laya-search-2bv2-vs-foulplay-unlimited.md) | 2-B v2 탐색 개선(foe PP 파싱 수정·스케일 정규화·duel lose 완화·Taunt 흡수 보정, CPU 서빙) 대 foul-play, Blim 128경기 | Stopped |
+| [EX-214](../research/policy-learning/experiments/EX-214-laya-v14-search2bv2-vs-foulplay-unlimited.md) | v14 학습 모델(EX-213) + 2-B v2 온라인 탐색 결합 대 foul-play, Blim 128경기 | Planned |
+| [EX-217](../research/policy-learning/experiments/EX-217-laya-main-waya-mcts50k-vphiv2-vs-foulplay.md) | 방식 A(Laya 메인 합의형 블런더 가드 + MCTS 50k + V_phi v2 + 렌더러 무효 대면 수정) 대 foul-play, Blim 128경기 | Completed |
+| [EX-219](../research/policy-learning/experiments/EX-219-laya-way-c1-vs-foulplay-unlimited.md) | 방식 C-1 학습 모델(EX-218, v14+walled_duel) 대 foul-play, Blim 128경기 | Planned |
 
 ## 평가 / 배틀32
 
@@ -730,6 +812,12 @@
 | [EP-169](../research/rule-learning/plans/EP-169-showdown-ruleqa.md) | Showdown 규칙 Q&A·State 데이터셋 v1 | Completed |
 | [EP-173](../research/rule-learning/plans/EP-173-tacit-ruleqa-lora.md) | Tacit 규칙 Q&A LoRA | Completed |
 | [EX-107](../research/rule-learning/experiments/EX-107-tacit-ruleqa-lora.md) | Tacit-9B 규칙 Q&A LoRA | Completed |
+
+## 평가 / 오프라인 진단
+
+| ID | 제목 | 상태 |
+|---|---|---|
+| [EX-222](../research/policy-learning/experiments/EX-222-multiturn-2ply-waya-v2-ab.md) | 다수 턴 2-ply Top-K 탐색기 + Way A v2 가드레일 오프라인 A/B 진단 | Completed |
 
 ## 평가 / 정보 제거
 
@@ -786,7 +874,10 @@
 
 | ID | 제목 | 상태 |
 |---|---|---|
+| [D-224](../research/policy-learning/decisions/D-224-batch-b-waya-v2-ladder-wayc1-clean-wayb.md) | 배치 B 병행 실행: EX-223 방식 A v2 공식 래더(EX-224) + 정화 교사 방식 C-1(EX-225) → 프롬프트 도구 주입 방식 B(EX-226) DDP 자동 연쇄 | Accepted |
+| [EP-248](../research/policy-learning/plans/EP-248-batch-b-waya-v2-ladder-wayc1-clean-wayb.md) | 배치 B: EX-223 방식 A v2 공식 래더 병행 + 정화 방식 C-1 → 방식 B GPU 0·1 DDP 자동 연쇄 | Completed |
 | [EX-107](../research/rule-learning/experiments/EX-107-tacit-ruleqa-lora.md) | Tacit-9B 규칙 Q&A LoRA | Completed |
+| [EX-226](../research/policy-learning/experiments/EX-226-laya-way-b-tool-inject-train.md) | 방식 B: calc-duel-free + MCTS50k/V_phi v3 5단계 matchup & eval 프롬프트 주입 + 35% Tool Dropout + 인간 앵커 보존 학습 (GPU 0·1 DDP) | Completed |
 
 ## 학습 / System1
 
@@ -924,14 +1015,25 @@
 | [EX-172](../research/policy-learning/experiments/EX-172-laya-v11rtc-training.md) | laya v11rtc 학습(v10rt + 입력 수정 + 정책 교정, 1 epoch) | Completed |
 | [EX-178](../research/policy-learning/experiments/EX-178-laya-fp1-training.md) | laya fp1 처음부터 전체 학습(GPU 4장 DDP, 약 24시간) | Completed |
 
+## 학습 / 가치망
+
+| ID | 제목 | 상태 |
+|---|---|---|
+| [D-223](../research/policy-learning/decisions/D-223-vphi-v3-future-horizon-and-multiturn-search.md) | 미래 영향력 반영 상태가치망 V_phi v3 및 다수 턴 2-ply 탐색 · Way A v2 가드레일 | Accepted |
+| [EP-247](../research/policy-learning/plans/EP-247-vphi-v3-future-horizon-and-multiturn-search.md) | 미래 영향력 반영 가치함수 V_phi v3 및 2-ply 다수 턴 탐색 · Way A v2 검증 (GPU 0·1 전용) | Completed |
+| [EX-221](../research/policy-learning/experiments/EX-221-laya-state-value-v3-future-train.md) | 미래 영향력 반영 상태가치망 V_phi v3 데이터 구축 및 학습 (GPU 0) | Completed |
+
 ## 학습 / 가치함수
 
 | ID | 제목 | 상태 |
 |---|---|---|
 | [D-219](../research/policy-learning/decisions/D-219-laya-multiturn-search-and-value.md) | 1턴 시야·정적 가치 편향 극복을 위한 다중턴 탐색(2-A)·신경망 상태가치(2-B)·경량 MCTS-Q 재정렬 학습(1-B) (GPU 0·1 전용) | Accepted |
+| [D-221](../research/policy-learning/decisions/D-221-laya-main-waya-mcts50k-vphi-v2.md) | Laya 메인 합의형 블런더 가드(방식 A), MCTS 50k 심화, 상성·도구·특성·기술 반영 가치망 V_phi v2 및 렌더러 무효 대면 보완 | Accepted |
 | [EP-243](../research/policy-learning/plans/EP-243-laya-multiturn-search-value-distill.md) | 다중턴 온라인 탐색(2-A)·신경망 상태가치(2-B)·경량 MCTS-Q 재정렬 학습(1-B) (GPU 0·1 전용) | Active |
+| [EP-245](../research/policy-learning/plans/EP-245-laya-main-blunder-veto-mcts50k-vphi-v2.md) | Laya 메인 합의형 블런더 가드(방식 A): 상성·도구·특성·기술 반영 V_phi v2 보강 및 MCTS 50k 결합 (GPU 0·1 전용) | Completed |
 | [EX-207](../research/policy-learning/experiments/EX-207-laya-state-value-2b-train.md) | 2-B 리플레이 승패 기반 신경망 상태가치 모델 V_phi(poke_engine.State) 데이터 추출 및 학습(GPU 0·1) | Completed |
-| [EX-208](../research/policy-learning/experiments/EX-208-laya-search-2b-vs-foulplay-unlimited.md) | 2-B 온라인 다중턴 탐색 + 신경망 상태가치 V_phi 결합 대 foul-play, Blim 128경기(시간 제한 없음) | Running |
+| [EX-208](../research/policy-learning/experiments/EX-208-laya-search-2b-vs-foulplay-unlimited.md) | 2-B 온라인 다중턴 탐색 + 신경망 상태가치 V_phi 결합 대 foul-play, Blim 128경기(시간 제한 없음) | Completed |
+| [EX-216](../research/policy-learning/experiments/EX-216-laya-state-value-v2-matchup-train.md) | 상성·도구·특성·기술 기계적 매치업 피처 반영 상태가치망 V_phi v2 학습 및 검증 (GPU 0) | Completed |
 
 ## 학습 / 강화학습
 
@@ -1118,11 +1220,25 @@
 |---|---|---|
 | [D-215](../research/policy-learning/decisions/D-215-laya-foulplay-distill-then-rl.md) | v11rtc에 foul-play 탐색을 증류한 뒤, foul-play 상대 강화학습으로 다듬는다 | Accepted |
 | [D-219](../research/policy-learning/decisions/D-219-laya-multiturn-search-and-value.md) | 1턴 시야·정적 가치 편향 극복을 위한 다중턴 탐색(2-A)·신경망 상태가치(2-B)·경량 MCTS-Q 재정렬 학습(1-B) (GPU 0·1 전용) | Accepted |
+| [D-224](../research/policy-learning/decisions/D-224-batch-b-waya-v2-ladder-wayc1-clean-wayb.md) | 배치 B 병행 실행: EX-223 방식 A v2 공식 래더(EX-224) + 정화 교사 방식 C-1(EX-225) → 프롬프트 도구 주입 방식 B(EX-226) DDP 자동 연쇄 | Accepted |
 | [EP-236](../research/policy-learning/plans/EP-236-laya-v11rtc-foulplay-distill-rl.md) | v11rtc에 foul-play 탐색 증류 → foul-play 상대 강화학습 → foul-play·공식 래더 평가 | Paused |
 | [EP-243](../research/policy-learning/plans/EP-243-laya-multiturn-search-value-distill.md) | 다중턴 온라인 탐색(2-A)·신경망 상태가치(2-B)·경량 MCTS-Q 재정렬 학습(1-B) (GPU 0·1 전용) | Active |
+| [EP-248](../research/policy-learning/plans/EP-248-batch-b-waya-v2-ladder-wayc1-clean-wayb.md) | 배치 B: EX-223 방식 A v2 공식 래더 병행 + 정화 방식 C-1 → 방식 B GPU 0·1 DDP 자동 연쇄 | Completed |
 | [EX-182](../research/policy-learning/experiments/EX-182-laya-distill-teacher-labels.md) | 사람 학습 국면의 foul-play 탐색 교사 라벨(CPU) | Completed |
 | [EX-183](../research/policy-learning/experiments/EX-183-laya-v11rtc-distill-training.md) | v11rtc + foul-play 탐색 증류 학습(1 epoch, GPU 4장) | Completed |
-| [EX-209](../research/policy-learning/experiments/EX-209-laya-mcts5k-q-rerank-1b-train.md) | 1-B 오프라인 경량 MCTS-5k 루트 Q 후보 재정렬 타깃 생성 및 v13 단일 모델 학습(GPU 0·1) | Running |
+| [EX-209](../research/policy-learning/experiments/EX-209-laya-mcts5k-q-rerank-1b-train.md) | 1-B 오프라인 경량 MCTS-5k 루트 Q 후보 재정렬 타깃 생성 및 v13 단일 모델 학습(GPU 0·1) | Completed |
+| [EX-225](../research/policy-learning/experiments/EX-225-laya-way-c1-clean-vphiv3-2ply-train.md) | 방식 C-1 오염 제거판: EX-221 V_phi v3 + 2-ply 정화 교사 증류 학습 (GPU 0·1 DDP) | Completed |
+| [EX-226](../research/policy-learning/experiments/EX-226-laya-way-b-tool-inject-train.md) | 방식 B: calc-duel-free + MCTS50k/V_phi v3 5단계 matchup & eval 프롬프트 주입 + 35% Tool Dropout + 인간 앵커 보존 학습 (GPU 0·1 DDP) | Completed |
+
+## 학습 / 증류·재정렬
+
+| ID | 제목 | 상태 |
+|---|---|---|
+| [D-222](../research/policy-learning/decisions/D-222-laya-way-c1-v14-walled-teacher50k.md) | 방식 C-1: v14+walled_duel 입력 및 Hard-Example MCTS 50k + EX-216 V_phi v2 교사 증류 학습 | Accepted |
+| [EP-244](../research/policy-learning/plans/EP-244-laya-search-2bv2-and-v14-training.md) | 상대 회복·흡수 대면 대응: 2-B v2 탐색 개선(CPU 서빙) 및 v14 입력·MCTS-5k Q 재학습 병행 (GPU 0·1 전용) | Paused |
+| [EP-246](../research/policy-learning/plans/EP-246-laya-way-c1-v14-walled-teacher50k-distill.md) | 방식 C-1: v14+walled_duel 입력 및 Hard-Example MCTS 50k + EX-216 V_phi v2 교사 증류 학습 (GPU 0·1 전용) | Paused |
+| [EX-213](../research/policy-learning/experiments/EX-213-laya-v14-data-and-mcts5k-training.md) | v14 회복·흡수 인지 입력 렌더러 데이터 생성 및 MCTS-5k Q 단일 모델 DDP 학습(GPU 0·1) | Stopped |
+| [EX-218](../research/policy-learning/experiments/EX-218-laya-way-c1-v14-walled-teacher50k-train.md) | 방식 C-1: v14+walled_duel 데이터·Hard-Example MCTS 50k + EX-216 V_phi v2 교사 타깃 생성 및 DDP 학습 (GPU 0·1) | Stopped |
 
 ## 학습 / 학습 데이터 생성
 

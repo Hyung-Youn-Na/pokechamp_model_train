@@ -46,6 +46,15 @@ Git clone에는 코드·문서·작은 고정 입력이 포함된다. 외부 모
 다른 연구선의 자료는 ID와 함께 branch·commit·EX/manifest를 인용해 출처를 식별한다.
 이 문서는 기존 연구 질문·평가 기준·예산을 새로 정하지 않는다.
 
+## 2.1 현재 Laya 메인 3단계 실험 트랙 (방식 A · B · C)
+
+`policy-learning` 연구선에서 사용자가 추진하기로 합의한 **Laya 메인 3-모듈 결합 실험 로드맵(방식 A → B → C)**의 상세 설계·전제·함정 방지 규칙 원문은 [학습 설계: Laya 메인 방식 A·B·C](research/policy-learning/DESIGN.md#laya-main-abc-roadmap)와 [D-221](research/policy-learning/decisions/D-221-laya-main-waya-mcts50k-vphi-v2.md)에 둔다. 세션이 바뀌더라도 아래 진행 맥락을 기준으로 이어간다.
+
+- **공통 기반**: Laya 정책(`EX-200` + `walled_duel` 수정) · `poke-engine` MCTS **`50k`** · 매치업 인지 상태가치망 **$V_\phi$ v2**([EX-216](research/policy-learning/experiments/EX-216-laya-state-value-v2-matchup-train.md), `AUC 0.7536`). **물리 GPU 0·1 전용**(GPU 2·3 미접촉).
+- **방식 A (합의형 블런더 가드)**: Laya 1순위 기본 존중 + MCTS 50k·$V_\phi$ v2 합의 시에만 Veto. [EP-245](research/policy-learning/plans/EP-245-laya-main-blunder-veto-mcts50k-vphi-v2.md) · [EX-217](research/policy-learning/experiments/EX-217-laya-main-waya-mcts50k-vphiv2-vs-foulplay.md)에서 우선 실행.
+- **방식 B (Laya 입력 도구 주입)**: `eval: mcts ... | vphi ...` 및 후보별 상대 격차를 Laya 프롬프트에 직접 넣어 100% Laya 단독 최종 결정(1에폭 학습, 인간 정답 보존 + Tool Dropout 30~40%로 지름길 붕괴 방지). *A 결과 확인 후 별도 EP/EX 등록·승인 뒤 실행.*
+- **방식 C (오프라인 교사·크리틱 내재화)**: `MCTS 50k + V_phi v2`를 오프라인 교사(C-1 Hard-Example 집중 증류) 또는 실전 궤적 DPO/RL 크리틱(C-2)으로 써서 Laya 본체 체급 강화 후 A/B와 선순환 결합. *별도 EP/EX 등록·승인 뒤 실행.*
+
 ## 3. 환경·실행기·명령 경계
 
 [실행 환경과 출력·명령 경계](shared/execution/ENVIRONMENT.md)를 확인한다.

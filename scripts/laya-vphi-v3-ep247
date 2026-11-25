@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+# EP-247 / D-223: End-to-end EX-221 (Future-Aware V_phi v3) -> EX-222 (2-ply Top-K + Way A v2 Offline A/B)
+# Strictly uses physical GPU 0 ONLY (GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4); GPU 2 & 3 NEVER touched.
+set -euo pipefail
+
+ROOT=/workspace
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+FP_PY="$ROOT/.tools/foul-play/.venv/bin/python"
+GPU0_UUID="GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4"
+RUN221="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-221"
+RUN222="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-222"
+DATA221="/mnt/digicap/combined/hyna/backup/pokechamp-research/datasets/generated/laya-state-value/v3"
+
+WORKERS=${1:-36}
+mkdir -p "$RUN221" "$RUN222"
+
+echo "=== [EP-247] Stage 1/4: EX-221 extract (workers=$WORKERS, nice 19, PYTHONHASHSEED=0) ==="
+if [ ! -f "$DATA221/manifest.json" ]; then
+  CUDA_VISIBLE_DEVICES='' PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH="$ROOT:$ROOT/.tools/foul-play/src" \
+    nice -n 19 "$ROOT/scripts/mem-guard" 40 "$RUN221/extract-memory.log" -- \
+    "$FP_PY" -u -m integration.laya_search.data_value_v3 extract --workers "$WORKERS"
+
+  echo "=== [EP-247] Stage 2/4: EX-221 build dataset ==="
+  CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH="$ROOT:$ROOT/pokechamp" \
+    "$ROOT/scripts/mem-guard" 40 "$RUN221/build-memory.log" -- \
+    "$LAYA_PY" -u -m integration.laya_search.data_value_v3 build
+else
+  echo "[EP-247] dataset already built: $DATA221/manifest.json"
+fi
+
+echo "=== [EP-247] Stage 3/4: EX-221 train & ablate V_phi v3 on physical GPU 0 ONLY ==="
+if [ ! -f "$RUN221/checkpoints/selected/config.json" ]; then
+  CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES="$GPU0_UUID" \
+    PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$ROOT:$ROOT/pokechamp" \
+    "$LAYA_PY" -u -m integration.laya_search.train_value_v3 --epochs 24 --device cuda
+else
+  echo "[EP-247] EX-221 checkpoint already trained: $RUN221/checkpoints/selected"
+fi
+
+echo "=== [EP-247] Stage 4/4: EX-222 2-ply Top-K + Way A v2 Offline A/B (GPU 0 scorer) ==="
+READY="$RUN222/scorers.ready.json"
+rm -f "$READY"
+CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES="$GPU0_UUID" \
+  PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$ROOT:$ROOT/pokechamp" \
+  "$LAYA_PY" -u -m integration.laya_search.eval_ab_v3 serve-scorers --ready-file "$READY" \
+  > "$RUN222/scorer.log" 2>&1 &
+SRV_PID=$!
+trap 'kill "$SRV_PID" 2>/dev/null || true' EXIT
+
+for i in $(seq 60); do
+  [ -f "$READY" ] && break
+  kill -0 "$SRV_PID" 2>/dev/null || { echo "[EP-247] scorer died"; cat "$RUN222/scorer.log"; exit 1; }
+  sleep 1
+done
+[ -f "$READY" ] || { echo "[EP-247] scorer not ready"; exit 1; }
+ENDPOINT=$(python3 -c "import json; print(json.load(open('$READY'))['endpoint'])")
+echo "[EP-247] scorer ready at $ENDPOINT (pid $SRV_PID)"
+
+CUDA_VISIBLE_DEVICES='' PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 \
+  PYTHONPATH="$ROOT:$ROOT/.tools/foul-play/src" \
+  "$FP_PY" -u -m integration.laya_search.eval_ab_v3 run-ab --endpoint "$ENDPOINT" --blim-limit 240
+
+echo "=== [EP-247] ALL STAGES COMPLETED CLEANLY ==="

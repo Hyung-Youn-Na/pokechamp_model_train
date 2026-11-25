@@ -110,7 +110,7 @@ def gold_mcts_q(
 
 def selected_games() -> dict[str, list[str]]:
     """Deterministic game selection: `TRAIN_GAMES` from non-heldout train + EX-199 heldout games (cached)."""
-    sel_path = RUN / 'selection.json'
+    sel_path = RUN / 'game_selection.json'
     if sel_path.exists():
         return json.loads(sel_path.read_text())
     from integration.laya_value.data_value import heldout_games

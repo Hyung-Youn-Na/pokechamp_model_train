@@ -5,6 +5,35 @@ D-170에 따라 중앙 문서의 관련 절을 이전한 편집 원문이다. �
 다른 주제의 기록을 인용하더라도 해당 원문의 소유권·범위를 이전하지 않는다.
 
 
+<a id="laya-main-abc-roadmap"></a>
+
+### Laya 메인 3-모듈 결합 실험 로드맵 — 방식 A · B · C (D-221, 2026-11-24)
+
+사용자 방향(2026-11-24: **Laya를 주 결정권자(메인)로 두고**, `poke-engine` MCTS와 매치업 인지 상태가치망 $V_\phi$ v2를 보조 모듈로 활용하되 A → B → C 세 구조를 순차 실험)에 따라, 아래 세 실험 트랙의 역할 분담·전제 조건·주의점을 설계 원문으로 고정한다. *(각 트랙의 실제 실행은 개별 EP/EX 등록 및 사용자 실행 확인을 따른다.)*
+
+#### 공통 기반 모듈
+- **Laya 정책 + 상대예측 ($p, q$)**: 기본 체크포인트 `EX-200` + `v13`/`v14` + `walled_duel` 수정(전 공격기 무효 시 `duel: me 9+ hits (none) ... -> lose` 발화) + `foe_options_clean`(PP 괄호 파싱 수정).
+- **`poke-engine` MCTS (`50,000 iterations`)**: 다수 턴 전술 수읽기·종반·`forced_switch` 계산 + `Taunt`+흡수 특성 회복 누락 보정(`search_2b_v2.expand_turn1_features_v2`). 8샘플 순차 기준 턴당 ~1.1s(CPU 1코어).
+- **매치업 인지 상태가치망 $V_\phi$ v2 ([EX-216](experiments/EX-216-laya-state-value-v2-matchup-train.md))**: Gen 9 상성·테라·도구(`Air Balloon` 등)·특성(흡수·부유·`Multiscale`·`Unaware` 등)·기술(위력·회복·드레인·선공기)을 6×6 기계적 매치업 피처(`pair_only(38)+global(47)`)로 계산하는 반대칭 DeepSets(`held-out AUC 0.7536`, `LL 0.5848`, 종반 `AUC 0.8529`).
+
+#### 세 실험 방식 정의
+
+| 방식 | 핵심 구조 | Laya 역할 | MCTS 50k 역할 | $V_\phi$ v2 역할 | 재학습 필요 | 핵심 검증 질문 |
+|---|---|---|---|---|---|---|
+| **방식 A** *(합의형 블런더 가드)* | **1차 완료([EP-245](plans/EP-245-laya-main-blunder-veto-mcts50k-vphi-v2.md) / [EX-217](experiments/EX-217-laya-main-waya-mcts50k-vphiv2-vs-foulplay.md) `0.391`, [EX-220](experiments/EX-220-laya-waya-mcts50k-ladder.md) 래더 조기종료)** | 기본 결정권자(~89% 유지) | 전술 블런더 감지기 (`dm` 임계값) | 이중 승인 검수관 (`dv` 반대 시 MCTS 편향 차단) | 없음 | Laya 주권(~89%)을 유지하면서 Blim 128·래더에서 실수 교정이 개선되는가? *(진단 교훈: 1-ply $V_\phi$ v2 + `evaluate.rs`의 HP 회복 과대평가 및 `walled_veto`/`pr_ratio` 가드레일 보강 필요)* |
+| **방식 B** *(Laya 입력 도구 주입)* | 예정(가치함수·탐색 보강 후 별도 EP/EX 등록) | **100% 단독 최종 결정권자** | 후보별 다수 턴 승률/격차 텍스트 제공 (`mcts 40% (best)`) | 보드·후보별 승률/격차 텍스트 제공 (`vphi 50% (-3%)`) | 1에폭 필요 | 외부 수식 없이 Laya가 두 도구의 계산과 보드 문맥을 직접 종합해 상황별 신뢰도를 학습하는가? |
+| **방식 C** *(오프라인 교사·크리틱 내재화)* | 1차 시도 조기종료([EP-246](plans/EP-246-laya-way-c1-v14-walled-teacher50k-distill.md) / [EX-218](experiments/EX-218-laya-way-c1-v14-walled-teacher50k-train.md) `Stopped`: 교사 HP 회복 과대평가 오염) → $V_\phi$ v3·다수 턴 탐색 보강 후 재추진 | **단독 본체 강화 대상** (실전 ~0.25s/턴) | 오프라인 교사(`50k`+합의) / DPO·RL 크리틱 | 오프라인 교사 / DPO·RL 크리틱 | 교사 생성 + 1에폭/DPO | 오염 없는 다수 턴 교사 증류(C-1, Hard-Example 집중) 또는 실전 궤적 DPO/RL(C-2)로 Laya 본체 체급이 얼마나 올라가고, 이를 A/B와 재결합했을 때 선순환이 일어나는가? |
+
+#### 방식 B · C 설계 시 필수 안전장치 (함정 방지)
+- **방식 B — 지름길 붕괴(Shortcut Collapse) 방지**:
+  1. 모든 행에 MCTS 정답을 복사시키지 않고, **인간 고레이팅 기보 정답을 기본 보존**하면서 명백한 전술 블런더 구간만 교정 라벨을 혼합해 “언제 도구를 믿고 언제 무시할지”를 학습시킨다.
+  2. **Tool Dropout (학습 행의 30~40%에서 `eval:` / `mcts` / `vphi` 필드 생략)**을 적용해 도구 없이도 보드 텍스트(`v14+walled_duel`)를 독해하는 본체 능력을 유지한다.
+  3. 절대값보다 상대 순위·격차(`best`, `-2%`) 중심으로 표기해 오프라인(5k~50k)과 실전(50k) 간 스케일 차이에 둔감하게 설계한다.
+- **방식 C — 비용·분포 이동 통제**:
+  1. **C-1 (Hard-Example 집중 증류)**: 전 턴을 50k로 돌리지 않고, Laya 실수 턴(방식 A Veto 발동 턴·`duel: lose`·`walled`·회복/흡수·종반)에만 50k+$V_\phi$ v2 교사 타깃을 집중 생성해 `v14+walled_duel` 프롬프트 위에서 학습한다.
+  2. **C-2 (실전 궤적 DPO/RL)**: `foul-play` 대국 궤적에서 `MCTS 50k + V_phi v2` 크리틱이 산출한 선호 쌍($a_{\text{teacher}} \succ a_{\text{laya blunder}}$)으로 분포 이동(Laya 자신이 만든 불리 보드 탈출)을 직접 교정한다.
+- **자원 제약 (항상 준수)**: **물리 GPU 0·1만 사용**(GPU 2·3은 타 프로젝트 전용으로 일절 미접촉), [D-191](decisions/D-191-no-offline-battle-gate.md)(오프라인 지표는 보고 전용, 배틀 게이트 금지) 및 [C-047](../../CONTRACTS.md#c-047-viewer-export)(뷰어·봉인) 준수.
+
 <a id="foulplay-primary-ladder-final"></a>
 
 ### 현재 평가 기준 — foul-play 점수로 개발하고 공식 래더로 최종 확인 (D-214, 2026-11-19)

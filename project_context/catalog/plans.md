@@ -15,6 +15,7 @@
 | [EP-234](../research/policy-learning/plans/EP-234-laya-fp1-foulplay-input.md) | laya fp1 렌더러(foul-play 기반 입력) 자료·처음부터 전체 학습·foul-play 배틀 | Active |
 | [EP-237](../research/policy-learning/plans/EP-237-laya-observed-public-info-input.md) | laya 입력에 foul-play의 경기 중 추론 전부 반영(렌더러 v12) | Active |
 | [EP-243](../research/policy-learning/plans/EP-243-laya-multiturn-search-value-distill.md) | 다중턴 온라인 탐색(2-A)·신경망 상태가치(2-B)·경량 MCTS-Q 재정렬 학습(1-B) (GPU 0·1 전용) | Active |
+| [EP-250](../research/policy-learning/plans/EP-250-ex226-wayb-offense-ladder.md) | EX-226 방식 B Offense 전용 공식 Showdown gen9ou 래더 (13:30 KST까지) | Active |
 
 <a id="blocked-plans"></a>
 
@@ -39,6 +40,8 @@
 | [EP-226](../research/policy-learning/plans/EP-226-laya-human-teams-v7-v8-v9.md) | laya v7t·v8t·v9t 사람 팀 비교 배틀(GPU0·1·2) | Stopped |
 | [EP-233](../research/policy-learning/plans/EP-233-laya-foulplay-v11.md) | foul-play 대 laya v11rt·v11rtc, EX-174 Blim 일정 128경기씩(CPU) | Stopped |
 | [EP-236](../research/policy-learning/plans/EP-236-laya-v11rtc-foulplay-distill-rl.md) | v11rtc에 foul-play 탐색 증류 → foul-play 상대 강화학습 → foul-play·공식 래더 평가 | Paused |
+| [EP-244](../research/policy-learning/plans/EP-244-laya-search-2bv2-and-v14-training.md) | 상대 회복·흡수 대면 대응: 2-B v2 탐색 개선(CPU 서빙) 및 v14 입력·MCTS-5k Q 재학습 병행 (GPU 0·1 전용) | Paused |
+| [EP-246](../research/policy-learning/plans/EP-246-laya-way-c1-v14-walled-teacher50k-distill.md) | 방식 C-1: v14+walled_duel 입력 및 Hard-Example MCTS 50k + EX-216 V_phi v2 교사 증류 학습 (GPU 0·1 전용) | Paused |
 
 <a id="completed-plans"></a>
 
@@ -244,6 +247,10 @@
 | [EP-240](../research/policy-learning/plans/EP-240-laya-v13-input-bugfixes.md) | laya 렌더러 v13 입력 결함 수정(폼 스펙·테라 방어·선공 Roost·Ivy Cudgel)과 검증 | Completed |
 | [EP-241](../research/policy-learning/plans/EP-241-laya-v13-zeroshot-vs-foulplay.md) | laya v13 입력 교정(무재학습 EX-200) 대 foul-play Blim 128경기(시간 제한 없음) | Completed |
 | [EP-242](../research/policy-learning/plans/EP-242-laya-lead-matchup-2b.md) | laya 2b 선봉 선택 모듈(`lead_policy.py`, 상대 선봉 추정 × 6×6 매치업 기대값 + 모델 사전확률 재가중) 구현 | Completed |
+| [EP-245](../research/policy-learning/plans/EP-245-laya-main-blunder-veto-mcts50k-vphi-v2.md) | Laya 메인 합의형 블런더 가드(방식 A): 상성·도구·특성·기술 반영 V_phi v2 보강 및 MCTS 50k 결합 (GPU 0·1 전용) | Completed |
+| [EP-247](../research/policy-learning/plans/EP-247-vphi-v3-future-horizon-and-multiturn-search.md) | 미래 영향력 반영 가치함수 V_phi v3 및 2-ply 다수 턴 탐색 · Way A v2 검증 (GPU 0·1 전용) | Completed |
+| [EP-248](../research/policy-learning/plans/EP-248-batch-b-waya-v2-ladder-wayc1-clean-wayb.md) | 배치 B: EX-223 방식 A v2 공식 래더 병행 + 정화 방식 C-1 → 방식 B GPU 0·1 DDP 자동 연쇄 | Completed |
+| [EP-249](../research/policy-learning/plans/EP-249-ex226-wayb-and-ex225-c1clean-blim128-and-ladder.md) | EX-226(방식 B) · EX-225(방식 C-1 정화판) Blim 128 병렬 배틀 평가 및 EX-226 공식 래더 병행 | Completed |
 
 <a id="other-plans"></a>
 

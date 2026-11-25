@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# EP-244 / D-220 (EX-212): 2-B v2 online search on CPU serving (0 GPU, OMP_NUM_THREADS=4) vs foul-play Blim 128.
+# Runs safely in parallel with EX-213 (v14 data 16w nice 19 -> GPU 0·1 DDP train). GPUs 2 & 3 NEVER touched.
+STAGE="${1:-all}"
+ROOT=/workspace
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+RUN_DIR="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-212"
+
+export PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp"
+export PYTHONDONTWRITEBYTECODE=1
+export HF_HUB_OFFLINE=1
+export TOKENIZERS_PARALLELISM=false
+export CUDA_VISIBLE_DEVICES=''
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+
+run_stage() {
+  local st="$1"
+  echo "[ep244] $(date -u +%FT%TZ) EX-212 $st (CPU serving)"
+  "$ROOT/scripts/mem-guard" 40 "$RUN_DIR-memory.log" -- \
+    nice -n 10 "$LAYA_PY" -m integration.laya_search.battle_search_v2 "$st" EX-212
+}
+
+case "$STAGE" in
+  mock|prepare|execute|export) run_stage "$STAGE" ;;
+  all)
+    run_stage mock
+    run_stage prepare
+    run_stage execute
+    run_stage export
+    ;;
+  *) echo "Usage: $0 [mock|prepare|execute|export|all]"; exit 2 ;;
+esac

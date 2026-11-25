@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# EP-244 / D-220 (EX-213): v14 data re-rendering (CPU 16w nice 19) -> GPU 0·1 ONLY DDP training -> GPU 0 eval.
+# Runs safely in parallel with EX-212 (CPU serving). Physical GPUs 2 & 3 are NEVER touched.
+MODE="${1:-all}"
+WORKERS="${2:-16}"
+ROOT=/workspace
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+RUN="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-213"
+
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export PYTHONDONTWRITEBYTECODE=1
+export HF_HUB_OFFLINE=1
+export TOKENIZERS_PARALLELISM=false
+mkdir -p "$RUN"
+
+do_data() {
+  echo "[ex213] $(date -u +%FT%TZ) v14 data build (workers=$WORKERS, nice 19, mem-guard=30)"
+  CUDA_VISIBLE_DEVICES='' PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$ROOT/scripts/mem-guard" 30 "$RUN/data-memory.log" -- \
+    nice -n 19 "$LAYA_PY" -m integration.laya_v14.data_v14 build --workers "$WORKERS"
+}
+
+do_train() {
+  echo "[ex213] $(date -u +%FT%TZ) v14 DDP train on physical GPU 0 & GPU 1 ONLY (mem-guard=55)"
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$ROOT/scripts/mem-guard" 55 "$RUN/train-memory.log" -- \
+    "$LAYA_PY" -m integration.laya_v14.train_v14 train
+}
+
+do_eval() {
+  echo "[ex213] $(date -u +%FT%TZ) v14 held-out & tera knowledge eval on physical GPU 0 ONLY"
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$ROOT/scripts/mem-guard" 20 "$RUN/eval-memory.log" -- \
+    "$LAYA_PY" -m integration.laya_v14.train_v14 eval
+}
+
+case "$MODE" in
+  data)  do_data ;;
+  train) do_train ;;
+  eval)  do_eval ;;
+  all)   do_data && do_train && do_eval ;;
+  *) echo "Usage: $0 [data|train|eval|all] [workers]"; exit 2 ;;
+esac

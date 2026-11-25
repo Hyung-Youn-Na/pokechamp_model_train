@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+# EP-248 / D-224 (Batch B): Shared EX-221 V_phi v3 2-ply 28k rescore -> EX-225 (Way C-1 Clean DDP + Eval)
+# -> EX-226 (Way B Tool-Inject DDP + Eval). Strictly pins physical GPU 0 & GPU 1 ONLY; GPUs 2 & 3 NEVER touched!
+set -euo pipefail
+
+ROOT=/workspace
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+FP_PY="$ROOT/.tools/foul-play/.venv/bin/python"
+RUN225="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-225"
+RUN226="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-226"
+DATA225="/mnt/digicap/combined/hyna/backup/pokechamp-research/datasets/generated/laya-v14w-c1v3/v1"
+DATA226="/mnt/digicap/combined/hyna/backup/pokechamp-research/datasets/generated/laya-v14w-wayb/v1"
+
+WORKERS=${1:-32}
+mkdir -p "$RUN225" "$RUN226"
+
+echo "=== [Batch B] Stage 1/6: Re-score 28k hard turns with EX-221 V_phi v3 + 2-ply (GPU 1 scorer + CPU ${WORKERS}w nice 19) ==="
+if [ ! -f "$DATA225/manifest.json" ]; then
+  READY="$RUN225/vphi3.ready.json"
+  rm -f "$READY"
+  CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=GPU-c7e2d577-573f-0412-1ed6-ad6648efa454 \
+    PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$LAYA_PY" -u -m integration.laya_v14.data_way_c1_v3 vphi3-server --ready-file "$READY" \
+    > "$RUN225/vphi3-server.log" 2>&1 &
+  SRV_PID=$!
+  trap 'kill "$SRV_PID" 2>/dev/null || true' EXIT
+
+  for i in $(seq 60); do
+    [ -f "$READY" ] && break
+    kill -0 "$SRV_PID" 2>/dev/null || { echo "[Batch B] vphi3-server died"; cat "$RUN225/vphi3-server.log"; exit 1; }
+    sleep 1
+  done
+  [ -f "$READY" ] || { echo "[Batch B] vphi3-server not ready"; exit 1; }
+  ENDPOINT=$(python3 -c "import json; print(json.load(open('$READY'))['endpoint'])")
+  echo "[Batch B] vphi3-server ready at $ENDPOINT (pid $SRV_PID)"
+
+  CUDA_VISIBLE_DEVICES='' PYTHONHASHSEED=0 PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH="$ROOT:$ROOT/.tools/foul-play/src" \
+    nice -n 19 "$ROOT/scripts/mem-guard" 40 "$RUN225/rescore-memory.log" -- \
+    "$FP_PY" -u -m integration.laya_v14.data_way_c1_v3 rescore-2ply --workers "$WORKERS" --endpoint "$ENDPOINT"
+
+  kill "$SRV_PID" 2>/dev/null || true
+  wait "$SRV_PID" 2>/dev/null || true
+  trap - EXIT
+
+  echo "=== [Batch B] Stage 2/6: Build purified EX-225 Way C-1 dataset + HP-recovery purity audit ==="
+  CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$LAYA_PY" -u -m integration.laya_v14.data_way_c1_v3 build-targets
+else
+  echo "[Batch B] EX-225 dataset already built: $DATA225/manifest.json"
+fi
+
+echo "=== [Batch B] Stage 3/6: Build EX-226 Way B prompt-injected dataset (35% Tool Dropout + Human Anchor) ==="
+if [ ! -f "$DATA226/manifest.json" ]; then
+  CUDA_VISIBLE_DEVICES='' PYTHONDONTWRITEBYTECODE=1 PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$LAYA_PY" -u -m integration.laya_v14.data_way_b build
+else
+  echo "[Batch B] EX-226 dataset already built: $DATA226/manifest.json"
+fi
+
+echo "=== [Batch B] Stage 4/6: EX-225 Way C-1 Clean GPU 0·1 DDP 1-epoch Train ==="
+if [ ! -f "$RUN225/checkpoints/selected/config.json" ]; then
+  PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+    PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$ROOT/scripts/mem-guard" 55 "$RUN225/train-memory.log" -- \
+    "$LAYA_PY" -u -m integration.laya_v14.train_way_c1_v3 train
+fi
+
+echo "=== [Batch B] Stage 5/6: EX-225 Way C-1 Clean GPU 0 Offline Eval ==="
+if [ ! -f "$RUN225/evaluation/summary.json" ]; then
+  CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4 \
+    PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+    PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$LAYA_PY" -u -m integration.laya_v14.train_way_c1_v3 eval
+fi
+
+echo "=== [Batch B] Stage 6/6: EX-226 Way B Tool-Inject GPU 0·1 DDP 1-epoch Train -> GPU 0 Offline Eval ==="
+if [ ! -f "$RUN226/checkpoints/selected/config.json" ]; then
+  PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+    PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$ROOT/scripts/mem-guard" 55 "$RUN226/train-memory.log" -- \
+    "$LAYA_PY" -u -m integration.laya_v14.train_way_b train
+fi
+if [ ! -f "$RUN226/evaluation/summary.json" ]; then
+  CUDA_DEVICE_ORDER=PCI_BUS_ID CUDA_VISIBLE_DEVICES=GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4 \
+    PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+    PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$LAYA_PY" -u -m integration.laya_v14.train_way_b eval
+fi
+
+echo "=== [Batch B] EX-225 AND EX-226 BOTH COMPLETED CLEANLY ==="

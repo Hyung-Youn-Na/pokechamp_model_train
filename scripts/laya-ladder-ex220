@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# EX-220 (EP-245 / D-221): Official Showdown gen9ou ladder with EX-217 exact Way A config
+# (EX-200 + v13 + walled_duel + MCTS 50k + EX-216 V_phi v2 + Consensus Blunder Veto), CPU serving
+# (0 GPU, OMP_NUM_THREADS=4, nice 10, --workers 2) running safely in parallel with EX-218 GPU 0·1 DDP.
+# Stops cleanly at game boundary as soon as EX-218 DDP training finishes (or 10h safety cap).
+main() {
+set -u
+ROOT=/workspace
+PKG=/workspace/exports/laya-play
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+TEAMS_FILE=${TEAMS_FILE:-$PKG/app/laya_play/teams.json}
+TEAM=${TEAM:-t61731415d7}
+CKPT=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-200/checkpoints/selected
+VAL_CKPT=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-216/checkpoints/selected
+EX218_RUN=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-218
+READY=$PKG/runtime/serving-waya50k.ready.json
+MAX_SECONDS=${MAX_SECONDS:-36000}
+start_ts=$(date -u +%s)
+kst() { TZ=UTC-9 date '+%H:%M:%S KST'; }
+
+ex218_training_done() {
+  [ -f "$EX218_RUN/checkpoints/selected/config.json" ] && return 0
+  if [ -f "$EX218_RUN/status.json" ]; then
+    python3 -c "import json,sys; s=json.load(open('$EX218_RUN/status.json')).get('stage'); sys.exit(0 if s in ('trained','completed') else 1)" 2>/dev/null && return 0
+  fi
+  return 1
+}
+
+cd "$PKG"
+mkdir -p "$PKG/runtime/logs"
+pgrep -f "laya_play.bot .*--name nhy_test1629" >/dev/null && { echo "[loop] $(kst) the account is in use; stopping"; exit 1; }
+rm -f "$READY"
+
+CUDA_VISIBLE_DEVICES='' \
+  OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 \
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+  PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+  nice -n 10 "$LAYA_PY" -m integration.laya_search.serve_search \
+  --checkpoint "$CKPT" --value-checkpoint "$VAL_CKPT" \
+  --way-a --walled-duel --iterations 50000 \
+  --model laya-waya --device cpu --workers 2 \
+  --ready-file "$READY" >> "$PKG/runtime/logs/serving-waya50k.log" 2>&1 < /dev/null &
+SERVING_PID=$!
+SERVICE=$PKG/runtime/serving.ready.json
+[ -f "$SERVICE" ] && cp -p "$SERVICE" "$SERVICE.before-ex220"
+trap 'kill "$SERVING_PID" 2>/dev/null; [ -f "$SERVICE.before-ex220" ] && mv -f "$SERVICE.before-ex220" "$SERVICE"' EXIT
+
+for i in $(seq 300); do
+  [ -f "$READY" ] && break
+  kill -0 "$SERVING_PID" 2>/dev/null || { echo "[loop] $(kst) serving died"; exit 1; }
+  sleep 1
+done
+[ -f "$READY" ] || { echo "[loop] $(kst) serving not ready"; exit 1; }
+cp -f "$READY" "$SERVICE"
+echo "[loop] $(kst) EX-220 laya-waya (EX-217 Way A + MCTS 50k + EX-216 V_phi v2, CPU serving) pid $SERVING_PID ready; loop until EX-218 training finishes, team $TEAM"
+
+fails=0 n=0
+while :; do
+  if ex218_training_done; then
+    echo "[loop] $(kst) EX-218 training finished after run $n -> stopping cleanly!"
+    break
+  fi
+  elapsed=$(( $(date -u +%s) - start_ts ))
+  (( elapsed < MAX_SECONDS )) || { echo "[loop] $(kst) safety cap reached after run $n"; break; }
+  kill -0 "$SERVING_PID" 2>/dev/null || { echo "[loop] $(kst) serving exited; stopping"; break; }
+  n=$((n + 1))
+  echo "[loop] $(kst) run $n: laya-waya (EX-217 Way A, MCTS 50k, EX-216 V_phi v2, CPU), team $TEAM ($(basename "$TEAMS_FILE"))"
+  LADDER=yes SEARCH_MINUTES=30 ./official.sh --games-limit 1 --teams "$TEAMS_FILE" --team "$TEAM" --serving "$READY" 2>&1 \
+      | grep -viE --line-buffered "password|assertion" \
+      | grep -E --line-buffered "^\[bot\]|^\[official\] error|Traceback|Error"
+  rc=${PIPESTATUS[0]}
+  if (( rc != 0 )); then
+    fails=$((fails + 1)); echo "[loop] $(kst) run $n exited $rc (consecutive failures $fails)"
+    (( fails >= 3 )) && { echo "[loop] $(kst) stopping after 3 consecutive failures"; break; }
+    sleep 30
+  else
+    fails=0
+  fi
+  PYTHONPATH=app PYTHONDONTWRITEBYTECODE=1 python3 -m laya_play.ladder_replays --user nhy_test1629 2>&1 | tail -1
+  sleep 5
+done
+PYTHONPATH=app PYTHONDONTWRITEBYTECODE=1 python3 -m laya_play.ladder_replays --user nhy_test1629 --search 2>&1 | tail -1
+echo "[loop] $(kst) EX-220 done"
+}
+main "$@"; exit $?

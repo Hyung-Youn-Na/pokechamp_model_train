@@ -34,6 +34,7 @@ def seed_of(sample_id: str) -> int:
 def main():
     T.setup()
     games: OrderedDict[str, T.Tracker] = OrderedDict()
+    ply1_cache: dict[str, list[object]] = {}
     sys.stdout.write(json.dumps(dict(status='ready', version=SC.VERSION)) + '\n')
     sys.stdout.flush()
 
@@ -43,8 +44,16 @@ def main():
             req = json.loads(line)
             op = req.get('op', 'search')
             if op == 'close':
-                games.pop(req['game'], None)
-                out = dict(closed=req['game'])
+                gid = req['game']
+                games.pop(gid, None)
+                ply1_cache.pop(gid, None)
+                out = dict(closed=gid)
+            elif op == 'expand_2ply':
+                from . import search_multiturn as SMT
+                gid = req['game']
+                s1_states = ply1_cache.get(gid) or []
+                s1_indices = [int(i) for i in (req.get('s1_indices') or [])]
+                out = SMT.expand_turn2_from_states(s1_states, s1_indices)
             else:
                 gid = req['game']
                 game = games.get(gid)
@@ -53,7 +62,8 @@ def main():
                     game = T.Tracker(raw, req['side'], req['own_sets'])
                     games[gid] = game
                     while len(games) > MAX_OPEN_GAMES:
-                        games.popitem(last=False)
+                        old_g, _ = games.popitem(last=False)
+                        ply1_cache.pop(old_g, None)
                 else:
                     games.move_to_end(gid)
                     game.lines = T.lines_of(raw)
@@ -77,8 +87,18 @@ def main():
                             out = SC.search_mcts_samples(samples, mapping, iterations=iters)
                             out['choices'] = mapping
                             if req.get('expand_2b') and kind == 'turn_action' and req.get('foe'):
-                                from . import search_2b as S2B
-                                out['expand_2b'] = S2B.expand_turn1_features(samples, mapping, req['foe'])
+                                if req.get('v3'):
+                                    from . import search_multiturn as SMT
+                                    exp1, s1_states, _ = SMT.expand_turn1_v3_states(samples, mapping, req['foe'])
+                                    out['expand_2b'] = exp1
+                                    if req.get('cache_2ply'):
+                                        ply1_cache[gid] = s1_states
+                                elif req.get('v2'):
+                                    from . import search_2b_v2 as S2BV2
+                                    out['expand_2b'] = S2BV2.expand_turn1_features_v2(samples, mapping, req['foe'])
+                                else:
+                                    from . import search_2b as S2B
+                                    out['expand_2b'] = S2B.expand_turn1_features(samples, mapping, req['foe'])
                         else:
                             out = dict(q_mcts=None, v_mcts=None, root_q=None, samples=0, used_samples=0, errors=0,
                                        choices=mapping)

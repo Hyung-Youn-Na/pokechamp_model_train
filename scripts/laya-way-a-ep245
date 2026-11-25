@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# EP-245 / D-221 (EX-217): Way A (Laya-Main Consensus Blunder Veto + MCTS 50k + EX-216 V_phi v2 + walled_duel)
+# on physical GPU 0 ONLY vs foul-play Blim 128. GPUs 2 & 3 are NEVER touched.
+MODE="${1:-all}"
+ROOT=/workspace
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+RUN="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-217"
+
+export CUDA_DEVICE_ORDER=PCI_BUS_ID
+export CUDA_VISIBLE_DEVICES=GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export PYTHONDONTWRITEBYTECODE=1
+export HF_HUB_OFFLINE=1
+export TOKENIZERS_PARALLELISM=false
+export PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp"
+
+run_step() {
+  local step="$1"
+  echo "[ep245] $(date -u +%FT%TZ) EX-217 $step (Way A + MCTS 50k + EX-216 V_phi v2, GPU 0 ONLY)"
+  "$ROOT/scripts/mem-guard" 40 "${RUN}-${step}-memory.log" -- \
+    "$LAYA_PY" -m integration.laya_search.battle_way_a "$step" EX-217
+}
+
+case "$MODE" in
+  mock|prepare|execute|export) run_step "$MODE" ;;
+  all)
+    run_step mock
+    run_step prepare
+    run_step execute
+    run_step export
+    ;;
+  *) echo "Usage: $0 [mock|prepare|execute|export|all]"; exit 2 ;;
+esac

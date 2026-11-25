@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# EP-246 / D-222 (EX-218, Way C-1):
+# - `prep`: runs safely IN PARALLEL with EX-217 (GPU 0) using CPU nice 19 + physical GPU 1 ONLY!
+# - `all`:  runs `prep` -> waits for GPU 0 idle (EX-217 finish) -> physical GPU 0·1 DDP 1-epoch train -> GPU 0 eval.
+# Physical GPUs 2 & 3 are NEVER touched.
+MODE="${1:-all}"
+SEARCH_WORKERS="${2:-28}"
+ROOT=/workspace
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+FP_PY="$ROOT/.tools/foul-play/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+RUN="/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-218"
+READY="$RUN/vphi2.ready.json"
+
+export OMP_NUM_THREADS=4
+export MKL_NUM_THREADS=4
+export PYTHONDONTWRITEBYTECODE=1
+export HF_HUB_OFFLINE=1
+export TOKENIZERS_PARALLELISM=false
+mkdir -p "$RUN"
+
+VPHI_PID=""
+cleanup() {
+  if [ -n "$VPHI_PID" ] && kill -0 "$VPHI_PID" 2>/dev/null; then
+    kill "$VPHI_PID" 2>/dev/null || true
+  fi
+}
+trap cleanup EXIT
+
+do_prep() {
+  echo "[ex218] $(date -u +%FT%TZ) Stage 1/4: upgrade v14 -> v14+walled_duel (CPU 16w nice 19, mem-guard 30)"
+  CUDA_VISIBLE_DEVICES='' PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$ROOT/scripts/mem-guard" 30 "$RUN/walled-memory.log" -- \
+    nice -n 19 "$LAYA_PY" -m integration.laya_v14.data_way_c1 upgrade-walled --workers 16
+
+  echo "[ex218] $(date -u +%FT%TZ) Stage 2/4: select Hard-Examples (25k train + 3k held-out)"
+  CUDA_VISIBLE_DEVICES='' PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$LAYA_PY" -m integration.laya_v14.data_way_c1 select-hard
+
+  echo "[ex218] $(date -u +%FT%TZ) Stage 3/4: EX-200 p & foe inference on physical GPU 1 ONLY"
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$ROOT/scripts/mem-guard" 25 "$RUN/infer-memory.log" -- \
+    "$LAYA_PY" -m integration.laya_v14.data_way_c1 infer-hard
+
+  echo "[ex218] $(date -u +%FT%TZ) Stage 4/4: MCTS 50k (CPU ${SEARCH_WORKERS}w nice 19) + EX-216 V_phi v2 server (GPU 1 ONLY)"
+  rm -f "$READY"
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$LAYA_PY" -m integration.laya_v14.data_way_c1 vphi-server --ready-file "$READY" \
+    >> "$RUN/vphi2-server.log" 2>&1 &
+  VPHI_PID=$!
+  for _ in $(seq 120); do
+    [ -f "$READY" ] && break
+    kill -0 "$VPHI_PID" 2>/dev/null || { echo "[ex218] vphi2 server died"; exit 1; }
+    sleep 0.5
+  done
+  [ -f "$READY" ] || { echo "[ex218] vphi2 server readiness timeout"; exit 1; }
+
+  CUDA_VISIBLE_DEVICES='' PYTHONHASHSEED=0 PYTHONPATH="$ROOT:$ROOT/.tools/foul-play/src" \
+    "$ROOT/scripts/mem-guard" 40 "$RUN/search50k-memory.log" -- \
+    nice -n 19 "$FP_PY" -m integration.laya_v14.data_way_c1 search-hard \
+    --workers "$SEARCH_WORKERS" --iterations 50000 --ready-file "$READY"
+
+  cleanup
+  VPHI_PID=""
+
+  echo "[ex218] $(date -u +%FT%TZ) Building Way C-1 teacher targets & dataset manifest"
+  CUDA_VISIBLE_DEVICES='' PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$LAYA_PY" -m integration.laya_v14.data_way_c1 build-targets
+}
+
+do_train_eval() {
+  echo "[ex218] $(date -u +%FT%TZ) Waiting for physical GPU 0 idle (EX-217 completion)..."
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$LAYA_PY" -m integration.laya_v14.train_way_c1 wait-gpu0
+
+  echo "[ex218] $(date -u +%FT%TZ) Launching EX-218 DDP 1-epoch train on physical GPU 0 & GPU 1 ONLY (mem-guard 55)"
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$ROOT/scripts/mem-guard" 55 "$RUN/train-memory.log" -- \
+    "$LAYA_PY" -m integration.laya_v14.train_way_c1 train
+
+  echo "[ex218] $(date -u +%FT%TZ) Running EX-218 offline held-out (general + Hard 50k+V_phi2 + Tera) eval on GPU 0 ONLY"
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+    "$ROOT/scripts/mem-guard" 20 "$RUN/eval-memory.log" -- \
+    "$LAYA_PY" -m integration.laya_v14.train_way_c1 eval
+}
+
+case "$MODE" in
+  prep) do_prep ;;
+  train-eval) do_train_eval ;;
+  all) do_prep && do_train_eval ;;
+  *) echo "Usage: $0 [prep|train-eval|all] [search_workers]"; exit 2 ;;
+esac

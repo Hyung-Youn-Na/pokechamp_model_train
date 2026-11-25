@@ -1,0 +1,152 @@
+#!/usr/bin/env bash
+# EX-230 (EP-249 / D-225): Official Showdown gen9ou ladder with EX-226 (Way B: calc-duel-free + 5-tier matchup:
+# + eval: mcts || vphi3 2-ply prompt injection, 100% Laya standalone final decision, ZERO external veto equation).
+# CPU serving (0 GPU, OMP=4, nice 10, --workers 2), running safely in parallel with EX-227 (GPU 0) & EX-228->EX-229 (GPU 1).
+# 28-team non-stall rotation. Auto-stops cleanly at game boundary once BOTH EX-227 and EX-229 seal!
+main() {
+set -u
+ROOT=/workspace
+PKG=/workspace/exports/laya-play
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+TEAMS_FILE=${TEAMS_FILE:-$PKG/app/laya_play/teams.json}
+TEAM=${TEAM:-rotate}
+ROT_STATE="$PKG/runtime/ex230-rotation.json"
+TEAM_OVERRIDE="$PKG/runtime/team-ex230.override"
+STOP_FILE="$PKG/runtime/stop-ex230"
+CKPT=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-226/checkpoints/selected
+VAL_CKPT=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-221/checkpoints/selected
+EX227_SEAL=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-227/seal.json
+EX229_SEAL=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-229/seal.json
+READY=$PKG/runtime/serving-ex226-wayb.ready.json
+MAX_SECONDS=${MAX_SECONDS:-28800}
+start_ts=$(date -u +%s)
+kst() { TZ=UTC-9 date '+%H:%M:%S KST'; }
+
+blim_done() {
+  [ -f "$EX227_SEAL" ] && [ -f "$EX229_SEAL" ] && return 0
+  return 1
+}
+
+next_team_info() {
+  python3 - "$TEAMS_FILE" "$ROT_STATE" "$1" <<'PY'
+import json, sys
+from pathlib import Path
+
+teams_path, state_path, mode = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3].strip()
+teams = json.loads(teams_path.read_text())
+EXCLUDE_STALL = {'tfd69993f31', 't9e3f9bd84a', 'td061dd6180', 't71230b7e95'}
+by_id = {(t.get('id') or t.get('team_id')): t for t in teams}
+rot_ids = {tid: t for tid, t in by_id.items() if tid not in EXCLUDE_STALL}
+
+if mode != 'rotate' and mode in by_id:
+    t = by_id[mode]
+    print(f"{mode}\t{t.get('archetype','?')}\t{', '.join(t.get('species',[]))}\tfixed")
+    sys.exit(0)
+
+if state_path.exists():
+    st = json.loads(state_path.read_text())
+    order = [tid for tid in st.get('order', []) if tid in rot_ids]
+    idx = int(st.get('next', 0))
+else:
+    order, idx = [], 0
+
+if len(order) != len(rot_ids):
+    buckets = {}
+    for t in teams:
+        tid = t.get('id') or t.get('team_id')
+        if tid in EXCLUDE_STALL:
+            continue
+        buckets.setdefault(t.get('archetype', 'other'), []).append(tid)
+    prio = ['balance', 'offense', 'weather', 'defense']
+    keys = [k for k in prio if k in buckets] + [k for k in sorted(buckets) if k not in prio]
+    for k, top in (('balance', 't637fcf81c3'), ('offense', 'ta199a565dc')):
+        if k in buckets and top in buckets[k]:
+            buckets[k].remove(top)
+            buckets[k].insert(0, top)
+    order = []
+    while any(buckets.values()):
+        for k in keys:
+            if buckets.get(k):
+                order.append(buckets[k].pop(0))
+    idx = 0
+
+pos = idx % len(order)
+tid = order[pos]
+t = by_id[tid]
+state_path.write_text(json.dumps({'order': order, 'next': pos + 1, 'round': (idx // len(order)) + 1}, indent=2))
+print(f"{tid}\t{t.get('archetype','?')}\t{', '.join(t.get('species',[]))}\t{pos+1}/{len(order)}")
+PY
+}
+
+cd "$PKG"
+mkdir -p "$PKG/runtime/logs"
+rm -f "$STOP_FILE"
+pgrep -f "laya_play.bot .*--name nhy_test1629" >/dev/null && { echo "[loop] $(kst) the account is in use; stopping"; exit 1; }
+rm -f "$READY"
+
+CUDA_VISIBLE_DEVICES='' \
+  OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 \
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+  PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+  nice -n 10 "$LAYA_PY" -m integration.laya_search.serve_search \
+  --checkpoint "$CKPT" --value-checkpoint "$VAL_CKPT" \
+  --v14 --way-b --two-ply --walled-duel --no-calc-duel --iterations 50000 \
+  --model laya-ex226-wayb --device cpu --workers 2 \
+  --ready-file "$READY" >> "$PKG/runtime/logs/serving-ex226-wayb.log" 2>&1 < /dev/null &
+SERVING_PID=$!
+SERVICE=$PKG/runtime/serving.ready.json
+[ -f "$SERVICE" ] && cp -p "$SERVICE" "$SERVICE.before-ex230"
+trap 'kill "$SERVING_PID" 2>/dev/null; [ -f "$SERVICE.before-ex230" ] && mv -f "$SERVICE.before-ex230" "$SERVICE"' EXIT
+
+for i in $(seq 300); do
+  [ -f "$READY" ] && break
+  kill -0 "$SERVING_PID" 2>/dev/null || { echo "[loop] $(kst) serving died"; exit 1; }
+  sleep 1
+done
+[ -f "$READY" ] || { echo "[loop] $(kst) serving not ready"; exit 1; }
+cp -f "$READY" "$SERVICE"
+echo "[loop] $(kst) EX-230 laya-ex226-wayb (EX-226 Way B + v14 + calc-duel-free + 5-tier matchup & eval, CPU serving) pid $SERVING_PID ready; loop until EX-227 & EX-229 seal, team mode=$TEAM"
+
+fails=0 n=0
+while :; do
+  if [ -f "$STOP_FILE" ]; then
+    echo "[loop] $(kst) stop file detected after run $n -> stopping cleanly!"
+    rm -f "$STOP_FILE"
+    break
+  fi
+  if blim_done; then
+    echo "[loop] $(kst) EX-227 & EX-229 both sealed after run $n -> stopping cleanly!"
+    break
+  fi
+  elapsed=$(( $(date -u +%s) - start_ts ))
+  (( elapsed < MAX_SECONDS )) || { echo "[loop] $(kst) safety cap reached after run $n"; break; }
+  kill -0 "$SERVING_PID" 2>/dev/null || { echo "[loop] $(kst) serving exited; stopping"; break; }
+
+  mode="$TEAM"
+  if [ -f "$TEAM_OVERRIDE" ]; then
+    ov=$(tr -d ' \r\n' < "$TEAM_OVERRIDE")
+    [ -n "$ov" ] && mode="$ov"
+  fi
+  IFS=$'\t' read -r cur_team cur_arch cur_sp cur_slot <<< "$(next_team_info "$mode")"
+
+  n=$((n + 1))
+  echo "[loop] $(kst) run $n: laya-ex226-wayb (EX-226 Way B, CPU), team $cur_team [$cur_slot] ($cur_arch: $cur_sp)"
+  LADDER=yes SEARCH_MINUTES=30 ./official.sh --games-limit 1 --teams "$TEAMS_FILE" --team "$cur_team" --serving "$READY" 2>&1 \
+      | grep -viE --line-buffered "password|assertion" \
+      | grep -E --line-buffered "^\[bot\]|^\[official\] error|Traceback|Error"
+  rc=${PIPESTATUS[0]}
+  if (( rc != 0 )); then
+    fails=$((fails + 1)); echo "[loop] $(kst) run $n exited $rc (consecutive failures $fails)"
+    (( fails >= 3 )) && { echo "[loop] $(kst) stopping after 3 consecutive failures"; break; }
+    sleep 30
+  else
+    fails=0
+  fi
+  PYTHONPATH=app PYTHONDONTWRITEBYTECODE=1 python3 -m laya_play.ladder_replays --user nhy_test1629 2>&1 | tail -1
+  sleep 5
+done
+PYTHONPATH=app PYTHONDONTWRITEBYTECODE=1 python3 -m laya_play.ladder_replays --user nhy_test1629 --search 2>&1 | tail -1
+echo "[loop] $(kst) EX-230 ladder done"
+}
+main "$@"; exit $?

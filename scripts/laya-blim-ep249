@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# EP-249 / D-225: Blim 128 runners strictly pinned to physical GPU 0 (EX-227) or GPU 1 (EX-228 -> EX-229).
+# Physical GPUs 2 & 3 are NEVER touched!
+set -euo pipefail
+
+ROOT=/workspace
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+GPU0_UUID="GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4"
+GPU1_UUID="GPU-c7e2d577-573f-0412-1ed6-ad6648efa454"
+
+export PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp"
+export PYTHONDONTWRITEBYTECODE=1
+export HF_HUB_OFFLINE=1
+export TOKENIZERS_PARALLELISM=false
+export CUDA_DEVICE_ORDER=PCI_BUS_ID
+
+run_one() {
+  local sid=$1 gpu_uuid=$2
+  echo "=== [EP-249] Starting $sid on $gpu_uuid ==="
+  CUDA_VISIBLE_DEVICES="$gpu_uuid" "$LAYA_PY" -u -m integration.laya_search.battle_ep249 mock "$sid"
+  CUDA_VISIBLE_DEVICES="$gpu_uuid" "$LAYA_PY" -u -m integration.laya_search.battle_ep249 prepare "$sid"
+  CUDA_VISIBLE_DEVICES="$gpu_uuid" "$LAYA_PY" -u -m integration.laya_search.battle_ep249 execute "$sid"
+  CUDA_VISIBLE_DEVICES="$gpu_uuid" "$LAYA_PY" -u -m integration.laya_search.battle_ep249 export "$sid"
+  echo "=== [EP-249] Completed & Sealed $sid ==="
+}
+
+track=${1:-}
+case "$track" in
+  track1|EX-227)
+    run_one EX-227 "$GPU0_UUID"
+    ;;
+  track2|EX-228-EX-229)
+    run_one EX-228 "$GPU1_UUID"
+    run_one EX-229 "$GPU1_UUID"
+    ;;
+  EX-228)
+    run_one EX-228 "$GPU1_UUID"
+    ;;
+  EX-229)
+    run_one EX-229 "$GPU1_UUID"
+    ;;
+  *)
+    echo "usage: $0 {track1|track2|EX-227|EX-228|EX-229}" >&2
+    exit 2
+    ;;
+esac

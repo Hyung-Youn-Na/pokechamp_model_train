@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# EX-223 (EP-247 / D-223): Way A v2 + Future-Aware V_phi v3 (EX-221) + 2-Ply Top-K + MCTS 50k vs foul-play Blim 128
+# Strictly uses physical GPU 0 ONLY (GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4); GPUs 2 & 3 NEVER touched.
+set -euo pipefail
+
+ROOT=/workspace
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+GPU0_UUID="GPU-4f27dd5a-ef72-0d3b-4f50-fc6c360edfd4"
+
+export PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp"
+export PYTHONDONTWRITEBYTECODE=1
+export HF_HUB_OFFLINE=1
+export TOKENIZERS_PARALLELISM=false
+export CUDA_DEVICE_ORDER=PCI_BUS_ID
+export CUDA_VISIBLE_DEVICES="$GPU0_UUID"
+
+cmd=${1:-all}
+case "$cmd" in
+  mock|prepare|execute|export)
+    "$LAYA_PY" -u -m integration.laya_search.battle_way_a_v2 "$cmd" EX-223
+    ;;
+  all)
+    "$LAYA_PY" -u -m integration.laya_search.battle_way_a_v2 mock EX-223
+    "$LAYA_PY" -u -m integration.laya_search.battle_way_a_v2 prepare EX-223
+    "$LAYA_PY" -u -m integration.laya_search.battle_way_a_v2 execute EX-223
+    "$LAYA_PY" -u -m integration.laya_search.battle_way_a_v2 export EX-223
+    ;;
+  *)
+    echo "usage: $0 {mock|prepare|execute|export|all}" >&2
+    exit 2
+    ;;
+esac

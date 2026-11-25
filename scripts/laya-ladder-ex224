@@ -1,0 +1,160 @@
+#!/usr/bin/env bash
+# EX-224 (EP-248 / D-224): Official Showdown gen9ou ladder with EX-223 exact Way A v2 config
+# (EX-200 + v13 + walled_duel + EX-221 Future-Aware V_phi v3 + 2-ply Top-K + MCTS 50k + Way A v2 guardrails),
+# CPU serving (0 GPU, OMP=4, nice 10, --workers 2), running safely in parallel with EX-225 -> EX-226 GPU 0·1 DDP.
+# Supports TEAM=rotate (default: archetype-interleaved 32-team rotation over teams.json) or fixed TEAM=<id>.
+# Live override: write a team id (or 'rotate') to runtime/team-ex224.override; touch runtime/stop-ex224 to stop cleanly.
+# Stops cleanly at game boundary once EX-226 finishes (or 14h safety cap). Zero forfeit!
+main() {
+set -u
+ROOT=/workspace
+PKG=/workspace/exports/laya-play
+LAYA_PY="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-training/.venv/bin/python"
+LAYA_SRC="$ROOT/.tools/laya-0.4.13/worktrees/pokemon-v10"
+TEAMS_FILE=${TEAMS_FILE:-$PKG/app/laya_play/teams.json}
+TEAM=${TEAM:-rotate}
+ROT_STATE="$PKG/runtime/ex224-rotation.json"
+TEAM_OVERRIDE="$PKG/runtime/team-ex224.override"
+STOP_FILE="$PKG/runtime/stop-ex224"
+CKPT=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-200/checkpoints/selected
+VAL_CKPT=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-221/checkpoints/selected
+EX226_RUN=/mnt/digicap/combined/hyna/backup/pokechamp-research/runs/model-training/EX-226
+READY=$PKG/runtime/serving-waya-v2.ready.json
+MAX_SECONDS=${MAX_SECONDS:-50400}
+start_ts=$(date -u +%s)
+kst() { TZ=UTC-9 date '+%H:%M:%S KST'; }
+
+batch_b_done() {
+  if [ -f "$EX226_RUN/status.json" ]; then
+    python3 -c "import json,sys; s=json.load(open('$EX226_RUN/status.json')).get('stage'); sys.exit(0 if s in ('completed',) else 1)" 2>/dev/null && return 0
+  fi
+  return 1
+}
+
+next_team_info() {
+  python3 - "$TEAMS_FILE" "$ROT_STATE" "$1" <<'PY'
+import json, sys
+from pathlib import Path
+
+teams_path, state_path, mode = Path(sys.argv[1]), Path(sys.argv[2]), sys.argv[3].strip()
+teams = json.loads(teams_path.read_text())
+EXCLUDE_STALL = {'tfd69993f31', 't9e3f9bd84a', 'td061dd6180', 't71230b7e95'}
+by_id = {(t.get('id') or t.get('team_id')): t for t in teams}
+rot_ids = {tid: t for tid, t in by_id.items() if tid not in EXCLUDE_STALL}
+
+if mode != 'rotate' and mode in by_id:
+    t = by_id[mode]
+    print(f"{mode}\t{t.get('archetype','?')}\t{', '.join(t.get('species',[]))}\tfixed")
+    sys.exit(0)
+
+# Build archetype-interleaved 28-team non-stall rotation order (excluding 4 full-stall decks; t61731415d7 last)
+if state_path.exists():
+    st = json.loads(state_path.read_text())
+    order = [tid for tid in st.get('order', []) if tid in rot_ids]
+    idx = int(st.get('next', 0))
+else:
+    order, idx = [], 0
+
+if len(order) != len(rot_ids):
+    buckets = {}
+    for t in teams:
+        tid = t.get('id') or t.get('team_id')
+        if tid == 't61731415d7' or tid in EXCLUDE_STALL:
+            continue
+        buckets.setdefault(t.get('archetype', 'other'), []).append(tid)
+    # Prioritize strong/meta balance & offense archetypes first, then interleave all buckets
+    prio = ['balance', 'offense', 'weather', 'defense']
+    keys = [k for k in prio if k in buckets] + [k for k in sorted(buckets) if k not in prio]
+    # Promote t637fcf81c3 to top of balance and ta199a565dc to top of offense for immediate diverse start
+    for k, top in (('balance', 't637fcf81c3'), ('offense', 'ta199a565dc')):
+        if k in buckets and top in buckets[k]:
+            buckets[k].remove(top)
+            buckets[k].insert(0, top)
+    order = []
+    while any(buckets.values()):
+        for k in keys:
+            if buckets.get(k):
+                order.append(buckets[k].pop(0))
+    if 't61731415d7' in by_id:
+        order.append('t61731415d7')
+    idx = 0
+
+pos = idx % len(order)
+tid = order[pos]
+t = by_id[tid]
+state_path.write_text(json.dumps({'order': order, 'next': pos + 1, 'round': (idx // len(order)) + 1}, indent=2))
+print(f"{tid}\t{t.get('archetype','?')}\t{', '.join(t.get('species',[]))}\t{pos+1}/{len(order)}")
+PY
+}
+
+cd "$PKG"
+mkdir -p "$PKG/runtime/logs"
+rm -f "$STOP_FILE"
+pgrep -f "laya_play.bot .*--name nhy_test1629" >/dev/null && { echo "[loop] $(kst) the account is in use; stopping"; exit 1; }
+rm -f "$READY"
+
+CUDA_VISIBLE_DEVICES='' \
+  OMP_NUM_THREADS=4 MKL_NUM_THREADS=4 \
+  PYTHONPATH="$LAYA_SRC:$ROOT:$ROOT/pokechamp" \
+  PYTHONDONTWRITEBYTECODE=1 HF_HUB_OFFLINE=1 TOKENIZERS_PARALLELISM=false \
+  nice -n 10 "$LAYA_PY" -m integration.laya_search.serve_search \
+  --checkpoint "$CKPT" --value-checkpoint "$VAL_CKPT" \
+  --way-a-v2 --two-ply --walled-duel --no-calc-duel --iterations 50000 \
+  --model laya-waya-v2 --device cpu --workers 2 \
+  --ready-file "$READY" >> "$PKG/runtime/logs/serving-waya-v2.log" 2>&1 < /dev/null &
+SERVING_PID=$!
+SERVICE=$PKG/runtime/serving.ready.json
+[ -f "$SERVICE" ] && cp -p "$SERVICE" "$SERVICE.before-ex224"
+trap 'kill "$SERVING_PID" 2>/dev/null; [ -f "$SERVICE.before-ex224" ] && mv -f "$SERVICE.before-ex224" "$SERVICE"' EXIT
+
+for i in $(seq 300); do
+  [ -f "$READY" ] && break
+  kill -0 "$SERVING_PID" 2>/dev/null || { echo "[loop] $(kst) serving died"; exit 1; }
+  sleep 1
+done
+[ -f "$READY" ] || { echo "[loop] $(kst) serving not ready"; exit 1; }
+cp -f "$READY" "$SERVICE"
+echo "[loop] $(kst) EX-224 laya-waya-v2 (EX-223 Way A v2 + EX-221 V_phi v3 + 2-ply + MCTS 50k, CPU serving) pid $SERVING_PID ready; loop until EX-226 completes, team mode=$TEAM"
+
+fails=0 n=0
+while :; do
+  if [ -f "$STOP_FILE" ]; then
+    echo "[loop] $(kst) stop file detected after run $n -> stopping cleanly!"
+    rm -f "$STOP_FILE"
+    break
+  fi
+  if batch_b_done; then
+    echo "[loop] $(kst) EX-226 completed after run $n -> stopping cleanly!"
+    break
+  fi
+  elapsed=$(( $(date -u +%s) - start_ts ))
+  (( elapsed < MAX_SECONDS )) || { echo "[loop] $(kst) safety cap reached after run $n"; break; }
+  kill -0 "$SERVING_PID" 2>/dev/null || { echo "[loop] $(kst) serving exited; stopping"; break; }
+
+  mode="$TEAM"
+  if [ -f "$TEAM_OVERRIDE" ]; then
+    ov=$(tr -d ' \r\n' < "$TEAM_OVERRIDE")
+    [ -n "$ov" ] && mode="$ov"
+  fi
+  IFS=$'\t' read -r cur_team cur_arch cur_sp cur_slot <<< "$(next_team_info "$mode")"
+
+  n=$((n + 1))
+  echo "[loop] $(kst) run $n: laya-waya-v2 (EX-223 Way A v2 + V_phi v3 2-ply, CPU), team $cur_team [$cur_slot] ($cur_arch: $cur_sp)"
+  LADDER=yes SEARCH_MINUTES=30 ./official.sh --games-limit 1 --teams "$TEAMS_FILE" --team "$cur_team" --serving "$READY" 2>&1 \
+      | grep -viE --line-buffered "password|assertion" \
+      | grep -E --line-buffered "^\[bot\]|^\[official\] error|Traceback|Error"
+  rc=${PIPESTATUS[0]}
+  if (( rc != 0 )); then
+    fails=$((fails + 1)); echo "[loop] $(kst) run $n exited $rc (consecutive failures $fails)"
+    (( fails >= 3 )) && { echo "[loop] $(kst) stopping after 3 consecutive failures"; break; }
+    sleep 30
+  else
+    fails=0
+  fi
+  PYTHONPATH=app PYTHONDONTWRITEBYTECODE=1 python3 -m laya_play.ladder_replays --user nhy_test1629 2>&1 | tail -1
+  sleep 5
+done
+PYTHONPATH=app PYTHONDONTWRITEBYTECODE=1 python3 -m laya_play.ladder_replays --user nhy_test1629 --search 2>&1 | tail -1
+echo "[loop] $(kst) EX-224 done"
+}
+main "$@"; exit $?

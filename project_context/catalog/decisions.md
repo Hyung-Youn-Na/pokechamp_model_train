@@ -225,3 +225,10 @@
 | [D-217](../research/policy-learning/decisions/D-217-laya-engine-value-rerank-training.md) | foul-play 엔진 평가로 laya 후보 순위를 다시 매긴 target 학습 | Accepted |
 | [D-218](../research/policy-learning/decisions/D-218-laya-v13-input-bugfixes.md) | laya 렌더러 v13 입력 결함 수정(폼 스펙·테라 방어 재계산·선공 Roost 지면화·Ivy Cudgel 타입) | Accepted |
 | [D-219](../research/policy-learning/decisions/D-219-laya-multiturn-search-and-value.md) | 1턴 시야·정적 가치 편향 극복을 위한 다중턴 탐색(2-A)·신경망 상태가치(2-B)·경량 MCTS-Q 재정렬 학습(1-B) (GPU 0·1 전용) | Accepted |
+| [D-220](../research/policy-learning/decisions/D-220-laya-recovery-matchup-2bv2-and-v14.md) | 상대 회복·흡수 기반 대면 불리 대응: 2-B v2 탐색 개선(CPU 서빙) 및 v14 입력·재학습 병행 | Accepted |
+| [D-221](../research/policy-learning/decisions/D-221-laya-main-waya-mcts50k-vphi-v2.md) | Laya 메인 합의형 블런더 가드(방식 A), MCTS 50k 심화, 상성·도구·특성·기술 반영 가치망 V_phi v2 및 렌더러 무효 대면 보완 | Accepted |
+| [D-222](../research/policy-learning/decisions/D-222-laya-way-c1-v14-walled-teacher50k.md) | 방식 C-1: v14+walled_duel 입력 및 Hard-Example MCTS 50k + EX-216 V_phi v2 교사 증류 학습 | Accepted |
+| [D-223](../research/policy-learning/decisions/D-223-vphi-v3-future-horizon-and-multiturn-search.md) | 미래 영향력 반영 상태가치망 V_phi v3 및 다수 턴 2-ply 탐색 · Way A v2 가드레일 | Accepted |
+| [D-224](../research/policy-learning/decisions/D-224-batch-b-waya-v2-ladder-wayc1-clean-wayb.md) | 배치 B 병행 실행: EX-223 방식 A v2 공식 래더(EX-224) + 정화 교사 방식 C-1(EX-225) → 프롬프트 도구 주입 방식 B(EX-226) DDP 자동 연쇄 | Accepted |
+| [D-225](../research/policy-learning/decisions/D-225-ep249-ex226-wayb-ex225-c1clean-blim128-ladder.md) | EP-249: EX-226(방식 B) · EX-225(방식 C-1 정화판) Blim 128 병렬 배틀 평가 및 EX-226 공식 래더 병행 | Accepted |
+| [D-226](../research/policy-learning/decisions/D-226-ep250-ex226-wayb-offense-ladder.md) | EP-250: EX-226 방식 B Offense 전용 공식 Showdown 래더 대전 (13:30 KST까지) | Accepted |
